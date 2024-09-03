@@ -1,10 +1,5 @@
 <?php
 
-session_start();
-$username = $_SESSION['username'];
-
-$name = '';
-
 // connect database
 $servername = 'localhost';
 $username = 'root';
@@ -19,7 +14,9 @@ if (!$conn) {
     die("Sorry failed to connect: " . mysqli_connect_error());
 }
 
-$username = mysqli_real_escape_string($conn, $username);
+session_start();
+$username = $_SESSION['username'];
+$username = mysqli_real_escape_string($conn, $username['username']);
 
 //write query for username and password
 $sql = "SELECT name FROM info WHERE username = '$username'";
@@ -45,8 +42,10 @@ mysqli_close($conn);
 </head>
 
 <body>
-    <h4>WELCOME</h4>
-    <H5><?php echo $name; ?></H5>
+    <div>
+        <h3>WELCOME</h3>
+        <h1><?php echo $name['name']; ?></h1>
+    </div>
 </body>
 
 </html>
