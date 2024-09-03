@@ -1,5 +1,20 @@
 <?php
 
+// connect database
+$servername = 'localhost';
+$username = 'root';
+$password = '';
+$databasename = 'session_project';
+
+// connection obj
+$conn = mysqli_connect($servername, $username, $password, $databasename);
+
+// check connection
+if (!$conn) {
+    die("Sorry failed to connect: " . mysqli_connect_error());
+}
+
+
 $username = $password = '';
 $error = '';
 
@@ -16,20 +31,6 @@ if (isset($_POST['submit'])) {
 
     // .......... validation check ............
 
-    // connect database
-    $servername = 'localhost';
-    $username = 'root';
-    $password = '';
-    $databasename = 'session_project';
-
-    // connection obj
-    $conn = mysqli_connect($servername, $username, $password, $databasename);
-
-    // check connection
-    if (!$conn) {
-        die("Sorry failed to connect: " . mysqli_connect_error());
-    }
-
     $username = mysqli_real_escape_string($conn, $username);
     $password = mysqli_real_escape_string($conn, $password);
 
@@ -45,19 +46,19 @@ if (isset($_POST['submit'])) {
 
     $username = mysqli_fetch_assoc($result);
 
-    // free the $result from memory
-    mysqli_free_result($result);
-
-    // close connection
-    mysqli_close($conn);
-
-    if ($error = '') {
+    if ($error == '') {
 
         session_start();
         $_SESSION['username'] = $username;
 
         header("Location: home.php");
     }
+
+    // free the $result from memory
+    mysqli_free_result($result);
+
+    // close connection
+    mysqli_close($conn);
 }
 
 ?>

@@ -34,6 +34,9 @@ if (isset($_POST['submit'])) {
         $result = mysqli_query($conn, $sql);
         if ($result && mysqli_num_rows($result) > 0) {
             $error = 'Please try another username';
+
+            // close connection
+            mysqli_close($conn);
         }
     }
 
@@ -42,7 +45,7 @@ if (isset($_POST['submit'])) {
         $error = 'None input field can be empty!';
     }
 
-    if ($error = '') {
+    if ($error == '') {
 
         // escape sql chars
         $name = mysqli_real_escape_string($conn, $_POST['name']);
