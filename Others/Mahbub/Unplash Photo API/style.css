@@ -1,0 +1,28 @@
+.input-box,
+p {
+   text-align: center;
+}
+input{
+    outline: none;
+    
+}
+
+.image-container {
+   margin-top: 20px;
+   display: flex;
+   flex-wrap: wrap;
+   gap: 10px;
+   justify-content: center;
+}
+
+.image-container img {
+   max-width: 150px;
+   height: 100px;
+   cursor: pointer;
+   border: 2px solid transparent;
+   transition: border-color 0.3s;
+}
+
+.image-container img:hover {
+   border-color: #007bff;
+}
