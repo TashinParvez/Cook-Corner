@@ -43,12 +43,14 @@
          </div>
 
          <div>
-            <button class="btn" type="submit">Sign Up</button
-               </div>
+            <button class="btn" type="submit">Sign Up</button>
+         </div>
 
-            <div class="sign-link">
-               <p>Already have an account?<a href="Login.php">Sign in</a></p>
-            </div>
+         <div class="sign-link">
+            <p>Already have an account?<a href="Login.php">Sign in</a></p>
+         </div>
+
+         <button class="g-btn"><i class='bx bxl-google'></i></button>
       </form>
    </div>
 </body>
