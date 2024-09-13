@@ -1,5 +1,11 @@
 <?php
 
+require 'vendor/autoload.php';
+
+use Egulias\EmailValidator\EmailValidator;
+use Egulias\EmailValidator\Validation\RFCValidation;
+
+
 $email = $password = $confirm_password = '';
 $errors = array('email' => '', 'password' => '', 'confirm_password' => '');
 
@@ -16,15 +22,15 @@ if (isset($_POST['sign_up'])) {
    //.............. All input field validation checking ...................
 
    // check email
-   if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) { // Format check
+   $emailValidator = new EmailValidator();
+   if (!$emailValidator->isValid($email, new RFCValidation())) { // Format check
 
       $errors['email'] = "Invalid email format.";
    } else {
 
       $domain = substr(strrchr($email, "@"), 1);
 
-      if (!checkdnsrr($domain, 'MX')) { // Domain check
-
+      if (!checkdnsrr($domain, 'MX')) {
          $errors['email'] = "Email domain is not valid.";
       } else {
 
