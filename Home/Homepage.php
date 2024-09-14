@@ -13,7 +13,10 @@
 </head>
 
 <body>
-    <h1 class="navbar">Navbar</h1>
+    <!-- <h1 class="navbar">Navbar</h1> -->  
+     <?php
+    include('../Includes/Navbar/navbarMain.php');  // tashin
+    ?>
 
     <section class="get-start">
         <h1>Hungry? Get started</h1>
