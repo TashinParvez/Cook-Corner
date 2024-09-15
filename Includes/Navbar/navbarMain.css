@@ -1,0 +1,20 @@
+.text-end{
+    margin-left: auto;
+}
+
+.d-flex{
+    margin-left: auto;
+}
+
+.navbar-nav{
+    margin-left: auto;
+}
+
+.navbar-brand img{
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100px;
+    width: 100px;
+    z-index: 999;
+}
