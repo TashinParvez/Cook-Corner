@@ -1,5 +1,13 @@
 <?php
 
+//...................... Database Connection ..............................
+include("../Includes/Database Connection/database_connection.php");
+
+// Session
+session_start();
+$id = $_SESSION['id'] ?? 'user_id_manually';
+
+
 
 ?>
 
