@@ -92,7 +92,7 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
 
 
                         </ul>
-                        
+
                     </div>
                     <!---------------------- seg2 end ---------------------->
                 </div>
@@ -244,6 +244,54 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
                             </div>
                         </div>
                     </div> -->
+                    <div class="container">
+
+                        <div class="container mt-5">
+                            <div class="form-group">
+                                <label for="allergy-input">Allergy Information</label>
+                                <div class="tag-input">
+                                    <input type="text" id="allergy-input" class="form-control" placeholder="Add allergy" />
+                                    <div id="tag-container" class="tag-container mt-2"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ------------ -->
+
+
+                        <script>
+                            const input = document.getElementById('allergy-input');
+                            const tagContainer = document.getElementById('tag-container');
+
+                            input.addEventListener('keydown', function(event) {
+                                if (event.key === 'Enter') {
+                                    event.preventDefault();
+                                    const value = input.value.trim();
+                                    if (value && !Array.from(tagContainer.children).some(tag => tag.textContent.includes(value))) {
+                                        addTag(value);
+                                        input.value = '';
+                                    }
+                                }
+                            });
+
+                            function addTag(value) {
+                                const tag = document.createElement('div');
+                                tag.className = 'tag';
+                                tag.innerHTML = `<span>${value}</span><button class="remove-btn">&times;</button>`;
+                                tag.querySelector('.remove-btn').addEventListener('click', () => {
+                                    tagContainer.removeChild(tag);
+                                });
+                                tagContainer.appendChild(tag);
+                            }
+
+                            // Optional: Add suggestion functionality (basic example)
+                            input.addEventListener('input', function() {
+                                const value = input.value.toLowerCase();
+                                const filteredSuggestions = suggestions.filter(s => s.toLowerCase().includes(value));
+
+                                // Implement suggestion display logic here
+                            });
+                        </script>
+                    </div>
 
                 </div>
                 <!------------------------- End Second col ------------------------->
