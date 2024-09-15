@@ -23,7 +23,7 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- css  -->
-    <link rel="stylesheet" href="../Includes/Navbar/navbarMain.css">
+    <link rel="stylesheet" href="../Includes/Navbar/navbarMain.css">      <!-- Navbar CSS -->
     <link href="Homepage.css" rel="stylesheet" type="text/css">
 </head>
 
@@ -32,7 +32,7 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
     <?php
     include('../Includes/Navbar/navbarMain.php');  // Mahbub 
 
-//     include('../Includes/Navbar/navbarMain.php');  // tashin
+    //     include('../Includes/Navbar/navbarMain.php');  // tashin
 
     ?>
 
@@ -442,6 +442,11 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
         </div>
     </section>
 
+    <!-- ============================== Footer ==================================== -->
+    <?php
+    include('../Includes/Footer/footermain.php');  // tashin 
+    ?>
+    <!-- ============================== Footer End ==================================== -->
 
 
 
