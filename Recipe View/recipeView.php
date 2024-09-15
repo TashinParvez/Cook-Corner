@@ -325,7 +325,7 @@
                                                     <img src="/Images/IMG-20240131-WA0004.jpg" alt="Circular Image" class="circle-image category-image">
                                                 </div>
                                             </div>
-                                            <div class="image-title">Category 01</div>
+                                            <div class="image-title">Items</div>
                                         </div>
                                     </div>
                                     <div class="col">
@@ -335,7 +335,7 @@
                                                     <img src="/Images/IMG-20240131-WA0004.jpg" alt="Circular Image" class="circle-image category-image">
                                                 </div>
                                             </div>
-                                            <div class="image-title">Category 01</div>
+                                            <div class="image-title">Items</div>
                                         </div>
                                     </div>
                                     <div class="col">
@@ -345,7 +345,7 @@
                                                     <img src="/Images/IMG-20240131-WA0004.jpg" alt="Circular Image" class="circle-image category-image">
                                                 </div>
                                             </div>
-                                            <div class="image-title">Category 01</div>
+                                            <div class="image-title">Items</div>
                                         </div>
                                     </div>
                                     <div class="col">
@@ -355,7 +355,7 @@
                                                     <img src="/Images/IMG-20240131-WA0004.jpg" alt="Circular Image" class="circle-image category-image">
                                                 </div>
                                             </div>
-                                            <div class="image-title">Category 01</div>
+                                            <div class="image-title">Items</div>
                                         </div>
                                     </div>
                                     <div class="col">
@@ -365,7 +365,7 @@
                                                     <img src="/Images/IMG-20240131-WA0004.jpg" alt="Circular Image" class="circle-image category-image">
                                                 </div>
                                             </div>
-                                            <div class="image-title">Category 01</div>
+                                            <div class="image-title">Items</div>
                                         </div>
                                     </div>
                                     <div class="col">
@@ -375,7 +375,7 @@
                                                     <img src="/Images/IMG-20240131-WA0004.jpg" alt="Circular Image" class="circle-image category-image">
                                                 </div>
                                             </div>
-                                            <div class="image-title">Category 01</div>
+                                            <div class="image-title">Items</div>
                                         </div>
                                     </div>
 

@@ -22,17 +22,17 @@
 }
 
 .circle-image {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #000;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #000;
 }
 
 .image-title {
-  margin-top: 10px;
-  font-size: 1.25rem;
-  font-weight: bold;
+    margin-top: 10px;
+    font-size: 1.25rem;
+    font-weight: bold;
 }
 .category-image {
   width: 50px;

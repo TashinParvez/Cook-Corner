@@ -23,7 +23,12 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- css  -->
+<<<<<<< HEAD
     <link rel="stylesheet" href="../Includes/Navbar/navbarMain.css">      <!-- Navbar CSS -->
+=======
+     <link rel="stylesheet" href="../Recipe View/">
+    <link rel="stylesheet" href="../Includes/Navbar/navbarMain.css">
+>>>>>>> 18d4e252ded462a630416abeda929135d43a4775
     <link href="Homepage.css" rel="stylesheet" type="text/css">
 </head>
 
@@ -36,6 +41,7 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
 
     ?>
 
+    <!-------------------------------------------- search section ---------------------------------------------------->
 
 
     <section class="get-start">
@@ -70,6 +76,7 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
             </div>
 
 
+            <!-------------------------------------------- Image sliding section ------------------------------------------------------->
 
 
 
@@ -227,6 +234,8 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
     </section>
 
 
+    <!------------------------------------------------- Course section  ----------------------------------------------->
+
     <section class="course m-4">
         <div class="container">
             <div class="identity m-2">
@@ -294,6 +303,9 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
 
     </section>
 
+    <!------------------------------------------------- Best Recipe section  ----------------------------------------------->
+
+
     <section class="best-recipe m-4">
         <div class="container">
             <div class="identity m-2">
@@ -352,6 +364,10 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
 
             </div>
     </section>
+
+
+    <!------------------------------------------------- categories section  ----------------------------------------------->
+
 
 
     <section class="all-categories m-4">
