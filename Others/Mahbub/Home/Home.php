@@ -69,58 +69,62 @@
                     <div class="carousel-item active">
                         <div class="row justify-content-center">
                             <div class="col-md-2">
-                                <div class="card">
-                                    <img src="../../../Images/FoodImages/6.jpg" class="card-img-top" alt="...">
-                                    <div class="card-body">
+                                <div class="card text-white">
+                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
                                         <h5 class="card-title">Card 1</h5>
                                         <p class="card-text">Description 1.</p>
                                     </div>
+                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 1">
                                 </div>
                             </div>
 
                             <div class="col-md-2">
-                                <div class="card">
-                                    <img src="../../../Images/FoodImages/6.jpg" class="card-img-top" alt="...">
-                                    <div class="card-body">
+                                <div class="card text-white">
+                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
                                         <h5 class="card-title">Card 2</h5>
                                         <p class="card-text">Description 2.</p>
                                     </div>
+                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 2">
                                 </div>
                             </div>
+
                             <div class="col-md-2">
-                                <div class="card">
-                                    <img src="../../../Images/FoodImages/6.jpg" class="card-img-top" alt="...">
-                                    <div class="card-body">
+                                <div class="card text-white">
+                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
                                         <h5 class="card-title">Card 3</h5>
                                         <p class="card-text">Description 3.</p>
                                     </div>
+                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 3">
                                 </div>
                             </div>
+
                             <div class="col-md-2">
-                                <div class="card">
-                                    <img src="../../../Images/FoodImages/6.jpg" class="card-img-top" alt="...">
-                                    <div class="card-body">
+                                <div class="card text-white">
+                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
                                         <h5 class="card-title">Card 4</h5>
                                         <p class="card-text">Description 4.</p>
                                     </div>
+                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 4">
                                 </div>
                             </div>
+
                             <div class="col-md-2">
-                                <div class="card">
-                                    <img src="../../../Images/FoodImages/6.jpg" class="card-img-top" alt="...">
-                                    <div class="card-body">
+                                <div class="card text-white">
+                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
                                         <h5 class="card-title">Card 5</h5>
                                         <p class="card-text">Description 5.</p>
                                     </div>
+                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 5">
                                 </div>
                             </div>
+
                             <div class="col-md-2">
-                                <div class="card">
-                                    <img src="../../../Images/FoodImages/6.jpg" class="card-img-top" alt="...">
-                                    <div class="card-body">
+                                <div class="card text-white">
+                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
                                         <h5 class="card-title">Card 6</h5>
                                         <p class="card-text">Description 6.</p>
                                     </div>
+                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 6">
                                 </div>
                             </div>
                         </div>
@@ -130,57 +134,62 @@
                     <div class="carousel-item">
                         <div class="row justify-content-center">
                             <div class="col-md-2">
-                                <div class="card">
-                                    <img src="../../../Images/FoodImages/6.jpg" class="card-img-top" alt="...">
-                                    <div class="card-body">
+                                <div class="card text-white">
+                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
                                         <h5 class="card-title">Card 7</h5>
                                         <p class="card-text">Description 7.</p>
                                     </div>
+                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 7">
                                 </div>
                             </div>
+
                             <div class="col-md-2">
-                                <div class="card">
-                                    <img src="../../../Images/FoodImages/6.jpg" class="card-img-top" alt="...">
-                                    <div class="card-body">
+                                <div class="card text-white">
+                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
                                         <h5 class="card-title">Card 8</h5>
                                         <p class="card-text">Description 8.</p>
                                     </div>
+                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 8">
                                 </div>
                             </div>
+
                             <div class="col-md-2">
-                                <div class="card">
-                                    <img src="../../../Images/FoodImages/6.jpg" class="card-img-top" alt="...">
-                                    <div class="card-body">
+                                <div class="card text-white">
+                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
                                         <h5 class="card-title">Card 9</h5>
                                         <p class="card-text">Description 9.</p>
                                     </div>
+                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 9">
                                 </div>
                             </div>
+
                             <div class="col-md-2">
-                                <div class="card">
-                                    <img src="../../../Images/FoodImages/6.jpg" class="card-img-top" alt="...">
-                                    <div class="card-body">
+                                <div class="card text-white">
+                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
                                         <h5 class="card-title">Card 10</h5>
                                         <p class="card-text">Description 10.</p>
                                     </div>
+                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 10">
                                 </div>
                             </div>
+
                             <div class="col-md-2">
-                                <div class="card">
-                                    <img src="../../../Images/FoodImages/6.jpg" class="card-img-top" alt="...">
-                                    <div class="card-body">
+                                <div class="card text-white">
+                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
                                         <h5 class="card-title">Card 11</h5>
                                         <p class="card-text">Description 11.</p>
                                     </div>
+                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 11">
                                 </div>
                             </div>
+
                             <div class="col-md-2">
-                                <div class="card">
-                                    <img src="../../../Images/FoodImages/6.jpg" class="card-img-top" alt="...">
-                                    <div class="card-body">
+                                <div class="card text-white">
+                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
                                         <h5 class="card-title">Card 12</h5>
                                         <p class="card-text">Description 12.</p>
                                     </div>
+                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 12">
                                 </div>
                             </div>
                         </div>
@@ -197,6 +206,7 @@
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>
+
 
 
 
@@ -267,7 +277,7 @@
                         </div>
                     </a>
                 </div>
-                
+
             </div>
 
 
