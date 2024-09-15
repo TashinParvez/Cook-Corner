@@ -163,7 +163,7 @@
 
                 <!-- ================================================== Directions ================================================== -->
                 <h2>Directions</h2>
-                <div class="container align-self-start">
+                <!-- <div class="container align-self-start">
                     <div class="card mb-3">
                         <img src="..." class="card-img-top" alt="...">
                         <div class="card-body">
@@ -181,23 +181,41 @@
                         <img src="..." class="card-img-bottom" alt="...">
                     </div>
 
+                </div> -->
+                <div class="container">
+                    <div class="container">
+                        <h4>1</h4>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde minima qui nam nostrum exercitationem possimus sequi quae hic voluptates aspernatur.</p>
+                    </div>
+                    <div class="container">
+                        <h4>2</h4>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde minima qui nam nostrum exercitationem possimus sequi quae hic voluptates aspernatur.</p>
+                    </div>
+                    <div class="container">
+                        <h4>3</h4>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde minima qui nam nostrum exercitationem possimus sequi quae hic voluptates aspernatur.</p>
+                    </div>
                 </div>
-
-
+                
                 <!-- ================================================== Notes ================================================== -->
                 <h2>Notes</h2>
-                <dic class="container">
-                    <h4>1</h4>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde minima qui nam nostrum exercitationem possimus sequi quae hic voluptates aspernatur.</p>
-                </dic>
-                <dic class="container">
-                    <h4>2</h4>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde minima qui nam nostrum exercitationem possimus sequi quae hic voluptates aspernatur.</p>
-                </dic>
-                <dic class="container">
-                    <h4>3</h4>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde minima qui nam nostrum exercitationem possimus sequi quae hic voluptates aspernatur.</p>
-                </dic>
+                
+                <div class="container">
+                    <div class="container">
+                        <h6>1</h6>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde minima qui nam nostrum exercitationem possimus sequi quae hic voluptates aspernatur.</p>
+                    </div>
+                    <div class="container">
+                        <h6>2</h6>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde minima qui nam nostrum exercitationem possimus sequi quae hic voluptates aspernatur.</p>
+                    </div>
+                    <div class="container">
+                        <h6>3</h6>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde minima qui nam nostrum exercitationem possimus sequi quae hic voluptates aspernatur.</p>
+                    </div>
+                </div>
+
+               
 
 
 
