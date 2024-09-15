@@ -1,6 +1,6 @@
 <?php
 //...................... Database Connection ..............................
-include("../Includes/Database Connection/database_connection.php");
+// include("../Includes/Database Connection/database_connection.php");
 
 // Session
 session_start();
@@ -23,6 +23,7 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- css  -->
+     <link rel="stylesheet" href="../Recipe View/">
     <link rel="stylesheet" href="../Includes/Navbar/navbarMain.css">
     <link href="Homepage.css" rel="stylesheet" type="text/css">
 </head>
@@ -32,10 +33,11 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
     <?php
     include('../Includes/Navbar/navbarMain.php');  // Mahbub 
 
-//     include('../Includes/Navbar/navbarMain.php');  // tashin
+    //     include('../Includes/Navbar/navbarMain.php');  // tashin
 
     ?>
 
+    <!-------------------------------------------- search section ---------------------------------------------------->
 
 
     <section class="get-start">
@@ -70,6 +72,7 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
             </div>
 
 
+            <!-------------------------------------------- Image sliding section ------------------------------------------------------->
 
 
 
@@ -227,6 +230,8 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
     </section>
 
 
+    <!------------------------------------------------- Course section  ----------------------------------------------->
+
     <section class="course m-4">
         <div class="container">
             <div class="identity m-2">
@@ -294,6 +299,9 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
 
     </section>
 
+    <!------------------------------------------------- Best Recipe section  ----------------------------------------------->
+
+
     <section class="best-recipe m-4">
         <div class="container">
             <div class="identity m-2">
@@ -352,6 +360,10 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
 
             </div>
     </section>
+
+
+    <!------------------------------------------------- categories section  ----------------------------------------------->
+
 
 
     <section class="all-categories m-4">
