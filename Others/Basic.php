@@ -22,6 +22,15 @@
     include('../Includes/Navbar/navbarMain.php');  // tashin
     ?>
 
+
+
+    <!-- ============================== Footer ==================================== -->
+    <?php
+    // include('../Includes/Footer/footermain.php');  // tashin
+    include('../Includes/Footer/footermainTry.php');  // tashin
+    ?>
+    <!-- ============================== Footer End ==================================== -->
+
 </body>
 
 </html>
