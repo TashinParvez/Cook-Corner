@@ -1,7 +1,7 @@
 <?php
 
 //...................... Database Connection ..............................
-include("../Includes/Database Connection/database_connection.php");
+// include("../Includes/Database Connection/database_connection.php");
 
 // Session
 session_start();
