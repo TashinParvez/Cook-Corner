@@ -23,7 +23,7 @@
     include('../Includes/Navbar/navbarMain.php');  // tashin
     ?>
 
-    <div class="container">
+    <div class="container pb-5">
         <div class="main-body">
 
             <!-- Breadcrumb -->
@@ -292,6 +292,13 @@
 
         </div>
     </div>
+
+    <!-- ============================== Footer ==================================== -->
+    <?php
+    // include('../Includes/Footer/footermain.php');  // tashin
+    include('../Includes/Footer/footermainTry.php');  // tashin
+    ?>
+    <!-- ============================== Footer End ==================================== -->
 
 
 </body>
