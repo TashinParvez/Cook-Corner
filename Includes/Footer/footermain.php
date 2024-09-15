@@ -19,9 +19,19 @@
 
 <body>
 
+    <style>
+        footer {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
 
-    <div class="container">
-        <footer class="py-5">
+        .temp-mail-smart-button-wrapper {
+            margin-bottom: 0;
+        }
+    </style>
+
+    <div class="container mt-5">
+        <footer class="py-1"> <!-- Changed padding class to py-1 to reduce height -->
             <div class="row">
                 <div class="col-6 col-md-2 mb-3">
                     <h5>Section</h5>
@@ -60,17 +70,16 @@
                     <form>
                         <h5>Subscribe to our newsletter</h5>
                         <p>Monthly digest of what's new and exciting from us.</p>
-                        <div class="d-flex flex-column flex-sm-row w-100 gap-2 temp-mail-smart-button-wrapper" style="position: relative;">
+                        <div class="d-flex flex-column flex-sm-row w-100 gap-2 temp-mail-smart-button-wrapper">
                             <label for="newsletter1" class="visually-hidden">Email address</label>
                             <input id="newsletter1" type="text" class="form-control" placeholder="Email address">
-                            <div data-lastpass-icon-root="" style="position: relative !important; height: 0px !important; width: 0px !important; float: left !important;"></div><button class="btn btn-primary" type="button">Subscribe</button>
-                            <div data-v-d654fd91=""></div>
+                            <button class="btn btn-primary" type="button">Subscribe</button>
                         </div>
                     </form>
                 </div>
             </div>
 
-            <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
+            <div class="d-flex flex-column flex-sm-row justify-content-between py-1 my-2 border-top"> <!-- Reduced padding and margin here -->
                 <p>© 2024 Team Pentagon. All rights reserved.</p>
                 <ul class="list-unstyled d-flex">
                     <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24" height="24">
