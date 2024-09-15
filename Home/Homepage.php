@@ -1,5 +1,4 @@
 <?php
-
 //...................... Database Connection ..............................
 include("../Includes/Database Connection/database_connection.php");
 
@@ -15,21 +14,29 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="Homepage.css">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- css  -->
+    <link rel="stylesheet" href="../Includes/Navbar/navbarMain.css">
+    <link href="Homepage.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
-    <!-- <h1 class="navbar">Navbar</h1> -->
+
     <?php
-    include('../Includes/Navbar/navbarMain.php');  // tashin
+    include('../Includes/Navbar/navbarMain.php');  // Mahbub 
+
+//     include('../Includes/Navbar/navbarMain.php');  // tashin
+
     ?>
+
+
 
     <section class="get-start">
         <h1>Hungry? Get started</h1>
@@ -53,173 +60,390 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
     </section>
 
 
-    <section class="suggestion">
-        <div class="wishes">
-            <h1>Good Morning</h1>
-            <p>What to cook Now?</p>
-        </div>
 
-        <div class="card-holder">
-            <a href="#">
-                <div class="recipe-card">
-                    <img src="./Images/pasta.jpg" alt="">
-                    <div class="card-info">
-                        <h3>Pasta</h3>
-                        <div class="ratings" style="color: yellow;">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
+
+    <section class="suggestion m-4">
+        <div class="container">
+            <div class="identity m-2">
+                <h2 class="m-0 p-0">Good Morning</h2>
+                <p class="m-0 p-0">What to cook today</p>
+            </div>
+
+
+
+
+
+            <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <!-- First set of 6 smaller cards -->
+                    <div class="carousel-item active">
+                        <div class="row justify-content-center">
+                            <div class="col-md-2">
+                                <div class="card text-white">
+                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
+                                        <h5 class="card-title">Card 1</h5>
+                                        <p class="card-text">Description 1.</p>
+                                    </div>
+                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 1">
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="card text-white">
+                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
+                                        <h5 class="card-title">Card 2</h5>
+                                        <p class="card-text">Description 2.</p>
+                                    </div>
+                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 2">
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="card text-white">
+                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
+                                        <h5 class="card-title">Card 3</h5>
+                                        <p class="card-text">Description 3.</p>
+                                    </div>
+                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 3">
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="card text-white">
+                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
+                                        <h5 class="card-title">Card 4</h5>
+                                        <p class="card-text">Description 4.</p>
+                                    </div>
+                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 4">
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="card text-white">
+                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
+                                        <h5 class="card-title">Card 5</h5>
+                                        <p class="card-text">Description 5.</p>
+                                    </div>
+                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 5">
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="card text-white">
+                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
+                                        <h5 class="card-title">Card 6</h5>
+                                        <p class="card-text">Description 6.</p>
+                                    </div>
+                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 6">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Second set of 6 smaller cards -->
+                    <div class="carousel-item">
+                        <div class="row justify-content-center">
+                            <div class="col-md-2">
+                                <div class="card text-white">
+                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
+                                        <h5 class="card-title">Card 7</h5>
+                                        <p class="card-text">Description 7.</p>
+                                    </div>
+                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 7">
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="card text-white">
+                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
+                                        <h5 class="card-title">Card 8</h5>
+                                        <p class="card-text">Description 8.</p>
+                                    </div>
+                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 8">
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="card text-white">
+                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
+                                        <h5 class="card-title">Card 9</h5>
+                                        <p class="card-text">Description 9.</p>
+                                    </div>
+                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 9">
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="card text-white">
+                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
+                                        <h5 class="card-title">Card 10</h5>
+                                        <p class="card-text">Description 10.</p>
+                                    </div>
+                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 10">
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="card text-white">
+                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
+                                        <h5 class="card-title">Card 11</h5>
+                                        <p class="card-text">Description 11.</p>
+                                    </div>
+                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 11">
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="card text-white">
+                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
+                                        <h5 class="card-title">Card 12</h5>
+                                        <p class="card-text">Description 12.</p>
+                                    </div>
+                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 12">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </a>
-            <a href="#">
-                <div class="recipe-card">
-                    <img src="./Images/pasta.jpg" alt="">
-                    <div class="card-info">
-                        <h3>Pasta</h3>
-                        <div class="ratings" style="color: yellow;">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a href="#">
-                <div class="recipe-card">
-                    <img src="./Images/pasta.jpg" alt="">
-                    <div class="card-info">
-                        <h3>Pasta</h3>
-                        <div class="ratings" style="color: yellow;">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a href="#">
-                <div class="recipe-card">
-                    <img src="./Images/pasta.jpg" alt="">
-                    <div class="card-info">
-                        <h3>Pasta</h3>
-                        <div class="ratings" style="color: yellow;">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a href="#">
-                <div class="recipe-card">
-                    <img src="./Images/pasta.jpg" alt="">
-                    <div class="card-info">
-                        <h3>Pasta</h3>
-                        <div class="ratings" style="color: yellow;">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                        </div>
-                    </div>
-                </div>
-            </a>
+
+                <!-- Carousel controls -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+
+
+
+
+
 
 
         </div>
     </section>
 
 
-    <section class="courses">
+    <section class="course m-4">
+        <div class="container">
+            <div class="identity m-2">
+                <p class="m-0 p-0">Here are our cooking classes</p>
+                <h2 class="m-0 p-0">Popular Courses</h2>
+            </div>
 
-        <div class="course-heading">
-            <p>Our cooking Classes</p>
-            <h1>Popular Courses</h1>
-        </div>
 
-        <div class="card-holder">
-            <div class="course-card">
-                <img src="./Images/course.jpeg" alt="">
-                <div class="price-rating">
-                    <div class="price">Tk 150</div>
-                    <div class="ratings" style="color: yellow;">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                    </div>
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="col">
+                    <a href="#">
+                        <div class="card">
+                            <img src="../../../Images/FoodImages/2.jpg" class="card-img-top" alt="...">
+                            <div class="card-body">
+
+                                <p class="card-text">How to cook rice in home</p>
+                                <div class="row">
+                                    <div class="col d-flex justify-content-between">
+                                        <div class="text-start">Tk 150</div>
+                                        <div class="text-end">Ratings</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
                 </div>
-                <div class="course-info">
-                    <h3>How to make breakfast at home</h3>
-                    <i class="fa-solid fa-users"></i> 69 <span>Student enrobed</span>
+                <div class="col">
+                    <a href="#">
+                        <div class="card">
+                            <img src="../../../Images/FoodImages/2.jpg" class="card-img-top" alt="...">
+                            <div class="card-body">
+
+                                <p class="card-text">How to cook rice in home</p>
+                                <div class="row">
+                                    <div class="col d-flex justify-content-between">
+                                        <div class="text-start">Tk 150</div>
+                                        <div class="text-end">Ratings</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
                 </div>
+                <div class="col">
+                    <a href="#">
+                        <div class="card">
+                            <img src="../../../Images/FoodImages/2.jpg" class="card-img-top" alt="...">
+                            <div class="card-body">
+
+                                <p class="card-text">How to cook rice in home</p>
+                                <div class="row">
+                                    <div class="col d-flex justify-content-between">
+                                        <div class="text-start">Tk 150</div>
+                                        <div class="text-end">Ratings</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
             </div>
-            <div class="course-card">
-                <img src="./Images/course.jpeg" alt="">
-                <div class="price-rating">
-                    <div class="price">Tk 150</div>
-                    <div class="ratings" style="color: yellow;">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                    </div>
-                </div>
-                <div class="course-info">
-                    <h3>How to make breakfast at home</h3>
-                    <i class="fa-solid fa-users"></i> 69 <span>Student enrobed</span>
-                </div>
-            </div>
-            <div class="course-card">
-                <img src="./Images/course.jpeg" alt="">
-                <div class="price-rating">
-                    <div class="price">Tk 150</div>
-                    <div class="ratings" style="color: yellow;">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                    </div>
-                </div>
-                <div class="course-info">
-                    <h3>How to make breakfast at home</h3>
-                    <i class="fa-solid fa-users"></i> 69 <span>Student enrobed</span>
-                </div>
-            </div>
-            <div class="course-card">
-                <img src="./Images/course.jpeg" alt="">
-                <div class="price-rating">
-                    <div class="price">Tk 150</div>
-                    <div class="ratings" style="color: yellow;">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                    </div>
-                </div>
-                <div class="course-info">
-                    <h3>How to make breakfast at home</h3>
-                    <i class="fa-solid fa-users"></i> 69 <span>Student enrobed</span>
-                </div>
-            </div>
-        </div>
+
+
 
     </section>
+
+    <section class="best-recipe m-4">
+        <div class="container">
+            <div class="identity m-2">
+                <h2 class="m-0 p-0">The Best Recipe</h2>
+            </div>
+
+
+
+            <div class="row row-cols-1 row-cols-md-4 g-4">
+                <div class="col">
+                    <a href="#">
+                        <div class="card">
+                            <img src="../../../Images/FoodImages/3.jpg" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Ratings</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="#">
+                        <div class="card">
+                            <img src="../../../Images/FoodImages/3.jpg" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Ratings</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="#">
+                        <div class="card">
+                            <img src="../../../Images/FoodImages/3.jpg" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Ratings</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="#">
+                        <div class="card">
+                            <img src="../../../Images/FoodImages/3.jpg" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Ratings</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+
+
+            </div>
+    </section>
+
+
+    <section class="all-categories m-4">
+        <div class="container">
+            <div class="identity m-2">
+                <h2 class="m-0 p-0">All Categories</h2>
+            </div>
+
+
+
+
+            <div class="row row-cols-1 row-cols-md-4 g-4">
+                <div class="col">
+                    <a href="#">
+                        <div class="card">
+                            <img src="../../../Images/FoodImages/3.jpg" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Ratings</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </section>
+
+    <section class="Latest Recipe m-4">
+        <div class="container">
+            <div class="identity m-2">
+                <h2 class="m-0 p-0">Latest Recipe</h2>
+            </div>
+
+
+
+            <div class="row row-cols-1 row-cols-md-4 g-4">
+                <div class="col">
+                    <a href="#">
+                        <div class="card">
+                            <img src="../../../Images/FoodImages/4.jpg" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Card title</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="#">
+                        <div class="card">
+                            <img src="../../../Images/FoodImages/4.jpg" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Card title</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="#">
+                        <div class="card">
+                            <img src="../../../Images/FoodImages/4.jpg" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Card title</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="#">
+                        <div class="card">
+                            <img src="../../../Images/FoodImages/4.jpg" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Card title</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+
+            </div>
+
+
+
+
+        </div>
+    </section>
+
+
+
 
 </body>
 
