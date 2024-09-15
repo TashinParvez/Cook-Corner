@@ -5,9 +5,21 @@ include("../Includes/Database Connection/database_connection.php");
 
 // Session
 session_start();
-$id = $_SESSION['id'] ?? 'user_id_manually';
+$id = $_SESSION['id'] ?? '2';
 
+// $stmt = $conn->prepare('SELECT * FROM user_info WHERE id = ? LIMIT 1');
+$stmt = $conn->prepare('SELECT user_info.*, user_designation.designation_name 
+                        FROM user_info JOIN user_designation
+                        ON user_info.designation = user_designation.designation_id 
+                        WHERE user_info.id = ? 
+                        LIMIT 1');
+$stmt->bind_param('s', $id);
+$stmt->execute();
+$result = $stmt->get_result();
+$user_info = $result->fetch_assoc();
 
+$stmt->close();
+mysqli_close($conn);
 
 ?>
 
@@ -53,9 +65,9 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
                             <div class="d-flex flex-column align-items-center text-center">
                                 <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
                                 <div class="mt-3">
-                                    <h4>John Doe</h4>
-                                    <p class="text-secondary mb-1">Full Stack Developer</p>
-                                    <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
+                                    <h4><?php echo $user_info['first_name'] . ' ' . $user_info['last_name']; ?></h4>
+                                    <p class="text-secondary mb-1"><?php echo $user_info['designation_name']; ?></p>
+                                    <p class="text-muted font-size-sm"><?php echo $user_info['location']; ?></p>
                                     <p class="text-muted font-size-sm">Designation</p>
                                     <!-- <button class="btn btn-primary">Follow</button>
                                     <button class="btn btn-outline-primary">Message</button> -->
@@ -113,7 +125,7 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
                                         <h6 class="mb-0">First Name</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        Kenneth Valdez
+                                        <?php echo $user_info['first_name']; ?>
                                     </div>
 
                                 </div>
@@ -122,7 +134,7 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
                                         <h6 class="mb-0">Last Name</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        Kenneth Valdez
+                                        <?php echo $user_info['last_name']; ?>
                                     </div>
                                 </div>
                             </div>
@@ -134,7 +146,7 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
                                     <h6 class="mb-0">Email</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    fip@jukmuh.al
+                                    <?php echo $user_info['email']; ?>
                                 </div>
                             </div>
                             <hr>
@@ -143,7 +155,7 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
                                     <h6 class="mb-0">Password</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    fip@jukmuh.al
+                                    <?php echo $user_info['password']; ?>
                                 </div>
                             </div>
                             <hr>
@@ -153,7 +165,7 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
                                     <h6 class="mb-0">Address</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    Bay Area, San Francisco, CA
+                                    <?php echo $user_info['location']; ?>
                                 </div>
                             </div>
                             <hr>
@@ -304,7 +316,7 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
     <!-- ============================== Footer ==================================== -->
     <?php
     // include('../Includes/Footer/footermain.php');  // tashin
-    include('../Includes/Footer/footermainTry.php');  // tashin
+    include('../Includes/Footer/footermain.php');  // tashin
     ?>
     <!-- ============================== Footer End ==================================== -->
 
