@@ -1,9 +1,16 @@
 <?php
+//...................... Database Connection ..............................
+include("../Includes/Database Connection/database_connection.php");
+
+// Session
+session_start();
+$id = $_SESSION['id'] ?? 'user_id_manually';
+
 
 
 ?>
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -24,6 +31,9 @@
 
     <?php
     include('../Includes/Navbar/navbarMain.php');  // Mahbub 
+
+//     include('../Includes/Navbar/navbarMain.php');  // tashin
+
     ?>
 
 
