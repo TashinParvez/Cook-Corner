@@ -334,6 +334,7 @@
                                                     <img src="/Images/IMG-20240131-WA0004.jpg" alt="Circular Image" class="circle-image">
                                                 </div>
                                             </div>
+                                          
                                             <div class="image-title">Items</div>
                                         </div>
                                     </div>

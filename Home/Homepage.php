@@ -23,7 +23,7 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- css  -->
-     <link rel="stylesheet" href="../Recipe View/">
+    <link rel="stylesheet" href="../Recipe View/">
     <link rel="stylesheet" href="../Includes/Navbar/navbarMain.css">
     <link href="Homepage.css" rel="stylesheet" type="text/css">
 </head>
@@ -299,6 +299,17 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
 
     </section>
 
+
+    <!-- cooking class section -->
+    <section class="cooking-class">
+        <div class="class-info">
+            <h1>Join Our Cooking Class,<br>Become a Chef</h1>
+            <p>Want to cook like a chef? Our cooking online courses offer step-by-step guidance and expert tips to
+                transform your cooking. Join us now!</p>
+            <a href="#" class="btn">Register Now</a>
+        </div>
+    </section>
+
     <!------------------------------------------------- Best Recipe section  ----------------------------------------------->
 
 
@@ -375,18 +386,68 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
 
 
 
-            <div class="row row-cols-1 row-cols-md-4 g-4">
+            <div class="row row-cols-1 row-cols-md-6 g-4">
                 <div class="col">
                     <a href="#">
-                        <div class="card">
-                            <img src="../../../Images/FoodImages/3.jpg" class="card-img-top" alt="...">
-                            <div class="card-body text-center">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Ratings</p>
+                        <div class="card text-center bg-transparent border-0">
+                            <img src="../../../Images/FoodImages/2.jpg" class="card-img-top rounded-circle mx-auto d-block" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title ">Card title</h5>
                             </div>
                         </div>
                     </a>
                 </div>
+                <div class="col">
+                    <a href="#">
+                        <div class="card text-center bg-transparent border-0">
+                            <img src="../../../Images/FoodImages/2.jpg" class="card-img-top rounded-circle mx-auto d-block" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title ">Card title</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="#">
+                        <div class="card text-center bg-transparent border-0">
+                            <img src="../../../Images/FoodImages/2.jpg" class="card-img-top rounded-circle mx-auto d-block" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title ">Card title</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="#">
+                        <div class="card text-center bg-transparent border-0">
+                            <img src="../../../Images/FoodImages/2.jpg" class="card-img-top rounded-circle mx-auto d-block" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title ">Card title</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="#">
+                        <div class="card text-center bg-transparent border-0">
+                            <img src="../../../Images/FoodImages/2.jpg" class="card-img-top rounded-circle mx-auto d-block" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title ">Card title</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="#">
+                        <div class="card text-center bg-transparent border-0">
+                            <img src="../../../Images/FoodImages/2.jpg" class="card-img-top rounded-circle mx-auto d-block" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title ">Card title</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
             </div>
 
 
