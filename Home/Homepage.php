@@ -1,3 +1,16 @@
+<?php
+
+//...................... Database Connection ..............................
+include("../Includes/Database Connection/database_connection.php");
+
+// Session
+session_start();
+$id = $_SESSION['id'] ?? 'user_id_manually';
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,7 +26,10 @@
 </head>
 
 <body>
-    <h1 class="navbar">Navbar</h1>
+    <!-- <h1 class="navbar">Navbar</h1> -->
+    <?php
+    include('../Includes/Navbar/navbarMain.php');  // tashin
+    ?>
 
     <section class="get-start">
         <h1>Hungry? Get started</h1>

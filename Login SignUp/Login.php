@@ -1,3 +1,50 @@
+<?php
+
+$email = $password = '';
+$error = '';
+
+if (isset($_POST['login'])) {
+
+   //................ Retrieve data from input field ...............
+   $email = $_POST['email'] ?? '';
+   $password = $_POST['password'] ?? '';
+
+   if (empty($_POST['email']) || empty($_POST['password'])) {
+
+      $error = 'Invalid email or password.';
+   } else {
+
+      //...................... Database Connection ..............................
+      include("../Includes/Database Connection/database_connection.php");
+
+      $stmt = $conn->prepare('SELECT id, password FROM user_info WHERE email = ? LIMIT 1');
+      $stmt->bind_param('s', $email);
+      $stmt->execute();
+      $stmt->bind_result($id, $stored_password);
+
+      if ($stmt->fetch()) {
+
+         if (password_verify($password, $stored_password)) {
+
+            session_start();
+            $_SESSION['id'] = $id;
+
+            $stmt->close();
+            mysqli_close($conn);
+
+            header('Location: #');
+            exit();
+         } else {
+            $error = "Invalid email or password.";
+         }
+      } else {
+         $error = "Invalid email or password.";
+      }
+   }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,14 +59,14 @@
 
 <body>
    <div class="wrapper">
-      <form action="#">
+      <form action="Login.php" method="post">
          <h1>Login</h1>
          <div class="input-box">
-            <input type="text" name="" id="" placeholder="Username" />
+            <input type="text" name="email" id="" placeholder="Email" value="<?php echo htmlspecialchars($email) ?>" />
             <i class="bx bxs-user"></i>
          </div>
          <div class="input-box">
-            <input type="password" name="" id="" placeholder="Password" />
+            <input type="password" name="password" id="" placeholder="Password" />
             <i class="bx bxs-lock-alt"></i>
          </div>
          <div class="remember-forget">
@@ -28,7 +75,7 @@
          </div>
 
          <div>
-            <button class="btn" type="submit">Login</button>
+            <button class="btn" type="submit" name="login">Login</button>
          </div>
          <div class="reg-link">
             <p>Don't have an account?<a href="Signup.php">Register</a></p>
