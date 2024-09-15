@@ -1,6 +1,6 @@
 <?php
 
-require 'vendor/autoload.php';
+require '../vendor/autoload.php';
 
 use Egulias\EmailValidator\EmailValidator;
 use Egulias\EmailValidator\Validation\RFCValidation;
@@ -96,10 +96,10 @@ if (isset($_POST['sign_up'])) {
          <h1>Signup</h1>
 
          <!-- this will have to be deleted, Mahbub -->
-         <div class="input-box">
+         <!-- <div class="input-box">
             <input type="text" name="" id="" placeholder="Username" required />
             <i class="bx bxs-user"></i>
-         </div>
+         </div> -->
 
          <div class="input-box">
             <input type="text" name="email" id="" placeholder="Email" value="<?php echo htmlspecialchars($email) ?>" required />
