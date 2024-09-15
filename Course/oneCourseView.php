@@ -26,7 +26,8 @@
 
     <!-- ============================== Footer ==================================== -->
     <?php
-    include('../Includes/Footer/footermain.php');  // tashin 
+    // include('../Includes/Footer/footermain.php');  // tashin
+    include('../Includes/Footer/footermainTry.php');  // tashin
     ?>
     <!-- ============================== Footer End ==================================== -->
 
