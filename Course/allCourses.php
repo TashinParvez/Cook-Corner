@@ -20,7 +20,12 @@
 
     <link rel="stylesheet" href="../Includes/Navbar/navbarMain.css"> <!-- Navbar CSS -->
     <!-- css  -->
+
+    <link href="css/styles.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../Includes/Navbar/navbarMain.css"> <!-- Nav CSS -->
+=======
     <link href="allCourses.css" rel="stylesheet" type="text/css">
+
 </head>
 
 
@@ -29,8 +34,76 @@
     <?php
     include('../Includes/Navbar/navbarMain.php');  // tashin
     ?>
-    <!-- ==============================  ==================================== -->
+    <!-- ============================== Course section ==================================== -->
 
+
+    <section class="course m-4">
+        <div class="container">
+            <div class="identity m-2">
+                <p class="m-0 p-0">Here are our cooking classes</p>
+                <h2 class="m-0 p-0">Popular Courses</h2>
+            </div>
+
+
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="col">
+                    <a href="#">
+                        <div class="card">
+                            <img src="../../../Images/FoodImages/2.jpg" class="card-img-top" alt="...">
+                            <div class="card-body">
+
+                                <p class="card-text">How to cook rice in home</p>
+                                <div class="row">
+                                    <div class="col d-flex justify-content-between">
+                                        <div class="text-start">Tk 150</div>
+                                        <div class="text-end">Ratings</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="#">
+                        <div class="card">
+                            <img src="../../../Images/FoodImages/2.jpg" class="card-img-top" alt="...">
+                            <div class="card-body">
+
+                                <p class="card-text">How to cook rice in home</p>
+                                <div class="row">
+                                    <div class="col d-flex justify-content-between">
+                                        <div class="text-start">Tk 150</div>
+                                        <div class="text-end">Ratings</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="#">
+                        <div class="card">
+                            <img src="../../../Images/FoodImages/2.jpg" class="card-img-top" alt="...">
+                            <div class="card-body">
+
+                                <p class="card-text">How to cook rice in home</p>
+                                <div class="row">
+                                    <div class="col d-flex justify-content-between">
+                                        <div class="text-start">Tk 150</div>
+                                        <div class="text-end">Ratings</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+            <div class="d-grid mx-auto">
+                <button type="button" class="btn btn-secondary btn-lg col-1 mx-auto">MORE</button><br>
+            </div>
+    </section>
+=======
     <div class="container">
         <section class="cooking-class">
             <div class="class-info">
