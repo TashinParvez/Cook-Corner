@@ -32,7 +32,7 @@ if (isset($_POST['login'])) {
             $stmt->close();
             mysqli_close($conn);
 
-            header('Location: #');
+            header('Location: Homepage.php');
             exit();
          } else {
             $error = "Invalid email or password.";
