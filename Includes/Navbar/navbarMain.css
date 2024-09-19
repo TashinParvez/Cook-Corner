@@ -141,9 +141,10 @@
 .occasion-menu ul li {
     padding: 5px 0;
 }
-.occasion-menu ul li:hover{
+
+.occasion-menu ul li:hover {
     list-style: circle !important;
-} 
+}
 
 
 
@@ -155,9 +156,9 @@
     transition: 0.5s;
 }
 
-.occasion-menu ul li a:hover  {
+.occasion-menu ul li a:hover {
     color: #28a745;
-    padding-left: 2rem; 
+    padding-left: 2rem;
 }
 
 /* For mobile responsiveness */
@@ -178,13 +179,13 @@
 }
 
 /* General style for all nav-link items */
-.nav-link {
+.navbar .nav-link {
     position: relative;
     display: inline-block;
     text-decoration: none;
 }
 
-.nav-link::before {
+.navbar .nav-link::before {
     content: "";
     position: absolute;
     width: 0;
