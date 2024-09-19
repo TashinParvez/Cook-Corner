@@ -14,13 +14,13 @@
 }
 
 /* search */
-.d-flex {
+.navbar .d-flex {
     margin-left: 500px;
     position: relative;
     width: 500px;
 }
 
-.d-flex button {
+.navbar .d-flex button {
     position: relative;
     right: 50px;
 }

@@ -249,7 +249,7 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
 
                                 <p class="card-text">How to cook rice in home</p>
                                 <div class="row">
-                                    <div class="col d-flex justify-content-between">
+                                    <div class="col d-flex  justify-content-between">
                                         <div class="text-start">Tk 150</div>
                                         <div class="text-end">Ratings</div>
                                     </div>
