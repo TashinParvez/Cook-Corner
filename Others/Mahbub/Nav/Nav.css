@@ -25,6 +25,10 @@
     right: 50px;
 }
 
+.search:focus {
+    box-shadow: 0 0 15px #a5eba5, 0 0 15px #a5eba5;
+}
+
 /*  */
 
 .navbar-nav {
@@ -45,6 +49,9 @@
 }
 
 
+
+
+/* Mega menu for the recipe dropdown */
 /* Mega menu for the recipe dropdown */
 .recipe-menu {
     width: 1200px;
@@ -84,10 +91,6 @@
     padding: 5px 0;
 }
 
-.recipe-menu ul li:hover {
-    list-style: circle !important;
-}
-
 .recipe-menu ul li a {
     text-decoration: none;
     color: #495057;
@@ -95,14 +98,13 @@
     transition: color 0.2s ease-in-out;
     font-size: 0.95rem;
     /* Slightly smaller font for links */
-    transition: 0.5s;
 }
 
 .recipe-menu ul li a:hover {
     color: #28a745;
-    padding-left: 2rem;
     /* Accent color on hover */
 }
+
 
 
 /* Mega menu for the occasion dropdown */
@@ -141,23 +143,16 @@
 .occasion-menu ul li {
     padding: 5px 0;
 }
-.occasion-menu ul li:hover{
-    list-style: circle !important;
-} 
-
-
 
 .occasion-menu ul li a {
     text-decoration: none;
     color: #495057;
     transition: color 0.2s ease-in-out;
     font-size: 0.95rem;
-    transition: 0.5s;
 }
 
-.occasion-menu ul li a:hover  {
+.occasion-menu ul li a:hover {
     color: #28a745;
-    padding-left: 2rem; 
 }
 
 /* For mobile responsiveness */
@@ -175,28 +170,4 @@
     .occasion-menu ul li {
         padding: 10px 0;
     }
-}
-
-/* General style for all nav-link items */
-.nav-link {
-    position: relative;
-    display: inline-block;
-    text-decoration: none;
-}
-
-.nav-link::before {
-    content: "";
-    position: absolute;
-    width: 0;
-    height: 3px;
-    bottom: 4px;
-    left: 0;
-    background-color: black;
-    visibility: hidden;
-    transition: all 0.3s ease-in-out;
-}
-
-.nav-link:hover::before {
-    visibility: visible;
-    width: 100%;
 }
