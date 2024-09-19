@@ -31,6 +31,8 @@
     </style>
 
     <div class="container mt-5">
+        <hr style="border: 1px solid #000; width: 100%; margin: 20px auto;">
+
         <footer class="py-1"> <!-- Changed padding class to py-1 to reduce height -->
             <div class="row">
                 <div class="col-6 col-md-2 mb-3">

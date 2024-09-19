@@ -1,0 +1,80 @@
+<div class="col-md-9">
+            <!-- Horizontal Scrollable Tabs -->
+            <ul class="nav nav-tabs" id="recipeTabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="tab-eid-fitr" data-bs-toggle="tab" href="#content-eid-fitr" role="tab" aria-controls="content-eid-fitr" aria-selected="true">Shemai</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="tab-eid-fitr-biryani" data-bs-toggle="tab" href="#content-eid-fitr-biryani" role="tab" aria-controls="content-eid-fitr-biryani" aria-selected="false">Biryani</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="tab-eid-fitr-sheer-khurma" data-bs-toggle="tab" href="#content-eid-fitr-sheer-khurma" role="tab" aria-controls="content-eid-fitr-sheer-khurma" aria-selected="false">Sheer Khurma</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="tab-eid-fitr-pudding" data-bs-toggle="tab" href="#content-eid-fitr-pudding" role="tab" aria-controls="content-eid-fitr-pudding" aria-selected="false">Pudding</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="tab-eid-fitr-halwa" data-bs-toggle="tab" href="#content-eid-fitr-halwa" role="tab" aria-controls="content-eid-fitr-halwa" aria-selected="false">Halwa</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="tab-eid-fitr-kheer" data-bs-toggle="tab" href="#content-eid-fitr-kheer" role="tab" aria-controls="content-eid-fitr-kheer" aria-selected="false">Kheer</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="tab-eid-fitr-kheer" data-bs-toggle="tab" href="#content-eid-fitr-kheer" role="tab" aria-controls="content-eid-fitr-kheer" aria-selected="false">Kheer</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="tab-eid-fitr-kheer" data-bs-toggle="tab" href="#content-eid-fitr-kheer" role="tab" aria-controls="content-eid-fitr-kheer" aria-selected="false">Kheer</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="tab-eid-fitr-kheer" data-bs-toggle="tab" href="#content-eid-fitr-kheer" role="tab" aria-controls="content-eid-fitr-kheer" aria-selected="false">Kheer</a>
+                </li>
+
+            </ul>
+
+            <!-- Tab Content -->
+            <div class="tab-content mt-3">
+                <div class="tab-pane fade show active" id="content-eid-fitr" role="tabpanel">
+                    <div class="row">
+                        <!-- Recipe Card Example -->
+                        <div class="col-md-4 mb-4">
+                            <div class="card">
+                                <img src="your-image-path.jpg" class="card-img-top" alt="Shemai">
+                                <div class="card-body">
+                                    <h5 class="card-title">Shemai</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- More tab panes for other categories -->
+                <div class="tab-pane fade" id="content-eid-fitr-biryani" role="tabpanel">
+				<div class="col- ">
+						<div class="card" style="width: 18rem;">
+							<img src="../Images/background.png" class="card-img-top" alt="...">
+							<div class="card-body">
+								<h5 class="card-title">Biriyani</h5>
+								<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+								<a href="#" class="btn btn-primary">Go somewhere</a>
+							</div>
+						</div>
+					</div>
+
+                </div>
+
+                <div class="tab-pane fade" id="content-eid-fitr-sheer-khurma" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <div class="card">
+                                <img src="your-image-path.jpg" class="card-img-top" alt="Sheer Khurma">
+                                <div class="card-body">
+                                    <h5 class="card-title">Sheer Khurma</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add more tab content for each recipe category as needed -->
+            </div>
+        </div>
