@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="navbarMain.css">
+    <link rel="stylesheet" href="Nav.css">
 </head>
 
 <body>
@@ -40,7 +40,7 @@
                     <div class="text-end">
                         <a href="#" class="text-black text-decoration-none">Login</a>
                         <span>|</span>
-                        <a href="#" class=" text-black text-decoration-none">Sign Up</a>
+                        <a href="#" class="text-black text-decoration-none">Sign Up</a>
                     </div>
 
                     <div class="icons">
@@ -137,9 +137,13 @@
                     </li>
 
 
+
+
                     <li class="nav-item">
                         <a class="nav-link" href="#">RecipeGenerator</a>
                     </li>
+
+
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" aria-expanded="false">
@@ -192,6 +196,10 @@
                             </div>
                         </ul>
                     </li>
+
+
+
+
 
                     <li class="nav-item">
                         <a class="nav-link" href="#">KitchenTips</a>
