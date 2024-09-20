@@ -1,0 +1,13 @@
+ .dropdown-toggle {
+  min-width: 200px; /* Adjust this value according to your needs */
+  text-align: left;
+}
+
+ .dropdown-item span {
+  margin-right: 10px;
+}
+
+ .dropdown-item span:empty {
+  display: inline-block; /* Keep space even when empty */
+  width: 15px; /* Adjust for better alignment */
+}
