@@ -51,10 +51,14 @@ if (isset($_POST['login'])) {
 <head>
    <meta charset="UTF-8" />
    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-   <title>Login Page</title>
-   <link rel="stylesheet" href="login.css" />
+   <title>Login</title>
    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+
+   <!-- favicon -->
+   <link rel="icon" href="../Images/logo/fav-icon.png" />
+
+   <link rel="stylesheet" href="login.css" />
 </head>
 
 <body>
