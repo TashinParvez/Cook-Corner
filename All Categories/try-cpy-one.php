@@ -115,7 +115,7 @@ mysqli_close($conn);
 
     <div class="container mt-4">
         <div class="row justify-content-center">
-            <div class="col-3">
+            <div class="col-6">
                 <!-- ------------------------------- Filters --------------------------------------- -->
 
                 <div class="filter-section">
@@ -357,7 +357,7 @@ mysqli_close($conn);
 
 
             <!-- ------------------------------- recipies --------------------------------------- -->
-            <div class="col-9">
+            <div class="col-10">
                 <div class="row row-cols-1 row-cols-md-4 g-4">
 
 
@@ -483,6 +483,7 @@ mysqli_close($conn);
 
         </div>
     </div>
+
 
 
 
