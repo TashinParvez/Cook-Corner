@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
 
     <!-- Icon -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- CSS -->
     <link rel="stylesheet" href="navbarMain.css">
@@ -38,16 +38,16 @@
                     </form>
 
                     <div class="text-end">
-                        <a href="#" class="text-black text-decoration-none">Login</a>
+                        <a href="../../Login SignUp/Login.php" class="text-black text-decoration-none">Login</a>
                         <span>|</span>
-                        <a href="#" class=" text-black text-decoration-none">Sign Up</a>
+                        <a href="../../Login SignUp/Signup.php" class=" text-black text-decoration-none">Sign Up</a>
                     </div>
 
                     <div class="icons">
-                        <a href="#" class="text-black text-decoration-none"><i class="bi bi-person"></i></a>
-                        <a href="#" class="text-black text-decoration-none"><i class="bi bi-calendar-check"></i></a>
-                        <a href="#" class="text-black text-decoration-none"><i class="bi bi-cart-plus"></i></a>
-                        <a href="#" class="text-black text-decoration-none"><i class="bi bi-heart"></i></a>
+                        <a href="#" class="text-black text-decoration-none"><i class="fa-solid fa-user"></i></a>
+                        <a href="#" class="text-black text-decoration-none"><i class="fa-solid fa-calendar-check"></i></a>
+                        <a href="#" class="text-black text-decoration-none"><i class="fa-solid fa-cart-shopping"></i></a>
+                        <a href="#" class="text-black text-decoration-none"><i class="fa-solid fa-heart"></i></a>
 
                     </div>
                 </div>
@@ -63,7 +63,7 @@
 
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active" aria-current="page" href="../../Home/Homepage.php">Home</a>
                     </li>
 
                     <li class="nav-item dropdown">
@@ -203,7 +203,7 @@
                         <a class="nav-link" href="#">Shop</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Course</a>
+                        <a class="nav-link" href="../../Course/allCourses.php">Course</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">AddRecipe</a>
