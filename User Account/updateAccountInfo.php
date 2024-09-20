@@ -7,7 +7,6 @@ include("../Includes/Database Connection/database_connection.php");
 session_start();
 $id = $_SESSION['id'] ?? '2';
 
-// $stmt = $conn->prepare('SELECT * FROM user_info WHERE id = ? LIMIT 1');
 $stmt = $conn->prepare('SELECT user_info.*, user_designation.designation_name 
                         FROM user_info JOIN user_designation
                         ON user_info.designation = user_designation.designation_id 
@@ -321,6 +320,6 @@ mysqli_close($conn);
     <!-- ============================== Footer End ==================================== -->
 
 
-</body>
+</body> 
 
 </html>

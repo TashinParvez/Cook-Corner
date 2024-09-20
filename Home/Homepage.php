@@ -16,20 +16,25 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>Cook Corner</title>
+    <title>Home</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
+    <!-- favicon -->
+    <link rel="icon" href="../Images/logo/fav-icon.png" />
+    
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <!-- css  -->
-<<<<<<< HEAD
-    <link rel="stylesheet" href="../Includes/Navbar/navbarMain.css">      <!-- Navbar CSS -->
-=======
-     <link rel="stylesheet" href="../Recipe View/">
-    <link rel="stylesheet" href="../Includes/Navbar/navbarMain.css">
->>>>>>> 18d4e252ded462a630416abeda929135d43a4775
+    <link rel="stylesheet" href="../Includes/Navbar/navbarMain.css"> <!-- Navbar CSS -->
     <link href="Homepage.css" rel="stylesheet" type="text/css">
+    
+    <!-- Javascript -->
+    <script src="bmi.js"></script>
+
+
 </head>
 
 <body>
@@ -38,7 +43,6 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
     include('../Includes/Navbar/navbarMain.php');  // Mahbub 
 
     //     include('../Includes/Navbar/navbarMain.php');  // tashin
-
     ?>
 
     <!-------------------------------------------- search section ---------------------------------------------------->
@@ -253,9 +257,9 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
 
                                 <p class="card-text">How to cook rice in home</p>
                                 <div class="row">
-                                    <div class="col d-flex justify-content-between">
-                                        <div class="text-start">Tk 150</div>
-                                        <div class="text-end">Ratings</div>
+                                    <div class="col d-flex  justify-content-between">
+                                        <div>Tk 150</div>
+                                        <div>Ratings</div>
                                     </div>
                                 </div>
                             </div>
@@ -270,9 +274,9 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
 
                                 <p class="card-text">How to cook rice in home</p>
                                 <div class="row">
-                                    <div class="col d-flex justify-content-between">
-                                        <div class="text-start">Tk 150</div>
-                                        <div class="text-end">Ratings</div>
+                                    <div class="col d-flex  justify-content-between">
+                                        <div>Tk 150</div>
+                                        <div>Ratings</div>
                                     </div>
                                 </div>
                             </div>
@@ -287,9 +291,9 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
 
                                 <p class="card-text">How to cook rice in home</p>
                                 <div class="row">
-                                    <div class="col d-flex justify-content-between">
-                                        <div class="text-start">Tk 150</div>
-                                        <div class="text-end">Ratings</div>
+                                    <div class="col d-flex  justify-content-between">
+                                        <div>Tk 150</div>
+                                        <div>Ratings</div>
                                     </div>
                                 </div>
                             </div>
@@ -297,10 +301,20 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
                     </a>
                 </div>
 
-            </div>
 
 
 
+    </section>
+
+
+    <!-- cooking class section -->
+    <section class="cooking-class">
+        <div class="class-info">
+            <h1>Join Our Cooking Class,<br>Become a Chef</h1>
+            <p>Want to cook like a chef? Our cooking online courses offer step-by-step guidance and expert tips to
+                transform your cooking. Join us now!</p>
+            <a href="#" class="btn">Register Now</a>
+        </div>
     </section>
 
     <!------------------------------------------------- Best Recipe section  ----------------------------------------------->
@@ -366,11 +380,11 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
     </section>
 
 
-    <!------------------------------------------------- categories section  ----------------------------------------------->
+    <!------------------------------------------------- All Categories section  ----------------------------------------------->
 
 
 
-    <section class="all-categories m-4">
+    <section class="all-categories m-5">
         <div class="container">
             <div class="identity m-2">
                 <h2 class="m-0 p-0">All Categories</h2>
@@ -379,18 +393,70 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
 
 
 
-            <div class="row row-cols-1 row-cols-md-4 g-4">
+            <div class="row row-cols-1 row-cols-md-6 g-4">
+                <!--------------------------------- elements in categories  ------------------------------->
+
                 <div class="col">
                     <a href="#">
-                        <div class="card">
-                            <img src="../../../Images/FoodImages/3.jpg" class="card-img-top" alt="...">
-                            <div class="card-body text-center">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Ratings</p>
+                        <div class="card text-center bg-transparent border-0">
+                            <img src="../../../Images/FoodImages/2.jpg" class="card-img-top rounded-circle mx-auto d-block" alt="..." style="width: 150px; height: 150px; object-fit: cover;">
+                            <div class="card-body">
+                                <h5 class="card-title ">Eid al-Fitr</h5>
                             </div>
                         </div>
                     </a>
                 </div>
+                <div class="col">
+                    <a href="#">
+                        <div class="card text-center bg-transparent border-0">
+                            <img src="../../../Images/FoodImages/2.jpg" class="card-img-top rounded-circle mx-auto d-block" alt="..." style="width: 150px; height: 150px; object-fit: cover;">
+                            <div class="card-body">
+                                <h5 class="card-title ">Eid al-Fitr</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="#">
+                        <div class="card text-center bg-transparent border-0">
+                            <img src="../../../Images/FoodImages/2.jpg" class="card-img-top rounded-circle mx-auto d-block" alt="..." style="width: 150px; height: 150px; object-fit: cover;">
+                            <div class="card-body">
+                                <h5 class="card-title ">Eid al-Fitr</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="#">
+                        <div class="card text-center bg-transparent border-0">
+                            <img src="../../../Images/FoodImages/2.jpg" class="card-img-top rounded-circle mx-auto d-block" alt="..." style="width: 150px; height: 150px; object-fit: cover;">
+                            <div class="card-body">
+                                <h5 class="card-title ">Eid al-Fitr</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="#">
+                        <div class="card text-center bg-transparent border-0">
+                            <img src="../../../Images/FoodImages/2.jpg" class="card-img-top rounded-circle mx-auto d-block" alt="..." style="width: 150px; height: 150px; object-fit: cover;">
+                            <div class="card-body">
+                                <h5 class="card-title ">Eid al-Fitr</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="#">
+                        <div class="card text-center bg-transparent border-0">
+                            <img src="../../../Images/FoodImages/2.jpg" class="card-img-top rounded-circle mx-auto d-block" alt="..." style="width: 150px; height: 150px; object-fit: cover;">
+                            <div class="card-body">
+                                <h5 class="card-title ">Eid al-Fitr</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
             </div>
 
 
@@ -398,6 +464,7 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
 
         </div>
     </section>
+    <!------------------------------------------------- Latest Recipe section  ----------------------------------------------->
 
     <section class="Latest Recipe m-4">
         <div class="container">
@@ -458,13 +525,107 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
         </div>
     </section>
 
+    <!------------------------------------------------- BMI section  ----------------------------------------------->
+    <section class="BMISection bg-light pt-4 mt-5">
+
+        <div class="container">
+            <div class="row">
+                <!-- BMI Calculator Form -->
+                <div class="col-md-6">
+                    <div class="card">
+                        <h2>Calculate Your BMI</h2>
+                        <p>BMI calculator generates the number of calories your body burns per day at rest. Your BMI with activity factor is the number of calories your body burns per day based on the activity factor you selected.</p>
+                        <form id="bmiForm">
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <label for="height" class="form-label">Height (cm)*</label>
+                                    <input type="number" class="form-control" id="height" placeholder="Enter height">
+                                </div>
+                                <div class="col">
+                                    <label for="weight" class="form-label">Weight (kg)*</label>
+                                    <input type="number" class="form-control" id="weight" placeholder="Enter weight">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <label for="age" class="form-label">Age*</label>
+                                    <input type="number" class="form-control" id="age" placeholder="Enter age">
+                                </div>
+                                <div class="col">
+                                    <label for="gender" class="form-label">Gender*</label>
+                                    <select class="form-select" id="gender">
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="activity" class="form-label">Select an activity factor*</label>
+                                <select class="form-select" id="activity">
+                                    <option value="1.2">Little or no Exercise / desk job</option>
+                                    <option value="1.375">Light exercise / sports 1-3 days/week</option>
+                                    <option value="1.55">Moderate exercise / sports 3-5 days/week</option>
+                                    <option value="1.725">Hard exercise / sports 6-7 days a week</option>
+                                    <option value="1.9">Very hard exercise / physical job</option>
+                                </select>
+                            </div>
+                            <button type="button" class="btn btn-dark" onclick="calculateBMI()">Calculate</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-md-1">
+                </div>
+
+                <!-- BMI Chart -->
+                <div class="col-md-5 bmi-chart">
+                    <h2>BMI Calculator Chart</h2>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>BMI</th>
+                                <th>Weight Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Below 18.5</td>
+                                <td>Underweight</td>
+                            </tr>
+                            <tr>
+                                <td>18.5 - 24.9</td>
+                                <td>Healthy</td>
+                            </tr>
+                            <tr>
+                                <td>25.0 - 29.9</td>
+                                <td>Overweight</td>
+                            </tr>
+                            <tr>
+                                <td>30.0 and Above</td>
+                                <td>Obese</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>*BMR Metabolic Rate / BMI Body Mass Index</p>
+
+                    <!-- BMI Result Box -->
+                    <div id="resultBox" class="result-box">
+                        <p id="bmiResultText"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+
+
     <!-- ============================== Footer ==================================== -->
     <?php
     include('../Includes/Footer/footermain.php');  // tashin 
     ?>
     <!-- ============================== Footer End ==================================== -->
-
-
 
 </body>
 

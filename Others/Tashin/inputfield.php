@@ -17,19 +17,20 @@
 
 
 <body>
+    <div class="row">
 
-    <div class="col">
-        <a href="#">
-            <div class="card text-center bg-transparent border-0">
-                <img src="../../../Images/FoodImages/2.jpg" class="card-img-top rounded-circle mx-auto d-block" alt="..." style="width: 150px; height: 150px; object-fit: cover;">
-                <div class="card-body">
-                    <h5 class="card-title ">Eid al-Fitr</h5>
-                </div>
+        <div class="col-2">
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">@</span>
+                <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" value="ExistingUsername">
             </div>
-        </a>
+
+
+        </div>
     </div>
 
-    
+
 </body>
 
 </html>
