@@ -48,21 +48,21 @@
                 </form>
             </div>
 
+            <!------------------------ sort ------------------------>
             <div class="col-4 d-flex justify-content-end">
                 <div class="dropdown">
-                    <!-- Button with default text and fixed width -->
-                    <button class="btn btn-secondary dropdown-toggle w-100" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn btn-secondary dropdown-toggle dropdown-toggle-sort w-100" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                         Sorted by: Name
                     </button>
 
-                    <!-- Dropdown items with checkmark logic -->
                     <ul class="dropdown-menu" aria-labelledby="sortDropdown">
-                        <li><a class="dropdown-item" href="#" onclick="changeSort('Name')"><span id="check-name">✔</span> Name</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeSort('Recently Added')"><span id="check-recent"></span> Recently Added</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeSort('Popularity')"><span id="check-popularity"></span> Popularity</a></li>
+                        <li><a class="dropdown-item dropdown-item-sort" href="#" onclick="changeSort('Name')"><span id="check-name">✔</span> Name</a></li>
+                        <li><a class="dropdown-item dropdown-item-sort" href="#" onclick="changeSort('Recently Added')"><span id="check-recent"></span> Recently Added</a></li>
+                        <li><a class="dropdown-item dropdown-item-sort" href="#" onclick="changeSort('Popularity')"><span id="check-popularity"></span> Popularity</a></li>
                     </ul>
                 </div>
             </div>
+
         </div>
     </div>
 

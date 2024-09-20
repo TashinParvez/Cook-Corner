@@ -1,13 +1,13 @@
- .dropdown-toggle {
-  min-width: 200px; /* Adjust this value according to your needs */
+.dropdown-toggle-sort {
+  min-width: 200px;
   text-align: left;
 }
 
- .dropdown-item span {
+.dropdown-item-sort span {
   margin-right: 10px;
 }
 
- .dropdown-item span:empty {
-  display: inline-block; /* Keep space even when empty */
-  width: 15px; /* Adjust for better alignment */
+.dropdown-item-sort span:empty {
+  display: inline-block;
+  width: 15px;
 }
