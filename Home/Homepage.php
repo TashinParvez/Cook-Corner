@@ -30,6 +30,7 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
     <!-- css  -->
     <link rel="stylesheet" href="../Includes/Navbar/navbarMain.css"> <!-- Navbar CSS -->
     <link href="Homepage.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="bmi.css">
 
     <!-- Javascript -->
     <script src="bmi.js"></script>
@@ -535,7 +536,9 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
                 <div class="col-md-6">
                     <div class="card">
                         <h2>Calculate Your BMI</h2>
-                        <p>BMI calculator generates the number of calories your body burns per day at rest. Your BMI with activity factor is the number of calories your body burns per day based on the activity factor you selected.</p>
+                        <p>BMI calculator generates the number of calories your body burns per day at rest. Your BMI with
+                            activity factor is the number of calories your body burns per day based on the activity factor
+                            you selected.</p>
                         <form id="bmiForm">
                             <div class="row mb-3">
                                 <div class="col">
@@ -574,10 +577,6 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
                         </form>
                     </div>
                 </div>
-
-                <div class="col-md-1">
-                </div>
-
                 <!-- BMI Chart -->
                 <div class="col-md-5 bmi-chart">
                     <h2>BMI Calculator Chart</h2>
@@ -611,6 +610,7 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
 
                     <!-- BMI Result Box -->
                     <div id="resultBox" class="result-box">
+                        <span class="close-btn" onclick="hideResultBox()">×</span>
                         <p id="bmiResultText"></p>
                     </div>
                 </div>
