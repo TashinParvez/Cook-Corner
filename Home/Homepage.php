@@ -43,7 +43,8 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
     <?php
     include('../Includes/Navbar/navbarMain.php');  // Mahbub 
 
-    //     include('../Includes/Navbar/navbarMain.php');  // tashin
+    // include('../Includes/Navbar/navbarMain.php');  // Navbar // tahsin 
+    include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin    
     ?>
 
     <!-------------------------------------------- search section ---------------------------------------------------->

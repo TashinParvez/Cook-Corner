@@ -25,7 +25,8 @@
 <body style="background-color: #f0faf0;">
 
     <?php
-    include('../Includes/Navbar/navbarMain.php');  // tashin
+    include('../Includes/Navbar/navbarMain.php');  // Navbar 
+    include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin    
     ?>
 
     <div class="container bg-light pt-3">
@@ -337,7 +338,7 @@
                                                     <img src="/Images/IMG-20240131-WA0004.jpg" alt="Circular Image" class="circle-image category-image">
                                                 </div>
                                             </div>
-                                          
+
                                             <div class="image-title">Items</div>
                                         </div>
                                     </div>
