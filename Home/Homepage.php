@@ -23,14 +23,15 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
 
     <!-- favicon -->
     <link rel="icon" href="../Images/logo/fav-icon.png" />
-    
+
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- css  -->
     <link rel="stylesheet" href="../Includes/Navbar/navbarMain.css"> <!-- Navbar CSS -->
     <link href="Homepage.css" rel="stylesheet" type="text/css">
-    
+    <link rel="stylesheet" href="bmi.css">
+
     <!-- Javascript -->
     <script src="bmi.js"></script>
 
@@ -534,7 +535,9 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
                 <div class="col-md-6">
                     <div class="card">
                         <h2>Calculate Your BMI</h2>
-                        <p>BMI calculator generates the number of calories your body burns per day at rest. Your BMI with activity factor is the number of calories your body burns per day based on the activity factor you selected.</p>
+                        <p>BMI calculator generates the number of calories your body burns per day at rest. Your BMI with
+                            activity factor is the number of calories your body burns per day based on the activity factor
+                            you selected.</p>
                         <form id="bmiForm">
                             <div class="row mb-3">
                                 <div class="col">
@@ -573,10 +576,6 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
                         </form>
                     </div>
                 </div>
-
-                <div class="col-md-1">
-                </div>
-
                 <!-- BMI Chart -->
                 <div class="col-md-5 bmi-chart">
                     <h2>BMI Calculator Chart</h2>
@@ -610,6 +609,7 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
 
                     <!-- BMI Result Box -->
                     <div id="resultBox" class="result-box">
+                        <span class="close-btn" onclick="hideResultBox()">×</span>
                         <p id="bmiResultText"></p>
                     </div>
                 </div>

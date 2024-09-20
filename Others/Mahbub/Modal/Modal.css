@@ -1,0 +1,47 @@
+.modal-content {
+    padding: 2rem ;
+}
+
+.img-fluid {
+    max-height: 200px;
+}
+
+.checkbox-list {
+    margin-top: 1rem;
+}
+
+.checkbox-list .form-check {
+    margin-bottom: 0.5rem;
+}
+
+.modal-body {
+    display: flex;
+    justify-content: space-between;
+    height: 400px !important;
+}
+
+.left-section {
+    width: 45%;
+    overflow: hidden;
+}
+
+.right-section {
+    width: 50%;
+    overflow: auto;
+}
+
+.footer-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.footer-buttons .btn {
+    width: 48%;
+}
+
+.create-collection {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
