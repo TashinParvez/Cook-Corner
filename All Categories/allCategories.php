@@ -52,7 +52,9 @@ mysqli_close($conn);
 
 
 <body>
-    <?php include('../Includes/Navbar/navbarMain.php');  // Navbar 
+    <?php
+    include('../Includes/Navbar/navbarMain.php');  // Navbar 
+    include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin    
     ?>
     <div class="container text-center">
 

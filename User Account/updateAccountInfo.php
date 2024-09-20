@@ -39,7 +39,8 @@ mysqli_close($conn);
 <body>
 
     <?php
-    include('../Includes/Navbar/navbarMain.php');  // tashin
+    include('../Includes/Navbar/navbarMain.php');  // Navbar 
+    include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin    
     ?>
 
     <div class="container pb-5">
@@ -320,6 +321,6 @@ mysqli_close($conn);
     <!-- ============================== Footer End ==================================== -->
 
 
-</body> 
+</body>
 
 </html>

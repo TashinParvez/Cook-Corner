@@ -47,7 +47,8 @@ mysqli_close($conn);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title><?php echo htmlspecialchars($page_name); ?>
+    </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
@@ -61,9 +62,11 @@ mysqli_close($conn);
 
 <body>
 
-    <?php include('../Includes/Navbar/navbarMain.php');  // Navbar 
+    <?php
+    include('../Includes/Navbar/navbarMain.php');  // Navbar 
+    include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin    
     ?>
-
+    
     <!------------------------------------  Page info  ------------------------------------>
     <div class="container text-center">
         <h2 class="text-center mt-5 mb-3">Recipe Category: <b><?php echo htmlspecialchars($page_name); ?></b> </h2>
@@ -432,32 +435,11 @@ mysqli_close($conn);
                 <!----------------------------------------- Pagination Section ----------------------------------------->
                 <div class="container mt-5">
 
-                    <!---------------------------------- Logo Pagination Section ---------------------------------->
-                    <div class="logo-pagination d-flex justify-content-center align-items-center mb-3">
-                        <!-- Previous Button -->
-                        <a href="?page=<?php echo $current_page - 1; ?>"
-                            class="prev-arrow me-4 <?php if ($current_page <= 1) echo 'disabled'; ?>">
-                            &lt;&lt;
-                        </a>
-
-                        <!-- Logo or Center Text -->
-                        <div class="logo-box">
-                            <img src="../Images/logo/cook_Corner_LOGO-removebg-mainPartOnly.png" alt="Logo" style=" width: 100px;">
-                        </div>
-
-                        <!-- Next Button -->
-                        <a href="?page=<?php echo $current_page + 1; ?>"
-                            class="next-arrow ms-4 <?php if ($current_page >= $total_pages) echo 'disabled'; ?>">
-                            &gt;&gt;
-                        </a>
-                    </div>
-
-                    <!---------------------------------- Pagination Section ---------------------------------->
                     <nav aria-label="Page navigation example">
                         <ul class="pagination justify-content-center">
                             <!-- Previous Button -->
                             <li class="page-item <?php if ($current_page <= 1) echo 'disabled'; ?>">
-                                <a class="page-link" href="?page=<?php echo $current_page - 1; ?>" tabindex="-1">Previous</a>
+                                <a class="page-link" href="?page=<?php echo $current_page - 1; ?>" tabindex="-1">Prev</a>
                             </li>
 
                             <!-- Page Numbers -->
