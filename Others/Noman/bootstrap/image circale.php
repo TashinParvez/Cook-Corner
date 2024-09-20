@@ -1,5 +1,4 @@
-
-                <?php
+<?php
 
 ?>
 
@@ -18,17 +17,19 @@
 
 
 <body>
-    
+
     <div class="col">
         <a href="#">
             <div class="card text-center bg-transparent border-0">
-            <img src="../../../Images/FoodImages/2.jpg" class="card-img-top rounded-circle mx-auto d-block" alt="..." style="width: 150px; height: 150px; object-fit: cover;">
-            <div class="card-body">
+                <img src="../../../Images/FoodImages/2.jpg" class="card-img-top rounded-circle mx-auto d-block" alt="..." style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="card-body">
                     <h5 class="card-title ">Eid al-Fitr</h5>
                 </div>
             </div>
         </a>
     </div>
+
+    
 </body>
 
 </html>
