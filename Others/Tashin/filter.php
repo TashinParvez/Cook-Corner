@@ -24,13 +24,6 @@
 
 <body>
 
-    <?php
-    include('../Includes/Navbar/navbarMain.php');  // Navbar 
-    ?>
-
-
-
-
 
 
     <div class="filter-section">

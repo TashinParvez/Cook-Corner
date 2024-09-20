@@ -63,11 +63,11 @@
 
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="../../Home/Homepage.php">Home</a>
+                        <a class="nav-link active" aria-current="page" href="/Home/Homepage.php">Home</a>
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="/Recipe Search/RecipeSearch.php" role="button" aria-expanded="false">
                             Recipe
                         </a>
                         <ul class="dropdown-menu recipe-menu">
@@ -203,7 +203,7 @@
                         <a class="nav-link" href="#">Shop</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../../Course/allCourses.php">Course</a>
+                        <a class="nav-link" href="/Course/allCourses.php">Course</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">AddRecipe</a>
