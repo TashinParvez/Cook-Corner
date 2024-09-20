@@ -76,7 +76,7 @@
                                     <div class="col-md-2">
                                         <h6>Popular Categories</h6>
                                         <ul>
-                                            <li><a class="dropdown-item" href="#">Appetizer</a></li>
+                                            <li><a class="dropdown-item" href="/All Categories/oneparticularCategoryShow.php">Appetizer</a></li>
                                             <li><a class="dropdown-item" href="#">Main Course</a></li>
                                             <li><a class="dropdown-item" href="#">Desserts</a></li>
                                             <li><a class="dropdown-item" href="#">Snickers</a></li>
