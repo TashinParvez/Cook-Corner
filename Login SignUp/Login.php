@@ -1,17 +1,18 @@
 <?php
 
-$email = $password = '';
+$email = ''; 
+$user_password = '';
 $error = '';
 
 if (isset($_POST['login'])) {
 
    //................ Retrieve data from input field ...............
    $email = $_POST['email'] ?? '';
-   $password = $_POST['password'] ?? '';
+   $user_password = $_POST['password'] ?? '';
 
    if (empty($_POST['email']) || empty($_POST['password'])) {
 
-      $error = 'Invalid email or password.';
+      $error = 'Please Enter email or password.';
    } else {
 
       //...................... Database Connection ..............................
@@ -23,8 +24,7 @@ if (isset($_POST['login'])) {
       $stmt->bind_result($id, $stored_password);
 
       if ($stmt->fetch()) {
-
-         if (password_verify($password, $stored_password)) {
+         if (password_verify($user_password, $stored_password)) {
 
             session_start();
             $_SESSION['id'] = $id;
@@ -38,7 +38,7 @@ if (isset($_POST['login'])) {
             $error = "Invalid email or password.";
          }
       } else {
-         $error = "Invalid email or password.";
+         $error = "Data Fetch Failed";
       }
    }
 }
@@ -53,6 +53,7 @@ if (isset($_POST['login'])) {
    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
    <title>Login Page</title>
    <link rel="stylesheet" href="login.css" />
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
 </head>
@@ -77,6 +78,11 @@ if (isset($_POST['login'])) {
          <div>
             <button class="btn" type="submit" name="login">Login</button>
          </div>
+         <?php if (!empty($error)) : ?>
+            <div class="error-message">
+               <p class="text-danger text-center"><?php echo htmlspecialchars($error); ?></p>
+            </div>
+         <?php endif; ?>
          <div class="reg-link">
             <p>Don't have an account?<a href="Signup.php">Register</a></p>
          </div>
