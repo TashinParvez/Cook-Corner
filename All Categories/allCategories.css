@@ -1,0 +1,13 @@
+.dropdown-toggle-sort {
+  min-width: 200px;
+  text-align: left;
+}
+
+.dropdown-item-sort span {
+  margin-right: 10px;
+}
+
+.dropdown-item-sort span:empty {
+  display: inline-block;
+  width: 15px;
+}

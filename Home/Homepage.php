@@ -30,6 +30,7 @@ $id = $_SESSION['id'] ?? 'user_id_manually';
     <!-- css  -->
     <link rel="stylesheet" href="../Includes/Navbar/navbarMain.css"> <!-- Navbar CSS -->
     <link href="Homepage.css" rel="stylesheet" type="text/css">
+    
     <!-- Javascript -->
     <script src="bmi.js"></script>
 
