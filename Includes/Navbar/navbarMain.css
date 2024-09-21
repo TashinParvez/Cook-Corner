@@ -1,0 +1,234 @@
+* {
+    font-family: "Lora", serif;
+}
+
+/* drop down code */
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+}
+
+.text-end {
+    margin-left: auto;
+    margin-right: 30px;
+}
+
+/* search */
+.navbar .d-flex {
+    margin-left: 500px;
+    position: relative;
+    width: 500px;
+}
+
+.navbar .d-flex button {
+    position: relative;
+    right: 50px;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+/*  */
+
+.navbar-nav {
+    margin-left: auto;
+}
+
+.navbar-brand img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100px;
+    width: 100px;
+    z-index: 999;
+}
+
+.navbar .icons i {
+    margin-right: 10px;
+    font-size: 1.1rem;
+}
+
+
+/* Mega menu for the recipe dropdown */
+.recipe-menu {
+    width: 1200px;
+    display: none;
+    padding: 20px;
+    background-color: #f8f9fa;
+    /* Light background */
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    z-index: 1000;
+}
+
+.nav-item.dropdown:hover .recipe-menu {
+    display: block;
+    left: -250px;
+}
+
+.recipe-menu .row {
+    justify-content: space-between;
+}
+
+.recipe-menu h6 {
+    font-weight: 600;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    color: #343a40;
+    padding-left: 15px;
+}
+
+.recipe-menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+.recipe-menu ul li {
+    padding: 5px 0;
+}
+
+/* .recipe-menu ul li:hover {
+    list-style: circle !important;
+} */
+
+.recipe-menu ul li a {
+    text-decoration: none;
+    color: #495057;
+    /* Neutral gray for links */
+    transition: color 0.2s ease-in-out;
+    font-size: 0.95rem;
+    /* Slightly smaller font for links */
+    transition: 0.5s;
+}
+
+.recipe-menu ul li a:hover {
+    color: #28a745;
+    padding-left: 2rem;
+    /* Accent color on hover */
+}
+
+
+/* For mobile responsiveness */
+@media (max-width: 768px) {
+    .recipe-menu {
+        width: auto;
+        position: relative;
+        padding: 10px;
+    }
+
+    .recipe-menu .row {
+        flex-direction: column;
+    }
+
+    .recipe-menu ul li {
+        padding: 10px 0;
+    }
+}
+
+/*  */
+
+.nav-row {
+    padding: 20px !important;
+}
+
+
+/* Mega menu for the occasion dropdown */
+.occasion-menu {
+    width: 1200px;
+    display: none;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    z-index: 1000;
+}
+
+.nav-item.dropdown:hover .occasion-menu {
+    display: block;
+    left: -500px;
+}
+
+.occasion-menu .row {
+    justify-content: space-between;
+}
+
+.occasion-menu h6 {
+    font-weight: 600;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    color: #343a40;
+    padding-left: 15px;
+}
+
+.occasion-menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+.occasion-menu ul li {
+    padding: 5px 0;
+}
+
+/* .occasion-menu ul li:hover {
+    list-style: circle !important;
+} */
+
+
+
+.occasion-menu ul li a {
+    text-decoration: none;
+    color: #495057;
+    transition: color 0.2s ease-in-out;
+    font-size: 0.95rem;
+    transition: 0.5s;
+}
+
+.occasion-menu ul li a:hover {
+    color: #28a745;
+    padding-left: 2rem;
+}
+
+/* For mobile responsiveness */
+@media (max-width: 768px) {
+    .occasion-menu {
+        width: auto;
+        position: relative;
+        padding: 10px;
+    }
+
+    .occasion-menu .row {
+        flex-direction: column;
+    }
+
+    .occasion-menu ul li {
+        padding: 10px 0;
+    }
+}
+
+/* General style for all nav-link items */
+.navbar .nav-link {
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.navbar .nav-link::before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 3px;
+    bottom: 4px;
+    left: 0;
+    background-color: black;
+    visibility: hidden;
+    transition: all 0.5s ease-in-out;
+}
+
+.nav-link:hover::before {
+    visibility: visible;
+    width: 100%;
+}

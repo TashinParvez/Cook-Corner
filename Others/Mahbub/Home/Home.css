@@ -2,6 +2,7 @@ body {
     background-color: #f0faf0 !important;
 }
 
+/* get started css */
 
 .get-start {
     position: relative;
@@ -70,6 +71,8 @@ body {
     cursor: pointer;
 }
 
+/* end */
+
 
 .col a {
     text-decoration: none;
@@ -80,3 +83,8 @@ body {
     text-align: center;
 }
 
+
+.carouselImg{
+    height: 200px;
+    width: 250px;
+}

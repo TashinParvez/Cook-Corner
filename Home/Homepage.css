@@ -1,19 +1,8 @@
-* {
-    margin: 0;
-    padding: 0;
-
-}
-
 body {
-    background-color: #dcfadc;
+    background-color: #f0faf0 !important;
 }
 
-.navbar {
-    background: teal;
-    height: 90px;
-}
-
-/* get-start start */
+/* get started css */
 
 .get-start {
     position: relative;
@@ -35,7 +24,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url(./Images/getStarted.jpg);
+    background-image: url("../../../Images/FoodImages/6.jpg");
     background-size: cover;
     background-position: center;
     filter: blur(5px);
@@ -48,8 +37,8 @@ body {
 }
 
 .get-start .search input {
-    height: 1.8rem;
-    width: 20rem;
+    height: 2rem;
+    width: 25rem;
     outline: none;
     border: 2px solid #8ef88e;
     border-radius: 5px;
@@ -82,78 +71,78 @@ body {
     cursor: pointer;
 }
 
+/* end */
 
-/* suggestion  start */
-.wishes {
-    text-align: center;
-    margin-bottom: 1rem;
+
+.col a {
+    text-decoration: none;
+    color: black;
 }
 
-.card-holder {
-    padding: 0 1.5rem;
+.identity {
+    text-align: center;
+}
+
+
+.carouselImg {
+    height: 200px;
+    width: 250px;
+}
+
+/* cooking class css*/
+.cooking-class {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: 2.5rem;
-
-    margin-bottom: 1rem;
+    position: relative;
 }
 
-.recipe-card {
-    /* border: 2px solid black; */
-    height: 16rem;
-    width: 15rem;
-    border-radius: 10px;
-    background-color: white;
+.class-info {
+    position: relative;
+    width: 100%;
+    /* Full width of the cooking-class */
+    padding: 30px;
+
+    text-align: center;
+    color: white;
+    overflow: hidden;
+    /* Ensures the blur effect stays within the class-info */
 }
 
-.recipe-card img {
-    height: 13rem;
-    width: 15rem;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+.class-info::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../Images/FoodImages/imgae.webp') no-repeat center center;
+    background-size: cover;
+    filter: blur(8px);
+    /* Adjust the blur radius as needed */
+    z-index: -1;
+    /* Place the blurred background behind the class-info */
 }
 
-.card-holder a {
-    color: black;
+.class-info h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.class-info p {
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+.class-info .btn {
+    background-color: #ff0000;
+    color: white;
+    padding: 15px 30px;
     text-decoration: none;
+    font-size: 18px;
+    border-radius: 5px;
 }
 
-.recipe-card .card-info {
-    text-align: center;
-}
-
-
-/* course start */
-
-.course-heading {
-    text-align: center;
-    margin-bottom: 1rem;
-}
-
-.card-holder .course-card {
-    height: 19rem;
-    width: 18rem;
-    border-radius: 10px;
-    background-color: white;
-}
-
-.course-card img {
-    height: 13rem;
-    width: 18rem;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-}
-
-.price-rating {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 1rem;
-    margin-bottom: 1rem;
-}
-
-.course-info{
-    padding: 0 1rem;
-    line-height: 1.5rem;
+.class-info .btn:hover {
+    background-color: #cc0000;
 }
