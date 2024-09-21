@@ -206,7 +206,7 @@
                         <a class="nav-link" href="/Course/allCourses.php">Course</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">AddRecipe</a>
+                        <a class="nav-link" href="/Collection/collection.php">AddRecipe</a>
                     </li>
 
                 </ul>
