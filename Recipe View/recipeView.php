@@ -13,6 +13,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <!-- css  -->
+
+    <link rel="stylesheet" href="../Includes/Navbar/navbarMain.css"> <!-- Navbar CSS -->
+
+
     <link href="recipeView.css" rel="stylesheet" type="text/css">
 </head>
 
@@ -21,7 +25,8 @@
 <body style="background-color: #f0faf0;">
 
     <?php
-    include('../Includes/Navbar/navbarMain.php');  // tashin
+    include('../Includes/Navbar/navbarMain.php');  // Navbar 
+    include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin    
     ?>
 
     <div class="container bg-light pt-3">
@@ -320,60 +325,61 @@
                                         <div class="row justify-content-center">
                                             <div class="col-md-4">
                                                 <div class="image-container text-center">
-                                                    <img src="/Images/IMG-20240131-WA0004.jpg" alt="Circular Image" class="circle-image">
+                                                    <img src="/Images/IMG-20240131-WA0004.jpg" alt="Circular Image" class="circle-image category-image">
                                                 </div>
                                             </div>
-                                            <div class="image-title">Category 01</div>
+                                            <div class="image-title">Items</div>
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="row justify-content-center">
                                             <div class="col-md-4">
                                                 <div class="image-container text-center">
-                                                    <img src="/Images/IMG-20240131-WA0004.jpg" alt="Circular Image" class="circle-image">
+                                                    <img src="/Images/IMG-20240131-WA0004.jpg" alt="Circular Image" class="circle-image category-image">
                                                 </div>
                                             </div>
-                                            <div class="image-title">Category 01</div>
+
+                                            <div class="image-title">Items</div>
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="row justify-content-center">
                                             <div class="col-md-4">
                                                 <div class="image-container text-center">
-                                                    <img src="/Images/IMG-20240131-WA0004.jpg" alt="Circular Image" class="circle-image">
+                                                    <img src="/Images/IMG-20240131-WA0004.jpg" alt="Circular Image" class="circle-image category-image">
                                                 </div>
                                             </div>
-                                            <div class="image-title">Category 01</div>
+                                            <div class="image-title">Items</div>
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="row justify-content-center">
                                             <div class="col-md-4">
                                                 <div class="image-container text-center">
-                                                    <img src="/Images/IMG-20240131-WA0004.jpg" alt="Circular Image" class="circle-image">
+                                                    <img src="/Images/IMG-20240131-WA0004.jpg" alt="Circular Image" class="circle-image category-image">
                                                 </div>
                                             </div>
-                                            <div class="image-title">Category 01</div>
+                                            <div class="image-title">Items</div>
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="row justify-content-center">
                                             <div class="col-md-4">
                                                 <div class="image-container text-center">
-                                                    <img src="/Images/IMG-20240131-WA0004.jpg" alt="Circular Image" class="circle-image">
+                                                    <img src="/Images/IMG-20240131-WA0004.jpg" alt="Circular Image" class="circle-image category-image">
                                                 </div>
                                             </div>
-                                            <div class="image-title">Category 01</div>
+                                            <div class="image-title">Items</div>
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="row justify-content-center">
                                             <div class="col-md-4">
                                                 <div class="image-container text-center">
-                                                    <img src="/Images/IMG-20240131-WA0004.jpg" alt="Circular Image" class="circle-image">
+                                                    <img src="/Images/IMG-20240131-WA0004.jpg" alt="Circular Image" class="circle-image category-image">
                                                 </div>
                                             </div>
-                                            <div class="image-title">Category 01</div>
+                                            <div class="image-title">Items</div>
                                         </div>
                                     </div>
 

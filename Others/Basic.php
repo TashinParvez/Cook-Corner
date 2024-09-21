@@ -1,4 +1,19 @@
 <?php
+// Database table name:  
+
+//...................... Database Connection ..............................
+// include("../Includes/Database Connection/database_connection.php");
+
+
+// sql query
+// $sql = " ";
+
+// $resultantLabel = mysqli_query($conn, $sql);   // get query result
+
+// $labels = mysqli_fetch_all($resultantLabel);   // conver to array
+
+// mysqli_free_result($resultantLabel);
+// mysqli_close($conn);
 
 ?>
 
@@ -8,26 +23,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Basic</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+
+    <!-- favicon -->
+    <link rel="icon" href="../Images/logo/fav-icon.png" />
+
+
     <!-- css  -->
-    <!-- <link href="css/styles.css" rel="stylesheet" type="text/css"> -->
+    <link rel="stylesheet" href="../Includes/Navbar/navbarMain.css"> <!-- Navbar CSS -->
+
 </head>
 
 
 <body>
 
     <?php
-    include('../Includes/Navbar/navbarMain.php');  // tashin
+    include('../Includes/Navbar/navbarMain.php');  // tashin 
+    include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin
     ?>
-
 
 
     <!-- ============================== Footer ==================================== -->
     <?php
-    // include('../Includes/Footer/footermain.php');  // tashin
-    include('../Includes/Footer/footermainTry.php');  // tashin
+    include('../Includes/Footer/footermain.php');  // tashin 
     ?>
     <!-- ============================== Footer End ==================================== -->
 
