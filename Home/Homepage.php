@@ -1,6 +1,10 @@
 <?php
 //...................... Database Connection ..............................
+<<<<<<< HEAD
+//include("../Includes/Database Connection/database_connection.php");
+=======
 // include("../Includes/Database Connection/database_connection.php");
+>>>>>>> ee7b3cbdc224d03733466afd6119f4a9a5fec3c6
 
 // Session
 session_start();
