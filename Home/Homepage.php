@@ -1,6 +1,6 @@
 <?php
-//...................... Database Connection ..............................
-// include("../Includes/Database Connection/database_connection.php");
+//...................... Database Connection .............................. 
+// include("../Includes/Database Connection/database_connection.php"); 
 
 // Session
 session_start();
