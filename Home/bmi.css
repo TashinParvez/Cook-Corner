@@ -1,0 +1,37 @@
+.BMISection {
+   padding-bottom: 30px;
+}
+
+.BMISection .container {
+    margin-top: 50px;
+}
+
+.BMISection .card {
+    padding: 30px;
+}
+
+.BMISection .bmi-chart {
+    margin-left: 50px;
+}
+
+.BMISection .result-box {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    display: none;
+    position: relative;
+    text-align: center;
+}
+
+.BMISection .close-btn {
+    font-size: 30px;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translate(-50%, -50%);
+    color: #155724;
+}

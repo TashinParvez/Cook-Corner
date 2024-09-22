@@ -4,16 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Navbar</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> -->
     <!-- font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
 
     <!-- Icon -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- CSS -->
     <link rel="stylesheet" href="navbarMain.css">
@@ -32,22 +32,22 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <form class="d-flex" role="search">
-                        <input class="form-control search me-2" type="search" placeholder="Search" aria-label="Search">
+                        <input class="form-control search me-2" type="search" placeholder="Search your Recipe" aria-label="Search">
                         <button class="btn" type="submit"><i class="bi bi-search"></i>
                         </button>
                     </form>
 
                     <div class="text-end">
-                        <a href="#" class="text-black text-decoration-none">Login</a>
+                        <a href="../../Login SignUp/Login.php" class="text-black text-decoration-none">Login</a>
                         <span>|</span>
-                        <a href="#" class=" text-black text-decoration-none">Sign Up</a>
+                        <a href="../../Login SignUp/Signup.php" class=" text-black text-decoration-none">Sign Up</a>
                     </div>
 
                     <div class="icons">
-                        <a href="#" class="text-black text-decoration-none"><i class="bi bi-person"></i></a>
-                        <a href="#" class="text-black text-decoration-none"><i class="bi bi-calendar-check"></i></a>
-                        <a href="#" class="text-black text-decoration-none"><i class="bi bi-cart-plus"></i></a>
-                        <a href="#" class="text-black text-decoration-none"><i class="bi bi-heart"></i></a>
+                        <a href="#" class="text-black text-decoration-none"><i class="fa-solid fa-user"></i></a>
+                        <a href="#" class="text-black text-decoration-none"><i class="fa-solid fa-calendar-check"></i></a>
+                        <a href="#" class="text-black text-decoration-none"><i class="fa-solid fa-cart-shopping"></i></a>
+                        <a href="#" class="text-black text-decoration-none"><i class="fa-solid fa-heart"></i></a>
 
                     </div>
                 </div>
@@ -63,20 +63,20 @@
 
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active" aria-current="page" href="/Home/Homepage.php">Home</a>
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="/Recipe Search/RecipeSearch.php" role="button" aria-expanded="false">
                             Recipe
                         </a>
                         <ul class="dropdown-menu recipe-menu">
                             <div class="container-fluid">
-                                <div class="row">
+                                <div class="row nav-row">
                                     <div class="col-md-2">
                                         <h6>Popular Categories</h6>
                                         <ul>
-                                            <li><a class="dropdown-item" href="#">Appetizer</a></li>
+                                            <li><a class="dropdown-item" href="/All Categories/oneparticularCategoryShow.php">Appetizer</a></li>
                                             <li><a class="dropdown-item" href="#">Main Course</a></li>
                                             <li><a class="dropdown-item" href="#">Desserts</a></li>
                                             <li><a class="dropdown-item" href="#">Snickers</a></li>
@@ -85,7 +85,7 @@
                                         </ul>
                                     </div>
                                     <div class="col-md-2">
-                                        <h6>Recipe by Meal Type</h6>
+                                        <h6>Recipe by Meal</h6>
                                         <ul>
                                             <li><a class="dropdown-item" href="#">Breakfast</a></li>
                                             <li><a class="dropdown-item" href="#">Brunch</a></li>
@@ -147,9 +147,9 @@
                         </a>
                         <ul class="dropdown-menu occasion-menu">
                             <div class="container-fluid">
-                                <div class="row">
+                                <div class="row nav-row">
                                     <div class="col-md-2">
-                                        <h6>Islam</h6>
+                                        <h6>Islamic</h6>
                                         <ul>
                                             <li><a class="dropdown-item" href="#">Eid ul Fitr</a></li>
                                             <li><a class="dropdown-item" href="#">Eid ul Adha</a></li>
@@ -203,10 +203,10 @@
                         <a class="nav-link" href="#">Shop</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Course</a>
+                        <a class="nav-link" href="/Course/allCourses.php">Course</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">AddRecipe</a>
+                        <a class="nav-link" href="/Collection/collection.php">AddRecipe</a>
                     </li>
 
                 </ul>
