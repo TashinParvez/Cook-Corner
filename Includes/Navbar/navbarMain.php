@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-$user_id = $_SESSION['id'] ?? '2';
+$user_id = $_SESSION['id'] ?? '3';
 
 //...................... Database Connection ..............................
 include("../Includes/Database Connection/database_connection.php");
@@ -58,10 +58,21 @@ mysqli_close($conn);
                         </button>
                     </form>
 
-                    <div class="text-end">
-                        <a href="../../Login SignUp/Login.php" class="text-black text-decoration-none"><?php echo $name; ?></a>
+                    <!-- <div class="text-end">
+                        <a href="../../Login SignUp/Login.php" class="text-black text-decoration-none">Login</a>
                         <span>|</span>
                         <a href="../../Login SignUp/Signup.php" class=" text-black text-decoration-none">Sign Up</a>
+                    </div> -->
+
+                    <div class="text-end">
+                        <?php if ($user_id): ?>
+                            <span class="text-black">Welcome &nbsp;<?= htmlspecialchars($name); ?></span>
+                            <!-- <a href="../../User Account/logout.php" class="text-black text-decoration-none ms-3">Logout</a> -->
+                        <?php else: ?>
+                            <a href="../../Login SignUp/Login.php" class="text-black text-decoration-none">Login</a>
+                            <span>|</span>
+                            <a href="../../Login SignUp/Signup.php" class="text-black text-decoration-none">Sign Up</a>
+                        <?php endif; ?>
                     </div>
 
                     <div class="icons">
