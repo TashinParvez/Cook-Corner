@@ -1,3 +1,24 @@
+<?php
+
+session_start();
+$user_id = $_SESSION['id'] ?? '2';
+
+//...................... Database Connection ..............................
+include("../Includes/Database Connection/database_connection.php");
+
+$stmt = $conn->prepare('SELECT first_name FROM user_info WHERE id = ? LIMIT 1');
+$stmt->bind_param('i', $user_id);
+$stmt->execute();
+$stmt->bind_result($name);
+$stmt->fetch();
+
+$stmt->close();
+mysqli_close($conn);
+
+// echo $name;
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,13 +59,13 @@
                     </form>
 
                     <div class="text-end">
-                        <a href="../../Login SignUp/Login.php" class="text-black text-decoration-none">Login</a>
+                        <a href="../../Login SignUp/Login.php" class="text-black text-decoration-none"><?php echo $name; ?></a>
                         <span>|</span>
                         <a href="../../Login SignUp/Signup.php" class=" text-black text-decoration-none">Sign Up</a>
                     </div>
 
                     <div class="icons">
-                        <a href="#" class="text-black text-decoration-none"><i class="fa-solid fa-user"></i></a>
+                        <a href="../../User Account/updateAccountInfo.php" class="text-black text-decoration-none"><i class="fa-solid fa-user"></i></a>
                         <a href="#" class="text-black text-decoration-none"><i class="fa-solid fa-calendar-check"></i></a>
                         <a href="#" class="text-black text-decoration-none"><i class="fa-solid fa-cart-shopping"></i></a>
                         <a href="#" class="text-black text-decoration-none"><i class="fa-solid fa-heart"></i></a>
