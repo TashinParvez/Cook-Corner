@@ -42,8 +42,10 @@ $page_name = "My Favourite Breakfast List";
 
 <body>
     <!-- Include Spinner -->
-    <?php include('/Cook-Corner/Includes/Spinner/spinnerBasic.php'); // ovi
-    ?>
+    <?php 
+    //include('/Cook-Corner/Includes/Spinner/spinnerBasic.php'); // ovi
+     include('../Includes/Spinner/spinnerBasic.php'); ?> // ovi
+    
 
     <!------------------------------------------ Main content ------------------------------------------>
     <div id="mainContent" style="display:none;">
