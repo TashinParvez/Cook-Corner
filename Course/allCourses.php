@@ -52,7 +52,7 @@
 
                 <div class="row row-cols-1 row-cols-md-4 g-4">
                     <div class="col">
-                        <a href="#" class="text-decoration-none">
+                        <a href="oneCourseView.php" class="text-decoration-none">
                             <div class="card">
                                 <img src="../Images/FoodImages/cookingClass.jpeg" class="card-img-top" alt="...">
                                 <div class="card-body">
