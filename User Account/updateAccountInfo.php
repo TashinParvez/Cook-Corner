@@ -162,6 +162,7 @@ switch ($tabId) {
 
     <!-- css  -->
     <link href="css/styles.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../Includes/Navbar/navbarMain.css"> <!-- Navbar CSS -->
 
 </head>
 
