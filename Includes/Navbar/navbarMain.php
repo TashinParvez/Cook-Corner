@@ -1,3 +1,24 @@
+<?php
+
+session_start();
+$user_id = $_SESSION['id'] ?? '3';
+
+//...................... Database Connection ..............................
+include("../Includes/Database Connection/database_connection.php");
+
+$stmt = $conn->prepare('SELECT first_name FROM user_info WHERE id = ? LIMIT 1');
+$stmt->bind_param('i', $user_id);
+$stmt->execute();
+$stmt->bind_result($name);
+$stmt->fetch();
+
+$stmt->close();
+mysqli_close($conn);
+
+// echo $name;
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,14 +58,25 @@
                         </button>
                     </form>
 
-                    <div class="text-end">
+                    <!-- <div class="text-end">
                         <a href="../../Login SignUp/Login.php" class="text-black text-decoration-none">Login</a>
                         <span>|</span>
                         <a href="../../Login SignUp/Signup.php" class=" text-black text-decoration-none">Sign Up</a>
+                    </div> -->
+
+                    <div class="text-end">
+                        <?php if ($user_id): ?>
+                            <span class="text-black">Welcome &nbsp;<?= htmlspecialchars($name); ?></span>
+                            <!-- <a href="../../User Account/logout.php" class="text-black text-decoration-none ms-3">Logout</a> -->
+                        <?php else: ?>
+                            <a href="../../Login SignUp/Login.php" class="text-black text-decoration-none">Login</a>
+                            <span>|</span>
+                            <a href="../../Login SignUp/Signup.php" class="text-black text-decoration-none">Sign Up</a>
+                        <?php endif; ?>
                     </div>
 
                     <div class="icons">
-                        <a href="#" class="text-black text-decoration-none"><i class="fa-solid fa-user"></i></a>
+                        <a href="../../User Account/updateAccountInfo.php" class="text-black text-decoration-none"><i class="fa-solid fa-user"></i></a>
                         <a href="#" class="text-black text-decoration-none"><i class="fa-solid fa-calendar-check"></i></a>
                         <a href="#" class="text-black text-decoration-none"><i class="fa-solid fa-cart-shopping"></i></a>
                         <a href="#" class="text-black text-decoration-none"><i class="fa-solid fa-heart"></i></a>

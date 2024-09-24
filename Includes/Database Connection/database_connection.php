@@ -3,11 +3,11 @@
 // connect database
 $servername = 'localhost';
 $username = 'root';
-$password = '';
+$db_password = '';
 $databasename = 'Cook_corner';
 
 // connection obj
-$conn = mysqli_connect($servername, $username, $password, $databasename);
+$conn = mysqli_connect($servername, $username, $db_password, $databasename);
 
 // check connection
 if (!$conn) {
