@@ -255,7 +255,6 @@ echo $name;
 
         <!-- ============================== Sidebar ==================================== -->
         <?php
-        // include('../../Includes/Navbar/sidebar.php');  // tashin 
         include('/Cook-Corner/Includes/Navbar/sidebar.php');  // tashin 
         ?>
 

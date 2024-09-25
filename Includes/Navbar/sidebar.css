@@ -32,14 +32,3 @@
 #mySidebar.active + #toggleSidebar {
     right: 250px;
 }
-
-/* Main content */
-.content {
-    margin-right: 20px;
-    transition: margin-right 0.3s;
-}
-
-/* Adjust content when sidebar is open */
-#mySidebar.active ~ .content {
-    margin-right: 250px;
-}
