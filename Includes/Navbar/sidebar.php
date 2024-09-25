@@ -4,8 +4,8 @@
     #mySidebar {
         position: fixed;
         top: 0;
-        right: -250px;
-        width: 250px;
+        right: -360px;
+        width: 360px;
         height: 100%;
         background-color: #f8f9fa;
         transition: 0.3s;
@@ -32,7 +32,7 @@
 
     /* Move toggle button along with sidebar */
     #mySidebar.active+#toggleSidebar {
-        right: 250px;
+        right: 360px;
     }
 </style>
 
@@ -44,16 +44,19 @@
     <ul class="nav nav-tabs" id="myTab" role="tablist">
 
 
-        <!-- Cart -->
-        <li class="nav-item fs-6" role="presentation">
-            <a class="nav-link active" id="cart-tab" data-bs-toggle="tab" href="#cart" role="tab" aria-controls="cart" aria-selected="true">Cart</a>
-        </li>
-
 
         <!-- Todo List  -->
         <li class="nav-item fs-6" role="presentation">
             <a class="nav-link" id="todo-tab" data-bs-toggle="tab" href="#todo" role="tab" aria-controls="todo" aria-selected="false">Todo List</a>
         </li>
+
+
+
+        <!-- Cart -->
+        <li class="nav-item fs-6" role="presentation">
+            <a class="nav-link active" id="cart-tab" data-bs-toggle="tab" href="#cart" role="tab" aria-controls="cart" aria-selected="true">Cart</a>
+        </li>
+
 
 
         <!-- Favourite -->
@@ -68,17 +71,11 @@
     <div class="tab-content p-3">
 
 
-        <!-- Cart content-->
-        <div class="tab-pane fade show active" id="cart" role="tabpanel" aria-labelledby="cart-tab">
-            <h4>Cart Items</h4>
-            <p>Your cart is empty.</p>
-        </div>
 
 
         <!-- Todo List content-->
         <div class="tab-pane fade" id="todo" role="tabpanel" aria-labelledby="todo-tab">
             <h4>Todo List</h4>
-            <p>You have no tasks.</p>
 
 
             <table class="table table-striped">
@@ -161,6 +158,71 @@
                 <a type="button" class="btn btn-secondary btn-sm" href="../All Categories/allCategories.php">See All</a>
             </div>
 
+
+
+        </div>
+        <!-- Cart content-->
+        <div class="tab-pane fade show active" id="cart" role="tabpanel" aria-labelledby="cart-tab">
+            <h4>Cart Items</h4>
+
+            <table class="table table-striped">
+
+                <thead>
+                    <tr class="table-dark">
+                        <th scope="col">SI</th>
+                        <th scope="col">Item</th>
+                        <th scope="col">Quantity/Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Total Parice</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                    <tr>
+                        <!-- items:  -->
+                        <td>1</td>
+                        <td>Tomatoes</td>
+                        <td>1KG/20Tk</td>
+
+                        <td>
+                            <button type="button" class="btn btn-outline-primary btn-sm">+</button>
+                            1
+                            <button type="button" class="btn btn-outline-primary btn-sm">-</button>
+                        </td>
+
+                        <td>20Tk</td>
+                        <td>
+                            <button type="button" class="btn btn-outline-primary btn-sm">remove</button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <!-- items:  -->
+                        <td>2</td>
+                        <td>Broccoli</td>
+                        <td>1KG/20Tk</td>
+
+                        <td>
+                            <button type="button" class="btn btn-outline-primary btn-sm">+</button>
+                            1
+                            <button type="button" class="btn btn-outline-primary btn-sm">-</button>
+                        </td>
+
+                        <td>20Tk</td>
+                        <td>
+                            <button type="button" class="btn btn-outline-primary btn-sm">remove</button>
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+            <div class="d-flex text-center ">
+                <a type="button" class="btn btn-secondary btn-sm" href="../All Categories/allCategories.php">See All</a>
+            </div>
 
 
         </div>
