@@ -4,8 +4,8 @@ session_start();
 $user_id = $_SESSION['id'] ?? '3';
 
 //...................... Database Connection ..............................
-// include("../Includes/Database Connection/database_connection.php");  // for home page
-include("../../Includes/Database Connection/database_connection.php");  // for only navbar
+include("../Includes/Database Connection/database_connection.php");  // for home page
+// include("../../Includes/Database Connection/database_connection.php");  // for only navbar
 
 $stmt = $conn->prepare('SELECT first_name FROM user_info WHERE id = ? LIMIT 1');
 $stmt->bind_param('i', $user_id);
@@ -39,7 +39,8 @@ echo $name;
 
     <!-- CSS -->
     <link rel="stylesheet" href="navbarMain.css">
-    <link rel="stylesheet" href="sidebar.css"> <!-- sidebar -->
+    <!-- <link rel="stylesheet" href="sidebar.css"> -->
+    <!-- sidebar -->
 </head>
 
 <body>
@@ -254,7 +255,8 @@ echo $name;
 
         <!-- ============================== Sidebar ==================================== -->
         <?php
-        include('../../Includes/Navbar/sidebar.php');  // tashin 
+        // include('../../Includes/Navbar/sidebar.php');  // tashin 
+        include('/Cook-Corner/Includes/Navbar/sidebar.php');  // tashin 
         ?>
 
     </header>
