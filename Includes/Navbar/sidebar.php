@@ -42,31 +42,156 @@
 <div id="mySidebar">
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+
+        <!-- Cart -->
         <li class="nav-item fs-6" role="presentation">
             <a class="nav-link active" id="cart-tab" data-bs-toggle="tab" href="#cart" role="tab" aria-controls="cart" aria-selected="true">Cart</a>
         </li>
-        <li class="nav-item fs-6" role="presentation">
-            <a class="nav-link" id="favorites-tab" data-bs-toggle="tab" href="#favorites" role="tab" aria-controls="favorites" aria-selected="false">Favorites</a>
-        </li>
+
+
+        <!-- Todo List  -->
         <li class="nav-item fs-6" role="presentation">
             <a class="nav-link" id="todo-tab" data-bs-toggle="tab" href="#todo" role="tab" aria-controls="todo" aria-selected="false">Todo List</a>
         </li>
+
+
+        <!-- Favourite -->
+        <li class="nav-item fs-6" role="presentation">
+            <a class="nav-link" id="favorites-tab" data-bs-toggle="tab" href="#favorites" role="tab" aria-controls="favorites" aria-selected="false">Favorites</a>
+        </li>
+
+
     </ul>
 
     <!-- Tab content -->
     <div class="tab-content p-3">
+
+
+        <!-- Cart content-->
         <div class="tab-pane fade show active" id="cart" role="tabpanel" aria-labelledby="cart-tab">
             <h4>Cart Items</h4>
             <p>Your cart is empty.</p>
         </div>
-        <div class="tab-pane fade" id="favorites" role="tabpanel" aria-labelledby="favorites-tab">
-            <h4>Your Favorites</h4>
-            <p>No favorite items yet.</p>
-        </div>
+
+
+        <!-- Todo List content-->
         <div class="tab-pane fade" id="todo" role="tabpanel" aria-labelledby="todo-tab">
             <h4>Todo List</h4>
             <p>You have no tasks.</p>
+
+
+            <table class="table table-striped">
+
+                <thead>
+                    <tr class="table-dark">
+                        <th scope="col">Item</th>
+                        <th scope="col"> </th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col"> </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                    <tr>
+                        <!-- category: frute, vegetables, spices etc -->
+                        <td colspan="4"> <b>Vegetables</b></td>
+                    </tr>
+
+                    <tr>
+                        <!-- items:  -->
+                        <td>Mark</td>
+                        <td>
+                            <button type="button" class="btn btn-outline-primary btn-sm">+</button>
+                        </td>
+                        <td>Otto</td>
+                        <td>
+                            <button type="button" class="btn btn-outline-primary btn-sm">-</button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <!-- items:  -->
+                        <td>Mark</td>
+                        <td>
+                            <button type="button" class="btn btn-outline-primary btn-sm">+</button>
+                        </td>
+                        <td>Otto</td>
+                        <td>
+                            <button type="button" class="btn btn-outline-primary btn-sm">-</button>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <!-- category: frute, vegetables, spices etc -->
+                        <td colspan="4"> <b>Frute</b></td>
+                    </tr>
+
+                    <tr>
+                        <!-- items:  -->
+                        <td>Mark</td>
+                        <td>
+                            <button type="button" class="btn btn-outline-primary btn-sm">+</button>
+                        </td>
+                        <td>Otto</td>
+                        <td>
+                            <button type="button" class="btn btn-outline-primary btn-sm">-</button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <!-- items:  -->
+                        <td>Mark</td>
+                        <td>
+                            <button type="button" class="btn btn-outline-primary btn-sm">+</button>
+                        </td>
+                        <td>Otto</td>
+                        <td>
+                            <button type="button" class="btn btn-outline-primary btn-sm">-</button>
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+            <div class="d-flex text-center ">
+                <a type="button" class="btn btn-secondary btn-sm" href="../All Categories/allCategories.php">See All</a>
+            </div>
+
+
+
         </div>
+
+        <!-- Favourite content-->
+        <div class="tab-pane fade" id="favorites" role="tabpanel" aria-labelledby="favorites-tab">
+            <h4>Your Favorites</h4>
+
+
+            <div class="container">
+
+
+                <ul>
+                    <li><a class="dropdown-item" href="#">Breakfast <img src="/Images/Icons/Navigate-page-Icon.png" alt=""> </a></li>
+                    <li><a class="dropdown-item" href="#">Brunch <img src="/Images/Icons/Navigate-page-Icon.png" alt=""></a></li>
+                    <li><a class="dropdown-item" href="#">Lunch <img src="/Images/Icons/Navigate-page-Icon.png" alt=""></a></li>
+                    <li><a class="dropdown-item" href="#">Dinner <img src="/Images/Icons/Navigate-page-Icon.png" alt=""></a></li>
+                    <li><a class="dropdown-item" href="#">Snacks <img src="/Images/Icons/Navigate-page-Icon.png" alt=""></a></li>
+                    <li><a class="dropdown-item" href="#">Desserts <img src="/Images/Icons/Navigate-page-Icon.png" alt=""></a></li>
+                </ul>
+
+            </div>
+
+
+            <div class="d-flex text-center ">
+                <a type="button" class="btn btn-secondary btn-sm" href="../All Categories/allCategories.php">See All Categories</a>
+            </div>
+
+        </div>
+
+
     </div>
 </div>
 
@@ -74,9 +199,9 @@
 <div id="toggleSidebar">
     <<
         </div>
-        
 
-<!-------------------------------------- JS -------------------------------------->
+
+        <!-------------------------------------- JS -------------------------------------->
         <script>
             // Toggle Sidebar with Navbar Buttons
             document.getElementById('cartBtn').addEventListener('click', function() {

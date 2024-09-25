@@ -31,11 +31,11 @@
     include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin    
     ?>
 
-    <div class="container bg-light pt-3  " id="main-content">
+    <div class="container  pt-3  " id="main-content">
         <!-- <div class="row g-0 text-center">
-            <div class="col-8 bg-light mb-4 text-start"> -->
+            <div class="col-8  mb-4 text-start"> -->
         <div class="row g-4 text-center">
-            <div class="col-8 bg-light mb-4 text-start">
+            <div class="col-8  mb-4 text-start">
 
                 <!------------------- Segment 1 ------------------->
                 <h2 class="text-start">Cornflakes, Low-Fat Milk & Berries Recipe</h2>
@@ -233,7 +233,7 @@
                 <!---  __________________________________________   Segment 1 End __________________________________________  -->
             </div>
 
-            <div class="col-4 bg-light">
+            <div class="col-4 ">
 
                 <!-------__________________________________________ Segment 2 __________________________________________------->
 
