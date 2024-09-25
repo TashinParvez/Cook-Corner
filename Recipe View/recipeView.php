@@ -16,7 +16,7 @@
     <link rel="icon" href="../Images/logo/fav-icon.png" />
 
     <!-- css  -->
-    <link rel="stylesheet" href="../Includes/Navbar/navbarMain.css"> <!-- Navbar CSS -->
+    <link rel="stylesheet" href="../Includes/Navbar/navbarMain.css"> <!-- Navbar CSS --> 
 
 
     <link href="recipeView.css" rel="stylesheet" type="text/css">
