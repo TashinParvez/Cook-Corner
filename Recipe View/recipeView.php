@@ -16,7 +16,7 @@
     <link rel="icon" href="../Images/logo/fav-icon.png" />
 
     <!-- css  -->
-    <link rel="stylesheet" href="../Includes/Navbar/navbarMain.css"> <!-- Navbar CSS --> 
+    <link rel="stylesheet" href="../Includes/Navbar/navbarMain.css"> <!-- Navbar CSS -->
 
 
     <link href="recipeView.css" rel="stylesheet" type="text/css">
@@ -31,7 +31,7 @@
     include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin    
     ?>
 
-    <div class="container bg-light pt-3">
+    <div class="container bg-light pt-3  " id="main-content">
         <!-- <div class="row g-0 text-center">
             <div class="col-8 bg-light mb-4 text-start"> -->
         <div class="row g-4 text-center">

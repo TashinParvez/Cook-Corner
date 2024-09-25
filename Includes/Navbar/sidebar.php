@@ -36,6 +36,8 @@
     }
 </style>
 
+<!------------------------------ main Content ------------------------------>
+
 <!-- Sidebar -->
 <div id="mySidebar">
     <!-- Nav tabs -->
@@ -72,8 +74,9 @@
 <div id="toggleSidebar">
     <<
         </div>
+        
 
-
+<!-------------------------------------- JS -------------------------------------->
         <script>
             // Toggle Sidebar with Navbar Buttons
             document.getElementById('cartBtn').addEventListener('click', function() {
