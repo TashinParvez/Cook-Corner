@@ -17,9 +17,9 @@
 
     <script>
         document.getElementById('fetchVideos').addEventListener('click', function() {
-            
+
             const apiKey = "HAHAHAHAHHAHA"; // Replace HAHAHAHAHHAHA with your API key
-            const playlistId = "PLl0KD3g-oDOHpWRyyGBUJ9jmul0lUOD80"; // Replace with the playlist ID
+            const playlistId = "PLfKe0WM1XpkrUxFauzP8LqELMfnhQdJRs"; // Replace with the playlist ID
 
             fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&maxResults=50&key=${apiKey}`)
                 .then(response => response.json())
