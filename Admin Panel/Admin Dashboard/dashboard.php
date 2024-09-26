@@ -23,7 +23,10 @@
         ?>
 
         <!-- Main content area -->
-        <div class="container p-5">
+        <div class="container p-5" style=" 
+            margin-left: 280px;
+            padding: 0;">
+
             <h1>Welcome to the page!</h1>
             <p>This is your main content area.</p>
             <!-- More content goes here -->
