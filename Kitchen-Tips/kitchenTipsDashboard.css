@@ -1,0 +1,62 @@
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.container img {
+    border-radius: 5px;
+}
+
+h2, h3 {
+    font-weight: bold;
+}
+
+p {
+    color: #555;
+}
+
+.row .col-md-3, .col-md-4 {
+    margin-bottom: 20px;
+}
+
+img.img-fluid {
+    object-fit: cover;
+    width: 100%;
+    height: auto;
+}
+
+
+/* General styles for the links */
+.text-decoration-none {
+    position: relative;
+    display: inline-block;
+    color: #000; /* Black text */
+    text-decoration: none; /* Remove underline */
+    padding-bottom: 5px; /* Padding at the bottom to make room for the horizontal bar */
+}
+
+/* Initial state of the horizontal bar */
+.text-decoration-none::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: #000; /* Horizontal bar color */
+    transition: width 0.4s ease; /* Smooth transition for the bar */
+}
+
+/* Hover effect: expand the bar from left to right */
+.text-decoration-none:hover::after {
+    width: 100%; /* Full width on hover */
+}
+
+/* Optional: change color of text on hover */
+.text-decoration-none:hover {
+    color: #007bff; /* Optional: change text color on hover */
+}
