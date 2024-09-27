@@ -16,7 +16,7 @@ $stmt->fetch();
 $stmt->close();
 mysqli_close($conn);
 
-echo $name;
+// echo $name;
 
 ?>
 
@@ -255,7 +255,7 @@ echo $name;
 
         <!-- ============================== Sidebar ==================================== -->
         <?php
-        include('/Cook-Corner/Includes/Navbar/sidebar.php');  // tashin 
+        include('../Includes/Navbar/sidebar.php');  // tashin 
         ?>
 
     </header>
