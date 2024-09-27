@@ -67,9 +67,7 @@
         <div class="col-3">
             <div class="flex-shrink-0 p-3 bg-white" style="width: 280px; height: 100vh; overflow-y: auto; position: fixed;">
                 <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
-                    <svg class="bi pe-none me-2" width="30" height="24">
-                        <use xlink:href="#bootstrap"></use>
-                    </svg>
+                   
                     <span class="fs-5 fw-semibold">Project 2024</span>
                 </a>
                 <ul class="list-unstyled ps-0">
@@ -180,7 +178,7 @@
             </div>
 
 
-            <div class="content-wrapper">
+           
                 <div class="container">
                     <!-- Class Title -->
                     <h2>Class Title: Introduction to Topic</h2>
@@ -199,7 +197,7 @@
                         <a href="#" class="btn btn-success">Mark as Complete</a>
                     </div>
                 </div>
-            </div>
+        
 
         </div>
 
