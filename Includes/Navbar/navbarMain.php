@@ -179,7 +179,7 @@ echo $name;
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="/Occasions/occasion_main.php" role="button" aria-expanded="false">
                             Occasions
                         </a>
                         <ul class="dropdown-menu occasion-menu">
@@ -231,7 +231,7 @@ echo $name;
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="#">KitchenTips</a>
+                        <a class="nav-link" href="/Kitchen-Tips/kitchenTipsDashboard.php">KitchenTips</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">MealPlan</a>
