@@ -1,3 +1,76 @@
+<?php
+// Database table name:  
+
+//...................... Database Connection ..............................
+include("/Cook-Corner/Includes/Database Connection/database_connection.php");
+
+$userID = '1';  // instructor id
+
+if (isset($_POST['submit'])) {
+
+    // Get form data
+    $courseTitle = mysqli_real_escape_string($conn, $_POST['courseTitle']); // 'courseTitle' refers to the name or id
+    $courseAbstract = mysqli_real_escape_string($conn, $_POST['courseAbstract']);
+    $courseDescription = mysqli_real_escape_string($conn, $_POST['courseDescription']);
+    $courseAmount = mysqli_real_escape_string($conn, $_POST['courseAmount']);
+    $playlistLink = mysqli_real_escape_string($conn, $_POST['playlistLink']);
+    $courseDuration = mysqli_real_escape_string($conn, $_POST['courseDuration']);
+    $difficultyLevel = mysqli_real_escape_string($conn, $_POST['difficultyLevel']);
+
+
+    // Process YouTube Playlist Link and extract playlist ID
+    parse_str(parse_url($playlistLink, PHP_URL_QUERY), $queryParams);
+    $playlistID = $queryParams['list'] ?? ''; // Extract the 'list' parameter (Playlist ID)
+
+
+    // Check for uploaded image
+    if ($_FILES['image']['error'] === 0) {
+
+        // Image upload settings
+        $targetDir = "/Images/Upload/";
+
+        $tempName = $_FILES['image']['tmp_name'];
+        $imageName = basename($_FILES['image']['name']);
+        $targetFile = $targetDir . $imageName;
+        $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+
+        // Check if image file is valid
+        $check = getimagesize($tempName);
+        if ($check !== false) {
+            // Move uploaded file to the target directory
+            if (move_uploaded_file($tempName, $targetFile)) {
+
+                // Prepare SQL query to insert course data --------------------------------- tashin
+                // have to handle image link (mahabub part)
+
+                $sql = "INSERT INTO courses
+                        (course_title, abstract, description, thumbnail, price, playlist_link, duration, difficulty_level)
+                        VALUES ('$courseTitle', '$courseAbstract', '$courseDescription', '$imageName',
+                        '$courseAmount', '$playlistLink', '$courseDuration', '$difficultyLevel')";
+            
+
+
+                if (mysqli_query($conn, $sql)) {
+                    // Redirect or give a success message
+                    echo "<script>alert('Course added successfully!'); window.location.href='/Admin Panel/course-list.php';</script>";
+                } else {
+                    echo "Error: " . mysqli_error($conn);
+                }
+            } else {
+                echo "Sorry, there was an error uploading your image.";
+            }
+        } else {
+            echo "File is not a valid image.";
+        }
+    } else {
+        echo "Please upload a course thumbnail.";
+    }
+}
+
+// mysqli_free_result($resultantLabel);
+mysqli_close($conn);
+
+?>
 <!doctype html>
 <html lang="en">
 
@@ -13,7 +86,7 @@
 
     <!-- favicon -->
     <link rel="icon" href="../Images/logo/fav-icon.png" />
-    
+
     <!-- css -->
 
 </head>
@@ -47,9 +120,9 @@
                 <div class="mb-3">
                     <label for="description" class="form-label">Course Abstract</label>
                     <textarea id="description" class="form-control" rows="2" placeholder="Describe the course, its contents, and objectives" required></textarea>
-                 </div>
- 
-            
+                </div>
+
+
                 <hr>
 
                 <!-- Course Description -->
@@ -62,7 +135,7 @@
 
                 <!-- Photo Upload -->
                 <div class="mb-3 row">
-                    <label for="recipePhoto" class="form-label">Course Thumbnail</label>
+                    <label for="recipePhoto" class="form-label">Course Thumbnail*</label>
                     <div class="col-md-6">
                         <input type="file" id="recipePhoto" class="form-control" accept="image/*">
 
@@ -176,7 +249,7 @@
                 <!-- Buttons -->
                 <div class="container d-flex justify-content-end">
                     <button type="button" class="btn btn-outline-secondary me-4" id="cancel">Cancel</button>
-                    <button type="submit" class="btn btn-danger" id="submitCourse">Submit Course</button>
+                    <button type="submit" class="btn btn-danger" id="submitCourse" name="submit">Submit Course</button>
                 </div>
 
             </form>

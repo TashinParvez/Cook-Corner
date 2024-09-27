@@ -80,7 +80,7 @@ if (isset($_POST['submit'])) { // submit btn name
         if ($resultantLabel && mysqli_num_rows($resultantLabel) > 0) {
             // Fetch result as associative array
             $image = mysqli_fetch_assoc($resultantLabel);
-            
+
             // Display the image
             echo '<img src="../../Images/Books/' . $image['file_name'] . '" alt="Uploaded Image" class="img-fluid">';
         } else {
