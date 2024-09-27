@@ -57,7 +57,7 @@ mysqli_close($conn);
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <form class="d-flex" role="search">
                         <input class="form-control search me-2" type="search" placeholder="Search your Recipe" aria-label="Search">
-                        <button class="btn" type="submit"><i class="bi bi-search"></i>
+                        <button class="btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></i>
                         </button>
                     </form>
 
