@@ -12,8 +12,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-    <!-- css  -->
+    <!-- favicon -->
+    <link rel="icon" href="../Images/logo/fav-icon.png" />
 
+    <!-- css  -->
     <link rel="stylesheet" href="../Includes/Navbar/navbarMain.css"> <!-- Navbar CSS -->
 
 
@@ -29,11 +31,11 @@
     include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin    
     ?>
 
-    <div class="container bg-light pt-3">
+    <div class="container  pt-3  " id="main-content">
         <!-- <div class="row g-0 text-center">
-            <div class="col-8 bg-light mb-4 text-start"> -->
+            <div class="col-8  mb-4 text-start"> -->
         <div class="row g-4 text-center">
-            <div class="col-8 bg-light mb-4 text-start">
+            <div class="col-8  mb-4 text-start">
 
                 <!------------------- Segment 1 ------------------->
                 <h2 class="text-start">Cornflakes, Low-Fat Milk & Berries Recipe</h2>
@@ -231,7 +233,7 @@
                 <!---  __________________________________________   Segment 1 End __________________________________________  -->
             </div>
 
-            <div class="col-4 bg-light">
+            <div class="col-4 ">
 
                 <!-------__________________________________________ Segment 2 __________________________________________------->
 
@@ -409,8 +411,8 @@
 
     <!-- ============================== Footer ==================================== -->
     <?php
-    // include('../Includes/Footer/footermain.php');  // tashin
-    include('../Includes/Footer/footermainTry.php');  // tashin
+    include('../Includes/Footer/footermain.php');  // tashin
+    // include('../Includes/Footer/footermainTry.php');  // tashin
     ?>
     <!-- ============================== Footer End ==================================== -->
 

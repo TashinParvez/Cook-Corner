@@ -1,5 +1,49 @@
 <?php
 
+
+//...................... Database Connection ..............................
+include("../Includes/Database Connection/database_connection.php");
+
+$user_id = "1";
+
+
+// ---------- For hero segment ---------------
+$sql = "SELECT 
+        IF(EXISTS(SELECT 1 
+              FROM `junction_course_taken_user` 
+              WHERE user_id = '$user_id' AND course_id = '1'), 1, 0) AS found;";
+
+$resultantLabel = mysqli_query($conn, $sql);
+
+$heropage = mysqli_fetch_all($resultantLabel)[0][0];
+// $heropage = 1;
+
+// print_r($heropage[0][0]);
+// print($heropage);
+
+
+
+// ---------- For Enrolled segment ---------------
+$sql = "SELECT *
+        FROM (
+                SELECT * 
+                FROM `junction_course_taken_user` 
+                WHERE user_id = '$user_id') 
+        as taken_course 
+        INNER JOIN
+        course
+        ON 
+        taken_course.course_id = course.course_id;";
+
+$resultantLabel = mysqli_query($conn, $sql);
+$enrolled = mysqli_fetch_all($resultantLabel);
+
+$enrolledCourseCount = count($enrolled);
+// print($enrolledCourseCount);
+
+
+mysqli_free_result($resultantLabel);
+mysqli_close($conn);
 ?>
 
 <!doctype html>
@@ -30,26 +74,81 @@
 
     <?php
     include('../Includes/Navbar/navbarMain.php');  // tashin
+    include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin
     ?>
     <!-- ============================== Course section ==================================== -->
     <div class="container">
-        <section class="cooking-class">
-            <div class="class-info">
-                <h1>Become your own chef,<br>Explore new Recipe</h1>
-                <p>Want to cook like a chef? Our cooking online courses offer step-by-step guidance and expert tips to
-                    transform your cooking. Join us now!</p>
-                <a href="#" class="btn">Enrol Now</a>
-            </div>
-        </section>
 
 
+        <!-- Hero Segment -->
+        <?php
+        if ($heropage == 0) {
+        ?>
+            <section class="cooking-class">
+                <div class="class-info">
+                    <h1>Become your own chef,<br>Explore new Recipe</h1>
+                    <p>Want to cook like a chef? Our cooking online courses offer step-by-step guidance and expert tips to
+                        transform your cooking. Join us now!</p>
+                    <a href="#" class="btn">Enrol Now</a>
+                </div>
+            </section>
+        <?php
+        }
+        ?>
+
+        <!-- enrolled Courses -->
+        <?php
+        if ($enrolledCourseCount  != 0) {
+        ?>
+
+            <section class="course m-4">
+                <div class="container">
+                    <div class="identity m-2">
+                        <h3 class="m-0 p-0 text-center">Enrolled Courses</h3>
+                    </div>
+
+                    <div class="row row-cols-1 row-cols-md-4 g-4">
+
+
+
+                        <div class="col">
+                            <a href="oneCourseView.php" class="text-decoration-none">
+                                <div class="card">
+                                    <img src="../Images/FoodImages/cookingClass.jpeg" class="card-img-top" alt="...">
+                                    <div class="card-body">
+
+                                        <div class="row">
+                                            <div class="col d-flex justify-content-between">
+                                                <div>Tk 150</div>
+                                                <div class="ratings">
+                                                    <i class="fa-solid fa-star"></i>
+                                                    <i class="fa-solid fa-star"></i>
+                                                    <i class="fa-solid fa-star"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="card-text mb-0">How to cook rice in home</p>
+                                        <p class="card-text"><i class="fa-solid fa-users "></i> 69 student enroled</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+
+                    </div>
+            </section>
+
+        <?php
+        }
+        ?>
+
+
+        <!-- All Courses -->
         <section class="course m-4">
             <div class="container">
                 <div class="identity m-2">
                     <h3 class="m-0 p-0 text-center">Our Courses</h3>
                 </div>
-
-
                 <div class="row row-cols-1 row-cols-md-4 g-4">
                     <div class="col">
                         <a href="oneCourseView.php" class="text-decoration-none">

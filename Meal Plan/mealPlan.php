@@ -40,13 +40,17 @@
 
 <body>
 
+    <?php
+    include('../Includes/Navbar/navbarMain.php');  // tashin 
+    include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin
+    ?>
 
 
-    <button type="button" class="btn btn-primary btn-sm" title="Previous Button">
-        <i class="bi bi-arrow-left"></i> <!-- Bootstrap icon example -->
-    </button>
-
-
+    <!-- ============================== Footer ==================================== -->
+    <?php
+    include('../Includes/Footer/footermain.php');  // tashin 
+    ?>
+    <!-- ============================== Footer End ==================================== -->
 
 </body>
 
