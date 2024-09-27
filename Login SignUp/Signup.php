@@ -59,7 +59,7 @@ if (isset($_POST['sign_up'])) {
    }
 
    if (!array_filter($errors)) {
-     $hash = password_hash($password, PASSWORD_BCRYPT);
+      $hash = password_hash($password, PASSWORD_BCRYPT);
       $stmt = $conn->prepare('INSERT INTO user_info (email, password) VALUES (?, ?)');
       $stmt->bind_param('ss', $email, $hash);
       $stmt->execute();
@@ -90,7 +90,7 @@ if (isset($_POST['sign_up'])) {
 
    <!-- favicon -->
    <link rel="icon" href="../Images/logo/fav-icon.png" />
-   
+
    <link rel="stylesheet" href="signup.css" />
 </head>
 

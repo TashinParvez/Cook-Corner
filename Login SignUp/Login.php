@@ -1,14 +1,14 @@
 <?php
 
-$email = ''; 
-$user_password = '';
+$email = '';
+$password = '';
 $error = '';
 
 if (isset($_POST['login'])) {
 
    //................ Retrieve data from input field ...............
    $email = $_POST['email'] ?? '';
-   $user_password = $_POST['password'] ?? '';
+   $password = $_POST['password'] ?? '';
 
    if (empty($_POST['email']) || empty($_POST['password'])) {
 
@@ -24,7 +24,8 @@ if (isset($_POST['login'])) {
       $stmt->bind_result($id, $stored_password);
 
       if ($stmt->fetch()) {
-         if (password_verify($user_password, $stored_password)) {
+
+         if (password_verify($password, $stored_password)) {
 
             session_start();
             $_SESSION['id'] = $id;
@@ -32,7 +33,7 @@ if (isset($_POST['login'])) {
             $stmt->close();
             mysqli_close($conn);
 
-            header('Location: Homepage.php');
+            header('Location: ..\Home\Homepage.php');
             exit();
          } else {
             $error = "Invalid email or password.";

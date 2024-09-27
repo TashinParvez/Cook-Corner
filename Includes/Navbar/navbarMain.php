@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-$user_id = $_SESSION['id'];
+$user_id = $_SESSION['id'] ?? '3';
 
 //...................... Database Connection ..............................
 include("../Includes/Database Connection/database_connection.php");  // for home page
@@ -16,7 +16,7 @@ $stmt->fetch();
 $stmt->close();
 mysqli_close($conn);
 
-echo $name;
+// echo $name;
 
 ?>
 
@@ -57,7 +57,7 @@ echo $name;
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <form class="d-flex" role="search">
                         <input class="form-control search me-2" type="search" placeholder="Search your Recipe" aria-label="Search">
-                        <button class="btn" type="submit"><i class="bi bi-search"></i>
+                        <button class="btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></i>
                         </button>
                     </form>
 
@@ -255,7 +255,7 @@ echo $name;
 
         <!-- ============================== Sidebar ==================================== -->
         <?php
-        include('/Cook-Corner/Includes/Navbar/sidebar.php');  // tashin 
+        include('../Includes/Navbar/sidebar.php');  // tashin 
         ?>
 
     </header>
