@@ -11,6 +11,9 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
 
+    <!-- favicon -->
+    <link rel="icon" href="../Images/logo/fav-icon.png" />
+    
     <!-- css -->
 
 </head>
@@ -38,6 +41,15 @@
                     <label for="courseTitle" class="form-label">Course Title</label>
                     <input type="text" id="courseTitle" class="form-control" placeholder="Give your course a title" required>
                 </div>
+                <hr>
+
+                <!-- Course Abstract -->
+                <div class="mb-3">
+                    <label for="description" class="form-label">Course Abstract</label>
+                    <textarea id="description" class="form-control" rows="2" placeholder="Describe the course, its contents, and objectives" required></textarea>
+                 </div>
+ 
+            
                 <hr>
 
                 <!-- Course Description -->
