@@ -1,6 +1,83 @@
 <?php
 //...................... Database Connection .............................. 
-// include("../Includes/Database Connection/database_connection.php"); 
+include("../Includes/Database Connection/database_connection.php");
+
+
+// Set the time zone to Bangladesh Standard Time (BST)
+$bdTimeZone = new DateTimeZone('Asia/Dhaka');
+$bdDateTime = new DateTime('now', $bdTimeZone);
+
+$current_time = $bdDateTime->format('H:i:s'); // Outputs something like 10:25:45
+
+
+// .......... Load Recipe from DB According to Day Interval ..........
+$current_chunk = '';
+$greetings = '';
+
+if ($current_time >= '06:00:00' && $current_time < '12:00:00') {
+
+    $current_chunk = 'morning';
+    $greetings = 'Good Morning';
+} else if ($current_time >= '12:00:00' && $current_time < '16:00:00') {
+
+    $current_chunk = 'afternoon';
+    $greetings = 'Good Afternoon';
+} else if ($current_time >= '16:00:00' && $current_time < '20:00:00') {
+
+    $current_chunk = 'evening';
+    $greetings = 'Good Evening';
+} else if ($current_time >= '20:00:00' && $current_time < '23:59:59') {
+
+    $current_chunk = 'night';
+    $greetings = 'Good Night';
+} else {
+
+    $current_chunk = 'else';
+    $greetings = 'Good Night';
+}
+// echo 'Greetings: ' . $greetings;
+
+// Load Chunk Recipes from DB                       is it necessary to take all information about a recipe???
+$stmt = $conn->prepare('SELECT * FROM recipe_info WHERE recipe_id IN
+                    (SELECT recipe_id FROM junction_meal_type_recipe_info WHERE meal_type_id IN
+                    (SELECT meal_type_id FROM junction_meal_type_day_chunk WHERE chunk_id =
+                    (SELECT chunk_id FROM day_chunk WHERE chunk_name = ?)));');
+$stmt->bind_param('s', $current_chunk);
+$stmt->execute();
+$result = $stmt->get_result();
+$chunk_recipes = $result->fetch_assoc();
+
+// Load Best Rcipes from DB                       is it necessary to take all information about a recipe???
+$stmt = $conn->prepare('SELECT recipe_info.* FROM recipe_info INNER JOIN recipe_feedback
+                    ON recipe_info.recipe_id = recipe_feedback.recipe_id WHERE rating > 3;');
+$stmt->execute();
+$result = $stmt->get_result();
+$best_recipes = $result->fetch_assoc();
+
+// Load Latest Rcipes from DB                       is it necessary to take all information about a recipe and all recipes as well???
+$stmt = $conn->prepare('SELECT * FROM recipe_info ORDER BY created_at DESC;');
+$stmt->execute();
+$result = $stmt->get_result();
+$latest_recipes = $result->fetch_assoc();
+
+// Load All Categories from DB
+$stmt = $conn->prepare('SELECT * FROM recipe_category;');
+$stmt->execute();
+$result = $stmt->get_result();
+$categories = $result->fetch_assoc();
+
+// Load Popular Courses from DB              there is no parameter for being polular a course???
+// $stmt = $conn->prepare('');
+// $stmt->bind_param('s', $current_chunk);
+// $stmt->execute();
+// $result = $stmt->get_result();
+// $popular_courses = $result->fetch_assoc();
+
+
+
+$stmt->close();
+mysqli_close($conn);
+
 
 ?>
 
@@ -71,7 +148,7 @@
     <section class="suggestion m-4">
         <div class="container">
             <div class="identity m-2">
-                <h2 class="m-0 p-0">Good Morning</h2>
+                <h2 class="m-0 p-0"><?php echo $greetings ?></h2>
                 <p class="m-0 p-0">What to cook today</p>
             </div>
 
