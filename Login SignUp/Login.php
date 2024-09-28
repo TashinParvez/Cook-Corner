@@ -21,14 +21,14 @@ if (isset($_POST['login'])) {
       $stmt = $conn->prepare('SELECT id, password FROM user_info WHERE email = ? LIMIT 1');
       $stmt->bind_param('s', $email);
       $stmt->execute();
-      $stmt->bind_result($id, $stored_password);
+      $stmt->bind_result($user_id, $stored_password);
 
       if ($stmt->fetch()) {
 
          if (password_verify($password, $stored_password)) {
 
             session_start();
-            $_SESSION['id'] = $id;
+            $_SESSION['user_id'] = $user_id;
 
             $stmt->close();
             mysqli_close($conn);
