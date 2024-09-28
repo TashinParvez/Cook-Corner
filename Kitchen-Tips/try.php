@@ -3,6 +3,8 @@
 //...................... Database Connection ..............................
 include("../Includes/Database Connection/database_connection.php");
 
+
+
 $clickedCatagory = "Cooking Techniques";  // get from click
 
 // -------------- clickedCatagory Info -----------------
@@ -107,7 +109,6 @@ mysqli_close($conn);
     <!-- ---------------------------- Hero Main Image Section ---------------------------------------- -->
 
     <div class="container mt-4">
-
         <div class="row">
 
             <div class="col-md-8">
@@ -164,6 +165,7 @@ mysqli_close($conn);
             </div>
         </div>
 
+
     </div>
     </div>
 
@@ -192,17 +194,14 @@ mysqli_close($conn);
 
         <!--  kt.image, kt.tips_title, kt.description, user_info.first_name , user_info.last_name, likes -->
 
-        <div class="row" id="tipsContainer">
-            <!-- First 12 tips will be displayed here -->
+        <div class="row" id="tip-container">
+            <!-- Display the first 12 tips initially -->
             <?php
             $initialTips = array_slice($allTips, 0, 12); // Get first 12 tips
             foreach ($initialTips as $oneTip) { ?>
-                <div class="col-md-4 item">
-                    <!-- image -->
-                    <img src="../Images/Kitchen-Tips/<?php echo htmlspecialchars($oneTip[0]); ?>" class="img-fluid" alt="Care Tip">
-                    <!-- title -->
+                <div class="col-md-4">
+                    <img src="../Images/Kitchen-Tips/<?php echo htmlspecialchars($oneTip[0]); ?> " class="img-fluid" alt="Care Tip">
                     <h5><?php echo htmlspecialchars($oneTip[1]); ?></h5>
-                    <!-- user added by -->
                     <p>by <?php echo htmlspecialchars($oneTip[3]) . " " . htmlspecialchars($oneTip[4]); ?></p>
                 </div>
             <?php } ?>
@@ -210,49 +209,88 @@ mysqli_close($conn);
 
         <!-- Load More Button -->
         <div class="text-center">
-            <button id="loadMore" class="btn btn-primary mt-3">Load More</button>
+            <button id="load-more-btn" class="btn btn-primary" data-offset="12">Load More</button>
         </div>
 
+        <?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $offset = (int)$_POST['offset'];
+
+    // Slice the next 12 tips based on the offset
+    $newTips = array_slice($allTips, $offset, 12);
+
+    // Prepare response
+    $response = [
+        'cards' => []
+    ];
+
+    // If there are tips left to load
+    if (count($newTips) > 0) {
+        foreach ($newTips as $oneTip) {
+            $response['cards'][] = [
+                'title' => htmlspecialchars($oneTip[1]),
+                'first_name' => htmlspecialchars($oneTip[3]),
+                'last_name' => htmlspecialchars($oneTip[4])
+            ];
+        }
+    }
+
+    // If no more cards are left
+    if (count($allTips) <= $offset + 12) {
+        $response['noMoreCards'] = true;
+    }
+
+    // Return the response as JSON
+    echo json_encode($response);
+    exit();
+}
+?>
 
         <script>
-            const allTips = <?php echo json_encode($allTips); ?>; // Get all tips data from PHP
-            let currentIndex = 12; // Start at 12 since the first 12 tips are already displayed
-            const itemsPerPage = 12; // Number of items to load on each click
+            document.getElementById('load-more-btn').addEventListener('click', function() {
+                let button = this;
+                let offset = parseInt(button.getAttribute('data-offset')); // Get the current offset
 
-            // Function to load more tips
-            function loadMoreTips() {
-                const tipsContainer = document.getElementById("tipsContainer");
+                // AJAX request to fetch more cards
+                let xhr = new XMLHttpRequest();
+                xhr.open('POST', '', true); // Since we're not using a new file, this will be the same file
 
-                // Determine the end index for slicing the tips array
-                const endIndex = currentIndex + itemsPerPage;
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
-                // Get the slice of tips to display
-                const tipsToShow = allTips.slice(currentIndex, endIndex);
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        let response = JSON.parse(xhr.responseText);
 
-                // Append new tips to the container
-                tipsToShow.forEach(oneTip => {
-                    const itemDiv = document.createElement("div");
-                    itemDiv.classList.add("col-md-4", "item");
-                    itemDiv.innerHTML = `
-                <img src="/Images/Kitchen-Tips/${oneTip[0]}" class="img-fluid" alt="Care Tip">
-                <h5>${oneTip[1]}</h5>
-                <p>by ${oneTip[3]} ${oneTip[4]}</p>
-            `;
-                    tipsContainer.appendChild(itemDiv);
-                });
+                        // Check if there are any more cards to load
+                        if (response.cards.length > 0) {
+                            // Append the new cards to the container
+                            let container = document.getElementById('tip-container');
+                            response.cards.forEach(function(card) {
+                                let cardHTML = `<div class="col-md-4">
+                        <img src="../Images/Kitchen-Tips/${card[0]}" class="img-fluid" alt="Care Tip">
+                        <h5>${card.title}</h5>
+                        <p>by ${card.first_name} ${card.last_name}</p>
+                    </div>`;
+                                container.innerHTML += cardHTML;
+                            });
 
-                // Update the current index
-                currentIndex += itemsPerPage;
+                            // Update the offset for the next batch
+                            button.setAttribute('data-offset', offset + 12);
+                        }
 
-                // Disable button if no more tips are left to show
-                if (currentIndex >= allTips.length) {
-                    document.getElementById("loadMore").disabled = true;
-                    document.getElementById("loadMore").textContent = "No more tips to load";
-                }
-            }
+                        // If there are no more cards, disable the button
+                        if (response.noMoreCards) {
+                            button.disabled = true;
+                            button.innerText = 'No More Cards';
+                        }
+                    } else {
+                        console.error('Error loading more cards');
+                    }
+                };
 
-            // Add event listener for the Load More button
-            document.getElementById("loadMore").addEventListener("click", loadMoreTips);
+                // Send offset as a POST request to the same page
+                xhr.send('offset=' + offset);
+            });
         </script>
 
 
