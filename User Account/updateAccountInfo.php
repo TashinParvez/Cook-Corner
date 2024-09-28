@@ -1,12 +1,9 @@
 <?php
 
+// include('../Includes/Navbar/navbarMain.php');  // tashin
+echo $user_id;
 //...................... Database Connection ..............................
 include("../Includes/Database Connection/database_connection.php");
-
-// Session
-session_start();
-$id = $_SESSION['id'] ?? '2';
-
 
 $tabId = isset($_POST['tabId']) ? $_POST['tabId'] : 'tab-update-profile';
 
@@ -15,7 +12,7 @@ switch ($tabId) {
 
         $title = 'Update Profile';
 
-        // ..........This part for updating database edited by user ............. working
+        // ..........This part for updating database edited by user .............
 
         $errors = array('first_name' => '', 'last_name' => '', 'location' => '', 'date_of_birth' => '', 'zip_code' => '');
 
@@ -84,7 +81,7 @@ switch ($tabId) {
             if (!array_filter($errors)) {
 
                 $stmt = $conn->prepare('UPDATE user_info SET first_name = ?, last_name = ?, location = ?, date_of_birth = ?, zip_code = ? WHERE id = ?');
-                $stmt->bind_param('sssssi', $first_name, $last_name, $location, $date_of_birth, $zip_code, $id);
+                $stmt->bind_param('sssssi', $first_name, $last_name, $location, $date_of_birth, $zip_code, $user_id);
                 $stmt->execute();
 
                 $stmt->close();
@@ -103,7 +100,7 @@ switch ($tabId) {
                         WHERE user_info.id = ? 
                         LIMIT 1');
 
-            $stmt->bind_param('s', $id);
+            $stmt->bind_param('s', $user_id);
             $stmt->execute();
             $result = $stmt->get_result();
             $user_info = $result->fetch_assoc();
@@ -160,8 +157,10 @@ switch ($tabId) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
+    <link rel="stylesheet" href="../Includes/Navbar/navbarMain.css"> <!-- Navbar CSS -->
     <!-- css  -->
     <link href="css/styles.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../Includes/Navbar/navbarMain.css"> <!-- Navbar CSS -->
 
 </head>
 
@@ -251,7 +250,7 @@ switch ($tabId) {
                 <div class="col-md-9">
                     <div class="tab-content">
                         <div class="tab-pane fade <?php echo ($tabId == 'tab-update-profile') ? 'show active' : ''; ?>" id="content-update-profile" role="tabpanel">
-                            <!-- Update Profile --> working
+                            <!-- Update Profile -->
 
                             <form action="updateAccountInfo.php" method="post">
                                 <div class="card mb-3">

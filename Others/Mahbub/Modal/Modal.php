@@ -71,48 +71,6 @@
         </div>
     </div>
 
-    <style>
-        /* Set a max height for the checkbox list and make it scrollable */
-        .checkbox-list {
-            max-height: 150px;
-            overflow-y: auto;
-            margin-top: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .checkbox-list .form-check {
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-buttons {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 1rem;
-        }
-
-        .footer-buttons .btn {
-            width: 48%;
-        }
-
-        .create-collection {
-            margin-top: 1rem;
-        }
-
-        .modal-body {
-            display: flex;
-            justify-content: space-between;
-            height: 400px;
-        }
-
-        .left-section {
-            width: 45%;
-        }
-
-        .right-section {
-            width: 50%;
-        }
-    </style>
 
     <script>
         document.getElementById("create-collection-btn").addEventListener("click", function() {

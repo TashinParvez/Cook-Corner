@@ -1,14 +1,14 @@
 <?php
 
-$email = ''; 
-$user_password = '';
+$email = '';
+$password = '';
 $error = '';
 
 if (isset($_POST['login'])) {
 
    //................ Retrieve data from input field ...............
    $email = $_POST['email'] ?? '';
-   $user_password = $_POST['password'] ?? '';
+   $password = $_POST['password'] ?? '';
 
    if (empty($_POST['email']) || empty($_POST['password'])) {
 
@@ -21,18 +21,19 @@ if (isset($_POST['login'])) {
       $stmt = $conn->prepare('SELECT id, password FROM user_info WHERE email = ? LIMIT 1');
       $stmt->bind_param('s', $email);
       $stmt->execute();
-      $stmt->bind_result($id, $stored_password);
+      $stmt->bind_result($user_id, $stored_password);
 
       if ($stmt->fetch()) {
-         if (password_verify($user_password, $stored_password)) {
+
+         if (password_verify($password, $stored_password)) {
 
             session_start();
-            $_SESSION['id'] = $id;
+            $_SESSION['user_id'] = $user_id;
 
             $stmt->close();
             mysqli_close($conn);
 
-            header('Location: Homepage.php');
+            header('Location: ..\Home\Homepage.php');
             exit();
          } else {
             $error = "Invalid email or password.";
