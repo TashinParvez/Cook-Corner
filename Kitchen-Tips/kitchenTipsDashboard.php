@@ -232,7 +232,7 @@ mysqli_close($conn);
 
             <?php foreach (array_slice($forPopularSeg, 0, 4) as $pitems) { ?>
                 <div class="col-md-3">
-                    <img src="../Images//FoodImages/3.jpg" class="img-fluid" alt="Article">
+                    <img src="../Images/Kitchen-Tips/<?php echo htmlspecialchars($pitems[2]); ?> " class="img-fluid" alt="Article">
                     <!-- image chnage tashin -->
                     <h5> <?php echo htmlspecialchars($pitems[0]); ?></h5>
                     <p> <?php echo htmlspecialchars($pitems[0]); ?></p>
@@ -246,7 +246,6 @@ mysqli_close($conn);
     <!-- -------------------------------------------------------------------------------------------------------------------------- -->
     <!-- ALL Tips -->
     <div class="container mt-5 mb-3">
-
 
         <div class="row">
             <div class="col-4">
@@ -312,7 +311,8 @@ mysqli_close($conn);
             // }
 
             // Randomly shuffle the $heroItems array
-            shuffle($heroItems);
+            // shuffle($heroItems);
+
 
             // Number of items to show initially
             $itemsPerPage = 12;
@@ -322,7 +322,7 @@ mysqli_close($conn);
             foreach (array_slice($heroItems, $currentIndex, $itemsPerPage) as $heroItem) { // Changed variable name here
             ?>
                 <div class="col-md-4 item">
-                    <img src="../Images/FoodImages/4.jpg" class="img-fluid" alt="Care Tip">
+                    <img src="../Images/Kitchen-Tips/<?php echo htmlspecialchars($heroItem[2]); ?>" class="img-fluid" alt="Care Tip">
                     <!-- image chnage tashin -->
 
                     <h5><?php echo htmlspecialchars($heroItem[0]); ?></h5> <!-- Changed $item to $heroItem -->
@@ -334,6 +334,7 @@ mysqli_close($conn);
             }
             ?>
         </div>
+        <!-- liad more btn -->
         <div class="row justify-content-center">
             <button id="loadMore" class="btn btn-primary mt-3 col-3">Load More</button>
         </div>
@@ -355,8 +356,9 @@ mysqli_close($conn);
                     itemsToShow.forEach(heroItem => { // Changed variable name here
                         const itemDiv = document.createElement("div");
                         itemDiv.classList.add("col-md-4", "item");
+                        // chnage here tashin tashin
                         itemDiv.innerHTML = `
-                    <img src="../Images/FoodImages/4.jpg" class="img-fluid" alt="Care Tip">
+                    <img src="../Images/kitchen-Tips/${heroItem[2]}" class="img-fluid" alt="Care Tip">
                     <h5>${heroItem[0]}</h5> <!-- Changed $item to $heroItem -->
                     <small>(${heroItem[7]})</small> <!-- Changed $item to $heroItem -->
                     <p>by ${heroItem[5]} ${heroItem[6]}</p> <!-- Changed $item to $heroItem -->
