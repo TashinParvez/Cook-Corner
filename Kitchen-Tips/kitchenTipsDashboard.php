@@ -225,7 +225,7 @@ mysqli_close($conn);
     <!-- ---------------------------- Main Image Section ---------------------------------------- -->
 
 
-    <!-- Explore Kitchen Tips -->
+    <!-- Explore Kitchen Tips  Popular Tips section-->
     <div class="container mt-5">
         <h3>Popular Tips</h3>
         <div class="row">
