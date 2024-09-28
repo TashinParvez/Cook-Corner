@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-$user_id = $_SESSION['id'];
+$user_id = $_SESSION['user_id'] ?? '5';
 
 //...................... Database Connection ..............................
 include("../Includes/Database Connection/database_connection.php");  // for home page
