@@ -51,7 +51,7 @@
     <!-- remove -->
     <?php foreach ($allcategories as $category) { ?>
         <?php echo htmlspecialchars($category['name']); ?>
-    <?php } ?>
+     <?php } ?>
     <!-- remove -->
 
 
