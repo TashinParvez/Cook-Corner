@@ -1,7 +1,3 @@
-<?php
-
-?>
-
 <!doctype html>
 <html lang="en">
 
@@ -9,13 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Footer</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> -->
-    <!-- css  -->
-    <!-- <link href="css/styles.css" rel="stylesheet" type="text/css"> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
-
-
 
 <body>
 
@@ -30,10 +22,15 @@
         }
     </style>
 
-    <div class="container mt-5">
-        <hr style="border: 1px solid #000; width: 100%; margin: 20px auto;">
+    <!-- Full width hr element -->
 
-        <footer class="py-1"> <!-- Changed padding class to py-1 to reduce height -->
+    <hr style="  border: 1px solid #000;
+            width: 100%;
+            margin: 0;">
+
+    <!-- Full width footer container -->
+    <div class="container-fluid mt-1">
+        <footer class="ps-5 pe-5">
             <div class="row">
                 <div class="col-6 col-md-2 mb-3">
                     <h5>Section</h5>
@@ -81,7 +78,7 @@
                 </div>
             </div>
 
-            <div class="d-flex flex-column flex-sm-row justify-content-between py-1 my-2 border-top"> <!-- Reduced padding and margin here -->
+            <div class="d-flex flex-column flex-sm-row justify-content-between  border-top">
                 <p>© 2024 Team Pentagon. All rights reserved.</p>
                 <ul class="list-unstyled d-flex">
                     <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24" height="24">
@@ -97,7 +94,6 @@
             </div>
         </footer>
     </div>
-
 
 </body>
 
