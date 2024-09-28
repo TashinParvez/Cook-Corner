@@ -1,3 +1,28 @@
+<?php
+// Database table name:  
+
+//...................... Database Connection ..............................
+include("../Includes/Database Connection/database_connection.php");
+
+// --------------------- For segment 1 -------------------
+$sql = "SELECT id,name 
+        FROM kitchen_tips_category  WHERE 1;";
+
+$resultantLabel = mysqli_query($conn, $sql);   // get query result
+
+$allCategorisOfKitchenTips = mysqli_fetch_all($resultantLabel);   // conver to array
+
+// print_r($allCategorisOfKitchenTips);
+
+// foreach ($allCategorisOfKitchenTips as $category) {
+//     echo htmlspecialchars($category[1]);
+//     echo "<br>";
+// }
+
+mysqli_free_result($resultantLabel);
+mysqli_close($conn);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,6 +52,8 @@
 
 
     <!-- ---------------------------- first Segement ---------------------------------------- -->
+
+
     <div class="text-center mt-4">
         <!-- Title and Subtitle -->
         <h1 class="fw-bold">Kitchen Tips</h1>
@@ -34,26 +61,37 @@
             suggestions from our Allrecipes editors.</p>
 
         <!-- First Row of Navigation Links -->
-        <div class="d-flex justify-content-center flex-wrap mb-3">
-            <a href="#" class="me-3 text-dark fw-bold text-decoration-none">All About Ingredients</a>
-            <a href="#" class="me-3 text-dark fw-bold text-decoration-none">Food Wishes: Behind the Recipe</a>
-            <a href="#" class="me-3 text-dark fw-bold text-decoration-none">Conversions</a>
-            <a href="#" class="me-3 text-dark fw-bold text-decoration-none">Cook Times and Temperatures</a>
-            <a href="#" class="me-3 text-dark fw-bold text-decoration-none">Food Safety</a>
-        </div>
+        <div class="d-flex justify-content-center flex-wrap mb-3 kitchen-tips-container">
 
-        <!-- Second Row of Navigation Links -->
-        <div class="d-flex justify-content-center flex-wrap mb-3">
-            <a href="#" class="me-3 text-dark fw-bold text-decoration-none">Health and Nutrition</a>
-            <a href="#" class="me-3 text-dark fw-bold text-decoration-none">How To</a>
-            <a href="#" class="me-3 text-dark fw-bold text-decoration-none">Food Storage and Kitchen Organization</a>
-            <a href="#" class="text-dark fw-bold text-decoration-none">In the Kitchen</a>
-        </div> 
+            <?php foreach ($allCategorisOfKitchenTips as $category) { ?>
+                <a href="#" class="me-3 text-dark fw-bold text-decoration-none">
+                    <?php echo htmlspecialchars($category[1]); ?>
+                </a>
+            <?php } ?>
+
+        </div>
 
     </div>
 
+    <style>
+        .kitchen-tips-container {
+            max-width: 70%;
+            /* Set the max-width to 80% */
+            margin: 0 auto;
+            /* Center the container */
+        }
 
-     
+        .kitchen-tips-container a {
+            flex: 0 1 auto;
+            /* Make the links flexible */
+            margin-bottom: 10px;
+            /* Space between rows */
+        }
+    </style>
+
+
+
+
     <!-- -------------------------- ------------------------------------- -->
     <div class="container mt-5">
         <div class="row">
@@ -115,7 +153,7 @@
 
     <!-- ---------------------------- Main Image Section ---------------------------------------- -->
 
- 
+
     <!-- Explore Kitchen Tips -->
     <div class="container mt-5">
         <h3>Explore Kitchen Tips</h3>

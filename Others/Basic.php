@@ -11,7 +11,7 @@
 // $resultantLabel = mysqli_query($conn, $sql);   // get query result
 
 // $labels = mysqli_fetch_all($resultantLabel);   // conver to array
-
+//   echo htmlspecialchars($total_categories);  
 // mysqli_free_result($resultantLabel);
 // mysqli_close($conn);
 

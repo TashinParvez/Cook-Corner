@@ -27,7 +27,7 @@ if (isset($_POST['sendCode'])) {
             $mail->isSMTP();
             $mail->Host = 'smtp.example.com'; // Your SMTP server
             $mail->SMTPAuth = true;
-            $mail->Username = 'your_email@example.com'; // Your email
+            $mail->Username = 'tashinparvez2002@gmail.com'; // Your email
             $mail->Password = 'your_password'; // Your email password
             $mail->SMTPSecure = 'tls';
             $mail->Port = 587;
