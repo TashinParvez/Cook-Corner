@@ -28,7 +28,7 @@ if (isset($_POST['sendCode'])) {
 
         // Content
         $mail->isHTML(true);                                     // Set email format to HTML
-        $mail->Subject = 'Your Password Reset Code';
+        $mail->Subject = 'Your Reset Code';
         $mail->Body    = "Your password reset code is: <b>$code</b>";
 
         $mail->send();

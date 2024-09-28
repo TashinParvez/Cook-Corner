@@ -78,7 +78,7 @@ if (isset($_POST['login'])) {
          </div>
          <div class="remember-forget">
             <label for="int"><input type="checkbox" name="" id="int" />Remember me</label>
-            <a href="#">Forgot Password?</a>
+            <a href="SendCode.php">Forgot Password?</a>
          </div>
 
          <div>
