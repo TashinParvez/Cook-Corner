@@ -137,18 +137,13 @@
 
 
                                         <div class="container mt-5">
-                                            <form action="#">
-                                                <div class="form-group">
-                                                    <h3>Generate your Recipe</h3>
-                                                    <div class="tag-input">
-                                                        <input type="text" class="form-control" placeholder="Add ingredient" />
-                                                        <div id="tag-container" class="tag-container mt-2">
-
-                                                        </div>
-                                                    </div>
+                                            <div class="form-group">
+                                                <label for="allergy-input">Allergy Information</label>
+                                                <div class="tag-input">
+                                                    <input type="text" id="allergy-input" class="form-control" placeholder="Add allergy" />
+                                                    <div id="tag-container" class="tag-container mt-2"></div>
                                                 </div>
-                                                <button type="button" class="btn btn-danger mb-3">Generate</button>
-                                            </form>
+                                            </div>
                                         </div>
 
                                         <div class="row"> <!-- working -->
