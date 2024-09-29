@@ -84,3 +84,30 @@
     border-right: 2px solid rgb(187, 184, 184);
 
 }
+
+
+.tag {
+    display: flex;
+    align-items: center;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin: 2px;
+    /* Optional: Add some margin around tags for better spacing */
+}
+
+.tag span {
+    margin-right: 5px;
+}
+
+.tag .remove-btn {
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: red;
+    font-size: 16px;
+}
+
+.tag-container {
+    display: flex;
+}
