@@ -16,21 +16,51 @@ $total_categories = mysqli_fetch_array(mysqli_query($conn, $sql_count))[0];
 // Calculate total pages
 $total_pages = ceil($total_categories / $categories_per_page);
 
-// --------------- Sort by name with limit and offset -----------------
-$sql = "SELECT * 
-        FROM  recipe_category
-        ORDER BY name 
-        LIMIT $categories_per_page OFFSET $offset";
+// --------------- Sort by with limit and offset -----------------
 
-$result = mysqli_query($conn, $sql);
-$allcategories = mysqli_fetch_all($result, MYSQLI_ASSOC);
+// Set default value for order if not provided
+$sort = isset($_POST['sortInput']) ? $_POST['sortInput'] : 'namewise';
 
-// ----------------------------------------------------------------
+switch ($sort) {
+    case 'namewise':
+        $sortByClause = "ORDER BY name";
+        break;
+    case 'recentlyAdded':
+        $sortByClause = "ORDER BY n.created_at DESC";
+        break;
+    case 'mostRecipes':
+        $sortByClause = "ORDER BY n.created_at DESC";
+        break;
+}
 
-// ----------------------------------------------------------------
+$stmt = $conn->prepare('SELECT * FROM recipe_category ORDER BY ? LIMIT ? OFFSET ?');
 
-mysqli_free_result($result);
+$stmt->bind_param('sii', $sortByClause, $categories_per_page, $offset);
+$stmt->execute();
+$result = $stmt->get_result();
+$allcategories = $result->fetch_all(MYSQLI_ASSOC);
+
+$stmt->close();
 mysqli_close($conn);
+
+
+// $sql = "SELECT *                 // Tashin
+//         FROM  recipe_category
+//         ORDER BY name 
+//         LIMIT $categories_per_page OFFSET $offset";
+
+// $result = mysqli_query($conn, $sql);
+// $allcategories = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+// mysqli_free_result($result);
+// mysqli_close($conn);
+
+// ----------------------------------------------------------------
+
+
+// ----------------------------------------------------------------
+
+
 ?>
 
 
@@ -109,15 +139,50 @@ mysqli_close($conn);
 
             <div class="col-4">
                 <!------------------------ sort ------------------------>
+
+
+                <!-- Filtered by -->
+
+
+
+
+
+                <!-- ............... -->
+
+
+
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle dropdown-toggle-sort w-100" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        Sorted by: Name
+                        Sorted by: <?php
+                                    switch ($sort) {
+                                        case 'namewise':
+                                            echo 'Name';
+                                            break;
+                                        case 'recentlyAdded':
+                                            echo 'Recently Added';
+                                            break;
+                                        case 'mostRecipes':
+                                            echo 'Most Recipes';
+                                            break;
+                                    }
+                                    ?>
                     </button>
 
+                    <script>
+                        function submiSorttForm(sortInput) { // hidden input name
+                            document.getElementById('sortInput').value = sortInput; // hidden input id
+                            document.getElementById('sortForm').submit(); // form id
+                        }
+                    </script>
+
+                    <form id="sortForm" action="allCategories.php" method="post">
+                        <input type="hidden" name="sortInput" id="sortInput">
+                    </form>
+
                     <ul class="dropdown-menu" aria-labelledby="sortDropdown">
-                        <li><a class="dropdown-item" href="#" onclick="changeSort('Name')"><span id="check-name">✔</span> Name</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeSort('Recently Added')"><span id="check-recent"></span> Recently Added</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeSort('Popularity')"><span id="check-popularity"></span> Most Recipes</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="submiSorttForm('namewise')"><span id="check-name"><?php echo ($sort == 'namewise') ? '✔' : ''; ?></span> Name</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="submiSorttForm('recentlyAdded')"><span id="check-recent"><?php echo ($sort == 'recentlyAdded') ? '✔' : ''; ?></span> Recently Added</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="submiSorttForm('mostRecipes')"><span id="check-popularity"><?php echo ($sort == 'mostRecipes') ? '✔' : ''; ?></span> Most Recipes</a></li>
                     </ul>
                 </div>
             </div>
@@ -130,10 +195,22 @@ mysqli_close($conn);
         <div class="container">
             <div class="row g-4">
 
+                <script>
+                    function submitCategoryForm(categoryId) {
+                        const form = document.getElementById('categoryForm');
+                        form.action = 'oneparticularCategoryShow.php?categoryId=' + categoryId;
+                        form.submit();
+                    }
+                </script>
+
+                <form id="categoryForm" action="oneparticularCategoryShow.php" method="post">
+                    <!-- No hidden input needed -->
+                </form>
+
                 <!-- Loop through all categories and display them -->
                 <?php foreach ($allcategories as $category) { ?>
                     <div class="col-6 col-sm-4 col-md-3 col-lg-1-5">
-                        <a href="#" style="text-decoration: none;">
+                        <a href="#" style="text-decoration: none;" onclick="submitCategoryForm(<?php echo $category['id']; ?>)">
                             <div class="card text-center bg-transparent border-0">
                                 <img src="../../../Images/FoodImages/2.jpg" class="card-img-top rounded-circle mx-auto d-block" alt="..." style="width: 150px; height: 150px; object-fit: cover;">
                                 <div class="card-body">
