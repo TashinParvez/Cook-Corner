@@ -232,3 +232,44 @@ input[type="search"]::-webkit-search-cancel-button {
     visibility: visible;
     width: 100%;
 }
+
+/* Kitchen-menu */
+
+.kitchen-menu {
+    width: 1000px;
+    display: none;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    z-index: 1000;
+}
+
+.nav-item.dropdown:hover .kitchen-menu {
+    display: flex !important;
+    justify-content: center;
+    flex-wrap: wrap;
+    left: -400px;
+}
+
+.kitchen-menu .dropdown-item:hover {
+    color: #28a745 !important;
+}
+
+.go-next {
+    margin-top: 5px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 15px;
+}
+
+.go-next a{
+    color: teal;
+    font-weight: bold;
+    text-decoration: none;
+
+}
+
+

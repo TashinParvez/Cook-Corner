@@ -8,7 +8,7 @@
         display: none; /* Hidden by default */
         position: fixed; /* Fixed position at the bottom right */
         bottom: 20px;
-        right: 20px;
+        left: 20px;
         z-index: 99; /* Ensure it's above other content */
         font-size: 18px;
         border: none;
