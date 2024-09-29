@@ -162,12 +162,10 @@
                                 <div class="row">
                                     <!-- Head -->
                                     <div class="container">
-
-
                                         
                                             <div class="form-group">
                                                 <div class="tag-input">
-                                                    <input type="text" id="allergy-input" class="form-control" placeholder="Add allergy" />
+                                                    <input type="text" id="allergy-input" class="form-control" placeholder="Ingrediants" />
                                                     <div id="tag-container" class="tag-container mt-2">
 
                                                     </div>
