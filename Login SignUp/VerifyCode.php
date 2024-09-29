@@ -1,4 +1,11 @@
-?>
+<?php
+    $resetCode = isset($_GET['code']) ? htmlspecialchars($_GET['code']) : '';
+    $resetEmail = isset($_GET['email']) ? htmlspecialchars($_GET['email']) : '';
+
+
+    echo $resetCode . " " . $resetEmail;
+    
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 
