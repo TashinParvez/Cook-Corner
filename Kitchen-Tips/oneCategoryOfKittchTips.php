@@ -143,26 +143,29 @@ mysqli_close($conn);
                 } ?>
             </div>
 
-        </div>
 
+            <div class="col-md-4">
 
+                <div class="row">
 
-        <div class="col-md-4">
+                    <div class="col-md-12 mb-3">
+                        <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($forheroSegment[1][0]);   ?>" class="img-fluid" alt="Thumbnail">
+                        <p><?php echo htmlspecialchars($forheroSegment[1][1]);   ?></p>
+                    </div>
 
-            <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($forheroSegment[2][0]);   ?>" class="img-fluid" alt="Thumbnail">
+                        <p><?php echo htmlspecialchars($forheroSegment[2][1]);   ?></p>
+                    </div>
 
-                <div class="col-md-12 mb-3">
-                    <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($forheroSegment[1][0]);   ?>" class="img-fluid" alt="Thumbnail">
-                    <p><?php echo htmlspecialchars($forheroSegment[1][1]);   ?></p>
                 </div>
-
-                <div class="col-md-12 mb-3">
-                    <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($forheroSegment[2][0]);   ?>" class="img-fluid" alt="Thumbnail">
-                    <p><?php echo htmlspecialchars($forheroSegment[2][1]);   ?></p>
-                </div>
-
             </div>
+
         </div>
+
+
+
+
 
     </div>
     </div>
