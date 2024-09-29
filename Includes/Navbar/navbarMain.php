@@ -2,7 +2,7 @@
 
 session_start();
 
-$user_id = $_SESSION['user_id'];
+$user_id = $_SESSION['user_id'] ?? '9';
 
 
 //...................... Database Connection ..............................
