@@ -1,3 +1,100 @@
+<?php
+
+include('../Includes/Navbar/navbarMain.php');  // tashin
+
+// echo $user_id;
+
+//...................... Database Connection ..............................
+include("../Includes/Database Connection/database_connection.php");
+
+if (isset($_POST['submitRecipe'])) {
+
+    // These three won't be changed
+    $recipeTitle = $_POST['recipeTitle'] ?? '';
+    $recipePhoto = $_POST['recipePhoto'] ?? '';
+    $description = $_POST['description'] ?? '';
+
+    $ingredients = $_POST['ingredients'] ?? [];
+    $ingredients = implode('<splitForIngredient>', $ingredients);
+
+
+    $directions = $_POST['directions'] ?? '';
+    $directions = implode('<splitForDirection>', $directions);
+
+
+    $servings = $_POST['servings'] ?? '';
+    $yield = $_POST['yield'] ?? '';
+    $prepTime = $_POST['prepTime'] ?? '';
+    $cookTime = $_POST['cookTime'] ?? '';
+
+    $noteTitles = $_POST['noteTitles'] ?? '';
+    $noteTitles = implode('<splitForNoteTitles>', $noteTitles);
+
+    $noteDescriptions = $_POST['noteDescriptions'] ?? '';
+    $noteDescriptions = implode('<splitForNoteDescriptions>', $noteDescriptions);
+
+    $notes = $noteTitles . '<separatorForNoteTitlesAndNoteDescriptions>' . $noteDescriptions;
+
+
+    $stmt = $conn->prepare('SELECT CASE 
+                                    WHEN designation IS NULL THEN 0
+                                    ELSE 1
+                            END AS chef_status
+                            FROM user_info WHERE id = ?;');
+    $stmt->bind_param('i', $user_id);
+    $stmt->execute();
+    $stmt->bind_result($chef_status);
+    $stmt->fetch();
+
+    if ($chef_status == 1) {
+
+        $stmt = $conn->prepare('INSERT INTO recipe_info
+        (title, image, description, ingredients, directions, for_how_many_person, yelds, prep_time, cook_time, notes, author)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);');
+
+        $stmt->bind_param(
+            'sssssssssss',
+            $recipeTitle,
+            $recipePhoto,
+            $description,
+            $ingredients,
+            $directions,
+            $servings,
+            $yield,
+            $prepTime,
+            $cookTime,
+            $notes
+        );
+        $stmt->execute();
+
+        $stmt->close();
+        mysqli_close($conn);
+
+        header('Location: updateAccountInfo.php');
+        exit();
+    } else {
+        echo 'Only chef can add a recipe!';
+    }
+
+
+
+
+
+
+
+    //........................***********.............
+    // Store $ingredients in the database as plain text (without altering line breaks)
+
+    // When retrieving from the database, apply nl2br before displaying
+    // $storedIngredients = nl2br(htmlspecialchars($storedIngredientsFromDb));
+    //......................................................
+}
+
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,7 +119,7 @@
 <body>
 
     <?php
-    include('../Includes/Navbar/navbarMain.php');  // tashin 
+    // include('../Includes/Navbar/navbarMain.php');  // tashin 
     include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin
     ?>
 
@@ -30,19 +127,19 @@
         <h1 class="text-center text-danger mb-4">Add a Recipe</h1>
         <p class="text-center">Uploading personal recipes is easy! Add yours to your favorites, share with friends, family, or the community.</p>
 
-        <form id="recipeForm" class="p-4 border bg-light rounded">
+        <form id="recipeForm" class="p-4 border bg-light rounded" action="addRecipe.php" method="post">
             <hr>
             <!-- Recipe Title -->
             <div class="mb-3">
                 <label for="recipeTitle" class="form-label">Recipe Title</label>
-                <input type="text" id="recipeTitle" class="form-control" placeholder="Give your recipe a title" required>
+                <input type="text" id="recipeTitle" name="recipeTitle" class="form-control" placeholder="Give your recipe a title" required>
             </div>
             <hr>
             <!-- Photo Upload -->
             <div class="mb-3 row">
                 <label for="recipePhoto" class="form-label">Photo (optional)</label>
                 <div class="col-md-6">
-                    <input type="file" id="recipePhoto" class="form-control" accept="image/*">
+                    <input type="file" id="recipePhoto" name="recipePhoto" class="form-control" accept="image/*">
                 </div>
                 <small class="text-muted mt-2">Use JPEG or PNG. Must be at least 960 x 960. Max file size: 30MB</small>
             </div>
@@ -50,14 +147,14 @@
             <!-- Description -->
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
-                <textarea id="description" class="form-control" rows="4" placeholder="Share the story behind your recipe and what makes it special" required></textarea>
+                <textarea id="description" name="description" class="form-control" rows="4" placeholder="Share the story behind your recipe and what makes it special" required></textarea>
             </div>
             <hr>
             <!-- Ingredients Section -->
             <div class="mb-3">
                 <label class="form-label">Ingredients</label>
                 <div id="ingredientsList" class="mb-2">
-                    <input type="text" name="ingredient[]" class="form-control mb-2" placeholder="e.g. 2 cups flour, sifted" required>
+                    <input type="text" name="ingredients[]" class="form-control mb-2" placeholder="e.g. 2 cups flour, sifted" required>
                 </div>
                 <button type="button" class="btn btn-outline-danger" id="addIngredient">+ Add Ingredient</button>
             </div>
@@ -66,7 +163,7 @@
             <div class="mb-3">
                 <label class="form-label">Directions</label>
                 <div id="directionsList" class="mb-2">
-                    <input type="text" name="direction[]" class="form-control mb-2" placeholder="Step 1" required>
+                    <input type="text" name="directions[]" class="form-control mb-2" placeholder="Step 1" required>
                 </div>
                 <button type="button" class="btn btn-outline-danger" id="addStep">+ Add Step</button>
             </div>
@@ -75,11 +172,11 @@
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label for="servings" class="form-label">Servings</label>
-                    <input type="text" id="servings" class="form-control" placeholder="e.g. 8">
+                    <input type="text" id="servings" name="servings" class="form-control" placeholder="e.g. 8" required>
                 </div>
                 <div class="col-md-6">
                     <label for="yield" class="form-label">Yield (Optional)</label>
-                    <input type="text" id="yield" class="form-control" placeholder="e.g. 1 9-inch cake">
+                    <input type="text" id="yield" name="yield" class="form-control" placeholder="e.g. 1 9-inch cake">
                 </div>
             </div>
 
@@ -87,11 +184,11 @@
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label for="prepTime" class="form-label">Prep Time</label>
-                    <input type="number" id="prepTime" class="form-control" placeholder="0" min="0"> mins
+                    <input type="number" id="prepTime" name="prepTime" class="form-control" placeholder="0" min="0" required> mins
                 </div>
                 <div class="col-md-6">
                     <label for="cookTime" class="form-label">Cook Time (optional)</label>
-                    <input type="number" id="cookTime" class="form-control" placeholder="0" min="0"> mins
+                    <input type="number" id="cookTime" name="cookTime" class="form-control" placeholder="0" min="0"> mins
                 </div>
             </div>
 
@@ -102,8 +199,8 @@
                 <label class="form-label">Notes (Optional)</label>
                 <div id="notesList" class="mb-2">
                     <div class="note-entry mb-3">
-                        <input type="text" name="noteTitle[]" class="form-control mb-2" placeholder="Note title (e.g., Tip about storage)" required>
-                        <textarea name="noteDescription[]" class="form-control mb-2" rows="3" placeholder="Add a note description (e.g., Keep in the fridge for 3 days)" required></textarea>
+                        <input type="text" name="noteTitles[]" class="form-control mb-2" placeholder="Note title (e.g., Tip about storage)" required>
+                        <textarea name="noteDescriptions[]" class="form-control mb-2" rows="3" placeholder="Add a note description (e.g., Keep in the fridge for 3 days)" required></textarea>
                     </div>
                 </div>
                 <button type="button" class="btn btn-outline-danger" id="addNote">+ Add Note</button>
@@ -115,7 +212,7 @@
             <!-- Buttons -->
             <div class="container d-flex justify-content-end">
                 <button type="button" class="btn btn-outline-secondary me-4" id="cancel">Cancel</button>
-                <button type="submit" class="btn btn-danger" id="submitRecipe">Submit Recipe</button>
+                <button type="submit" class="btn btn-danger" id="submitRecipe" name="submitRecipe">Submit Recipe</button>
             </div>
 
         </form>
