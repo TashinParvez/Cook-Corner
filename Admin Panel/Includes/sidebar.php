@@ -12,7 +12,7 @@
 
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-            <a href="/Admin Panel/Admin Dashboard/dashboard.php" class="nav-link active" aria-current="page">
+            <a href="/Admin Panel/Admin Dashboard/dashboard.php" class="nav-link" aria-current="page">
                 <svg class="bi pe-none me-2" width="16" height="16">
                     <use xlink:href="#home"></use>
                 </svg>
@@ -65,7 +65,7 @@
 
 
         <li>
-            <a href="/Admin Panel/Add New Course/addCourse.php" class="nav-link link-dark">
+            <a href="/Admin Panel/Add New Course/addCourse.php" class="nav-link link-dark active">
                 <svg class="bi pe-none me-2" width="16" height="16">
                     <use xlink:href="#table"></use>
                 </svg>

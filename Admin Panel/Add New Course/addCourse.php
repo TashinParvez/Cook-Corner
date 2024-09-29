@@ -108,7 +108,7 @@ mysqli_close($conn);
             <p class="text-center">Enter course details to add a new course to the system.</p>
 
             <form id="courseForm" class="p-4 border bg-light rounded">
-                <hr>
+                
                 <!-- Course Title -->
                 <div class="mb-3">
                     <label for="courseTitle" class="form-label">Course Title</label>
