@@ -20,6 +20,34 @@
 
     <link rel="stylesheet" href="../Includes/Navbar/navbarMain.css"> <!-- Navbar CSS -->
 
+    <style>
+        .tag {
+            display: flex;
+            align-items: center;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            padding: 5px 10px;
+            margin: 2px;
+            /* Optional: Add some margin around tags for better spacing */
+        }
+
+        .tag span {
+            margin-right: 5px;
+        }
+
+        .tag .remove-btn {
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: red;
+            font-size: 16px;
+        }
+
+        .tag-container {
+            display: flex;
+        }
+    </style>
+
     <link rel="stylesheet" href="RecipeSearch.css">
 </head>
 
@@ -136,20 +164,19 @@
                                     <div class="container">
 
 
-                                        <div class="container mt-5">
-                                            <form action="#">
-                                                <div class="form-group">
-                                                    <h3>Generate your Recipe</h3>
-                                                    <div class="tag-input">
-                                                        <input type="text" class="form-control" placeholder="Add ingredient" />
-                                                        <div id="tag-container" class="tag-container mt-2">
+                                        
+                                            <div class="form-group">
+                                                <div class="tag-input">
+                                                    <input type="text" id="allergy-input" class="form-control" placeholder="Add allergy" />
+                                                    <div id="tag-container" class="tag-container mt-2">
 
-                                                        </div>
                                                     </div>
                                                 </div>
-                                                <button type="button" class="btn btn-danger mb-3">Generate</button>
-                                            </form>
-                                        </div>
+                                                <button class="btn btn-danger">Generate</button>
+                                            </div>
+
+
+                                        
 
                                         <div class="row"> <!-- working -->
                                             <!-- Added Filters -->
