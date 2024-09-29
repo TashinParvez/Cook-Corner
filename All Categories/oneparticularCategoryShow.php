@@ -4,8 +4,15 @@
 include("../Includes/Database Connection/database_connection.php");
 
 
-$page_name = "Appetizers"; //---------> this will come from all category page
+$categoryId = isset($_GET['categoryId']) ? htmlspecialchars($_GET['categoryId']) : '1'; //---------> this will come from all category page
 
+$stmt = $conn->prepare('SELECT name FROM recipe_category WHERE id = ? LIMIT 1;');
+
+$stmt->bind_param('i', $categoryId);
+$stmt->execute();
+$stmt->bind_result($page_name);
+$stmt->fetch();
+$stmt->close();
 
 $categories_per_page = 24; // 6 rows * 4 categories per row
 $current_page = isset($_GET['page']) ? intval($_GET['page']) : 1;

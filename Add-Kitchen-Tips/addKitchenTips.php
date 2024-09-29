@@ -23,7 +23,8 @@
 <body>
 
     <?php
-    include('/Cook-Corner/Includes/Navbar/navbarMain.php');  // tashin 
+    // include('/Cook-Corner/Includes/Navbar/navbarMain.php');  // tashin 
+    include("../Includes/Navbar/navbarMain.php");
     include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin
     ?>
 

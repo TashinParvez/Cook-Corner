@@ -1,7 +1,7 @@
 <?php
 
-// include('../Includes/Navbar/navbarMain.php');  // tashin
-echo $user_id;
+include('../Includes/Navbar/navbarMain.php');  // tashin
+
 //...................... Database Connection ..............................
 include("../Includes/Database Connection/database_connection.php");
 
@@ -93,14 +93,13 @@ switch ($tabId) {
         } else {
             $can_edit = isset($_POST['edit']) ? 'edit' : '';
 
-            $stmtForProfile = '';
             $stmt = $conn->prepare('SELECT user_info.*, user_designation.designation_name
-                        FROM user_info JOIN user_designation
+                        FROM user_info LEFT JOIN user_designation
                         ON user_info.designation = user_designation.designation_id 
                         WHERE user_info.id = ? 
                         LIMIT 1');
 
-            $stmt->bind_param('s', $user_id);
+            $stmt->bind_param('i', $user_id);
             $stmt->execute();
             $result = $stmt->get_result();
             $user_info = $result->fetch_assoc();
@@ -167,7 +166,7 @@ switch ($tabId) {
 <body>
 
     <?php
-    include('../Includes/Navbar/navbarMain.php');  // tashin
+    // include('../Includes/Navbar/navbarMain.php');  // tashin
     ?>
 
     <div class="container pb-5">
