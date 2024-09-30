@@ -1,26 +1,57 @@
 <?php
 
 include('../Includes/Navbar/navbarMain.php');  // tashin
-
 // echo $user_id;
 
 //...................... Database Connection ..............................
 include("../Includes/Database Connection/database_connection.php");
 
+$recipePhoto = $recipeTitle = $description = $ingredients = $directions = $servings = $yield = $prepTime = $cookTime = $noteTitles = $noteDescriptions = '';
+
 if (isset($_POST['submitRecipe'])) {
 
+    if (isset($_FILES['recipePhoto']) && $_FILES['recipePhoto']['error'] == 0) {
+
+        $tempname = $_FILES['recipePhoto']['tmp_name'];
+
+        $file_name = $_FILES['recipePhoto']['name'];
+        $file_ext = pathinfo($file_name, PATHINFO_EXTENSION);
+        $file_base_name = pathinfo($file_name, PATHINFO_FILENAME);
+
+        // $upload_dir = 'Images\Recipe-Images\\';
+        $upload_dir = 'D:\All UIU Materials\8th Trimester\SAD Lab\Project\Cook-Corner\Images\Recipe-Images\\';
+        if (!is_dir($upload_dir)) {
+            mkdir($upload_dir, 0777, true);
+        }
+
+        $counter = 0;
+        $target_file = $upload_dir . $file_base_name . '.' . $file_ext;
+
+        while (file_exists($target_file)) {
+            $counter++;
+            $new_file_name = $file_base_name . "($counter)" . '.' . $file_ext;
+            $target_file = $upload_dir . $new_file_name;
+        }
+
+        // Now move the file to the target directory with the new unique file name
+        if (move_uploaded_file($_FILES['recipePhoto']['tmp_name'], $target_file)) {
+            $recipePhoto = isset($new_file_name) ? $new_file_name : $file_base_name . '.' . $file_ext;
+        } else {
+            echo "There was an error uploading the file.";
+        }
+    }
+
     // These three won't be changed
+    $recipePhoto = isset($recipePhoto) ?? '';
+
     $recipeTitle = $_POST['recipeTitle'] ?? '';
-    $recipePhoto = $_POST['recipePhoto'] ?? '';
     $description = $_POST['description'] ?? '';
 
     $ingredients = $_POST['ingredients'] ?? [];
-    $ingredients = implode('<splitForIngredient>', $ingredients);
-
+    $ingredients = implode('<splitForIngredient>', array_map('trim', $ingredients));
 
     $directions = $_POST['directions'] ?? '';
-    $directions = implode('<splitForDirection>', $directions);
-
+    $directions = implode('<splitForDirection>', array_map('trim', $directions));
 
     $servings = $_POST['servings'] ?? '';
     $yield = $_POST['yield'] ?? '';
@@ -28,10 +59,10 @@ if (isset($_POST['submitRecipe'])) {
     $cookTime = $_POST['cookTime'] ?? '';
 
     $noteTitles = $_POST['noteTitles'] ?? '';
-    $noteTitles = implode('<splitForNoteTitles>', $noteTitles);
+    $noteTitles = implode('<splitForNoteTitles>', array_map('trim', $noteTitles));
 
     $noteDescriptions = $_POST['noteDescriptions'] ?? '';
-    $noteDescriptions = implode('<splitForNoteDescriptions>', $noteDescriptions);
+    $noteDescriptions = implode('<splitForNoteDescriptions>', array_map('trim', $noteDescriptions));
 
     $notes = $noteTitles . '<separatorForNoteTitlesAndNoteDescriptions>' . $noteDescriptions;
 
@@ -70,16 +101,11 @@ if (isset($_POST['submitRecipe'])) {
         $stmt->close();
         mysqli_close($conn);
 
-        header('Location: updateAccountInfo.php');
-        exit();
+        header('Location: #');
+        // exit();
     } else {
         echo 'Only chef can add a recipe!';
     }
-
-
-
-
-
 
 
     //........................***********.............
@@ -89,7 +115,6 @@ if (isset($_POST['submitRecipe'])) {
     // $storedIngredients = nl2br(htmlspecialchars($storedIngredientsFromDb));
     //......................................................
 }
-
 
 
 ?>
@@ -132,7 +157,8 @@ if (isset($_POST['submitRecipe'])) {
             <!-- Recipe Title -->
             <div class="mb-3">
                 <label for="recipeTitle" class="form-label">Recipe Title</label>
-                <input type="text" id="recipeTitle" name="recipeTitle" class="form-control" placeholder="Give your recipe a title" required>
+                <input type="text" id="recipeTitle" name="recipeTitle" class="form-control" placeholder="Give your recipe a title"
+                    value="<?php echo htmlspecialchars($recipeTitle); ?>" required>
             </div>
             <hr>
             <!-- Photo Upload -->
@@ -147,14 +173,29 @@ if (isset($_POST['submitRecipe'])) {
             <!-- Description -->
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
-                <textarea id="description" name="description" class="form-control" rows="4" placeholder="Share the story behind your recipe and what makes it special" required></textarea>
+                <textarea id="description" name="description" class="form-control" rows="4" placeholder="Share the story behind your recipe and what makes it special"
+                    required><?php echo htmlspecialchars($description); ?></textarea>
             </div>
             <hr>
             <!-- Ingredients Section -->
             <div class="mb-3">
                 <label class="form-label">Ingredients</label>
                 <div id="ingredientsList" class="mb-2">
-                    <input type="text" name="ingredients[]" class="form-control mb-2" placeholder="e.g. 2 cups flour, sifted" required>
+                    <?php
+                    $ingredients = array_map('trim', explode('<splitForIngredient>', $ingredients));
+
+                    if (!empty($ingredients)) {
+                        foreach ($ingredients as $ingredient) {
+                    ?>
+                            <input type="text" name="ingredients[]" class="form-control mb-2" placeholder="e.g. 2 cups flour, sifted" value="<?php echo htmlspecialchars($ingredient); ?>" required>
+                        <?php
+                        }
+                    } else {
+                        ?>
+                        <input type="text" name="ingredients[]" class="form-control mb-2" placeholder="e.g. 2 cups flour, sifted" required>
+                    <?php
+                    }
+                    ?>
                 </div>
                 <button type="button" class="btn btn-outline-danger" id="addIngredient">+ Add Ingredient</button>
             </div>
@@ -163,7 +204,21 @@ if (isset($_POST['submitRecipe'])) {
             <div class="mb-3">
                 <label class="form-label">Directions</label>
                 <div id="directionsList" class="mb-2">
-                    <input type="text" name="directions[]" class="form-control mb-2" placeholder="Step 1" required>
+                    <?php
+                    $directions = array_map('trim', explode('<splitForDirection>', $directions));
+
+                    if (!empty($directions)) {
+                        foreach ($directions as $direction) {
+                    ?>
+                            <input type="text" name="directions[]" class="form-control mb-2" placeholder="Step 1" value="<?php echo htmlspecialchars($direction); ?>" required>
+                        <?php
+                        }
+                    } else {
+                        ?>
+                        <input type="text" name="directions[]" class="form-control mb-2" placeholder="Step 1" required>
+                    <?php
+                    }
+                    ?>
                 </div>
                 <button type="button" class="btn btn-outline-danger" id="addStep">+ Add Step</button>
             </div>
@@ -172,11 +227,13 @@ if (isset($_POST['submitRecipe'])) {
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label for="servings" class="form-label">Servings</label>
-                    <input type="text" id="servings" name="servings" class="form-control" placeholder="e.g. 8" required>
+                    <input type="text" id="servings" name="servings" class="form-control" placeholder="e.g. 8"
+                        value="<?php echo htmlspecialchars($servings); ?>" required>
                 </div>
                 <div class="col-md-6">
                     <label for="yield" class="form-label">Yield (Optional)</label>
-                    <input type="text" id="yield" name="yield" class="form-control" placeholder="e.g. 1 9-inch cake">
+                    <input type="text" id="yield" name="yield" class="form-control" placeholder="e.g. 1 9-inch cake"
+                        value="<?php echo htmlspecialchars($recipeTitle); ?>">
                 </div>
             </div>
 
@@ -184,11 +241,13 @@ if (isset($_POST['submitRecipe'])) {
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label for="prepTime" class="form-label">Prep Time</label>
-                    <input type="number" id="prepTime" name="prepTime" class="form-control" placeholder="0" min="0" required> mins
+                    <input type="number" id="prepTime" name="prepTime" class="form-control" placeholder="0" min="0"
+                        value="<?php echo htmlspecialchars($recipeTitle); ?>" required> mins
                 </div>
                 <div class="col-md-6">
                     <label for="cookTime" class="form-label">Cook Time (optional)</label>
-                    <input type="number" id="cookTime" name="cookTime" class="form-control" placeholder="0" min="0"> mins
+                    <input type="number" id="cookTime" name="cookTime" class="form-control" placeholder="0" min="0"
+                        value="<?php echo htmlspecialchars($recipeTitle); ?>"> mins
                 </div>
             </div>
 
@@ -199,8 +258,24 @@ if (isset($_POST['submitRecipe'])) {
                 <label class="form-label">Notes (Optional)</label>
                 <div id="notesList" class="mb-2">
                     <div class="note-entry mb-3">
-                        <input type="text" name="noteTitles[]" class="form-control mb-2" placeholder="Note title (e.g., Tip about storage)" required>
-                        <textarea name="noteDescriptions[]" class="form-control mb-2" rows="3" placeholder="Add a note description (e.g., Keep in the fridge for 3 days)" required></textarea>
+                        <?php
+                        $noteTitles = array_map('trim', explode('<splitForNoteTitles>', $noteTitles));
+                        $noteDescriptions = array_map('trim', explode('<splitForNoteDescriptions>', $noteDescriptions));
+
+                        if (!empty($noteTitles) && !empty($noteDescriptions)) {
+                            foreach ($noteTitles as $index => $noteTitle) {
+                        ?>
+                                <input type="text" name="noteTitles[]" class="form-control mb-2" placeholder="Note title (e.g., Tip about storage)" value="<?php echo htmlspecialchars($noteTitle); ?>" required>
+                                <textarea name="noteDescriptions[]" class="form-control mb-2" rows="3" placeholder="Add a note description (e.g., Keep in the fridge for 3 days)" required><?php echo htmlspecialchars($noteDescriptions[$index]); ?></textarea>
+                            <?php
+                            }
+                        } else {
+                            ?>
+                            <input type="text" name="noteTitles[]" class="form-control mb-2" placeholder="Note title (e.g., Tip about storage)" required>
+                            <textarea name="noteDescriptions[]" class="form-control mb-2" rows="3" placeholder="Add a note description (e.g., Keep in the fridge for 3 days)" required></textarea>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </div>
                 <button type="button" class="btn btn-outline-danger" id="addNote">+ Add Note</button>
