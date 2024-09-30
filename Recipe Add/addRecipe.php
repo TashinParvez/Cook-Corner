@@ -18,7 +18,8 @@ if (isset($_POST['submitRecipe'])) {
         $file_ext = pathinfo($file_name, PATHINFO_EXTENSION);
         $file_base_name = pathinfo($file_name, PATHINFO_FILENAME);
 
-        $upload_dir = 'Images\Recipe-Images\\';
+        // $upload_dir = 'Images\Recipe-Images\\';
+        $upload_dir = 'D:\All UIU Materials\8th Trimester\SAD Lab\Project\Cook-Corner\Images\Recipe-Images\\';
         if (!is_dir($upload_dir)) {
             mkdir($upload_dir, 0777, true);
         }
