@@ -4,8 +4,8 @@
     #mySidebar {
         position: fixed;
         top: 0;
-        right: -360px;
-        width: 360px;
+        right: -400px;
+        width: 400px;
         height: 100%;
         background-color: #f8f9fa;
         transition: 0.3s;
@@ -22,17 +22,68 @@
         position: fixed;
         top: 50%;
         right: -40px;
-        background-color: #007bff;
+        background-color: #ff5252;
         color: white;
         padding: 10px;
         cursor: pointer;
         z-index: 1001;
         transition: right 0.3s;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+       
     }
 
     /* Move toggle button along with sidebar */
     #mySidebar.active+#toggleSidebar {
-        right: 360px;
+        right: 400px;
+    }
+
+    tbody tr td .btn-primary {
+        background: transparent !important;
+        color: black;
+        border: none;
+    }
+
+    tbody tr td .btn-primary:hover {
+        background: transparent !important;
+        color: black;
+    }
+
+    /* Centering text in table headers and cells */
+    #mySidebar .table th,
+    #mySidebar .table td {
+        text-align: center;
+        /* Center-align the text */
+    }
+
+    /* Optional: To ensure all tables use this style */
+    table {
+        width: 100%;
+        /* Ensures the table takes full width */
+    }
+
+    tbody tr .btn-primary {
+        outline: none;
+        border: none;
+
+    }
+
+    h4 {
+        text-align: center;
+    }
+
+    .nav-tabs .nav-link {
+        color: black;
+    }
+
+    .tab-pane .container ul li {
+        list-style: none;
+    }
+
+    .tab-pane .container ul li a {
+        width: 90% !important;
+        line-height: 40px !important;
+        text-align: center !important;
     }
 </style>
 
@@ -84,71 +135,36 @@
                     <tr class="table-dark">
                         <th scope="col">Item</th>
                         <th scope="col"> </th>
-                        <th scope="col">Quantity</th>
                         <th scope="col"> </th>
+                        <th scope="col"> </th>
+                        <th scope="col">Quantity</th>
+
                     </tr>
                 </thead>
                 <tbody>
-
-
                     <tr>
                         <!-- category: frute, vegetables, spices etc -->
-                        <td colspan="4"> <b>Vegetables</b></td>
+                        <td colspan="6"> <b>Vegetables</b></td>
                     </tr>
-
                     <tr>
                         <!-- items:  -->
                         <td>Mark</td>
-                        <td>
-                            <button type="button" class="btn btn-outline-primary btn-sm">+</button>
-                        </td>
-                        <td>Otto</td>
-                        <td>
-                            <button type="button" class="btn btn-outline-primary btn-sm">-</button>
-                        </td>
+                        <th scope="col"> </th>
+                        <th scope="col"> </th>
+                        <th scope="col"> </th>
+                        <td> <button type="button" class="btn btn-primary btn-sm">+</button>Otto <button type="button" class="btn btn-primary btn-sm">-</button></td>
                     </tr>
-
                     <tr>
                         <!-- items:  -->
                         <td>Mark</td>
-                        <td>
-                            <button type="button" class="btn btn-outline-primary btn-sm">+</button>
-                        </td>
-                        <td>Otto</td>
-                        <td>
-                            <button type="button" class="btn btn-outline-primary btn-sm">-</button>
-                        </td>
+                        <th scope="col"> </th>
+                        <th scope="col"> </th>
+                        <th scope="col"> </th>
+                        <td> <button type="button" class="btn btn-primary btn-sm">+</button>Otto <button type="button" class="btn btn-primary btn-sm">-</button></td>
                     </tr>
 
 
-                    <tr>
-                        <!-- category: frute, vegetables, spices etc -->
-                        <td colspan="4"> <b>Frute</b></td>
-                    </tr>
 
-                    <tr>
-                        <!-- items:  -->
-                        <td>Mark</td>
-                        <td>
-                            <button type="button" class="btn btn-outline-primary btn-sm">+</button>
-                        </td>
-                        <td>Otto</td>
-                        <td>
-                            <button type="button" class="btn btn-outline-primary btn-sm">-</button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <!-- items:  -->
-                        <td>Mark</td>
-                        <td>
-                            <button type="button" class="btn btn-outline-primary btn-sm">+</button>
-                        </td>
-                        <td>Otto</td>
-                        <td>
-                            <button type="button" class="btn btn-outline-primary btn-sm">-</button>
-                        </td>
-                    </tr>
 
                 </tbody>
 
@@ -169,9 +185,8 @@
 
                 <thead>
                     <tr class="table-dark">
-                        <th scope="col">SI</th>
+
                         <th scope="col">Item</th>
-                        <th scope="col">Quantity/Price</th>
                         <th scope="col">Quantity</th>
                         <th scope="col">Total Parice</th>
                         <th scope="col">Action</th>
@@ -182,37 +197,36 @@
 
                     <tr>
                         <!-- items:  -->
-                        <td>1</td>
+
                         <td>Tomatoes</td>
-                        <td>1KG/20Tk</td>
+
 
                         <td>
-                            <button type="button" class="btn btn-outline-primary btn-sm">+</button>
+                            <button type="button" class="btn btn-primary btn-sm">+</button>
                             1
-                            <button type="button" class="btn btn-outline-primary btn-sm">-</button>
+                            <button type="button" class="btn btn-primary btn-sm">-</button>
                         </td>
 
                         <td>20Tk</td>
                         <td>
-                            <button type="button" class="btn btn-outline-primary btn-sm">remove</button>
+                            <button type="button" class="btn btn-primary btn-sm">remove</button>
                         </td>
                     </tr>
 
                     <tr>
                         <!-- items:  -->
-                        <td>2</td>
+
                         <td>Broccoli</td>
-                        <td>1KG/20Tk</td>
 
                         <td>
-                            <button type="button" class="btn btn-outline-primary btn-sm">+</button>
+                            <button type="button" class="btn btn-primary btn-sm">+</button>
                             1
-                            <button type="button" class="btn btn-outline-primary btn-sm">-</button>
+                            <button type="button" class="btn btn-primary btn-sm">-</button>
                         </td>
 
                         <td>20Tk</td>
                         <td>
-                            <button type="button" class="btn btn-outline-primary btn-sm">remove</button>
+                            <button type="button" class="btn btn-primary btn-sm">remove</button>
                         </td>
                     </tr>
 
@@ -227,14 +241,10 @@
 
         </div>
 
-        <!-- Favourite content-->
+        <!-- Favorite content-->
         <div class="tab-pane fade" id="favorites" role="tabpanel" aria-labelledby="favorites-tab">
             <h4>Your Favorites</h4>
-
-
             <div class="container">
-
-
                 <ul>
                     <li><a class="dropdown-item" href="#">Breakfast <img src="/Images/Icons/Navigate-page-Icon.png" alt=""> </a></li>
                     <li><a class="dropdown-item" href="#">Brunch <img src="/Images/Icons/Navigate-page-Icon.png" alt=""></a></li>
@@ -243,14 +253,10 @@
                     <li><a class="dropdown-item" href="#">Snacks <img src="/Images/Icons/Navigate-page-Icon.png" alt=""></a></li>
                     <li><a class="dropdown-item" href="#">Desserts <img src="/Images/Icons/Navigate-page-Icon.png" alt=""></a></li>
                 </ul>
-
             </div>
-
-
             <div class="d-flex text-center ">
                 <a type="button" class="btn btn-secondary btn-sm" href="../All Categories/allCategories.php">See All Categories</a>
             </div>
-
         </div>
 
 
