@@ -1,0 +1,94 @@
+$stmt = $conn->prepare('SELECT * FROM recipe_category ORDER BY ? LIMIT ? OFFSET ?');
+
+$stmt->bind_param('sii', $sortBy, $categories_per_page, $offset);
+$stmt->execute();
+$result = $stmt->get_result();
+$allcategories = $result->fetch_all(MYSQLI_ASSOC);
+
+
+$sql_count = "SELECT COUNT(*) 
+              FROM `recipe_category`";
+
+$total_categories = mysqli_fetch_array(mysqli_query($conn, $sql_count))[0];
+
+// Calculate total pages
+$total_pages = ceil($total_categories / $categories_per_page);
+
+
+$sql = "SELECT *                 // Tashin
+        FROM  recipe_category
+        ORDER BY name 
+        LIMIT $categories_per_page OFFSET $offset";
+
+$result = mysqli_query($conn, $sql);
+$allcategories = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+mysqli_free_result($result);
+mysqli_close($conn);
+
+
+
+// --------------- Sort by name/ recently/ most recipes with limit and offset -----------------
+
+$categories_per_page = 24; // 6 rows * 4 categories per row
+$current_page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+$offset = ($current_page - 1) * $categories_per_page;
+
+// Set default value for order if not provided
+$sort = isset($_POST['sortInput']) ? $_POST['sortInput'] : 'namewise';
+
+switch ($sort) {
+    case 'namewise':
+        $sortBy = "name";
+        break;
+    case 'recentlyAdded':
+        $sortBy = "created_at DESC";
+        break;
+    case 'mostRecipes':
+        // $sortBy = "";
+        // here need adjustment
+        break;
+    default:
+        $sortBy = "name"; // Default sorting
+        break;
+}
+
+
+$search_text = '';
+$search_extended_query = '';
+
+if (isset($_POST['all_categories_search'])) {
+    $search_text = $_POST['all_categories_search'] ?? '';
+    if (!empty($search_text)) {
+
+        $search_text = $conn->real_escape_string($search_text);
+        $search_extended_query = "WHERE name LIKE '%$search_text%' OR description LIKE '%$search_text%'";
+    }
+}
+
+
+// Prepare SQL statement with search conditions
+$sql = "SELECT SQL_CALC_FOUND_ROWS * 
+        FROM recipe_category 
+        $search_extended_query
+        ORDER BY $sortBy
+        LIMIT ? OFFSET ?;";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param('ii', $categories_per_page, $offset);
+$stmt->execute();
+$result = $stmt->get_result();
+$allcategories = $result->fetch_all(MYSQLI_ASSOC);
+
+// Get the total number of rows using FOUND_ROWS()
+$total_categories_result = $conn->query("SELECT FOUND_ROWS()");
+$total_categories = $total_categories_result->fetch_array()[0];
+
+// Calculate total pages
+$total_pages = ceil($total_categories / $categories_per_page);
+
+
+$stmt->close();
+mysqli_close($conn);
+
+// ----------------------------------------------------------------
