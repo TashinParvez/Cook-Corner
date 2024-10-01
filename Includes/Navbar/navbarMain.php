@@ -2,7 +2,8 @@
 
 session_start();
 
-$user_id = $_SESSION['user_id'];
+$user_id = $_SESSION['user_id'] ?? '5';
+ 
 
 
 //...................... Database Connection ..............................
@@ -348,7 +349,7 @@ mysqli_close($conn);
                         <a class="nav-link" href="/Course/allCourses.php">Course</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/Collection/collection.php">AddRecipe</a>
+                        <a class="nav-link" href="/Recipe Add/addRecipe.php">AddRecipe</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../../Add-Kitchen-Tips/addKitchenTips.php">AddTips</a>

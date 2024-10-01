@@ -1,0 +1,44 @@
+.hero {
+    background-color: #f9f9f9;
+    padding: 60px 0;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 18px;
+}
+
+.section-title {
+    font-size: 28px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.calculator-section {
+    background-color: #e0f7fa;
+    padding: 40px;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.calculate-btn {
+    margin-top: 20px;
+}
+
+.tips-list li {
+    margin-bottom: 10px;
+}
+
+.call-to-action {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+}
