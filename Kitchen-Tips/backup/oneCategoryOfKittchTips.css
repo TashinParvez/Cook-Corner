@@ -1,0 +1,65 @@
+/* Custom styling */
+.card-title {
+  font-weight: bold;
+}
+
+.explore-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.explore-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.search-bar {
+  width: 300px;
+}
+
+/* ------------------------------------------------- */
+/* Add this CSS to your existing styles in oneCategoryOfKittchTips.css */
+
+.card-image {
+  width: 100%; /* Make the image frame responsive */
+  height: 200px; /* Fixed height for the image frame */
+  overflow: hidden; /* Hide the overflow */
+  position: relative; /* For positioning the image */
+}
+
+.card-image img {
+  position: absolute; /* Absolutely position the image */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  min-width: 100%; /* Make sure the image covers the width */
+  min-height: 100%; /* Make sure the image covers the height */
+  transform: translate(-50%, -50%); /* Adjust position to center */
+  object-fit: cover; /* Cover the entire container without distortion */
+}
+
+.item {
+  position: relative; /* Allow for absolute positioning of the image */
+  width: 100%; /* Full width of the column */
+  height: 250px; /* Increased height for better spacing */
+  overflow: hidden; /* Hide overflow */
+  margin-bottom: 15px; /* Add space between items */
+}
+
+.item img {
+  position: absolute; /* Position the image */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  min-width: 100%; /* Ensures the image covers the width */
+  min-height: 100%; /* Ensures the image covers the height */
+  transform: translate(-50%, -50%); /* Adjust position to center */
+}
+
+.item h5,
+.item p {
+  position: relative; /* Reset position for text */
+  margin: 10px 0; /* Add margin for spacing */
+  text-align: center; /* Center text alignment */
+}
