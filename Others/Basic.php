@@ -1,4 +1,7 @@
 <?php
+include('../Includes/Navbar/navbarMain.php');  // tashin (From now)
+// $user_id  [have access]
+
 // Database table name:  
 
 //...................... Database Connection ..............................
@@ -43,15 +46,14 @@
 <body>
 
     <?php
-    include('../Includes/Navbar/navbarMain.php');  // tashin 
     include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin
     ?>
 
-
+    <!--  -->
     <!-- remove -->
     <?php foreach ($allcategories as $category) { ?>
         <?php echo htmlspecialchars($category['name']); ?>
-     <?php } ?>
+    <?php } ?>
     <!-- remove -->
 
 
