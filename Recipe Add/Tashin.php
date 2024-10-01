@@ -6,6 +6,7 @@ include('../Includes/Navbar/navbarMain.php');  // tashin
 //...................... Database Connection ..............................
 include("../Includes/Database Connection/database_connection.php");
 
+
 $recipePhoto = $recipeTitle = $description = $ingredients = $directions = $servings = $yield = $prepTime = $cookTime = $noteTitles = $noteDescriptions = '';
 
 if (isset($_POST['submitRecipe'])) {
@@ -18,7 +19,7 @@ if (isset($_POST['submitRecipe'])) {
         $file_ext = pathinfo($file_name, PATHINFO_EXTENSION);
         $file_base_name = pathinfo($file_name, PATHINFO_FILENAME);
 
-        $upload_dir = '../../Images/Recipe-Images/';
+        $upload_dir = '../Images/Recipe-Images/';
         // $upload_dir = 'D:\All UIU Materials\8th Trimester\SAD Lab\Project\Cook-Corner\Images\Recipe-Images\\';
         if (!is_dir($upload_dir)) {
             mkdir($upload_dir, 0777, true);
@@ -43,6 +44,7 @@ if (isset($_POST['submitRecipe'])) {
         echo "No file was uploaded or there was an upload error.";
     }
 
+    // These three won't be changed
     $recipePhoto = isset($recipePhoto) ?? '';
 
     $recipeTitle = $_POST['recipeTitle'] ?? '';
@@ -77,12 +79,11 @@ if (isset($_POST['submitRecipe'])) {
     $stmt->execute();
     $stmt->bind_result($chef_status);
     $stmt->fetch();
-    $stmt->close();
 
     if ($chef_status == 1) {
 
         $stmt = $conn->prepare('INSERT INTO recipe_info
-        (title, image, description, ingredients, directions, servings, yield, prep_time, cook_time, notes, author)
+        (title, image, description, ingredients, directions, for_how_many_person, yelds, prep_time, cook_time, notes, author)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);');
 
         $stmt->bind_param(
@@ -92,12 +93,11 @@ if (isset($_POST['submitRecipe'])) {
             $description,
             $ingredients,
             $directions,
-            $servings, // for how many person
+            $servings,
             $yield,
             $prepTime,
             $cookTime,
-            $notes,
-            $user_id
+            $notes
         );
         $stmt->execute();
 
@@ -154,8 +154,9 @@ if (isset($_POST['submitRecipe'])) {
     <div class="container my-5">
         <h1 class="text-center text-danger mb-4">Add a Recipe</h1>
         <p class="text-center">Uploading personal recipes is easy! Add yours to your favorites, share with friends, family, or the community.</p>
-
         <form id="recipeForm" class="p-4 border bg-light rounded" action="addRecipe.php" method="post" enctype="multipart/form-data">
+
+            <!-- <form id="recipeForm" class="p-4 border bg-light rounded" action="addRecipe.php" method="post"> -->
             <hr>
             <!-- Recipe Title -->
             <div class="mb-3">
@@ -230,13 +231,13 @@ if (isset($_POST['submitRecipe'])) {
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label for="servings" class="form-label">Servings</label>
-                    <input type="number" id="servings" name="servings" class="form-control" placeholder="e.g. 8"
+                    <input type="text" id="servings" name="servings" class="form-control" placeholder="e.g. 8"
                         value="<?php echo htmlspecialchars($servings); ?>" required>
                 </div>
                 <div class="col-md-6">
                     <label for="yield" class="form-label">Yield (Optional)</label>
-                    <input type="number" id="yield" name="yield" class="form-control" placeholder="e.g. 1 9-inch cake"
-                        value="<?php echo htmlspecialchars($yield); ?>">
+                    <input type="text" id="yield" name="yield" class="form-control" placeholder="e.g. 1 9-inch cake"
+                        value="<?php echo htmlspecialchars($recipeTitle); ?>">
                 </div>
             </div>
 
@@ -245,12 +246,12 @@ if (isset($_POST['submitRecipe'])) {
                 <div class="col-md-6">
                     <label for="prepTime" class="form-label">Prep Time</label>
                     <input type="number" id="prepTime" name="prepTime" class="form-control" placeholder="0" min="0"
-                        value="<?php echo htmlspecialchars($prepTime); ?>" required> mins
+                        value="<?php echo htmlspecialchars($recipeTitle); ?>" required> mins
                 </div>
                 <div class="col-md-6">
                     <label for="cookTime" class="form-label">Cook Time (optional)</label>
                     <input type="number" id="cookTime" name="cookTime" class="form-control" placeholder="0" min="0"
-                        value="<?php echo htmlspecialchars($cookTime); ?>"> mins
+                        value="<?php echo htmlspecialchars($recipeTitle); ?>"> mins
                 </div>
             </div>
 
