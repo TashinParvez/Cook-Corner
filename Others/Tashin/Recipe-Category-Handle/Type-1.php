@@ -27,6 +27,7 @@ $occasions = ["Eidul Fitar", "Eid Azha", "Maghi Purnima", "Marriage", "Birthday"
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,32 +37,33 @@ $occasions = ["Eidul Fitar", "Eid Azha", "Maghi Purnima", "Marriage", "Birthday"
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 </head>
+
 <body>
-<div class="container mt-5">
-    <h2>Add a New Recipe</h2>
-    <form method="POST" action="">
-        <div class="mb-3">
-            <label for="occasions">Select Occasions:</label>
-            <select name="occasions[]" id="occasions" multiple="multiple" style="width: 100%;">
-                <?php foreach ($occasions as $occasion): ?>
-                    <option value="<?php echo htmlspecialchars($occasion); ?>"><?php echo htmlspecialchars($occasion); ?></option>
-                <?php endforeach; ?>
-            </select>
-        </div>
+    <div class="container mt-5">
+        <h2>Add a New Recipe</h2>
+        <form method="POST" action="">
+            <div class="mb-3">
+                <label for="occasions">Select Occasions:</label>
+                <select name="occasions[]" id="occasions" multiple="multiple" style="width: 100%;">
+                    <?php foreach ($occasions as $occasion): ?>
+                        <option value="<?php echo htmlspecialchars($occasion); ?>"><?php echo htmlspecialchars($occasion); ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
 
-        <button type="submit" class="btn btn-primary">Add Recipe</button>
-    </form>
-</div>
+        </form>
+    </div>
 
-<script>
-    $(document).ready(function() {
-        $('#occasions').select2({
-            placeholder: "Choose Occasions",
-            allowClear: true
+    <script>
+        $(document).ready(function() {
+            $('#occasions').select2({
+                placeholder: "Choose Occasions",
+                allowClear: true
+            });
         });
-    });
-</script>
+    </script>
 </body>
+
 </html>
 
 <?php
