@@ -1,0 +1,90 @@
+.modal-content {
+    padding: 2rem;
+}
+
+.img-fluid {
+    max-height: 200px;
+}
+
+.checkbox-list {
+    margin-top: 1rem;
+}
+
+.checkbox-list .form-check {
+    margin-bottom: 0.5rem;
+}
+
+.modal-body {
+    display: flex;
+    justify-content: space-between;
+    height: 400px !important;
+}
+
+.left-section {
+    width: 45%;
+    overflow: hidden;
+}
+
+.right-section {
+    width: 50%;
+    overflow: auto;
+}
+
+.footer-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.footer-buttons .btn {
+    width: 48%;
+}
+
+.create-collection {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+
+/* Set a max height for the checkbox list and make it scrollable */
+.checkbox-list {
+    max-height: 150px;
+    overflow-y: auto;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding-left: 5px;
+}
+
+.checkbox-list .form-check {
+    margin-bottom: 0.5rem;
+}
+
+.footer-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.footer-buttons .btn {
+    width: 48%;
+}
+
+.create-collection {
+    margin-top: 1rem;
+}
+
+.modal-body {
+    display: flex;
+    justify-content: space-between;
+    height: 400px;
+}
+
+.left-section {
+    width: 45%;
+}
+
+.right-section {
+    width: 50%;
+}
