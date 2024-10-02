@@ -140,7 +140,8 @@ mysqli_close($conn);
     // include('../Includes/Navbar/navbarMain.php');  // Mahbub 
 
     // include('../Includes/Navbar/navbarMain.php');  // Navbar // tahsin 
-    include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin    
+    include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin   
+    include "../Includes/AddMenu/addMenu.php"; 
     ?>
 
     <!-------------------------------------------- search section ---------------------------------------------------->
