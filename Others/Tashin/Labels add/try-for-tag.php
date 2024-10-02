@@ -2,16 +2,14 @@
 // Database connection
 include('/Cook-Corner/Includes/Database Connection/database_connection.php');
 
-// Query to fetch cities
-$sql = "SELECT city_name FROM `cities` WHERE 1;";
+// Query to fetch tags
+$sql = "SELECT tag_name FROM `tags` WHERE 1;";
 $result = mysqli_query($conn, $sql);
 
-// Get the city names and store them in a one-dimensional array  []
-
-$cities = [];   // this will use as suggestion next
+$allTage = [];
 
 while ($row = mysqli_fetch_assoc($result)) {
-    $cities[] = $row['city_name'];
+    $allTage[] = $row['tag_name'];
 }
 
 mysqli_free_result($result);
@@ -24,7 +22,7 @@ mysqli_close($conn);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cities Input with Suggestions</title>
+    <title>Tag Input with Suggestions</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .tag {
@@ -51,6 +49,7 @@ mysqli_close($conn);
         .tag-container {
             display: flex;
             flex-wrap: wrap;
+            margin-bottom: 10px;
         }
 
         #suggestions {
@@ -78,21 +77,25 @@ mysqli_close($conn);
 
     <div class="container mt-5">
         <div class="form-group position-relative">
-            <label for="cities-input">Cities Information</label>
+            <label for="tags-input">Tag Information</label>
+
+            <!-- Moved the tag-container ABOVE the input field -->
+            <div id="tag-container" class="tag-container mt-2"></div>
+
             <div class="tag-input position-relative">
-                <input type="text" id="cities-input" class="form-control" placeholder="Add Cities" />
-                <div id="tag-container" class="tag-container mt-2"></div>
+                <input type="text" id="tags-input" class="form-control" placeholder="Add Tags" />
             </div>
+
             <!-- Suggestions will appear here -->
             <div id="suggestions" class="list-group mt-1"></div>
         </div>
     </div>
 
-    <script>  // for cities suggestion 
-        // PHP cities array passed to JavaScript
-        const suggestions = <?php echo json_encode($cities); ?>;
+    <script>
+        // PHP tags array passed to JavaScript
+        const suggestions = <?php echo json_encode($allTage); ?>;
 
-        const input = document.getElementById('cities-input');
+        const input = document.getElementById('tags-input');
         const tagContainer = document.getElementById('tag-container');
         const suggestionBox = document.getElementById('suggestions');
 
@@ -103,15 +106,15 @@ mysqli_close($conn);
             if (value) {
                 const filteredSuggestions = suggestions.filter(s => s.toLowerCase().includes(value));
 
-                filteredSuggestions.forEach(city => {
-                    const highlightedCity = highlightMatch(city, value);
+                filteredSuggestions.forEach(tag => {
+                    const highlightedTag = highlightMatch(tag, value);
                     const suggestionItem = document.createElement('div');
-                    suggestionItem.innerHTML = highlightedCity;
+                    suggestionItem.innerHTML = highlightedTag;
                     suggestionItem.classList.add('list-group-item', 'list-group-item-action');
 
-                    // Add click functionality to add the city as a tag
+                    // Add click functionality to add the tag as a tag element
                     suggestionItem.addEventListener('click', function() {
-                        addTag(city);
+                        addTag(tag);
                         input.value = '';
                         suggestionBox.innerHTML = ''; // Clear suggestions after click
                     });
@@ -144,15 +147,15 @@ mysqli_close($conn);
             tagContainer.appendChild(tag);
         }
 
-        // Highlight matching part of the city name
-        function highlightMatch(city, query) {
+        // Highlight matching part of the tag name
+        function highlightMatch(tag, query) {
             const regex = new RegExp(`(${query})`, 'gi');
-            return city.replace(regex, '<span style="color: red;">$1</span>');
+            return tag.replace(regex, '<span style="color: red;">$1</span>');
         }
     </script>
 
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    
+
 </body>
 
 </html>
