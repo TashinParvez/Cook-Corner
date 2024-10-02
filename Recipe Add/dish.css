@@ -1,0 +1,19 @@
+.dish-container {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.dish-container input {
+    margin-right: 5px;
+}
+
+.remove-btn {
+    cursor: pointer;
+    color: red;
+    margin-left: 5px;
+}
+
+.add-dish-btn {
+    margin-top: 10px;
+}

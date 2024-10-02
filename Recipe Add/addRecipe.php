@@ -30,6 +30,16 @@ while ($row = mysqli_fetch_assoc($result)) {
     $allTage[] = $row['tag_name'];
 }
 
+// -------------------------- For City suggestion -------------------------
+$sql = "SELECT city_name FROM `cities` WHERE 1";
+$result = mysqli_query($conn, $sql);
+
+$allCities = [];
+
+while ($row = mysqli_fetch_assoc($result)) {
+    $allCities[] = $row['city_name'];
+}
+
 // ----------------------------------------------------------------------
 
 
@@ -164,6 +174,7 @@ if (isset($_POST['submitRecipe'])) {
     <link rel="stylesheet" href="../Includes/Navbar/navbarMain.css"> <!-- Navbar CSS -->
     <link rel="stylesheet" href="ingredent-sugg.css"> <!-- ingredent CSS -->
     <link rel="stylesheet" href="tags.css"> <!-- tag CSS -->
+    <link rel="stylesheet" href="dish.css"> <!-- dish CSS -->
 
     <!-- javascript -->
     <script src="addRecipe.js"></script>
@@ -360,7 +371,68 @@ if (isset($_POST['submitRecipe'])) {
             </script>
 
             <hr>
+
+            <!-- Dish add Section -->
+
+            <div class="container mt-3">
+                <h3 class="text-danger">Dishes you need</h3>
+                <p>Enter one ingredient per line. Include the quantity (i.e. cups, tablespoons) and any special preparation (i.e. sifted, softened, chopped). Use optional headers to organize the different parts of the recipe (i.e. Cake, Frosting, Dressing).</p>
+
+                <div id="dishes-list"></div>
+
+                <button id="add-dish" class="btn btn-primary add-dish-btn">+ ADD Dishes</button>
+            </div>
+
+            <script>
+                let dishCount = 0;
+
+                // Function to create a new dish input
+                function createDishInput() {
+                    dishCount++;
+
+                    const dishContainer = document.createElement('div');
+                    dishContainer.className = 'dish-container';
+
+                    dishContainer.innerHTML = `
+                <input type="text" placeholder="name" class="form-control" required />
+                <input type="text" placeholder="quantity" class="form-control" required />
+                <button class="remove-btn" onclick="removeDish(this)">✖</button>
+            `;
+
+                    document.getElementById('dishes-list').appendChild(dishContainer);
+                    toggleAddButton();
+                }
+
+                // Function to remove a dish input
+                function removeDish(button) {
+                    const dishContainer = button.parentElement;
+                    dishContainer.remove();
+                    dishCount--;
+                    toggleAddButton();
+                }
+
+                // Function to toggle the Add Dish button
+                function toggleAddButton() {
+                    const addButton = document.getElementById('add-dish');
+                    if (dishCount > 0) {
+                        addButton.disabled = false;
+                    } else {
+                        addButton.disabled = true;
+                    }
+                }
+                // Add event listener to Add Dish button
+                document.getElementById('add-dish').addEventListener('click', function(event) {
+                    event.preventDefault();
+                    createDishInput();
+                });
+            </script>
+
+            <hr>
+
+
+
             <!-- Directions Section -->
+
             <div class="mb-3">
                 <label class="form-label">Directions<small style="color: red;">*</small></label>
                 <div id="directionsList" class="mb-2">
@@ -370,7 +442,7 @@ if (isset($_POST['submitRecipe'])) {
                     if (!empty($directions)) {
                         foreach ($directions as $direction) {
                     ?>
-                            <input type="text" name="directions[]" class="form-control mb-2" placeholder="Step 1" value="<?php echo htmlspecialchars($direction); ?>" required>
+                            <input type="text" name="directions[]" class="form-control mb-2" placeholder="Step" value="<?php echo htmlspecialchars($direction); ?>" required>
                         <?php
                         }
                     } else {
@@ -382,6 +454,29 @@ if (isset($_POST['submitRecipe'])) {
                 </div>
                 <button type="button" class="btn btn-outline-danger" id="addStep">+ Add Step</button>
             </div>
+
+            <script>
+                // Function to create a new step input
+                function createStepInput() {
+                    const directionsList = document.getElementById('directionsList');
+                    const stepInput = document.createElement('input');
+
+                    stepInput.type = 'text';
+                    stepInput.name = 'directions[]';
+                    stepInput.className = 'form-control mb-2';
+                    stepInput.placeholder = 'Step';
+                    stepInput.required = true;
+
+                    directionsList.appendChild(stepInput);
+                }
+
+                // Add event listener to Add Step button
+                document.getElementById('addStep').addEventListener('click', createStepInput);
+            </script>
+
+
+
+
             <hr>
 
             <!-- Time Section -->
@@ -423,30 +518,70 @@ if (isset($_POST['submitRecipe'])) {
             <div class="mb-3">
                 <label class="form-label">Notes (Optional)</label>
                 <div id="notesList" class="mb-2">
-                    <div class="note-entry mb-3">
-                        <?php
-                        $noteTitles = array_map('trim', explode('<splitForNoteTitles>', $noteTitles));
-                        $noteDescriptions = array_map('trim', explode('<splitForNoteDescriptions>', $noteDescriptions));
+                    <?php
+                    $noteTitles = array_map('trim', explode('<splitForNoteTitles>', $noteTitles));
+                    $noteDescriptions = array_map('trim', explode('<splitForNoteDescriptions>', $noteDescriptions));
 
-                        if (!empty($noteTitles) && !empty($noteDescriptions)) {
-                            foreach ($noteTitles as $index => $noteTitle) {
-                        ?>
+                    if (!empty($noteTitles) && !empty($noteDescriptions)) {
+                        foreach ($noteTitles as $index => $noteTitle) {
+                    ?>
+                            <div class="note-entry mb-3">
                                 <input type="text" name="noteTitles[]" class="form-control mb-2" placeholder="Note title (e.g., Tip about storage)" value="<?php echo htmlspecialchars($noteTitle); ?>" required>
                                 <textarea name="noteDescriptions[]" class="form-control mb-2" rows="3" placeholder="Add a note description (e.g., Keep in the fridge for 3 days)" required><?php echo htmlspecialchars($noteDescriptions[$index]); ?></textarea>
-                            <?php
-                            }
-                        } else {
-                            ?>
-                            <input type="text" name="noteTitles[]" class="form-control mb-2" placeholder="Note title (e.g., Tip about storage)" required>
-                            <textarea name="noteDescriptions[]" class="form-control mb-2" rows="3" placeholder="Add a note description (e.g., Keep in the fridge for 3 days)" required></textarea>
+                                <button type="button" class="btn btn-outline-danger remove-note">Remove</button>
+                            </div>
                         <?php
                         }
+                    } else {
                         ?>
-                    </div>
+                        <div class="note-entry mb-3">
+                            <input type="text" name="noteTitles[]" class="form-control mb-2" placeholder="Note title (e.g., Tip about storage)" required>
+                            <textarea name="noteDescriptions[]" class="form-control mb-2" rows="3" placeholder="Add a note description (e.g., Keep in the fridge for 3 days)" required></textarea>
+                            <button type="button" class="btn btn-outline-danger remove-note">Remove</button>
+                        </div>
+                    <?php
+                    }
+                    ?>
                 </div>
                 <button type="button" class="btn btn-outline-danger" id="addNote">+ Add Note</button>
             </div>
             <hr>
+
+            <script>
+                // Function to create a new note input
+                function createNoteInput() {
+                    const notesList = document.getElementById('notesList');
+                    const noteEntry = document.createElement('div');
+                    noteEntry.className = 'note-entry mb-3';
+
+                    noteEntry.innerHTML = `
+            <input type="text" name="noteTitles[]" class="form-control mb-2" placeholder="Note title (e.g., Tip about storage)" required>
+            <textarea name="noteDescriptions[]" class="form-control mb-2" rows="3" placeholder="Add a note description (e.g., Keep in the fridge for 3 days)" required></textarea>
+            <button type="button" class="btn btn-outline-danger remove-note">Remove</button>
+        `;
+
+                    notesList.appendChild(noteEntry);
+
+                    // Add event listener to the remove button
+                    noteEntry.querySelector('.remove-note').addEventListener('click', function() {
+                        notesList.removeChild(noteEntry);
+                    });
+                }
+
+                // Add event listener to Add Note button
+                document.getElementById('addNote').addEventListener('click', createNoteInput);
+
+                // Event delegation for remove buttons
+                document.getElementById('notesList').addEventListener('click', function(event) {
+                    if (event.target.classList.contains('remove-note')) {
+                        const noteEntry = event.target.closest('.note-entry');
+                        if (noteEntry) {
+                            notesList.removeChild(noteEntry);
+                        }
+                    }
+                });
+            </script>
+
 
             <!-- --------------------------- tags input ---------------------------------- -->
             <div class="container mt-3">
@@ -531,7 +666,108 @@ if (isset($_POST['submitRecipe'])) {
 
             <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
+            <!-- tashin --------------------------- Location city where it famous optionals ---------------------------------- -->
 
+            <div class="container mt-5">
+                <div class="form-group position-relative">
+                    <label for="city-input">City Information</label>
+
+                    <!-- Moved the tag-container ABOVE the input field -->
+                    <div id="city-tag-container" class="tag-container mt-2"></div>
+
+                    <div class="tag-input position-relative">
+                        <input type="text" id="city-input" class="form-control" placeholder="Add Cities" />
+                    </div>
+
+                    <!-- Suggestions will appear here -->
+                    <div id="city-suggestions" class="list-group mt-1"></div>
+                </div>
+            </div>
+
+            <script>
+                // PHP cities array passed to JavaScript
+                const citySuggestions = <?php echo json_encode($allCities); ?>;
+
+                // Encapsulate city suggestion functionality
+                const citySuggestionModule = (() => {
+                    const cityInput = document.getElementById('city-input');
+                    const cityTagContainer = document.getElementById('city-tag-container');
+                    const citySuggestionBox = document.getElementById('city-suggestions');
+
+                    // Initialize event listeners
+                    const init = () => {
+                        cityInput.addEventListener('input', filterSuggestions);
+                        cityInput.addEventListener('keydown', addCityOnEnter);
+                    };
+
+                    const filterSuggestions = () => {
+                        const value = cityInput.value.toLowerCase();
+                        citySuggestionBox.innerHTML = ''; // Clear previous suggestions
+
+                        if (value) {
+                            const filteredSuggestions = citySuggestions.filter(city => city.toLowerCase().includes(value));
+
+                            filteredSuggestions.forEach(city => {
+                                const highlightedCity = highlightMatch(city, value);
+                                const suggestionItem = document.createElement('div');
+                                suggestionItem.innerHTML = highlightedCity;
+                                suggestionItem.classList.add('list-group-item', 'list-group-item-action');
+
+                                // Add click functionality to add the city as a tag element
+                                suggestionItem.addEventListener('click', () => {
+                                    addCityTag(city);
+                                    cityInput.value = ''; // Clear input after selection
+                                    citySuggestionBox.innerHTML = ''; // Clear suggestions after click
+                                });
+
+                                citySuggestionBox.appendChild(suggestionItem);
+                            });
+                        }
+                    };
+
+                    const addCityOnEnter = (event) => {
+                        if (event.key === 'Enter') {
+                            event.preventDefault();
+                            const value = cityInput.value.trim();
+                            if (value && !Array.from(cityTagContainer.children).some(tag => tag.textContent.includes(value))) {
+                                addCityTag(value);
+                                cityInput.value = ''; // Clear input after adding tag
+                                citySuggestionBox.innerHTML = ''; // Clear suggestions
+                            }
+                        }
+                    };
+
+                    // Add the city to the tag container
+                    const addCityTag = (value) => {
+                        const tag = document.createElement('div');
+                        tag.className = 'tag';
+                        tag.innerHTML = `<span>${value}</span><button class="remove-btn">&times;</button>`;
+                        tag.querySelector('.remove-btn').addEventListener('click', () => {
+                            cityTagContainer.removeChild(tag);
+                        });
+                        cityTagContainer.appendChild(tag);
+                    };
+
+                    // Highlight matching part of the city name
+                    const highlightMatch = (city, query) => {
+                        const regex = new RegExp(`(${query})`, 'gi');
+                        return city.replace(regex, '<span style="color: red;">$1</span>');
+                    };
+
+                    // Initialize the module
+                    return {
+                        init: init
+                    };
+                })();
+
+                // Initialize the city suggestion module
+                citySuggestionModule.init();
+            </script>
+
+            <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+
+            <!-- --------------------------- City end ---------------------------------- -->
 
             <!-- --------------------------- ALL optionals ---------------------------------- -->
             <!-- Story -->
@@ -540,8 +776,6 @@ if (isset($_POST['submitRecipe'])) {
                 <textarea id="story" name="story" class="form-control" rows="4" placeholder="Share the story.."> <?php echo htmlspecialchars($story); ?> </textarea>
             </div>
             <hr>
-
-
 
             <!-- ------------------------------------------------------------- -->
             <!-- Buttons -->
@@ -562,7 +796,6 @@ if (isset($_POST['submitRecipe'])) {
     <?php
     include('../Includes/Footer/footermain.php');  // tashin 
     ?>
-    <!-- ============================== Footer End ==================================== -->
 
 </body>
 
