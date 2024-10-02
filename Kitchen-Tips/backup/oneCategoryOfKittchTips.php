@@ -3,23 +3,12 @@
 //...................... Database Connection ..............................
 include("../Includes/Database Connection/database_connection.php");
 
-// $clickedCatagory = "Cooking Techniques";  // get from click
-$kitchenTipsCategoryId = isset($_GET['kitchenTipsCategoryId']) ? htmlspecialchars($_GET['kitchenTipsCategoryId']) : '8'; //---------> this will come from kithhen tips dashboard
-
-$stmt = $conn->prepare('SELECT name FROM kitchen_tips_category WHERE id = ? LIMIT 1;');
-
-$stmt->bind_param('i', $kitchenTipsCategoryId);
-$stmt->execute();
-$stmt->bind_result($kitchenTipsCategoryName);
-$stmt->fetch();
-$stmt->close();
-
-
+$clickedCatagory = "Cooking Techniques";  // get from click
 
 // -------------- clickedCatagory Info -----------------
 $sql = "SELECT `id`, `name`, `description`, `image_preview`
         FROM `kitchen_tips_category` 
-        WHERE name = '$kitchenTipsCategoryName'";
+        WHERE name = '$clickedCatagory'";
 
 $resultantLabel = mysqli_query($conn, $sql);   // get query result
 
@@ -207,24 +196,17 @@ mysqli_close($conn);
         <!--  kt.image, kt.tips_title, kt.description, user_info.first_name , user_info.last_name, likes -->
 
         <div class="row" id="tipsContainer">
+            <!-- First 12 tips will be displayed here -->
             <?php
             $initialTips = array_slice($allTips, 0, 12); // Get first 12 tips
             foreach ($initialTips as $oneTip) { ?>
-                <div class="col-md-4 item mb-4">
-                    <!-- card -->
-                    <div class="card">
-                        <!-- card image -->
-                        <div class="card-image">
-                            <img src="../Images/Kitchen-Tips/<?php echo htmlspecialchars($oneTip[0]); ?>" class="img-fluid" alt="Care Tip">
-                        </div>
-                        <!-- card body -->
-                        <div class="card-body">
-                            <!-- title -->
-                            <h5 class="card-title"><?php echo htmlspecialchars($oneTip[1]); ?></h5>
-                            <!-- user added by -->
-                            <p class="card-text">by <?php echo htmlspecialchars($oneTip[3]) . " " . htmlspecialchars($oneTip[4]); ?></p>
-                        </div>
-                    </div>
+                <div class="col-md-4 item">
+                    <!-- image -->
+                    <img src="../Images/Kitchen-Tips/<?php echo htmlspecialchars($oneTip[0]); ?>" class="img-fluid" alt="Care Tip">
+                    <!-- title -->
+                    <h5><?php echo htmlspecialchars($oneTip[1]); ?></h5>
+                    <!-- user added by -->
+                    <p>by <?php echo htmlspecialchars($oneTip[3]) . " " . htmlspecialchars($oneTip[4]); ?></p>
                 </div>
             <?php } ?>
         </div>
@@ -234,41 +216,45 @@ mysqli_close($conn);
             <button id="loadMore" class="btn btn-primary mt-3">Load More</button>
         </div>
 
-        <script>
-            const allTips = <?php echo json_encode($allTips); ?>;
-            let currentIndex = 12;
-            const itemsPerPage = 12;
 
+        <script>
+            const allTips = <?php echo json_encode($allTips); ?>; // Get all tips data from PHP
+            let currentIndex = 12; // Start at 12 since the first 12 tips are already displayed
+            const itemsPerPage = 12; // Number of items to load on each click
+
+            // Function to load more tips
             function loadMoreTips() {
                 const tipsContainer = document.getElementById("tipsContainer");
+
+                // Determine the end index for slicing the tips array
                 const endIndex = currentIndex + itemsPerPage;
+
+                // Get the slice of tips to display
                 const tipsToShow = allTips.slice(currentIndex, endIndex);
 
+                // Append new tips to the container
                 tipsToShow.forEach(oneTip => {
                     const itemDiv = document.createElement("div");
-                    itemDiv.classList.add("col-md-4", "item", "mb-4");
-
+                    itemDiv.classList.add("col-md-4", "item");
                     itemDiv.innerHTML = `
-                <div class="card">
-                    <div class="card-image">
-                        <img src="../Images/Kitchen-Tips/${oneTip[0]}" class="img-fluid" alt="Care Tip">
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">${oneTip[1]}</h5>
-                        <p class="card-text">by ${oneTip[3]} ${oneTip[4]}</p>
-                    </div>
-                </div>`;
+                <img src="/Images/Kitchen-Tips/${oneTip[0]}" class="img-fluid" alt="Care Tip">
+                <h5>${oneTip[1]}</h5>
+                <p>by ${oneTip[3]} ${oneTip[4]}</p>
+            `;
                     tipsContainer.appendChild(itemDiv);
                 });
 
+                // Update the current index
                 currentIndex += itemsPerPage;
 
+                // Disable button if no more tips are left to show
                 if (currentIndex >= allTips.length) {
                     document.getElementById("loadMore").disabled = true;
                     document.getElementById("loadMore").textContent = "No more tips to load";
                 }
             }
 
+            // Add event listener for the Load More button
             document.getElementById("loadMore").addEventListener("click", loadMoreTips);
         </script>
 

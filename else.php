@@ -1,53 +1,58 @@
-<?php
-// Database table name:  
-
-//...................... Database Connection ..............................
-// include("../Includes/Database Connection/database_connection.php");
-
-
-// sql query
-// $sql = " ";
-
-// $resultantLabel = mysqli_query($conn, $sql);   // get query result
-
-// $labels = mysqli_fetch_all($resultantLabel);   // conver to array
-
-// mysqli_free_result($resultantLabel);
-// mysqli_close($conn);
-
-?>
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basic</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .fab {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #28a745;
+      color: white;
+      border-radius: 50%;
+      padding: 15px;
+      font-size: 24px;
+      border: none;
+      cursor: pointer;
+      z-index: 1000;
+    }
 
+    .fab-options {
+      display: none;
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+    }
 
-    <!-- favicon -->
-    <link rel="icon" href="../Images/logo/fav-icon.png" />
-
-
-    <!-- css  -->
-    <link rel="stylesheet" href="../Includes/Navbar/navbarMain.css"> <!-- Navbar CSS -->
-
+    .fab-options .fab-option {
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
-
-
 <body>
 
+  <!-- Floating Action Button -->
+  <button class="fab" id="fab">+</button>
 
+  <!-- FAB Options -->
+  <div class="fab-options" id="fabOptions">
+    <button class="btn btn-primary fab-option">Add Tips</button>
+    <button class="btn btn-primary fab-option">Add Recipe</button>
+  </div>
 
-    <button type="button" class="btn btn-primary btn-sm" title="Previous Button">
-        <i class="bi bi-arrow-left"></i> <!-- Bootstrap icon example -->
-    </button>
-
-
+  <script>
+    // Toggle FAB options
+    document.getElementById('fab').addEventListener('click', function() {
+      var fabOptions = document.getElementById('fabOptions');
+      if (fabOptions.style.display === 'none' || fabOptions.style.display === '') {
+        fabOptions.style.display = 'block';
+      } else {
+        fabOptions.style.display = 'none';
+      }
+    });
+  </script>
 
 </body>
-
 </html>

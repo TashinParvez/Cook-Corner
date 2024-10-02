@@ -173,12 +173,16 @@ mysqli_close($conn);
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="go-next ">
+                                <a href="/Recipe Search/RecipeSearch.php">View all Recipe <i class="fa-solid fa-angles-right"></i></a>
+                            </div>
                         </ul>
                     </li>
 
 
                     <li class="nav-item">
-                        <a class="nav-link" href="#">RecipeGenerator</a>
+                        <a class="nav-link" href="/Recipe Search/RecipeGenerator.php">RecipeGenerator</a>
                     </li>
 
                     <li class="nav-item dropdown">
@@ -230,14 +234,113 @@ mysqli_close($conn);
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="go-next ">
+                                <a href="/Occasions/occasion_main.php">View all Occasions <i class="fa-solid fa-angles-right"></i></a>
+                            </div>
                         </ul>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Kitchen-Tips/kitchenTipsDashboard.php">KitchenTips</a>
+
+
+
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="/Kitchen-Tips/kitchenTipsDashboard.php" role="button" aria-expanded="false">
+                            Kitchen Tips
+                        </a>
+                        <ul class="dropdown-menu occasion-menu">
+                            <div class="container-fluid">
+                                <div class="row nav-row">
+                                    <div class="col-md-2">
+                                        <h6>Heading</h6>
+                                        <ul>
+                                            <li><a class="dropdown-item" href="#">Cooking Techniques</a></li>
+                                            <li><a class="dropdown-item" href="#">Ingredient Storage</a></li>
+                                            <li><a class="dropdown-item" href="#">Time-Saving Hacks</a></li>
+                                            <li><a class="dropdown-item" href="#">Meal Prep Tips</a></li>
+                                            <li><a class="dropdown-item" href="#">Food Safety</a></li>
+                                            <li><a class="dropdown-item" href="#">Baking Tips</a></li>
+                                            <li><a class="dropdown-item" href="#">Healthy Cooking</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <h6>Heading</h6>
+                                        <ul>
+                                            <li><a class="dropdown-item" href="#">Cooking Techniques</a></li>
+                                            <li><a class="dropdown-item" href="#">Ingredient Storage</a></li>
+                                            <li><a class="dropdown-item" href="#">Time-Saving Hacks</a></li>
+                                            <li><a class="dropdown-item" href="#">Meal Prep Tips</a></li>
+                                            <li><a class="dropdown-item" href="#">Food Safety</a></li>
+                                            <li><a class="dropdown-item" href="#">Baking Tips</a></li>
+                                            <li><a class="dropdown-item" href="#">Healthy Cooking</a></li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="card">
+                                            <a href="#" class="text-decoration-none">
+                                                <img  src="../Images/FoodImages/cookingClass.jpeg" class="card-img-top" alt="...">
+                                                <div class="card-body">
+
+                                                    <div class="row">
+                                                        <div class="col d-flex justify-content-between">
+                                                            <div>Tk 150</div>
+                                                            <div class="ratings">
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <p class="card-text mb-0">How to cook rice in home</p>
+                                                    <p class="card-text"><i class="fa-solid fa-users "></i> 69 student enroled</p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="go-next ">
+                                <a href="/Kitchen-Tips/kitchenTipsDashboard.php">View all Kitchen tips <i class="fa-solid fa-angles-right"></i></a>
+                            </div>
+                        </ul>
                     </li>
+
+
+
+
+                    <!-- <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="/Kitchen-Tips/kitchenTipsDashboard.php" role="button" aria-expanded="false">
+                            Kitchen Tips
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end kitchen-menu">
+                            <li><a class="dropdown-item" href="#">Cooking Techniques</a></li>
+                            <li><a class="dropdown-item" href="#">Ingredient Storage</a></li>
+                            <li><a class="dropdown-item" href="#">Time-Saving Hacks</a></li>
+                            <li><a class="dropdown-item" href="#">Meal Prep Tips</a></li>
+                            <li><a class="dropdown-item" href="#">Food Safety</a></li>
+                            <li><a class="dropdown-item" href="#">Baking Tips</a></li>
+                            <li><a class="dropdown-item" href="#">Healthy Cooking</a></li>
+                            <li><a class="dropdown-item" href="#">Baking Tips</a></li>
+                            <li><a class="dropdown-item" href="#">Healthy Cooking</a></li>
+                            <li><a class="dropdown-item" href="#">Baking Tips</a></li>
+                            <li><a class="dropdown-item" href="#">Healthy Cooking</a></li>
+                            <li><a class="dropdown-item" href="#">Baking Tips</a></li>
+                            <li><a class="dropdown-item" href="#">Healthy Cooking</a></li>
+
+
+                            <div class="go-next ">
+                                <a href="/Kitchen-Tips/kitchenTipsDashboard.php">View all Kitchen tips <i class="fa-solid fa-angles-right"></i></a>
+                            </div>
+                        </ul>
+
+                    </li> -->
+
                     <li class="nav-item">
-                        <a class="nav-link" href="#">MealPlan</a>
+                        <a class="nav-link" href="/Meal Plan/mealPlan.php">MealPlan</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Shop</a>
@@ -246,7 +349,7 @@ mysqli_close($conn);
                         <a class="nav-link" href="/Course/allCourses.php">Course</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/Collection/collection.php">AddRecipe</a>
+                        <a class="nav-link" href="/Recipe Add/addRecipe.php">AddRecipe</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../../Add-Kitchen-Tips/addKitchenTips.php">AddTips</a>
