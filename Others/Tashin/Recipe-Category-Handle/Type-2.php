@@ -27,6 +27,7 @@ $occasions = ["Eidul Fitar", "Eid Azha", "Maghi Purnima", "Marriage", "Birthday"
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,67 +36,73 @@ $occasions = ["Eidul Fitar", "Eid Azha", "Maghi Purnima", "Marriage", "Birthday"
     <style>
         /* Styling for dropdown with checkboxes */
         .dropdown-toggle::after {
-            display: none; /* Hide the default arrow */
+            display: none;
+            /* Hide the default arrow */
         }
 
         .dropdown-menu {
-            max-height: 200px; /* Set a maximum height for the dropdown */
-            overflow-y: auto;   /* Enable scrolling */
+            max-height: 200px;
+            /* Set a maximum height for the dropdown */
+            overflow-y: auto;
+            /* Enable scrolling */
         }
 
         .dropdown-item input {
-            margin-right: 10px; /* Space between checkbox and label */
+            margin-right: 10px;
+            /* Space between checkbox and label */
         }
     </style>
 </head>
+
 <body>
-<div class="container mt-5">
-    <h2>Add a New Recipe</h2>
-    <form method="POST" action="">
-        <div class="mb-3">
-            <label for="occasions">Select Occasions:</label>
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                    Choose Occasions
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <?php foreach ($occasions as $occasion): ?>
-                        <label class="dropdown-item">
-                            <input type="checkbox" name="occasions[]" value="<?php echo htmlspecialchars($occasion); ?>" onchange="updateSelectedText()"> 
-                            <?php echo htmlspecialchars($occasion); ?>
-                        </label>
-                    <?php endforeach; ?>
+    <div class="container mt-5">
+        <h2>Add a New Recipe</h2>
+        <form method="POST" action="">
+            <div class="mb-3">
+                <label for="occasions">Select Occasions:</label>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        Choose Occasions
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <?php foreach ($occasions as $occasion): ?>
+                            <label class="dropdown-item">
+                                <input type="checkbox" name="occasions[]" value="<?php echo htmlspecialchars($occasion); ?>" onchange="updateSelectedText()">
+                                <?php echo htmlspecialchars($occasion); ?>
+                            </label>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
+                <div class="mt-2" id="selected-occasions">Selected Occasions: None</div>
             </div>
-            <div class="mt-2" id="selected-occasions">Selected Occasions: None</div>
-        </div>
 
-        <button type="submit" class="btn btn-primary">Add Recipe</button>
-    </form>
-</div>
+            <button type="submit" class="btn btn-primary">Add Recipe</button>
+        </form>
+    </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-<script>
-    // Function to update selected occasions text
-    function updateSelectedText() {
-        const checkboxes = document.querySelectorAll('input[name="occasions[]"]');
-        const selected = Array.from(checkboxes)
-            .filter(checkbox => checkbox.checked)
-            .map(checkbox => checkbox.value);
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Function to update selected occasions text
+        function updateSelectedText() {
+            const checkboxes = document.querySelectorAll('input[name="occasions[]"]');
+            const selected = Array.from(checkboxes)
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => checkbox.value);
 
-        document.getElementById('selected-occasions').textContent = selected.length > 0 ? 
-            'Selected Occasions: ' + selected.join(', ') : 
-            'Selected Occasions: None';
-    }
+            document.getElementById('selected-occasions').textContent = selected.length > 0 ?
+                'Selected Occasions: ' + selected.join(', ') :
+                'Selected Occasions: None';
+        }
 
-    // Prevent dropdown from closing on click
-    document.querySelectorAll('.dropdown-item input').forEach(function (checkbox) {
-        checkbox.addEventListener('click', function (event) {
-            event.stopPropagation(); // Prevent the dropdown from closing
+        // Prevent dropdown from closing on click
+        document.querySelectorAll('.dropdown-item input').forEach(function(checkbox) {
+            checkbox.addEventListener('click', function(event) {
+                event.stopPropagation(); // Prevent the dropdown from closing
+            });
         });
-    });
-</script>
+    </script>
 </body>
+
 </html>
 
 <?php
