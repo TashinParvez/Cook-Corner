@@ -3,12 +3,23 @@
 //...................... Database Connection ..............................
 include("../Includes/Database Connection/database_connection.php");
 
-$clickedCatagory = "Cooking Techniques";  // get from click
+// $clickedCatagory = "Cooking Techniques";  // get from click
+$kitchenTipsCategoryId = isset($_GET['kitchenTipsCategoryId']) ? htmlspecialchars($_GET['kitchenTipsCategoryId']) : '8'; //---------> this will come from kithhen tips dashboard
+
+$stmt = $conn->prepare('SELECT name FROM kitchen_tips_category WHERE id = ? LIMIT 1;');
+
+$stmt->bind_param('i', $kitchenTipsCategoryId);
+$stmt->execute();
+$stmt->bind_result($kitchenTipsCategoryName);
+$stmt->fetch();
+$stmt->close();
+
+
 
 // -------------- clickedCatagory Info -----------------
 $sql = "SELECT `id`, `name`, `description`, `image_preview`
         FROM `kitchen_tips_category` 
-        WHERE name = '$clickedCatagory'";
+        WHERE name = '$kitchenTipsCategoryName'";
 
 $resultantLabel = mysqli_query($conn, $sql);   // get query result
 
