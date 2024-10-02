@@ -118,67 +118,75 @@ mysqli_close($conn);
     <!-- ---------------------------- Hero Main Image Section ---------------------------------------- -->
 
     <div class="container mt-4">
-
         <div class="row">
-
             <div class="col-md-8">
-                <!-- <img src="https://via.placeholder.com/960x540" class="img-fluid" alt="Featured Image"> -->
-                <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($forheroSegment[0][0]);   ?>" class="img-fluid" alt="Featured Image">
-                <!-- Title -->
-                <h2 class="mt-3"> <?php echo htmlspecialchars($forheroSegment[0][1]);   ?></h2>
-                <!-- author -->
-                <p>By <?php echo htmlspecialchars($forheroSegment[0][3]);
-                        echo " ";
-                        echo htmlspecialchars($forheroSegment[0][4]);
-                        ?>
-                </p>
-                <!-- description -->
-                <p>
-                    <?php echo htmlspecialchars($forheroSegment[0][2]); ?>
-                </p>
+                <div class="card mb-4">
+                    <!-- Featured Image -->
+                    <div class="card-image" style="height: 435px;"> <!-- Keep image size same -->
+                        <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($forheroSegment[0][0]); ?>" class="img-fluid" alt="Featured Image">
+                    </div>
+                    <!-- Card body -->
+                    <div class="card-body">
+                        <!-- Title -->
+                        <h2 class="card-title mt-3"> <?php echo htmlspecialchars($forheroSegment[0][1]); ?></h2>
+                        <!-- Author -->
+                        <p class="card-text">By <?php echo htmlspecialchars($forheroSegment[0][3]) . " " . htmlspecialchars($forheroSegment[0][4]); ?></p>
+                        <!-- Description -->
+                        <p class="card-text"><?php echo htmlspecialchars($forheroSegment[0][2]); ?></p>
 
-                <!-- Directions -->
-                <p> Directions: <br> </p>
-
-                <?php
-                $i = 1;
-                foreach (array_splice($directionsArray, 0) as $point) { ?>
-                    <p>
+                        <!-- Directions (First 3 directions) -->
+                        <p><strong>Directions:</strong></p>
                         <?php
-                        echo $i;
-                        echo ". ";
-                        echo htmlspecialchars($point);
+                        $i = 1;
+                        foreach (array_splice($directionsArray, 0, 3) as $point) { // Show only 3 directions 
                         ?>
-                    </p>
-                <?php $i++;
-                } ?>
-            </div>
+                            <p><?php echo $i . ". " . htmlspecialchars($point); ?></p>
+                        <?php $i++;
+                        } ?>
 
-
-            <div class="col-md-4">
-
-                <div class="row">
-
-                    <div class="col-md-12 mb-3">
-                        <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($forheroSegment[1][0]);   ?>" class="img-fluid" alt="Thumbnail">
-                        <p><?php echo htmlspecialchars($forheroSegment[1][1]);   ?></p>
+                        <!-- Link to full details -->
+                        <a href="specificTipPage.php?tip_id=<?php echo htmlspecialchars($forheroSegment[0][0]); ?>" style="color: red; text-decoration: none;" class="mt-2">Read More</a>
                     </div>
-
-                    <div class="col-md-12 mb-3">
-                        <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($forheroSegment[2][0]);   ?>" class="img-fluid" alt="Thumbnail">
-                        <p><?php echo htmlspecialchars($forheroSegment[2][1]);   ?></p>
-                    </div>
-
                 </div>
             </div>
 
+
+            <!-- Right Column with Thumbnails -->
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <div class="card">
+                            <div class="card-image">
+                                <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($forheroSegment[1][0]); ?>" class="img-fluid" alt="Thumbnail">
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text"><?php echo htmlspecialchars($forheroSegment[1][1]); ?></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <div class="card">
+                            <div class="card-image">
+                                <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($forheroSegment[2][0]); ?>" class="img-fluid" alt="Thumbnail">
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text"><?php echo htmlspecialchars($forheroSegment[2][1]); ?></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <div class="card">
+                            <div class="card-image">
+                                <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($forheroSegment[2][0]); ?>" class="img-fluid" alt="Thumbnail">
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text"><?php echo htmlspecialchars($forheroSegment[2][1]); ?></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-
-
-
-
-    </div>
     </div>
 
 
@@ -231,7 +239,7 @@ mysqli_close($conn);
 
         <!-- Load More Button -->
         <div class="text-center">
-            <button id="loadMore" class="btn btn-primary mt-3">Load More</button>
+            <button id="loadMore" class="btn btn-primary mt-3 mb-3">Load More</button>
         </div>
 
         <script>
