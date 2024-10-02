@@ -11,7 +11,7 @@
             right: -400px;
             width: 400px;
             height: 100%;
-            background-color: #f8f9fa;
+            background-color: #f5fcf0;
             transition: 0.3s;
             z-index: 1000;
         }
@@ -114,6 +114,13 @@
             color: black;
         }
 
+        .nav-tabs .nav-link.active {
+            background-color: #72BF78 !important;
+            /* Change background color */
+            color: white !important;
+            /* Change text color */
+        }
+
         .tab-pane .container ul li {
             list-style: none;
             margin-bottom: 5px;
@@ -205,7 +212,7 @@
                     </tr>
                 </thead>
                 <tbody id="todoTableBody"> <!-- Added ID for tbody -->
-                    
+
                 </tbody>
             </table>
 
@@ -240,9 +247,9 @@
 
 
                         <td>
-                            <button type="button" class="btn btn-primary btn-sm">+</button>
-                            1
-                            <button type="button" class="btn btn-primary btn-sm">-</button>
+                            <button type="button" class="btn btn-primary btn-sm" onclick="changeQuantity(this, -1)">-</button>
+                            <span class="quantity">1</span> <!-- Using span for quantity -->
+                            <button type="button" class="btn btn-primary btn-sm" onclick="changeQuantity(this, 1)">+</button>
                         </td>
 
                         <td>20Tk</td>
@@ -257,9 +264,9 @@
                         <td>Broccoli</td>
 
                         <td>
-                            <button type="button" class="btn btn-primary btn-sm">+</button>
-                            1
-                            <button type="button" class="btn btn-primary btn-sm">-</button>
+                            <button type="button" class="btn btn-primary btn-sm" onclick="changeQuantity(this, -1)">-</button>
+                            <span class="quantity">1</span> <!-- Using span for quantity -->
+                            <button type="button" class="btn btn-primary btn-sm" onclick="changeQuantity(this, 1)">+</button>
                         </td>
 
                         <td>20Tk</td>
