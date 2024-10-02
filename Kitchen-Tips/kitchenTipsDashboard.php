@@ -19,24 +19,42 @@ $allCategorisOfKitchenTips = mysqli_fetch_all($resultantLabel);   // conver to a
 // }
 
 
-// --------------------- For hero segment -------------------
+// .......Set default value for order if not provided
+$sort = isset($_POST['sortInput']) ? $_POST['sortInput'] : 'namewise';
+
+switch ($sort) {
+    case 'namewise':
+        $sortBy = "kt.tips_title";
+        break;
+    case 'recentlyAdded':
+        $sortBy = "kt.created_at DESC";
+        break;
+    case 'popularTips':
+        $sortBy = "likes DESC";
+        break;
+    default:
+        $sortBy = "name"; // Default sorting
+        break;
+}
+
+// --------------------- For hero segment ------------------- working
 $sql = "SELECT kt.tips_title, kt.description, kt.image, kt.difficulty_level, kt.estimated_time, 
                ui.first_name, ui.last_name,
-               kitchen_tips_category.name
-        FROM `kitchen_tips`  as kt
+               kitchen_tips_category.name, kt.created_at, kt.id
+        FROM 
+            kitchen_tips  as kt INNER JOIN user_info  as ui
+        ON 
+            ui.id = kt.user_id
         INNER JOIN
-        user_info  as ui
-        ON ui.id = kt.user_id
-        INNER JOIN
-        junction_kitchen_tips_into_category
+            junction_kitchen_tips_into_category
         ON
-        kt.id = junction_kitchen_tips_into_category.tip_id
+            kt.id = junction_kitchen_tips_into_category.tip_id
         INNER JOIN 
-        kitchen_tips_category
-		ON junction_kitchen_tips_into_category.category_id = kitchen_tips_category.id
-        
-        WHERE 1
-        ORDER BY RAND();";
+            kitchen_tips_category
+		ON 
+            junction_kitchen_tips_into_category.category_id = kitchen_tips_category.id
+   
+        ORDER BY $sortBy;";
 
 $resultantLabel = mysqli_query($conn, $sql);   // get query result
 $heroItems = mysqli_fetch_all($resultantLabel);   // conver to array
@@ -112,8 +130,21 @@ mysqli_close($conn);
         <!-- First Row of Navigation Links -->
         <div class="d-flex justify-content-center flex-wrap mb-3 kitchen-tips-container">
 
+
+            <script>
+                function submitKitchenTipsCategoryForm(kitchenTipsCategoryId) {
+                    const form = document.getElementById('kitchenTipsCategoryForm');
+                    form.action = 'oneCategoryOfKittchTips.php?kitchenTipsCategoryId=' + kitchenTipsCategoryId;
+                    form.submit();
+                }
+            </script>
+
+            <form id="kitchenTipsCategoryForm" action="oneCategoryOfKittchTips.php" method="post">
+                <!-- No hidden input needed -->
+            </form>
+
             <?php foreach ($allCategorisOfKitchenTips as $category) { ?>
-                <a href="#" class="me-3 text-dark fw-bold text-decoration-none">
+                <a href="#" class="me-3 text-dark fw-bold text-decoration-none" onclick="submitKitchenTipsCategoryForm(<?php echo $category[0]; ?>)">
                     <?php echo htmlspecialchars($category[1]); ?>
                 </a>
             <?php } ?>
@@ -145,14 +176,34 @@ mysqli_close($conn);
     <div class="container mt-5">
         <div class="row">
             <!-- Hero Segment-->
+
+            <!-- <script>
+                function submitKitchenTipsCategoryForm(kitchenTipsCategoryId) {
+                    const form = document.getElementById('kitchenTipsCategoryForm');
+                    form.action = 'oneCategoryOfKittchTips.php?kitchenTipsCategoryId=' + kitchenTipsCategoryId;
+                    form.submit();
+                }
+            </script>
+
+            <form id="kitchenTipsCategoryForm" action="oneCategoryOfKittchTips.php" method="post">
+                <!-- No hidden input needed -->
+            <!-- </form>
+            onclick="submitKitchenTipsCategoryForm(<?php // echo $category[0]; 
+                                                    ?>)" -->
+
+            <?php
+            $randomTips = $heroItems;
+            shuffle($randomTips);
+            ?>
+
             <!-- Left Side: Large Image with Heading and Subheading -->
             <div class="col-lg-6">
-                <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($heroItems[0][2]);  ?>" alt="Turkey" class="img-fluid">
+                <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($randomTips[0][2]);  ?>" alt="Turkey" class="img-fluid">
                 <!-- <h6 class="text-uppercase text-center mt-3" style="letter-spacing: 1px;">Skills</h6> -->
-                <h2 class="text-center mt-2"><?php echo htmlspecialchars($heroItems[0][0]);  ?></h2>
-                <p class="text-center">By <?php echo htmlspecialchars($heroItems[0][5]);
+                <h2 class="text-center mt-2"><?php echo htmlspecialchars($randomTips[0][0]);  ?></h2>
+                <p class="text-center">By <?php echo htmlspecialchars($randomTips[0][5]);
                                             echo " ";
-                                            echo htmlspecialchars($heroItems[0][6]);  ?></p>
+                                            echo htmlspecialchars($randomTips[0][6]);  ?></p>
             </div>
 
             <!-- Right Side: Articles Grid with Thumbnails and Headings -->
@@ -160,7 +211,7 @@ mysqli_close($conn);
                 <div class="row">
 
 
-                    <?php foreach (array_slice($heroItems, 1, 3) as $item) { ?>
+                    <?php foreach (array_slice($randomTips, 1, 3) as $item) { ?>
                         <div class="col-md-4">
                             <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($item[2]);  ?>" alt="Egg Cartons" class="img-fluid">
                             <h6 class="mt-2"> <?php echo htmlspecialchars($item[0]);  ?> </h6>
@@ -225,14 +276,14 @@ mysqli_close($conn);
     <!-- ---------------------------- Main Image Section ---------------------------------------- -->
 
 
-    <!-- Explore Kitchen Tips -->
+    <!-- Explore Kitchen Tips  Popular Tips section-->
     <div class="container mt-5">
         <h3>Popular Tips</h3>
         <div class="row">
 
             <?php foreach (array_slice($forPopularSeg, 0, 4) as $pitems) { ?>
                 <div class="col-md-3">
-                    <img src="../Images//FoodImages/3.jpg" class="img-fluid" alt="Article">
+                    <img src="../Images/Kitchen-Tips/<?php echo htmlspecialchars($pitems[2]); ?> " class="img-fluid" alt="Article">
                     <!-- image chnage tashin -->
                     <h5> <?php echo htmlspecialchars($pitems[0]); ?></h5>
                     <p> <?php echo htmlspecialchars($pitems[0]); ?></p>
@@ -246,7 +297,6 @@ mysqli_close($conn);
     <!-- -------------------------------------------------------------------------------------------------------------------------- -->
     <!-- ALL Tips -->
     <div class="container mt-5 mb-3">
-
 
         <div class="row">
             <div class="col-4">
@@ -278,16 +328,41 @@ mysqli_close($conn);
                 </div>
             </div>
 
-            <!------------------------ sort btn ------------------------>
+            <!------------------------ sort btn ------------------------> working
+
             <div class="col-md-4">
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle dropdown-toggle-sort w-100" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        Sorted by: Name
+                        Sorted by: <?php
+                                    switch ($sort) {
+                                        case 'namewise':
+                                            echo 'Name';
+                                            break;
+                                        case 'recentlyAdded':
+                                            echo 'Recently Added';
+                                            break;
+                                        case 'popularTips':
+                                            echo 'Most Recipes';
+                                            break;
+                                    }
+                                    ?>
                     </button>
+
+                    <script>
+                        function changeSort(sortInput) { // hidden input name
+                            document.getElementById('sortInput').value = sortInput; // hidden input id
+                            document.getElementById('sortForm').submit(); // form id
+                        }
+                    </script>
+
+                    <form id="sortForm" action="kitchenTipsDashboard.php" method="post">
+                        <input type="hidden" name="sortInput" id="sortInput">
+                    </form>
+
                     <ul class="dropdown-menu" aria-labelledby="sortDropdown">
-                        <li><a class="dropdown-item" href="#" onclick="changeSort('Name')"><span id="check-name">✔</span> Name</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeSort('Recently Added')"><span id="check-recent"></span> Recently Added</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeSort('Popularity')"><span id="check-popularity"></span> Popularity</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="changeSort('namewise')"><span id="check-name"><?php echo ($sort == 'namewise') ? '✔' : ''; ?></span> Name</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="changeSort('recentlyAdded')"><span id="check-recent"><?php echo ($sort == 'recentlyAdded') ? '✔' : ''; ?></span> Recently Added</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="changeSort('popularTips')"><span id="check-popularity"><?php echo ($sort == 'popularTips') ? '✔' : ''; ?></span> Popular Tips</a></li>
                     </ul>
                 </div>
             </div>
@@ -312,7 +387,8 @@ mysqli_close($conn);
             // }
 
             // Randomly shuffle the $heroItems array
-            shuffle($heroItems);
+            // shuffle($heroItems);
+
 
             // Number of items to show initially
             $itemsPerPage = 12;
@@ -322,7 +398,7 @@ mysqli_close($conn);
             foreach (array_slice($heroItems, $currentIndex, $itemsPerPage) as $heroItem) { // Changed variable name here
             ?>
                 <div class="col-md-4 item">
-                    <img src="../Images/FoodImages/4.jpg" class="img-fluid" alt="Care Tip">
+                    <img src="../Images/Kitchen-Tips/<?php echo htmlspecialchars($heroItem[2]); ?>" class="img-fluid" alt="Care Tip">
                     <!-- image chnage tashin -->
 
                     <h5><?php echo htmlspecialchars($heroItem[0]); ?></h5> <!-- Changed $item to $heroItem -->
@@ -334,6 +410,7 @@ mysqli_close($conn);
             }
             ?>
         </div>
+        <!-- liad more btn -->
         <div class="row justify-content-center">
             <button id="loadMore" class="btn btn-primary mt-3 col-3">Load More</button>
         </div>
@@ -355,8 +432,9 @@ mysqli_close($conn);
                     itemsToShow.forEach(heroItem => { // Changed variable name here
                         const itemDiv = document.createElement("div");
                         itemDiv.classList.add("col-md-4", "item");
+                        // chnage here tashin tashin
                         itemDiv.innerHTML = `
-                    <img src="../Images/FoodImages/4.jpg" class="img-fluid" alt="Care Tip">
+                    <img src="../Images/kitchen-Tips/${heroItem[2]}" class="img-fluid" alt="Care Tip">
                     <h5>${heroItem[0]}</h5> <!-- Changed $item to $heroItem -->
                     <small>(${heroItem[7]})</small> <!-- Changed $item to $heroItem -->
                     <p>by ${heroItem[5]} ${heroItem[6]}</p> <!-- Changed $item to $heroItem -->

@@ -23,7 +23,8 @@
 <body>
 
     <?php
-    include('/Cook-Corner/Includes/Navbar/navbarMain.php');  // tashin 
+    // include('/Cook-Corner/Includes/Navbar/navbarMain.php');  // tashin 
+    include("../Includes/Navbar/navbarMain.php");
     include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin
     ?>
 
@@ -66,12 +67,14 @@
             <hr>
 
 
-            <!-- Time Section -->
             <div class="row mb-3">
+                <!-- Time Section -->
                 <div class="col-md-6">
                     <label for="duration" class="form-label">Duration (in mins)</label>
                     <input type="number" id="duration" class="form-control" placeholder="e.g. 20" min="0" required>
                 </div>
+
+                <!-- Difficulty Section -->
                 <div class="col-md-6">
                     <label for="difficultyLevel" class="form-label">Difficulty Level</label>
                     <select id="difficultyLevel" class="form-control" required>

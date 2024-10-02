@@ -1,3 +1,83 @@
+<?php
+
+//...................... Database Connection ..............................
+include("../Includes/Database Connection/database_connection.php");
+
+// $clickedCatagory = "Cooking Techniques";  // get from click
+$kitchenTipsCategoryId = isset($_GET['kitchenTipsCategoryId']) ? htmlspecialchars($_GET['kitchenTipsCategoryId']) : '8'; //---------> this will come from kithhen tips dashboard
+
+$stmt = $conn->prepare('SELECT name FROM kitchen_tips_category WHERE id = ? LIMIT 1;');
+
+$stmt->bind_param('i', $kitchenTipsCategoryId);
+$stmt->execute();
+$stmt->bind_result($kitchenTipsCategoryName);
+$stmt->fetch();
+$stmt->close();
+
+
+
+// -------------- clickedCatagory Info -----------------
+$sql = "SELECT `id`, `name`, `description`, `image_preview`
+        FROM `kitchen_tips_category` 
+        WHERE name = '$kitchenTipsCategoryName'";
+
+$resultantLabel = mysqli_query($conn, $sql);   // get query result
+
+$clickedCatagoryInfo = mysqli_fetch_all($resultantLabel)[0];   // conver to array
+
+
+// print_r($clickedCatagoryInfo);
+
+
+// -------------- Fetch all Tips of this category -----------------
+$sql = "SELECT kt.image, kt.tips_title, kt.description,
+                user_info.first_name , user_info.last_name,
+                likes,
+                kt.Directions
+
+        FROM `kitchen_tips`  as kt
+        INNER JOIN
+        junction_kitchen_tips_into_category as jt
+        ON
+        kt.id = jt.tip_id
+        INNER JOIN
+        user_info
+        on user_info.id = kt.user_id
+        INNER JOIN
+        kitchen_tips_category as c 
+        ON
+        c.id = jt.category_id
+        WHERE c.id ='$clickedCatagoryInfo[0]'
+        ORDER BY likes DESC;";
+
+
+$resultantLabel = mysqli_query($conn, $sql);
+
+$allTips = mysqli_fetch_all($resultantLabel);
+
+$forheroSegment = array_slice($allTips, 0, 3);
+
+shuffle($allTips);
+
+$direction = $forheroSegment[0][6];
+$directionsArray = explode("__COOKCORNER__", $direction);
+// print_r($directionsArray);
+
+
+
+// $allTips  = array_rand($allTips);
+
+
+
+// print_r($forheroSegment[0]);
+
+// print_r($forheroSegment );
+// print_r($forheroSegment[0]);
+
+mysqli_free_result($resultantLabel);
+mysqli_close($conn);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +85,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kitchen Tips</title>
+    <title> <?php echo htmlspecialchars($clickedCatagoryInfo[1]);   ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
@@ -25,42 +105,84 @@
     include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin
     ?>
 
-    <!-- ---------------------------- first Segement ---------------------------------------- -->
+    <!-- ---------------------------- first Segement / hero segment ---------------------------------------- -->
     <div class="text-center mt-4">
         <!-- Title and Subtitle -->
-        <h1 class="fw-bold">Kitchen Tips</h1>
-        <p>Find cookware recommendations, money-saving ideas, holiday help, how-to tips, and more cooking and baking
-            suggestions from our Allrecipes editors.</p>
+        <h1 class="fw-bold">
+            <?php echo htmlspecialchars($clickedCatagoryInfo[1]);   ?>
+        </h1>
+        <p> <?php echo htmlspecialchars($clickedCatagoryInfo[2]);   ?></p>
     </div>
 
 
-    <!-- ---------------------------- Main Image Section ---------------------------------------- -->
+    <!-- ---------------------------- Hero Main Image Section ---------------------------------------- -->
 
     <div class="container mt-4">
         <div class="row">
             <div class="col-md-8">
-                <img src="https://via.placeholder.com/960x540" class="img-fluid" alt="Featured Image">
-                <h2 class="mt-3">What to Do Now If Your Turkey’s Still Frozen on Thanksgiving</h2>
-                <p>By Diana Christensen</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum officiis, alias debitis error ea sed unde. Quidem optio expedita
-                    praesentium? Hic ad mollitia quia magni, deserunt a totam odit optio pariatur maxime illum deleniti rem debitis at blanditiis!
-                    Blanditiis at laudantium, ullam exercitationem dignissimos nemo itaque perspiciatis, deserunt magni dicta et optio nisi nulla quos,
-                    est omnis non quo saepe similique illum culpa assumenda voluptatum sunt? Omnis facilis ab dolorem. Ea fugiat reiciendis aut veritatis
-                    numquam amet placeat, architecto labore temporibus quaerat natus error libero, neque officia, fuga dolor? Id, quaerat. Cum eveniet veritatis
-                    esse quaerat saepe pariatur numquam deleniti modi culpa, adipisci consectetur nisi consequatur dicta dolores error? Recusandae reprehenderit
-                    expedita nam aut fugit iusto tenetur sit esse cum veritatis, repellendus odio voluptatum modi enim dolorum tempore in. Qui sed optio suscipit
-                    labore distinctio fugiat neque inventore at corporis
-                    sit autem eaque quod, provident, iusto maxime totam? Harum accusantium dolore ipsum rem culpa vel. Atque, corporis repellat. </p>
+                <div class="card mb-4">
+                    <!-- Featured Image -->
+                    <div class="card-image" style="height: 435px;"> <!-- Keep image size same -->
+                        <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($forheroSegment[0][0]); ?>" class="img-fluid" alt="Featured Image">
+                    </div>
+                    <!-- Card body -->
+                    <div class="card-body">
+                        <!-- Title -->
+                        <h2 class="card-title mt-3"> <?php echo htmlspecialchars($forheroSegment[0][1]); ?></h2>
+                        <!-- Author -->
+                        <p class="card-text">By <?php echo htmlspecialchars($forheroSegment[0][3]) . " " . htmlspecialchars($forheroSegment[0][4]); ?></p>
+                        <!-- Description -->
+                        <p class="card-text"><?php echo htmlspecialchars($forheroSegment[0][2]); ?></p>
+
+                        <!-- Directions (First 3 directions) -->
+                        <p><strong>Directions:</strong></p>
+                        <?php
+                        $i = 1;
+                        foreach (array_splice($directionsArray, 0, 3) as $point) { // Show only 3 directions 
+                        ?>
+                            <p><?php echo $i . ". " . htmlspecialchars($point); ?></p>
+                        <?php $i++;
+                        } ?>
+
+                        <!-- Link to full details -->
+                        <a href="specificTipPage.php?tip_id=<?php echo htmlspecialchars($forheroSegment[0][0]); ?>" style="color: red; text-decoration: none;" class="mt-2">Read More</a>
+                    </div>
+                </div>
             </div>
+
+
+            <!-- Right Column with Thumbnails -->
             <div class="col-md-4">
                 <div class="row">
                     <div class="col-md-12 mb-3">
-                        <img src="https://via.placeholder.com/150" class="img-fluid" alt="Thumbnail">
-                        <p>Article Title</p>
+                        <div class="card">
+                            <div class="card-image">
+                                <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($forheroSegment[1][0]); ?>" class="img-fluid" alt="Thumbnail">
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text"><?php echo htmlspecialchars($forheroSegment[1][1]); ?></p>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-12 mb-3">
-                        <img src="https://via.placeholder.com/150" class="img-fluid" alt="Thumbnail">
-                        <p>Article Title</p>
+                        <div class="card">
+                            <div class="card-image">
+                                <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($forheroSegment[2][0]); ?>" class="img-fluid" alt="Thumbnail">
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text"><?php echo htmlspecialchars($forheroSegment[2][1]); ?></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <div class="card">
+                            <div class="card-image">
+                                <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($forheroSegment[2][0]); ?>" class="img-fluid" alt="Thumbnail">
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text"><?php echo htmlspecialchars($forheroSegment[2][1]); ?></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -68,10 +190,10 @@
     </div>
 
 
-    <!-----------------------------------------------------------  Explore Kitchen Tips ----------------------------------------------------------->
+    <!-----------------------------------------------------------  All Tips ----------------------------------------------------------->
     <div class="container mt-5">
         <div class="explore-section">
-            <h1 class="explore-title">Explore Kitchen Tips</h1>
+            <h1 class="explore-title">All <?php echo htmlspecialchars($clickedCatagoryInfo[1]); ?> Tips</h1>
             <!-- Search Bar -->
             <div class="search-bar">
                 <div class="input-group">
@@ -88,102 +210,84 @@
         </div>
         <hr>
 
+        <!---------------------------------------   all cards   --------------------------------------->
 
-        <div class="row">
-            <div class="col-md-4">
-                <img src="../Images/FoodImages/4.jpg" class="img-fluid" alt="Care Tip">
-                <h5>How to Season a Cast Iron Skillet</h5>
-                <p>Kitchen Tools and Techniques</p>
-            </div>
-            <div class="col-md-4">
-                <img src="../Images/FoodImages/4.jpg" class="img-fluid" alt="Care Tip">
-                <h5>How to Clean Dirty Sheet Pans</h5>
-                <p>Cleaning</p>
-            </div>
-            <div class="col-md-4">
-                <img src="../Images/FoodImages/4.jpg" class="img-fluid" alt="Care Tip">
-                <h5>What's the Difference Between a Convection Oven and an Air Fryer?</h5>
-                <p>Kitchen Tools and Techniques</p>
-            </div>
-            <!-- Add more care tips here -->
+        <!--  kt.image, kt.tips_title, kt.description, user_info.first_name , user_info.last_name, likes -->
+
+        <div class="row" id="tipsContainer">
+            <?php
+            $initialTips = array_slice($allTips, 0, 12); // Get first 12 tips
+            foreach ($initialTips as $oneTip) { ?>
+                <div class="col-md-4 item mb-4">
+                    <!-- card -->
+                    <div class="card">
+                        <!-- card image -->
+                        <div class="card-image">
+                            <img src="../Images/Kitchen-Tips/<?php echo htmlspecialchars($oneTip[0]); ?>" class="img-fluid" alt="Care Tip">
+                        </div>
+                        <!-- card body -->
+                        <div class="card-body">
+                            <!-- title -->
+                            <h5 class="card-title"><?php echo htmlspecialchars($oneTip[1]); ?></h5>
+                            <!-- user added by -->
+                            <p class="card-text">by <?php echo htmlspecialchars($oneTip[3]) . " " . htmlspecialchars($oneTip[4]); ?></p>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
         </div>
 
-        <div class="row">
-            <div class="col-md-4">
-                <img src="../Images/FoodImages/4.jpg" class="img-fluid" alt="Care Tip">
-                <h5>How to Season a Cast Iron Skillet</h5>
-                <p>Kitchen Tools and Techniques</p>
-            </div>
-            <div class="col-md-4">
-                <img src="../Images/FoodImages/4.jpg" class="img-fluid" alt="Care Tip">
-                <h5>How to Clean Dirty Sheet Pans</h5>
-                <p>Cleaning</p>
-            </div>
-            <div class="col-md-4">
-                <img src="../Images/FoodImages/4.jpg" class="img-fluid" alt="Care Tip">
-                <h5>What's the Difference Between a Convection Oven and an Air Fryer?</h5>
-                <p>Kitchen Tools and Techniques</p>
-            </div>
-            <!-- Add more care tips here -->
+        <!-- Load More Button -->
+        <div class="text-center">
+            <button id="loadMore" class="btn btn-primary mt-3 mb-3">Load More</button>
         </div>
-        <div class="row">
-            <div class="col-md-4">
-                <img src="../Images/FoodImages/4.jpg" class="img-fluid" alt="Care Tip">
-                <h5>How to Season a Cast Iron Skillet</h5>
-                <p>Kitchen Tools and Techniques</p>
-            </div>
-            <div class="col-md-4">
-                <img src="../Images/FoodImages/4.jpg" class="img-fluid" alt="Care Tip">
-                <h5>How to Clean Dirty Sheet Pans</h5>
-                <p>Cleaning</p>
-            </div>
-            <div class="col-md-4">
-                <img src="../Images/FoodImages/4.jpg" class="img-fluid" alt="Care Tip">
-                <h5>What's the Difference Between a Convection Oven and an Air Fryer?</h5>
-                <p>Kitchen Tools and Techniques</p>
-            </div>
-            <!-- Add more care tips here -->
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <img src="../Images/FoodImages/4.jpg" class="img-fluid" alt="Care Tip">
-                <h5>How to Season a Cast Iron Skillet</h5>
-                <p>Kitchen Tools and Techniques</p>
-            </div>
-            <div class="col-md-4">
-                <img src="../Images/FoodImages/4.jpg" class="img-fluid" alt="Care Tip">
-                <h5>How to Clean Dirty Sheet Pans</h5>
-                <p>Cleaning</p>
-            </div>
-            <div class="col-md-4">
-                <img src="../Images/FoodImages/4.jpg" class="img-fluid" alt="Care Tip">
-                <h5>What's the Difference Between a Convection Oven and an Air Fryer?</h5>
-                <p>Kitchen Tools and Techniques</p>
-            </div>
-            <!-- Add more care tips here -->
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <img src="../Images/FoodImages/4.jpg" class="img-fluid" alt="Care Tip">
-                <h5>How to Season a Cast Iron Skillet</h5>
-                <p>Kitchen Tools and Techniques</p>
-            </div>
-            <div class="col-md-4">
-                <img src="../Images/FoodImages/4.jpg" class="img-fluid" alt="Care Tip">
-                <h5>How to Clean Dirty Sheet Pans</h5>
-                <p>Cleaning</p>
-            </div>
-            <div class="col-md-4">
-                <img src="../Images/FoodImages/4.jpg" class="img-fluid" alt="Care Tip">
-                <h5>What's the Difference Between a Convection Oven and an Air Fryer?</h5>
-                <p>Kitchen Tools and Techniques</p>
-            </div>
-            <!-- Add more care tips here -->
-        </div>
+
+        <script>
+            const allTips = <?php echo json_encode($allTips); ?>;
+            let currentIndex = 12;
+            const itemsPerPage = 12;
+
+            function loadMoreTips() {
+                const tipsContainer = document.getElementById("tipsContainer");
+                const endIndex = currentIndex + itemsPerPage;
+                const tipsToShow = allTips.slice(currentIndex, endIndex);
+
+                tipsToShow.forEach(oneTip => {
+                    const itemDiv = document.createElement("div");
+                    itemDiv.classList.add("col-md-4", "item", "mb-4");
+
+                    itemDiv.innerHTML = `
+                <div class="card">
+                    <div class="card-image">
+                        <img src="../Images/Kitchen-Tips/${oneTip[0]}" class="img-fluid" alt="Care Tip">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">${oneTip[1]}</h5>
+                        <p class="card-text">by ${oneTip[3]} ${oneTip[4]}</p>
+                    </div>
+                </div>`;
+                    tipsContainer.appendChild(itemDiv);
+                });
+
+                currentIndex += itemsPerPage;
+
+                if (currentIndex >= allTips.length) {
+                    document.getElementById("loadMore").disabled = true;
+                    document.getElementById("loadMore").textContent = "No more tips to load";
+                }
+            }
+
+            document.getElementById("loadMore").addEventListener("click", loadMoreTips);
+        </script>
+
+
 
 
 
     </div>
+
+
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 

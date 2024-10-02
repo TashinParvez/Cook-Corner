@@ -1,0 +1,113 @@
+.filter-pill {
+    display: inline-flex;
+    align-items: center;
+    background-color: #e2e6ea;
+    color: #495057;
+    border-radius: 50px;
+    padding: 5px 10px;
+    margin: 2px;
+    font-size: 0.875rem;
+}
+
+.filter-pill .close {
+    margin-left: 8px;
+    cursor: pointer;
+}
+
+.filter-pill.placeholder {
+    background-color: #f8f9fa;
+    color: #6c757d;
+    font-style: italic;
+}
+
+.form-control {
+    background-color: transparent;
+}
+
+.form-control:focus {
+    background-color: transparent !important;
+}
+
+.accordion-button {
+    background-color: transparent;
+
+    padding: 0.25rem 0.5rem;
+    font-size: 1rem;
+    height: 2.5rem;
+    line-height: 1.5;
+    border-radius: 0px;
+}
+
+.accordion-item {
+    background-color: transparent;
+    border-radius: 0px;
+}
+
+.list-group-item {
+    background-color: transparent;
+    border-radius: 0px;
+    text-align: left;
+}
+
+.form-check-input {
+    background-color: transparent;
+}
+
+.accordion-body {
+    margin: 0%;
+    padding: 0%;
+    width: 100%;
+    border-color: black;
+    border-radius: 0px;
+}
+
+.form-check-input {
+    background-color: transparent;
+}
+
+.badge {
+    background-color: #2efa94 !important;
+    color: black;
+    border-radius: 10px;
+
+    height: 2rem;
+}
+
+.btn-close {
+    color: rgb(114, 113, 113) !important;
+}
+
+.filter-section {
+    /* background-color: red; */
+
+    height: 100vh;
+    border-right: 2px solid rgb(187, 184, 184);
+
+}
+
+
+.tag {
+    display: flex;
+    align-items: center;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin: 2px;
+    /* Optional: Add some margin around tags for better spacing */
+}
+
+.tag span {
+    margin-right: 5px;
+}
+
+.tag .remove-btn {
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: red;
+    font-size: 16px;
+}
+
+.tag-container {
+    display: flex;
+}

@@ -1,26 +1,11 @@
 <?php
-if (isset($_POST['resetPassword'])) {
-    $code = $_POST['code'];
-    $new_password = password_hash($_POST['new_password'], PASSWORD_DEFAULT); // Hash the password
-    $conn = new mysqli('localhost', 'username', 'password', 'cook_corner');
+    $resetCode = isset($_GET['code']) ? htmlspecialchars($_GET['code']) : '';
+    $resetEmail = isset($_GET['email']) ? htmlspecialchars($_GET['email']) : '';
 
-    // Check if the code matches
-    $query = "SELECT * FROM user_info WHERE code='$code'";
-    $result = $conn->query($query);
 
-    if ($result->num_rows > 0) {
-        // Code matches, update the password
-        $updateQuery = "UPDATE user_info SET password='$new_password', code=NULL WHERE code='$code'";
-        if ($conn->query($updateQuery) === TRUE) {
-            echo 'Password has been reset successfully!';
-        } else {
-            echo 'Error updating password: ' . $conn->error;
-        }
-    } else {
-        echo 'Invalid code. Please try again.';
-    }
-}
-?>
+    echo $resetCode . " " . $resetEmail;
+    
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,13 +19,16 @@ if (isset($_POST['resetPassword'])) {
 
 <body>
     <div class="wrapper">
-        <form action="verify_code.php" method="post">
-            <h1>Enter Code & New Password</h1>
+        <form action="VerifyCode.php" method="post">
+            <h1>Reset Password</h1>
             <div class="input-box">
                 <input type="text" name="code" placeholder="6-digit code" required>
             </div>
             <div class="input-box">
                 <input type="password" name="new_password" placeholder="New password" required>
+            </div>
+            <div class="input-box">
+                <input type="password" name="confirm_password" placeholder="Confirm Password" required>
             </div>
 
             <div>

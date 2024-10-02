@@ -1,0 +1,43 @@
+.meal-planner {
+    text-align: center;
+    margin: 50px 0;
+}
+
+.meal-planner .diet-options {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.meal-planner .diet-options .diet-option {
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.meal-planner .diet-options .diet-option img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+.meal-planner .diet-options .diet-option.active {
+    background-color: #007bff;
+    color: white;
+}
+
+.meal-planner .diet-options .diet-option.active img {
+    filter: brightness(0) invert(1);
+}
+
+.meal-planner .btn-calculate {
+    margin-top: 20px;
+}
+
+/* Optional: hover effect */
+.meal-planner .diet-options .diet-option:hover {
+    background-color: #e0e0e0;
+}

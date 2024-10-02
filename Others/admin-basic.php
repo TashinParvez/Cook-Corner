@@ -13,6 +13,9 @@
 
     <!-- favicon -->
     <link rel="icon" href="../Images/logo/fav-icon.png" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="...">
     
 </head>
 
