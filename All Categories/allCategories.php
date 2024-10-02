@@ -3,60 +3,83 @@
 //...................... Database Connection ..............................
 include("../Includes/Database Connection/database_connection.php");
 
+// --------------- Sort by name/ recently/ most recipes with limit and offset -----------------
 
 $categories_per_page = 24; // 6 rows * 4 categories per row
 $current_page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $offset = ($current_page - 1) * $categories_per_page;
 
-$sql_count = "SELECT COUNT(*) 
-              FROM `recipe_category`";
-
-$total_categories = mysqli_fetch_array(mysqli_query($conn, $sql_count))[0];
-
-// Calculate total pages
-$total_pages = ceil($total_categories / $categories_per_page);
-
-// --------------- Sort by with limit and offset -----------------
-
-// Set default value for order if not provided
+// .......Set default value for order if not provided
 $sort = isset($_POST['sortInput']) ? $_POST['sortInput'] : 'namewise';
 
 switch ($sort) {
     case 'namewise':
-        $sortByClause = "ORDER BY name";
+        $sortBy = "name";
         break;
     case 'recentlyAdded':
-        $sortByClause = "ORDER BY n.created_at DESC";
+        $sortBy = "created_at DESC";
         break;
     case 'mostRecipes':
-        $sortByClause = "ORDER BY n.created_at DESC";
+        $sortBy = "recipe_count DESC";
+        break;
+    default:
+        $sortBy = "name"; // Default sorting
         break;
 }
 
-$stmt = $conn->prepare('SELECT * FROM recipe_category ORDER BY ? LIMIT ? OFFSET ?');
+// ..............If search something
+$search_text = '';
+$search_extended_query = '';
 
-$stmt->bind_param('sii', $sortByClause, $categories_per_page, $offset);
+if (isset($_POST['all_categories_search'])) {
+    $search_text = $_POST['all_categories_search'] ?? '';
+    if (!empty($search_text)) {
+        $search_text = $conn->real_escape_string($search_text);
+        $search_extended_query = "WHERE rc.name LIKE '%$search_text%' OR rc.description LIKE '%$search_text%'";
+    }
+}
+
+
+$sql = "SELECT SQL_CALC_FOUND_ROWS rc.*, COUNT(j.recipe_id) AS recipe_count
+        FROM recipe_category rc
+        LEFT JOIN junction_recipe_info_recipe_category j ON rc.id = j.category_id
+        $search_extended_query
+        GROUP BY rc.id
+        ORDER BY $sortBy
+        LIMIT ? OFFSET ?;";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param('ii', $categories_per_page, $offset);
 $stmt->execute();
 $result = $stmt->get_result();
 $allcategories = $result->fetch_all(MYSQLI_ASSOC);
+
+// Get the total number of rows using FOUND_ROWS()
+$total_categories_result = $conn->query("SELECT FOUND_ROWS()");
+$total_categories = $total_categories_result->fetch_array()[0];
+
+// Calculate total pages
+$total_pages = ceil($total_categories / $categories_per_page);
 
 $stmt->close();
 mysqli_close($conn);
 
 
-// $sql = "SELECT *                 // Tashin
-//         FROM  recipe_category
-//         ORDER BY name 
-//         LIMIT $categories_per_page OFFSET $offset";
-
-// $result = mysqli_query($conn, $sql);
-// $allcategories = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-// mysqli_free_result($result);
-// mysqli_close($conn);
 
 // ----------------------------------------------------------------
 
+// Output format
+
+// $total_categories = 15; // Total number of categories that match the search and sorting criteria
+// $allcategories = [
+//     [
+//         'id' => 1,                     // Category ID
+//         'name' => 'Category Name',  // Category Name
+//         'image' => 'Category Image',  // Category Image
+//         'description' => 'Description 1', // Description
+//         'created_at' => '2024-01-01',  // Created Date
+//         'recipe_count' => 5             // Count of recipes associated with this category
+//     ]
 
 // ----------------------------------------------------------------
 
@@ -114,8 +137,9 @@ mysqli_close($conn);
         <div class="row justify-content-center">
             <!-------------------------------------------------- Search -------------------------------------------------->
             <div class="col-6 justify-content-center align-items-center">
-                <form class="w-100 me-3" role="search">
-                    <input type="search" class="form-control p-2" placeholder="Search Category..." aria-label="Search">
+                <form class="w-100 me-3" role="search" action="allCategories.php" method="post">
+                    <input type="search" class="form-control p-2" placeholder="Search Category..." aria-label="Search"
+                        name="all_categories_search" value="<?php echo htmlspecialchars($search_text); ?>">
                 </form>
             </div>
 
@@ -207,9 +231,9 @@ mysqli_close($conn);
                     <!-- No hidden input needed -->
                 </form>
 
-                <!-- Loop through all categories and display them -->
-                <?php foreach ($allcategories as $category) { ?>
-                    <div class="col-6 col-sm-4 col-md-3 col-lg-1-5">
+                <!-- Loop through all categories and display them --> <!-- Tashin  don't touch 'onclick' -->
+                <?php foreach ($allcategories as $category) { ?> <!--  and if want when sort by most recipe then show count of recioes of correspnding category -->
+                    <div class="col-6 col-sm-4 col-md-3 col-lg-1-5"> <!-- you will find output format of 'allCategories' in the php block -->
                         <a href="#" style="text-decoration: none;" onclick="submitCategoryForm(<?php echo $category['id']; ?>)">
                             <div class="card text-center bg-transparent border-0">
                                 <img src="../../../Images/FoodImages/2.jpg" class="card-img-top rounded-circle mx-auto d-block" alt="..." style="width: 150px; height: 150px; object-fit: cover;">
