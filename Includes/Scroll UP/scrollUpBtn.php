@@ -39,7 +39,7 @@
 </head>
 
 <body>
-    <button id="scrollToTopBtn" class="btn">
+    <button id="scrollToTopBtn">
         <i class="fa-solid fa-arrow-up-long"></i>
     </button>
 </body>
