@@ -12,7 +12,7 @@
         crossorigin="anonymous"></script>
     <!-- favicon -->
     <link rel="icon" href="../Images/logo/fav-icon.png" />
-    
+
     <!-- CSS -->
     <link rel="stylesheet" href="RecipeManagement.css">
 

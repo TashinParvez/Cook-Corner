@@ -86,7 +86,7 @@ body {
 
 .carouselImg {
     height: 200px;
-    width: 250px;
+    width: 200px !important;
 }
 
 /* cooking class css*/
@@ -146,3 +146,107 @@ body {
 .class-info .btn:hover {
     background-color: #cc0000;
 }
+
+
+.swiper {
+    width: 100%;
+    height: 100%;
+  }
+
+  .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    /* background: #fff; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .swiper-button-next, .swiper-button-prev{
+    color: #fff !important;
+  }
+  .swiper-button-next:hover, .swiper-button-prev:hover, .swiper-category .swiper-button-next:hover, .swiper-category .swiper-button-prev:hover{
+    color: #1E90FF !important;
+}
+.swiper-category .swiper-button-next, .swiper-category .swiper-button-prev{
+    color: #000000 !important;
+}
+
+  .swiper-slide a {
+    text-decoration: none;
+    color: #000;
+  }
+  .card-title:hover{
+    text-decoration: none;
+    color:  #1E90FF !important;
+  }
+
+  .child-list a{
+    display: inline-block;
+    line-height: 34px;
+    padding: 0 14px;
+    color: #111;
+    border: 1px solid #ddd;
+    border-radius: 30px;
+    margin: 0 5px 5px 0;
+    font-size: 13px;
+    font-weight: normal;
+}
+
+.child-list a:hover{
+    color: #fff;
+    background-color: #111;
+    border-color: #111;
+    text-decoration: none;
+}
+.swiper-slide a {
+    text-decoration: none;
+    color: #000;
+}
+
+.swiper-slide .card {
+    cursor: pointer;
+}
+
+.tab-pane {
+    display: none;
+}
+
+.tab-pane.show.active {
+    display: block;
+}
+
+.special-category {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.special-category h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.special-category p {
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.special-category .btn {
+    background-color: #007bff;
+    border: none;
+    color: white;
+}
+
+.special-category .btn:hover {
+    background-color: #0056b3;
+}
+

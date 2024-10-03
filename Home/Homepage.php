@@ -117,6 +117,8 @@ mysqli_close($conn);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
     <!-- favicon -->
     <link rel="icon" href="../Images/logo/fav-icon.png" />
 
@@ -140,7 +142,8 @@ mysqli_close($conn);
     // include('../Includes/Navbar/navbarMain.php');  // Mahbub 
 
     // include('../Includes/Navbar/navbarMain.php');  // Navbar // tahsin 
-    include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin    
+    include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin   
+    include "../Includes/AddMenu/addMenu.php";
     ?>
 
     <!-------------------------------------------- search section ---------------------------------------------------->
@@ -179,154 +182,33 @@ mysqli_close($conn);
 
 
             <!-------------------------------------------- Image sliding section ------------------------------------------------------->
+            <!-- Swiper for categories -->
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    <?php foreach ([1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as $key => $value): ?>
+                        <div class="swiper-slide">
+                            <a href="javascript:void(0);" class="category-tab" data-target="content-<?php echo $key; ?>">
 
-
-
-            <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <!-- First set of 6 smaller cards -->
-                    <div class="carousel-item active">
-                        <div class="row justify-content-center">
-                            <div class="col-md-2">
-                                <div class="card text-white">
-                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
-                                        <h5 class="card-title">Card 1</h5>
-                                        <p class="card-text">Description 1.</p>
+                                <div class="row justify-content-center">
+                                    <div class="col-md">
+                                        <div class="card text-white">
+                                            <div class="card-img-overlay d-flex flex-column justify-content-end">
+                                                <h5 class="card-title">Card <?php echo $key; ?></h5>
+                                                <p class="card-text">Description <?php echo $key; ?></p>
+                                            </div>
+                                            <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="...">
+                                        </div>
                                     </div>
-                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 1">
                                 </div>
-                            </div>
 
-                            <div class="col-md-2">
-                                <div class="card text-white">
-                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
-                                        <h5 class="card-title">Card 2</h5>
-                                        <p class="card-text">Description 2.</p>
-                                    </div>
-                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 2">
-                                </div>
-                            </div>
-
-                            <div class="col-md-2">
-                                <div class="card text-white">
-                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
-                                        <h5 class="card-title">Card 3</h5>
-                                        <p class="card-text">Description 3.</p>
-                                    </div>
-                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 3">
-                                </div>
-                            </div>
-
-                            <div class="col-md-2">
-                                <div class="card text-white">
-                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
-                                        <h5 class="card-title">Card 4</h5>
-                                        <p class="card-text">Description 4.</p>
-                                    </div>
-                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 4">
-                                </div>
-                            </div>
-
-                            <div class="col-md-2">
-                                <div class="card text-white">
-                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
-                                        <h5 class="card-title">Card 5</h5>
-                                        <p class="card-text">Description 5.</p>
-                                    </div>
-                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 5">
-                                </div>
-                            </div>
-
-                            <div class="col-md-2">
-                                <div class="card text-white">
-                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
-                                        <h5 class="card-title">Card 6</h5>
-                                        <p class="card-text">Description 6.</p>
-                                    </div>
-                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 6">
-                                </div>
-                            </div>
+                            </a>
                         </div>
-                    </div>
-
-                    <!-- Second set of 6 smaller cards -->
-                    <div class="carousel-item">
-                        <div class="row justify-content-center">
-                            <div class="col-md-2">
-                                <div class="card text-white">
-                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
-                                        <h5 class="card-title">Card 7</h5>
-                                        <p class="card-text">Description 7.</p>
-                                    </div>
-                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 7">
-                                </div>
-                            </div>
-
-                            <div class="col-md-2">
-                                <div class="card text-white">
-                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
-                                        <h5 class="card-title">Card 8</h5>
-                                        <p class="card-text">Description 8.</p>
-                                    </div>
-                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 8">
-                                </div>
-                            </div>
-
-                            <div class="col-md-2">
-                                <div class="card text-white">
-                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
-                                        <h5 class="card-title">Card 9</h5>
-                                        <p class="card-text">Description 9.</p>
-                                    </div>
-                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 9">
-                                </div>
-                            </div>
-
-                            <div class="col-md-2">
-                                <div class="card text-white">
-                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
-                                        <h5 class="card-title">Card 10</h5>
-                                        <p class="card-text">Description 10.</p>
-                                    </div>
-                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 10">
-                                </div>
-                            </div>
-
-                            <div class="col-md-2">
-                                <div class="card text-white">
-                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
-                                        <h5 class="card-title">Card 11</h5>
-                                        <p class="card-text">Description 11.</p>
-                                    </div>
-                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 11">
-                                </div>
-                            </div>
-
-                            <div class="col-md-2">
-                                <div class="card text-white">
-                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
-                                        <h5 class="card-title">Card 12</h5>
-                                        <p class="card-text">Description 12.</p>
-                                    </div>
-                                    <img src="../../../Images/FoodImages/1.jpg" class="card-img carouselImg" alt="Card 12">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
-
-                <!-- Carousel controls -->
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
             </div>
-
-
 
 
 
@@ -490,77 +372,38 @@ mysqli_close($conn);
 
 
 
+             <!-- Swiper for all categories -->
+        <div class="swiper mySwiper swiper-category">
+            <div class="swiper-wrapper">
+                <?php foreach ([1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as $key => $value): ?>
+                    <div class="swiper-slide">
+                        <a href="javascript:void(0);" class="category-tab" data-target="content-<?php echo $key; ?>">
+                        <!-- <div class="row justify-content-center">
+                        <div class="col-md"> -->
 
-            <div class="row row-cols-1 row-cols-md-6 g-4">
-                <!--------------------------------- elements in categories  ------------------------------->
-
-                <div class="col">
-                    <a href="#">
-                        <div class="card text-center bg-transparent border-0">
-                            <img src="../../../Images/FoodImages/2.jpg" class="card-img-top rounded-circle mx-auto d-block" alt="..." style="width: 150px; height: 150px; object-fit: cover;">
-                            <div class="card-body">
-                                <h5 class="card-title ">Eid al-Fitr</h5>
+                            <div class="card text-center bg-transparent border-0">
+                                <img src="../../../Images/FoodImages/2.jpg" class="card-img-top rounded-circle mx-auto d-block" alt="..." style="width: 100px; height: 100px; object-fit: cover;">
+                                <div class="card-body">
+                                    <h5 class="card-title">Eid al-Fitr <?php echo $key; ?></h5>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col">
-                    <a href="#">
-                        <div class="card text-center bg-transparent border-0">
-                            <img src="../../../Images/FoodImages/2.jpg" class="card-img-top rounded-circle mx-auto d-block" alt="..." style="width: 150px; height: 150px; object-fit: cover;">
-                            <div class="card-body">
-                                <h5 class="card-title ">Eid al-Fitr</h5>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col">
-                    <a href="#">
-                        <div class="card text-center bg-transparent border-0">
-                            <img src="../../../Images/FoodImages/2.jpg" class="card-img-top rounded-circle mx-auto d-block" alt="..." style="width: 150px; height: 150px; object-fit: cover;">
-                            <div class="card-body">
-                                <h5 class="card-title ">Eid al-Fitr</h5>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col">
-                    <a href="#">
-                        <div class="card text-center bg-transparent border-0">
-                            <img src="../../../Images/FoodImages/2.jpg" class="card-img-top rounded-circle mx-auto d-block" alt="..." style="width: 150px; height: 150px; object-fit: cover;">
-                            <div class="card-body">
-                                <h5 class="card-title ">Eid al-Fitr</h5>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col">
-                    <a href="#">
-                        <div class="card text-center bg-transparent border-0">
-                            <img src="../../../Images/FoodImages/2.jpg" class="card-img-top rounded-circle mx-auto d-block" alt="..." style="width: 150px; height: 150px; object-fit: cover;">
-                            <div class="card-body">
-                                <h5 class="card-title ">Eid al-Fitr</h5>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col">
-                    <a href="#">
-                        <div class="card text-center bg-transparent border-0">
-                            <img src="../../../Images/FoodImages/2.jpg" class="card-img-top rounded-circle mx-auto d-block" alt="..." style="width: 150px; height: 150px; object-fit: cover;">
-                            <div class="card-body">
-                                <h5 class="card-title ">Eid al-Fitr</h5>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
+                        <!-- </div>
+                        </div> -->
+                        </a>
+                    </div>
+                <?php endforeach; ?>
             </div>
-
-
-
-
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
         </div>
+         
+
+
+
+           
+
+
     </section>
     <!------------------------------------------------- Latest Recipe section  ----------------------------------------------->
 
@@ -723,6 +566,32 @@ mysqli_close($conn);
     include('../Includes/Footer/footermain.php');  // tashin 
     ?>
     <!-- ============================== Footer End ==================================== -->
+
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            slidesPerView: 6,
+            spaceBetween: 2,
+            loop: true,
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            // cssMode: true,
+            // pagination: {
+            //     el: ".swiper-pagination",
+            //     clickable: true,
+            // },
+        });
+    </script>
+
+
+
+
 
 </body>
 

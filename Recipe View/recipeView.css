@@ -1,16 +1,17 @@
 .bordered-container {
   position: relative;
-  border: 2px solid #000; /* Border around the container */
+  border: 2px solid #000;
+  /* Border around the container */
   padding: 20px;
   margin-top: 30px;
 }
 
 .title-on-border {
   position: absolute;
-  top: -15px; /* Position the title above the border */
+  top: -15px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #fff; /* Background color for the title */
+  background-color: #fff;
   padding: 0 10px;
   font-weight: bold;
 }
@@ -22,20 +23,99 @@
 }
 
 .circle-image {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #000;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: none !important;
+  object-fit: cover;
+  border: 2px solid #000;
 }
 
 .image-title {
-    margin-top: 10px;
-    font-size: 1.25rem;
-    font-weight: bold;
+  margin-top: 10px;
+  font-size: 1.25rem;
+  font-weight: bold;
 }
+
 .category-image {
   width: 50px;
   height: 50px;
 }
+
 /* ***************************************************************************************** */
+
+/* direction */
+
+h1 {
+  color: #333;
+}
+
+.step {
+  margin: 20px 0;
+}
+
+.step-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.step-number {
+  background-color: #88cc88;
+  color: white;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.step-title {
+  font-weight: bold;
+  color: #333;
+}
+
+.images {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.images img {
+  width: 48%;
+  border-radius: 4px;
+}
+
+.mark-complete {
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
+
+
+/* Dish */
+.dish-container {
+  margin-top: 20px;
+  background-color: #f0faf0;
+  padding: 20px;
+  border-radius: 8px;
+
+}
+
+.list-group-item {
+  display: flex;
+  align-items: center;
+  background-color: #f0faf0 !important;
+}
+
+
+/* Ingredients */
+.ing-name {
+  display: flex !important;
+  justify-content: space-between;
+}
+
+
