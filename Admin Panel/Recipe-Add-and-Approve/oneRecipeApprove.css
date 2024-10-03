@@ -1,0 +1,33 @@
+body {
+  background-color: #f8f9fa;
+}
+
+header {
+  margin-bottom: 20px;
+}
+
+.card {
+  margin-bottom: 20px;
+}
+
+.notification {
+  font-weight: bold;
+  text-align: center;
+  color: green;
+}
+
+.notification.error {
+  color: red;
+}
+
+.category-section {
+  margin-bottom: 10px;
+}
+
+.approve-btn {
+  margin-top: 20px;
+}
+
+.form-check {
+  margin-bottom: 5px;
+}

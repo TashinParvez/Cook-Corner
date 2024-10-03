@@ -46,7 +46,7 @@
             </a>
         </li>
         <li>
-            <a href="/Admin Panel/Management/RecipeManagement.php" class="nav-link link-dark">
+            <a href="/Admin Panel/Recipe-Add-and-Approve/RecipeManagement.php" class="nav-link link-dark">
                 <svg class="bi pe-none me-2" width="16" height="16">
                     <use xlink:href="#grid"></use>
                 </svg>

@@ -1,0 +1,45 @@
+.tag {
+    display: flex;
+    align-items: center;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin: 2px;
+}
+
+.tag span {
+    margin-right: 5px;
+}
+
+.tag .remove-btn {
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: red;
+    font-size: 16px;
+}
+
+.tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+#suggestions {
+    /* border: 1px solid #ddd; */
+    max-height: 150px;
+    overflow-y: auto;
+    position: absolute;
+    width: 100%;
+    z-index: 1000;
+    background-color: white;
+}
+
+.list-group-item {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.list-group-item:hover {
+    background-color: #f1f1f1;
+}
