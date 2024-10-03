@@ -31,6 +31,7 @@
 
     <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        
         // Get the form inputs
         $youtubeLink = $_POST['youtubeLink'];
         $startTime = $_POST['startTime'];
