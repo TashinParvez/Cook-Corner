@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingredients</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light background color */
+        }
+        .transparent-bg {
+            background-color: rgba(255, 255, 255, 0.8); /* Transparent background */
+            padding: 20px; /* Padding for the container */
+            border-radius: 5px; /* Rounded corners */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Slight shadow */
+        }
+        .ingredient-item {
+            padding: 10px; /* Add padding */
+            display: grid; /* Use grid for simple layout */
+            grid-template-columns: 1fr auto auto; /* Three columns: checkbox, item name, button */
+            align-items: center; /* Center align items vertically */
+        }
+        .form-check {
+            margin-right: 10px; /* Space between checkbox and text */
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h3 class="text-center">Ingredients</h3>
+        <div class="transparent-bg">
+            <ul class="list-group">
+                <li class="list-group-item ingredient-item">
+                    <div class="form-check">
+                        <input class="form-check-input item-check" type="checkbox" id="ingredient-1">
+                    </div>
+                    <label class="item-name" for="ingredient-1">Mark</label>
+                    <button class="btn btn-primary btn-sm">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </li>
+                <li class="list-group-item ingredient-item">
+                    <div class="form-check">
+                        <input class="form-check-input item-check" type="checkbox" id="ingredient-2">
+                    </div>
+                    <label class="item-name" for="ingredient-2">Jacob</label>
+                    <button class="btn btn-primary btn-sm">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </li>
+                <li class="list-group-item ingredient-item">
+                    <div class="form-check">
+                        <input class="form-check-input item-check" type="checkbox" id="ingredient-3">
+                    </div>
+                    <label class="item-name" for="ingredient-3">Larry the Bird</label>
+                    <button class="btn btn-primary btn-sm">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
