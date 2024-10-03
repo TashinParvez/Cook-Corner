@@ -1,3 +1,43 @@
+
+<?php
+
+$to = "mahmed221209@bscse.uiu.ac.bd";
+$subject = "HTML email";  // Fixed: Added the equal sign
+
+$message = "
+<html>
+<head>
+<title>HTML email</title>
+</head>
+<body>
+<p>This email contains HTML Tags!</p>
+<table border='1'>
+<tr>
+<th>Firstname</th>
+<th>Lastname</th>
+</tr>
+<tr>
+<td>Noman</td>
+<td>Ahmed</td>
+</tr>
+</table>
+</body>
+</html>
+";
+
+$headers = "MIME-Version: 1.0" . "\r\n";
+$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+
+// Fixed: Added the missing closing quotation mark and removed the extra period
+$headers .= 'From: <mahmed221209@bscse.uiu.ac.bd>' . "\r\n";
+
+// Fixed: Typo in the variable $message and closing parenthesis
+mail($to, $subject, $message, $headers);
+
+?>
+
+
+
 <?php
 ######
 # THIS FILE IS ONLY AN EXAMPLE. PLEASE MODIFY AS REQUIRED.
