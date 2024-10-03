@@ -99,6 +99,10 @@ mysqli_close($conn);
 </head>
 
 <body>
+    
+    <?php
+    include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin
+    ?>
 
     <!-- Hero Section -->
     <div class="hero">

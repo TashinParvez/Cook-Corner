@@ -12,7 +12,6 @@
             width: 400px;
             height: 100%;
             background-color: #f0f4f7;
-            background-color: #d9f2d9;
             /* Softer background color */
             box-shadow: -3px 0 10px rgba(0, 0, 0, 0.2);
             /* Adds a subtle shadow */
