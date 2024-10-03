@@ -13,7 +13,7 @@ $course_Info = mysqli_fetch_assoc($resultantLabel);
 
 $playlistID =  $course_Info['playlist_link'];
 
-$apiKey =  "HAHAHHHAHAHHA"; // Tashin API Key
+$apiKey =  "AIzaSyBm4S9TTRDo8Loo3xpFkm9ihwYRjOrSl7c"; // Tashin API Key
 
 
 $apiUrl = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId={$playlistID}&key={$apiKey}";

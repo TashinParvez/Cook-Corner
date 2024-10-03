@@ -19,7 +19,7 @@ $course_info = mysqli_fetch_all($resultantLabel)[0];
 
 $playlistID =  $course_info[2];
 
-$apiKey =  "HAHAHHAHAHHAHAHHA"; //-------- Tashin API Key [HAHAHHAHAHHAHAHHA] 
+$apiKey =  "AIzaSyBm4S9TTRDo8Loo3xpFkm9ihwYRjOrSl7c"; //-------- Tashin API Key [HAHAHHAHAHHAHAHHA] 
 
 
 function getVideoInfoFromPlaylist($playlistID, $apiKey)

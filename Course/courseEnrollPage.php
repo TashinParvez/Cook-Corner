@@ -64,7 +64,7 @@ function getVideoInfoFromPlaylist($playlistID, $apiKey)
     return $videoInfo;
 }
 
-$apiKey = 'HAHAHHAHHAHAHHAHHAHAHHAH'; //----> API Key Tashin  [HAHAHHAHHAHAHHAHHAHAHHAH]
+$apiKey = 'AIzaSyBm4S9TTRDo8Loo3xpFkm9ihwYRjOrSl7c'; //----> API Key Tashin  [HAHAHHAHHAHAHHAHHAHAHHAH]
 
 
 $playlistID = $course_info['playlist_link'];

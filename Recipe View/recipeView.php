@@ -177,7 +177,7 @@
                             </div>
                         </div>
                         <div class="markSection">
-                            <input type="checkbox" id="mark-complete-1">
+                            <input type="checkbox" id="mark-complete-1" >
                             <label for="mark-complete-1">Mark as complete</label>
                         </div>
                     </div>
