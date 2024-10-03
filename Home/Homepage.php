@@ -1,4 +1,8 @@
 <?php
+
+include('../Includes/Navbar/navbarMain.php');  // Mahbub 
+// echo $user_id;
+
 //...................... Database Connection .............................. 
 include("../Includes/Database Connection/database_connection.php");
 
@@ -38,24 +42,39 @@ if ($current_time >= '06:00:00' && $current_time < '12:00:00') {
 // echo 'Greetings: ' . $greetings;
 
 // Load Chunk Recipes from DB                       is it necessary to take all information about a recipe???
-$stmt = $conn->prepare('SELECT * FROM recipe_info WHERE recipe_id IN
-                    (SELECT recipe_id FROM junction_meal_type_recipe_info WHERE meal_type_id IN
-                    (SELECT meal_type_id FROM junction_meal_type_day_chunk WHERE chunk_id =
-                    (SELECT chunk_id FROM day_chunk WHERE chunk_name = ?)));');
+$stmt = $conn->prepare('SELECT recipe_info.recipe_id, recipe_info.title, recipe_feedback.rating, recipe_info.image
+                    FROM
+                        recipe_info LEFT JOIN recipe_feedback
+                    ON
+                        recipe_info.recipe_id = recipe_feedback.recipe_id
+                    WHERE
+                        recipe_info.recipe_id IN
+                            (SELECT recipe_id FROM junction_meal_type_recipe_info WHERE meal_type_id IN
+                            (SELECT meal_type_id FROM junction_meal_type_day_chunk WHERE chunk_id =
+                            (SELECT chunk_id FROM day_chunk WHERE chunk_name = ?))) LIMIT 20;');
 $stmt->bind_param('s', $current_chunk);
 $stmt->execute();
 $result = $stmt->get_result();
 $chunk_recipes = $result->fetch_assoc();
 
 // Load Best Rcipes from DB                       is it necessary to take all information about a recipe???
-$stmt = $conn->prepare('SELECT recipe_info.* FROM recipe_info INNER JOIN recipe_feedback
-                    ON recipe_info.recipe_id = recipe_feedback.recipe_id WHERE rating > 3;');
+$stmt = $conn->prepare('SELECT recipe_info.recipe_id, recipe_info.title, recipe_feedback.rating, recipe_info.image
+                        FROM
+                            recipe_info LEFT JOIN recipe_feedback
+                        ON
+                            recipe_info.recipe_id = recipe_feedback.recipe_id
+                        ORDER BY recipe_feedback.rating DESC LIMIT 20;');
 $stmt->execute();
 $result = $stmt->get_result();
 $best_recipes = $result->fetch_assoc();
 
 // Load Latest Rcipes from DB                       is it necessary to take all information about a recipe and all recipes as well???
-$stmt = $conn->prepare('SELECT * FROM recipe_info ORDER BY created_at DESC;');
+$stmt = $conn->prepare('SELECT recipe_info.recipe_id, recipe_info.title, recipe_feedback.rating, recipe_info.image
+                        FROM
+                            recipe_info LEFT JOIN recipe_feedback
+                        ON
+                            recipe_info.recipe_id = recipe_feedback.recipe_id
+                        ORDER BY created_at DESC LIMIT 20;');
 $stmt->execute();
 $result = $stmt->get_result();
 $latest_recipes = $result->fetch_assoc();
@@ -67,12 +86,18 @@ $result = $stmt->get_result();
 $categories = $result->fetch_assoc();
 
 // Load Popular Courses from DB              there is no parameter for being polular a course???
-// $stmt = $conn->prepare('');
-// $stmt->bind_param('s', $current_chunk);
-// $stmt->execute();
-// $result = $stmt->get_result();
-// $popular_courses = $result->fetch_assoc();
-
+$stmt = $conn->prepare('SELECT c.course_id, c.course_title, c.price, COUNT(j.user_id) AS taken_by_count
+                    FROM
+                        course AS c JOIN junction_course_taken_user AS j
+                    ON
+                        c.course_id = j.course_id
+                    GROUP BY
+                        c.course_id, c.course_title, c.price
+                    ORDER BY
+                        taken_by_count DESC LIMIT 20;');
+$stmt->execute();
+$result = $stmt->get_result();
+$popular_courses = $result->fetch_assoc();
 
 
 $stmt->close();
@@ -114,10 +139,11 @@ mysqli_close($conn);
 <body>
 
     <?php
-    include('../Includes/Navbar/navbarMain.php');  // Mahbub 
+    // include('../Includes/Navbar/navbarMain.php');  // Mahbub 
 
     // include('../Includes/Navbar/navbarMain.php');  // Navbar // tahsin 
-    include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin    
+    include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin   
+    include "../Includes/AddMenu/addMenu.php"; 
     ?>
 
     <!-------------------------------------------- search section ---------------------------------------------------->
@@ -329,8 +355,8 @@ mysqli_close($conn);
                 </div>
 
 
-
             </div>
+        </div>
     </section>
 
 

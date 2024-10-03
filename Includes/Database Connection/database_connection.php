@@ -4,7 +4,7 @@
 $servername = 'localhost';
 $username = 'root';
 $db_password = '';
-$databasename = 'Cook_corner';
+$databasename = 'cook_corner';
 
 // connection obj
 $conn = mysqli_connect($servername, $username, $db_password, $databasename);

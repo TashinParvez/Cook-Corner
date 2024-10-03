@@ -3,12 +3,23 @@
 //...................... Database Connection ..............................
 include("../Includes/Database Connection/database_connection.php");
 
-$clickedCatagory = "Cooking Techniques";  // get from click
+// $clickedCatagory = "Cooking Techniques";  // get from click
+$kitchenTipsCategoryId = isset($_GET['kitchenTipsCategoryId']) ? htmlspecialchars($_GET['kitchenTipsCategoryId']) : '8'; //---------> this will come from kithhen tips dashboard
+
+$stmt = $conn->prepare('SELECT name FROM kitchen_tips_category WHERE id = ? LIMIT 1;');
+
+$stmt->bind_param('i', $kitchenTipsCategoryId);
+$stmt->execute();
+$stmt->bind_result($kitchenTipsCategoryName);
+$stmt->fetch();
+$stmt->close();
+
+
 
 // -------------- clickedCatagory Info -----------------
 $sql = "SELECT `id`, `name`, `description`, `image_preview`
         FROM `kitchen_tips_category` 
-        WHERE name = '$clickedCatagory'";
+        WHERE name = '$kitchenTipsCategoryName'";
 
 $resultantLabel = mysqli_query($conn, $sql);   // get query result
 
@@ -107,67 +118,75 @@ mysqli_close($conn);
     <!-- ---------------------------- Hero Main Image Section ---------------------------------------- -->
 
     <div class="container mt-4">
-
         <div class="row">
-
             <div class="col-md-8">
-                <!-- <img src="https://via.placeholder.com/960x540" class="img-fluid" alt="Featured Image"> -->
-                <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($forheroSegment[0][0]);   ?>" class="img-fluid" alt="Featured Image">
-                <!-- Title -->
-                <h2 class="mt-3"> <?php echo htmlspecialchars($forheroSegment[0][1]);   ?></h2>
-                <!-- author -->
-                <p>By <?php echo htmlspecialchars($forheroSegment[0][3]);
-                        echo " ";
-                        echo htmlspecialchars($forheroSegment[0][4]);
-                        ?>
-                </p>
-                <!-- description -->
-                <p>
-                    <?php echo htmlspecialchars($forheroSegment[0][2]); ?>
-                </p>
+                <div class="card mb-4">
+                    <!-- Featured Image -->
+                    <div class="card-image" style="height: 435px;"> <!-- Keep image size same -->
+                        <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($forheroSegment[0][0]); ?>" class="img-fluid" alt="Featured Image">
+                    </div>
+                    <!-- Card body -->
+                    <div class="card-body">
+                        <!-- Title -->
+                        <h2 class="card-title mt-3"> <?php echo htmlspecialchars($forheroSegment[0][1]); ?></h2>
+                        <!-- Author -->
+                        <p class="card-text">By <?php echo htmlspecialchars($forheroSegment[0][3]) . " " . htmlspecialchars($forheroSegment[0][4]); ?></p>
+                        <!-- Description -->
+                        <p class="card-text"><?php echo htmlspecialchars($forheroSegment[0][2]); ?></p>
 
-                <!-- Directions -->
-                <p> Directions: <br> </p>
-
-                <?php
-                $i = 1;
-                foreach (array_splice($directionsArray, 0) as $point) { ?>
-                    <p>
+                        <!-- Directions (First 3 directions) -->
+                        <p><strong>Directions:</strong></p>
                         <?php
-                        echo $i;
-                        echo ". ";
-                        echo htmlspecialchars($point);
+                        $i = 1;
+                        foreach (array_splice($directionsArray, 0, 3) as $point) { // Show only 3 directions 
                         ?>
-                    </p>
-                <?php $i++;
-                } ?>
-            </div>
+                            <p><?php echo $i . ". " . htmlspecialchars($point); ?></p>
+                        <?php $i++;
+                        } ?>
 
-
-            <div class="col-md-4">
-
-                <div class="row">
-
-                    <div class="col-md-12 mb-3">
-                        <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($forheroSegment[1][0]);   ?>" class="img-fluid" alt="Thumbnail">
-                        <p><?php echo htmlspecialchars($forheroSegment[1][1]);   ?></p>
+                        <!-- Link to full details -->
+                        <a href="specificTipPage.php?tip_id=<?php echo htmlspecialchars($forheroSegment[0][0]); ?>" style="color: red; text-decoration: none;" class="mt-2">Read More</a>
                     </div>
-
-                    <div class="col-md-12 mb-3">
-                        <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($forheroSegment[2][0]);   ?>" class="img-fluid" alt="Thumbnail">
-                        <p><?php echo htmlspecialchars($forheroSegment[2][1]);   ?></p>
-                    </div>
-
                 </div>
             </div>
 
+
+            <!-- Right Column with Thumbnails -->
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <div class="card">
+                            <div class="card-image">
+                                <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($forheroSegment[1][0]); ?>" class="img-fluid" alt="Thumbnail">
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text"><?php echo htmlspecialchars($forheroSegment[1][1]); ?></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <div class="card">
+                            <div class="card-image">
+                                <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($forheroSegment[2][0]); ?>" class="img-fluid" alt="Thumbnail">
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text"><?php echo htmlspecialchars($forheroSegment[2][1]); ?></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <div class="card">
+                            <div class="card-image">
+                                <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($forheroSegment[2][0]); ?>" class="img-fluid" alt="Thumbnail">
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text"><?php echo htmlspecialchars($forheroSegment[2][1]); ?></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-
-
-
-
-    </div>
     </div>
 
 
@@ -196,65 +215,68 @@ mysqli_close($conn);
         <!--  kt.image, kt.tips_title, kt.description, user_info.first_name , user_info.last_name, likes -->
 
         <div class="row" id="tipsContainer">
-            <!-- First 12 tips will be displayed here -->
             <?php
             $initialTips = array_slice($allTips, 0, 12); // Get first 12 tips
             foreach ($initialTips as $oneTip) { ?>
-                <div class="col-md-4 item">
-                    <!-- image -->
-                    <img src="../Images/Kitchen-Tips/<?php echo htmlspecialchars($oneTip[0]); ?>" class="img-fluid" alt="Care Tip">
-                    <!-- title -->
-                    <h5><?php echo htmlspecialchars($oneTip[1]); ?></h5>
-                    <!-- user added by -->
-                    <p>by <?php echo htmlspecialchars($oneTip[3]) . " " . htmlspecialchars($oneTip[4]); ?></p>
+                <div class="col-md-4 item mb-4">
+                    <!-- card -->
+                    <div class="card">
+                        <!-- card image -->
+                        <div class="card-image">
+                            <img src="../Images/Kitchen-Tips/<?php echo htmlspecialchars($oneTip[0]); ?>" class="img-fluid" alt="Care Tip">
+                        </div>
+                        <!-- card body -->
+                        <div class="card-body">
+                            <!-- title -->
+                            <h5 class="card-title"><?php echo htmlspecialchars($oneTip[1]); ?></h5>
+                            <!-- user added by -->
+                            <p class="card-text">by <?php echo htmlspecialchars($oneTip[3]) . " " . htmlspecialchars($oneTip[4]); ?></p>
+                        </div>
+                    </div>
                 </div>
             <?php } ?>
         </div>
 
         <!-- Load More Button -->
         <div class="text-center">
-            <button id="loadMore" class="btn btn-primary mt-3">Load More</button>
+            <button id="loadMore" class="btn btn-primary mt-3 mb-3">Load More</button>
         </div>
 
-
         <script>
-            const allTips = <?php echo json_encode($allTips); ?>; // Get all tips data from PHP
-            let currentIndex = 12; // Start at 12 since the first 12 tips are already displayed
-            const itemsPerPage = 12; // Number of items to load on each click
+            const allTips = <?php echo json_encode($allTips); ?>;
+            let currentIndex = 12;
+            const itemsPerPage = 12;
 
-            // Function to load more tips
             function loadMoreTips() {
                 const tipsContainer = document.getElementById("tipsContainer");
-
-                // Determine the end index for slicing the tips array
                 const endIndex = currentIndex + itemsPerPage;
-
-                // Get the slice of tips to display
                 const tipsToShow = allTips.slice(currentIndex, endIndex);
 
-                // Append new tips to the container
                 tipsToShow.forEach(oneTip => {
                     const itemDiv = document.createElement("div");
-                    itemDiv.classList.add("col-md-4", "item");
+                    itemDiv.classList.add("col-md-4", "item", "mb-4");
+
                     itemDiv.innerHTML = `
-                <img src="/Images/Kitchen-Tips/${oneTip[0]}" class="img-fluid" alt="Care Tip">
-                <h5>${oneTip[1]}</h5>
-                <p>by ${oneTip[3]} ${oneTip[4]}</p>
-            `;
+                <div class="card">
+                    <div class="card-image">
+                        <img src="../Images/Kitchen-Tips/${oneTip[0]}" class="img-fluid" alt="Care Tip">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">${oneTip[1]}</h5>
+                        <p class="card-text">by ${oneTip[3]} ${oneTip[4]}</p>
+                    </div>
+                </div>`;
                     tipsContainer.appendChild(itemDiv);
                 });
 
-                // Update the current index
                 currentIndex += itemsPerPage;
 
-                // Disable button if no more tips are left to show
                 if (currentIndex >= allTips.length) {
                     document.getElementById("loadMore").disabled = true;
                     document.getElementById("loadMore").textContent = "No more tips to load";
                 }
             }
 
-            // Add event listener for the Load More button
             document.getElementById("loadMore").addEventListener("click", loadMoreTips);
         </script>
 

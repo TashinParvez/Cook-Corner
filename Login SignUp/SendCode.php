@@ -34,8 +34,8 @@ if (isset($_POST['sendCode'])) {
         $mail->send();
 
         // Redirect to the VerifyCode.php page after sending the email
-        // header("Location: VerifyCode.php?email=" . urlencode($recipientEmail) . "&code=$code");
-        header("Location: VerifyCode.php");
+        header("Location: VerifyCode.php?email=" . $recipientEmail . "&code=" . $code);
+        // header("Location: VerifyCode.php");
         exit(); // Ensure no further code is executed
     } catch (Exception $e) {
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";

@@ -1,8 +1,20 @@
+<?php
+include('/Cook-Corner/Includes/Database Connection/database_connection.php');
+
+$sql = "SELECT city_name FROM `cities` WHERE 1;";
+
+$result  = mysqli_query($conn, $sql);   // get query result
+
+$cities = mysqli_fetch_all($result);   // conver to array
+
+mysqli_free_result($result);
+mysqli_close($conn);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Allergy Input with Suggestions</title>
+<title>Cities Input with Suggestions</title>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
 <style>
     .tag {
@@ -27,7 +39,7 @@
         font-size: 16px;
     }
 
-    .tag-container{
+    .tag-container {
         display: flex;
     }
 </style>
@@ -37,9 +49,9 @@
 
     <div class="container mt-5">
         <div class="form-group">
-            <label for="allergy-input">Allergy Information</label>
+            <label for="cities-input">Cities Information</label>
             <div class="tag-input">
-                <input type="text" id="allergy-input" class="form-control" placeholder="Add allergy" />
+                <input type="text" id="cities-input" class="form-control" placeholder="Add Cities" />
                 <div id="tag-container" class="tag-container mt-2">
 
                 </div>
@@ -50,10 +62,10 @@
 
 
     <script>
-        const input = document.getElementById('allergy-input');
+        const input = document.getElementById('cities-input');
         const tagContainer = document.getElementById('tag-container');
 
-        input.addEventListener('keydown', function (event) {
+        input.addEventListener('keydown', function(event) {
             if (event.key === 'Enter') {
                 event.preventDefault();
                 const value = input.value.trim();
@@ -75,7 +87,7 @@
         }
 
         // Optional: Add suggestion functionality (basic example)
-        input.addEventListener('input', function () {
+        input.addEventListener('input', function() {
             const value = input.value.toLowerCase();
             const filteredSuggestions = suggestions.filter(s => s.toLowerCase().includes(value));
 
