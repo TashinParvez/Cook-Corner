@@ -20,6 +20,13 @@
         .temp-mail-smart-button-wrapper {
             margin-bottom: 0;
         }
+
+        .footer-img {
+            margin-left: 200px !important;
+            height: auto;
+            width: 170px;
+            object-fit: cover;
+        }
     </style>
 
     <!-- Full width hr element -->
@@ -33,42 +40,45 @@
         <footer class="ps-5 pe-5">
             <div class="row">
                 <div class="col-6 col-md-2 mb-3">
-                    <h5>Section</h5>
+                    <h5>Recipe</h5>
                     <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Quick And Easy</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Week Night</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Vegan</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Vegetarian</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Beverage</a></li>
                     </ul>
                 </div>
 
                 <div class="col-6 col-md-2 mb-3">
-                    <h5>Section</h5>
+                    <h5>Occasion</h5>
                     <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Islamic</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Hinduism</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Christianity</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Common Occasion</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Ceremony</a></li>
                     </ul>
                 </div>
 
                 <div class="col-6 col-md-2 mb-3">
-                    <h5>Section</h5>
+                    <h5>Tips</h5>
                     <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Time-Saving Hacks</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Baking Tips</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Healthy Cooking</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Ingredient Storage</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Food Safety</a></li>
                     </ul>
                 </div>
 
                 <div class="col-md-5 offset-md-1 mb-3">
+
+                    <img class="footer-img" src="../../Images/logo/fav-icon.png" alt="logo">
+
                     <form>
-                        <h5>Subscribe to our newsletter</h5>
-                        <p>Monthly digest of what's new and exciting from us.</p>
+                        <h5 class="text-center">Subscribe to our newsletter</h5>
+                        <p class="text-center">Monthly digest of what's new and exciting from us.</p>
                         <div class="d-flex flex-column flex-sm-row w-100 gap-2 temp-mail-smart-button-wrapper">
                             <label for="newsletter1" class="visually-hidden">Email address</label>
                             <input id="newsletter1" type="text" class="form-control" placeholder="Email address">
