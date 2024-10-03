@@ -10,14 +10,14 @@ $user_id = "1";
 // ---------- For hero segment ---------------
 $sql = "SELECT 
         IF(EXISTS(SELECT 1 
-              FROM `junction_course_taken_user` 
+              FROM `junction_course_taken_user`
               WHERE user_id = '$user_id' AND course_id = '1'), 1, 0) AS found;";
 
 $resultantLabel = mysqli_query($conn, $sql);
 
 $heropage = mysqli_fetch_all($resultantLabel)[0][0];
-// $heropage = 1;
 
+// $heropage = 1;
 // print_r($heropage[0][0]);
 // print($heropage);
 
