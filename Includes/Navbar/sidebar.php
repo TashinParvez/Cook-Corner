@@ -106,7 +106,7 @@
 
         }
 
-        h4 {
+        .tab-pane h4 {
             text-align: center;
         }
 
@@ -144,7 +144,7 @@
         }
 
 
-        .form-control {
+        .todo-form {
             text-align: center;
         }
 
@@ -371,7 +371,7 @@
 
                 // Construct the HTML for the new row
                 newRow.innerHTML = `
-            <td><input type="text" class="form-control" placeholder="Item Name"></td>
+            <td><input type="text" class="form-control todo-form" placeholder="Item Name"></td>
             <th scope="col"></th>
             <th scope="col"></th>
             <th scope="col"></th>

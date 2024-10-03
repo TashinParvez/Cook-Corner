@@ -44,7 +44,7 @@
                 <p>Uploaded by Tashin Parvez</p>
                 <p>Tags: CAKE , AMERICAN , YOGURT , GRAINS , FATHER’S DAY , MOTHER’S DAY FOURTH OF JULY BREAKFAST</p>
 
-                <img src="/Images/maxresdefault.jpg" class="img-fluid" alt="...">
+                <img src="/Images/maxresdefault.jpg" class="img-fluid mb-4" alt="...">
 
 
                 <!-- Time segment -->
@@ -84,144 +84,159 @@
                     </div>
                 </div>
 
-                <!--------------------- Ingredents --------------------->
-                <h3>Ingredents</h3>
+                <!-- ------------------- Ingredients ------------------- -->
+                <div class="ing-container container mb-2">
+                    <h2>Ingredients</h2>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <div class="form-check ing-name">
+                                <div>
+                                    <input type="checkbox" class="form-check-input" id="ingredient-1" onchange="toggleOpacity(this)">
+                                    <label class="form-check-label" for="ingredient-1">5 tablespoons honey (light brown sugar or maple syrup also works)</label>
+                                </div>
+                                <button class="btn  btn-sm">
+                                    <i class="fas fa-shopping-cart"></i> Add to Cart
+                                </button>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="form-check ing-name">
+                                <div>
+                                    <input type="checkbox" class="form-check-input" id="ingredient-2" onchange="toggleOpacity(this)">
+                                    <label class="form-check-label" for="ingredient-2">10 cups blueberries, washed and picked over for stems</label>
+                                </div>
+                                <button class="btn  btn-sm">
+                                    <i class="fas fa-shopping-cart"></i> Add to Cart
+                                </button>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="form-check ing-name">
+                                <div>
+                                    <input type="checkbox" class="form-check-input" id="ingredient-3" onchange="toggleOpacity(this)">
+                                    <label class="form-check-label" for="ingredient-3">150g Mayonnaise</label>
+                                </div>
+                                <button class="btn  btn-sm">
+                                    <i class="fas fa-shopping-cart"></i> Add to Cart
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
 
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col">
-                                <input type="checkbox">
-                            </th>
-                            <th scope="col">First</th>
-                            <th scope="col">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">
-                                <input type="checkbox">
-                            </th>
-                            <td>Mark</td>
-                            <td>
-                                <button class="btn btn-outline-primary">
-                                    <i class="fas fa-shopping-cart"></i> Add to Cart
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                <input type="checkbox">
-                            </th>
-                            <td>Jacob</td>
-                            <td>
-                                <button class="btn btn-outline-primary">
-                                    <i class="fas fa-shopping-cart"></i> Add to Cart
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                <input type="checkbox">
-                            </th>
-                            <td colspan="1">Larry the Bird</td>
-                            <td>
-                                <button class="btn btn-outline-primary">
-                                    <i class="fas fa-shopping-cart"></i> Add to Cart
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
 
 
                 <!-- ================================================== Dish Need ================================================== -->
-                <h3>Dish Needed </h3>
+                <div class="dish-container container mb-3">
+                    <h2>Dish Needed</h2>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="dish-1" onchange="toggleOpacity(this)">
+                                <label class="form-check-label" for="dish-1">Fresh herbs, such as chopped parsley and/or cilantro</label>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="dish-2" onchange="toggleOpacity(this)">
+                                <label class="form-check-label" for="dish-2">10 cups blueberries, washed and picked over for stems</label>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="dish-3" onchange="toggleOpacity(this)">
+                                <label class="form-check-label" for="dish-3">150g Mayonnaise</label>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="dish-4" onchange="toggleOpacity(this)">
+                                <label class="form-check-label" for="dish-4">5 tablespoons honey (light brown sugar or maple syrup also works)</label>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
 
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col">
-                                <input type="checkbox">
-                            </th>
-                            <th scope="col">First</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">
-                                <input type="checkbox">
-                            </th>
-                            <td>Mark</td>
 
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                <input type="checkbox">
-                            </th>
-                            <td>Jacob</td>
-
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                <input type="checkbox">
-                            </th>
-                            <td colspan="1">Larry the Bird</td>
-
-                        </tr>
-                    </tbody>
-                </table>
 
                 <!-- ================================================== Directions ================================================== -->
-                <h2>Directions</h2>
-                <!-- <div class="container align-self-start">
-                    <div class="card mb-3">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                <div class="container mb-3">
+                    <h2>Directions</h2>
+
+                    <!-- Step 1 -->
+                    <div class="direction-container" id="step-1">
+                        <div class="step">
+                            <div class="step-header">
+                                <div class="step-number">1</div>
+                                <div class="step-title">Make the egg cream (or substitute 3/4 to 1 cup bottled sauce):</div>
+                            </div>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy eirmod tempor in vid unt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et acc usam et justo duo dolores et ea rebum.</p>
+                            <div class="images">
+                                <img src="image1.jpg" alt="Cooking process">
+                                <img src="image2.jpg" alt="Dish">
+                            </div>
                         </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        <div class="markSection">
+                            <input type="checkbox" id="mark-complete-1">
+                            <label for="mark-complete-1">Mark as complete</label>
                         </div>
-                        <img src="..." class="card-img-bottom" alt="...">
                     </div>
 
-                </div> -->
-                <div class="container">
-                    <div class="container">
-                        <h4>1</h4>
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde minima qui nam nostrum exercitationem possimus sequi quae hic voluptates aspernatur.</p>
+                    <!-- Step 2 -->
+                    <div class="direction-container" id="step-2">
+                        <div class="step">
+                            <div class="step-header">
+                                <div class="step-number">2</div>
+                                <div class="step-title">Prepare the sauce:</div>
+                            </div>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy eirmod tempor in vid unt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et acc usam et justo duo dolores et ea rebum.</p>
+                            <div class="images">
+                                <img src="image1.jpg" alt="Cooking process">
+                                <img src="image2.jpg" alt="Dish">
+                            </div>
+                        </div>
+                        <div class="markSection">
+                            <input type="checkbox" id="mark-complete-2">
+                            <label for="mark-complete-2">Mark as complete</label>
+                        </div>
                     </div>
-                    <div class="container">
-                        <h4>2</h4>
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde minima qui nam nostrum exercitationem possimus sequi quae hic voluptates aspernatur.</p>
-                    </div>
-                    <div class="container">
-                        <h4>3</h4>
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde minima qui nam nostrum exercitationem possimus sequi quae hic voluptates aspernatur.</p>
+
+                    <!-- Step 3 -->
+                    <div class="direction-container" id="step-3">
+                        <div class="step">
+                            <div class="step-header">
+                                <div class="step-number">3</div>
+                                <div class="step-title">Serve the dish:</div>
+                            </div>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy eirmod tempor in vid unt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et acc usam et justo duo dolores et ea rebum.</p>
+                            <div class="images">
+                                <img src="image1.jpg" alt="Cooking process">
+                                <img src="image2.jpg" alt="Dish">
+                            </div>
+                        </div>
+                        <div class="markSection">
+                            <input type="checkbox" id="mark-complete-3">
+                            <label for="mark-complete-3">Mark as complete</label>
+                        </div>
                     </div>
                 </div>
+
+
 
                 <!-- ================================================== Notes ================================================== -->
                 <h2>Notes</h2>
 
                 <div class="container">
-                    <div class="container">
-                        <h6>1</h6>
+                    <div>
+                        <h6 class="step-number">1</h6>
                         <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde minima qui nam nostrum exercitationem possimus sequi quae hic voluptates aspernatur.</p>
                     </div>
-                    <div class="container">
-                        <h6>2</h6>
+                    <div>
+                        <h6 class="step-number">2</h6>
                         <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde minima qui nam nostrum exercitationem possimus sequi quae hic voluptates aspernatur.</p>
                     </div>
-                    <div class="container">
-                        <h6>3</h6>
+                    <div>
+                        <h6 class="step-number">3</h6>
                         <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde minima qui nam nostrum exercitationem possimus sequi quae hic voluptates aspernatur.</p>
                     </div>
                 </div>
@@ -244,7 +259,7 @@
                             <div class="title-on-border">About Chef</div>
                             <div class="container text-center">
                                 <div class="row justify-content-center">
-                                    <div class="col-md-4">
+                                    <div class="col-md-7">
                                         <div class="image-container text-center">
                                             <img src="/Images/IMG-20240131-WA0004.jpg" alt="Circular Image" class="circle-image">
                                         </div>
@@ -258,7 +273,7 @@
                 </div>
                 <!-- -------------------------- Neuttrations ---------------------------------- -->
                 <div class="container">
-                    <div class="container bg-dark text-light fw-light text-start p-1">
+                    <div class="container bg-dark text-light fw-light text-start p-3">
                         <h3>Nutrition Facts</h3> <!-- Corrected "Neuttrations" to "Nutrition" -->
                         <h6>Serving Size: 4</h6>
                         <h6>Calories Per Serving: 375</h6> <!-- Corrected "Calloris" to "Calories" -->
@@ -325,7 +340,7 @@
 
                                     <div class="col">
                                         <div class="row justify-content-center">
-                                            <div class="col-md-4">
+                                            <div class="col-md-9">
                                                 <div class="image-container text-center">
                                                     <img src="/Images/IMG-20240131-WA0004.jpg" alt="Circular Image" class="circle-image category-image">
                                                 </div>
@@ -335,7 +350,7 @@
                                     </div>
                                     <div class="col">
                                         <div class="row justify-content-center">
-                                            <div class="col-md-4">
+                                            <div class="col-md-9">
                                                 <div class="image-container text-center">
                                                     <img src="/Images/IMG-20240131-WA0004.jpg" alt="Circular Image" class="circle-image category-image">
                                                 </div>
@@ -346,7 +361,7 @@
                                     </div>
                                     <div class="col">
                                         <div class="row justify-content-center">
-                                            <div class="col-md-4">
+                                            <div class="col-md-9">
                                                 <div class="image-container text-center">
                                                     <img src="/Images/IMG-20240131-WA0004.jpg" alt="Circular Image" class="circle-image category-image">
                                                 </div>
@@ -356,7 +371,7 @@
                                     </div>
                                     <div class="col">
                                         <div class="row justify-content-center">
-                                            <div class="col-md-4">
+                                            <div class="col-md-9">
                                                 <div class="image-container text-center">
                                                     <img src="/Images/IMG-20240131-WA0004.jpg" alt="Circular Image" class="circle-image category-image">
                                                 </div>
@@ -366,7 +381,7 @@
                                     </div>
                                     <div class="col">
                                         <div class="row justify-content-center">
-                                            <div class="col-md-4">
+                                            <div class="col-md-9">
                                                 <div class="image-container text-center">
                                                     <img src="/Images/IMG-20240131-WA0004.jpg" alt="Circular Image" class="circle-image category-image">
                                                 </div>
@@ -376,7 +391,7 @@
                                     </div>
                                     <div class="col">
                                         <div class="row justify-content-center">
-                                            <div class="col-md-4">
+                                            <div class="col-md-9">
                                                 <div class="image-container text-center">
                                                     <img src="/Images/IMG-20240131-WA0004.jpg" alt="Circular Image" class="circle-image category-image">
                                                 </div>
@@ -395,12 +410,12 @@
                 <!-- -------------------------- Category End ---------------------------------- -->
 
                 <div class="card">
+                    <img src="/Images/maxresdefault.jpg" class="card-img-bottom" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">Card title</h5>
                         <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                         <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                     </div>
-                    <img src="/Images/maxresdefault.jpg" class="card-img-bottom" alt="...">
                 </div>
                 <!-- __________________________________________------- Segment 2 End __________________________________________------->
             </div>
@@ -416,6 +431,33 @@
     ?>
     <!-- ============================== Footer End ==================================== -->
 
+
+
+    <script>
+        // ingredients and dish
+        function toggleOpacity(checkbox) {
+            const label = checkbox.nextElementSibling; // Get the label element
+            if (checkbox.checked) {
+                label.style.opacity = '0.5'; // Set opacity to 0.5 when checked
+            } else {
+                label.style.opacity = '1'; // Set opacity back to 1 when unchecked
+            }
+        }
+
+        // Direction
+        const checkboxes = document.querySelectorAll('.markSection input[type="checkbox"]');
+
+        checkboxes.forEach((checkbox) => {
+            checkbox.addEventListener('change', (event) => {
+                const directionContainer = event.target.closest('.direction-container');
+                if (event.target.checked) {
+                    directionContainer.style.opacity = 0.5; // Reduce opacity
+                } else {
+                    directionContainer.style.opacity = 1; // Restore opacity
+                }
+            });
+        });
+    </script>
 
 </body>
 
