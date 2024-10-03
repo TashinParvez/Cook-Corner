@@ -45,6 +45,8 @@
 </head>
 
 <body>
+   
+
     <div class="container mt-5">
         <header class="text-center mb-4">
             <h1>Recipe Management</h1>
@@ -168,6 +170,7 @@
             notificationElement.className = type === 'error' ? 'notification error' : 'notification';
         }
     </script>
+    
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
