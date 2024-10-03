@@ -23,7 +23,6 @@ $allVideos = [];
 
 if (!empty($data['items'])) {
 
-
     foreach ($data['items'] as $item) {
         $videoTitle = $item['snippet']['title'];
         $videoId = $item['snippet']['resourceId']['videoId'];
@@ -62,9 +61,7 @@ mysqli_close($conn);
         /* Content wrapper adjustments */
         .content-wrapper {
             margin-left: 280px;
-            /* Left space for the sidebar */
             padding-top: 70px;
-            /* Space for the navbar */
         }
 
         /* Main flex container for right content */
@@ -73,18 +70,14 @@ mysqli_close($conn);
             justify-content: center;
             align-items: center;
             height: calc(100vh - 70px);
-            /* Subtract the navbar height */
             margin-left: 280px;
-            /* Subtract sidebar width */
         }
 
         /* Container for centering content */
         .container-content {
             width: 100%;
             max-width: 800px;
-            /* Maximum width of the content */
             text-align: center;
-            /* Horizontally center the text */
             padding: 20px;
         }
 
@@ -111,7 +104,6 @@ mysqli_close($conn);
             display: flex;
             justify-content: center;
             gap: 10px;
-            /* Space between buttons */
         }
     </style>
 </head>
