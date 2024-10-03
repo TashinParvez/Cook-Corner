@@ -31,7 +31,7 @@ $sql = "SELECT  ri.recipe_id, ri.title	,ri.subtitle	,ri.prep_time,
 $resultantLabel = mysqli_query($conn, $sql);
 $recipe_info = mysqli_fetch_all($resultantLabel);
 
-print_r($recipe_info);
+// print_r($recipe_info);
 
 
 
