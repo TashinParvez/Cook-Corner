@@ -1,0 +1,38 @@
+body {
+    background-color: #f5f5f5;
+}
+
+.recipe-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+    background-color: white;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+
+.recipe-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.no-recipes {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.load-more-btn {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.filter-bar {
+    margin-bottom: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
