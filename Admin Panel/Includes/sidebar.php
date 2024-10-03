@@ -81,6 +81,15 @@
             </a>
         </li>
 
+        <li>
+            <a href="#" class="nav-link link-dark">
+                <svg class="bi pe-none me-2" width="16" height="16">
+                    <use xlink:href="#grid"></use>
+                </svg>
+                Send NewsLetter
+            </a>
+        </li>
+
     </ul>
     <hr>
     <div class="dropdown">

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMVq49X6LT1ql2e2nU0f3G7U6rYvZ6sDq2sor" crossorigin="anonymous">
+    <style>
+        /* General card styling */
+        .recipe-card {
+            width: 300px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            margin: 20px; /* Add some space around the card */
+        }
+
+        /* Image container */
+        .recipe-img {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        /* Image styling */
+        .recipe-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        /* Save icon styling */
+        .save-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #fff;
+            font-size: 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Recipe information */
+        .recipe-info {
+            padding: 15px;
+        }
+
+        /* Title styling */
+        .recipe-title {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Added by styling */
+        .added-by {
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        /* Ratings styling */
+        .ratings {
+            margin-top: 5px;
+            color: #f4c150;
+            font-size: 1rem;
+        }
+
+        /* Hover details - Initially hidden */
+        .hover-details {
+            position: absolute;
+            top: 0; /* Overlay on the image */
+            left: 0;
+            width: 100%;
+            height: 100%; /* Match the height of the image */
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 15px;
+            box-sizing: border-box;
+            text-align: left;
+            font-size: 0.9rem;
+            opacity: 0; /* Start hidden */
+            transition: opacity 0.3s ease; /* Smooth transition */
+        }
+
+        /* Hover effect */
+        .recipe-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Image zoom effect on hover */
+        .recipe-card:hover .recipe-img img {
+            transform: scale(1.1);
+        }
+
+        /* Show hover details on hover */
+        .recipe-card:hover .hover-details {
+            opacity: 1; /* Show the details */
+        }
+
+        /* Save icon hover effect */
+        .save-icon:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <div class="recipe-card">
+        <div class="recipe-img">
+            <img src="/Images/Kitchen-Tips/batch_cooking.jpg" alt="Recipe Image">
+            <i class="fas fa-bookmark save-icon"></i>
+        </div>
+        <div class="recipe-info">
+            <h3 class="recipe-title">Delicious Pasta</h3>
+            <p class="added-by">Added by: <strong>Chef Mario</strong></p>
+            <div class="ratings">
+                <span>★★★★☆</span>
+                <small>(4.5)</small>
+            </div>
+        </div>
+        <div class="hover-details">
+            <p><strong>Prep Time:</strong> 20 mins</p>
+            <p><strong>Cook Time:</strong> 30 mins</p>
+            <p><strong>Ingredients:</strong> 7</p>
+        </div>
+    </div>
+</body>
+</html>
