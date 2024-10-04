@@ -92,7 +92,7 @@
             width: 100%;
         }
 
-        .table thead th {
+        .table-striped thead th {
             background-color: #72bf78;
             color: white;
             border: none;
