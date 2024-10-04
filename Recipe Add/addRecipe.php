@@ -106,42 +106,238 @@ if (isset($_POST['submit_recipe'])) {
     $stmt->fetch();
     $stmt->close();
 
-    // if ($chef_status == 1) {
+    if ($chef_status == 1) {
 
-    //     $stmt = $conn->prepare('INSERT INTO recipe_info
-    //     (title, image, description, ingredients, directions, servings, yield, prep_time, cook_time, notes, author)
-    //     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);');
+        // get the 'level' by 'level_name' from the 'skill_level' table
+        $stmt = $conn->prepare('SELECT level FROM skill_level WHERE level_name = ?');
+        $stmt->bind_param('s', $difficulty_level);
+        $stmt->execute();
+        $stmt->bind_result($difficulty_level);
+        $stmt->fetch();
+        $stmt->close();
 
-    //     $stmt->bind_param(
-    //         'sssssssssss',
-    //         $title,
-    //         $image,
-    //         $description,
-    //         $ingredients,
-    //         $directions,
-    //         $servings, // for how many person
-    //         $yield,
-    //         $prepTime,
-    //         $cookTime,
-    //         $notes,
-    //         $user_id
-    //     );
+        $stmt = $conn->prepare('INSERT INTO recipe_info
+                    (title, subtitle, image, description, prep_time, cook_time, servings, skill_level, how_you_learn_or_story, directions, notes, author) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);');
 
-    //     if ($stmt->execute()) {
+        $stmt->bind_param(
+            'ssssssssssss',
+            $title,
+            $sub_title,
+            $image,
+            $description,
+            $prepTime,
+            $cookTime,
+            $servings, // for how many person
+            $difficulty_level,
+            $story_or_learn,
+            $directions,
+            $notes,
+            $user_id
+        );
 
-    //         $stmt->close();
-    //         mysqli_close($conn);
 
-    //         header('Location: addRecipe.php');
-    //         exit();
-    //     } else {
+        if ($stmt->execute()) {
 
-    //         $stmt->execute();
-    //         echo "Error executing query: " . $stmt->error;
-    //     }
-    // } else {
-    //     echo 'Only chef can add a recipe!';
-    // }
+            $recipe_id = $conn->insert_id; // recipe_id after inserting into recipe_info
+            $stmt->close();
+
+            $flag = true;
+            foreach ($ingredients as $ingredient) {
+
+                $ingredient_name = trim($ingredient['name']);
+                $quantity = $ingredient['quantity'];
+                $unit_of_measurement = trim($ingredient['unit']);
+
+                //Check if the ingredient already exists in the 'ingredient_info' table
+                $stmt = $conn->prepare('SELECT ingredient_id FROM ingredient_info WHERE ingredient_name = ?');
+                $stmt->bind_param('s', $ingredient_name);
+                $stmt->execute();
+                $stmt->store_result();
+
+                if ($stmt->num_rows > 0) {
+                    // If the ingredient exists, fetch the ingredient_id
+                    $stmt->bind_result($ingredient_id);
+                    $stmt->fetch();
+                } else {
+                    // If the ingredient does not exist, insert it and get the new ingredient_id
+                    $stmt_insert = $conn->prepare('INSERT INTO ingredient_info (ingredient_name) VALUES (?)');
+                    $stmt_insert->bind_param('s', $ingredient_name);
+                    $stmt_insert->execute();
+                    $ingredient_id = $conn->insert_id;  // Get the inserted ingredient_id
+                    $stmt_insert->close();
+                }
+
+                $stmt->close();
+
+                // Insert into junction_recipe_ingredients (ingredient_id, recipe_id, quantity, unit_of_measurement)
+                $stmt_junction = $conn->prepare('INSERT INTO junction_recipe_ingredients (ingredient_id, recipe_id, quantity, unit_of_measurement) VALUES (?, ?, ?, ?)');
+                $stmt_junction->bind_param('iiis', $ingredient_id, $recipe_id, $quantity, $unit_of_measurement);
+
+                if (!$stmt_junction->execute()) {
+
+                    $flag = false;
+                    echo "Error executing query (Ingredients): " . $stmt_junction->error;
+                }
+
+                $stmt_junction->close();
+            }
+
+            if ($flag) {
+
+                foreach ($dishes as $dish) {
+
+                    $dish_name = trim($dish['name']);
+                    $quantity = $dish['quantity'];
+
+                    // Check if the dish already exists in the 'dishes' table
+                    $stmt = $conn->prepare('SELECT dish_id FROM dishes WHERE dish_name = ?');
+                    $stmt->bind_param('s', $dish_name);
+                    $stmt->execute();
+                    $stmt->store_result();
+
+                    if ($stmt->num_rows > 0) {
+
+                        // If dish exists, fetch the dish_id
+                        $stmt->bind_result($dish_id);
+                        $stmt->fetch();
+                    } else {
+                        // Step 2: If the dish does not exist, insert it and get the new dish_id
+                        $stmt_insert = $conn->prepare('INSERT INTO dishes (dish_name) VALUES (?)');
+                        $stmt_insert->bind_param('s', $dish_name);
+                        $stmt_insert->execute();
+                        $dish_id = $conn->insert_id;  // Get the inserted dish_id
+                        $stmt_insert->close();
+                    }
+
+                    $stmt->close();
+
+                    // Insert into junction_dishes_used_in_recipe (dish_id, recipe_id, quantity)
+                    $stmt_junction = $conn->prepare('INSERT INTO junction_dishes_used_in_recipe (dish_id, recipe_id, quantity) VALUES (?, ?, ?)');
+                    $stmt_junction->bind_param('iii', $dish_id, $recipe_id, $quantity);
+
+                    if (!$stmt_junction->execute()) {
+
+                        $flag = false;
+                        echo "Error executing query (Dishes): " . $stmt_junction->error;
+                    }
+
+                    $stmt_junction->close();
+                }
+
+                if ($flag) {
+
+                    if (!empty($tags)) {
+
+                        foreach ($tags as $tag) {
+
+                            $tag = trim($tag);
+
+                            // Check if the tag already exists in the 'tags' table
+                            $checkTagStmt = $conn->prepare('SELECT id FROM tags WHERE tag_name = ?');
+                            $checkTagStmt->bind_param('s', $tag);
+                            $checkTagStmt->execute();
+                            $checkTagStmt->store_result();
+
+                            if ($checkTagStmt->num_rows > 0) {
+                                // Tag exists, get the tag ID
+                                $checkTagStmt->bind_result($tag_id);
+                                $checkTagStmt->fetch();
+                            } else {
+                                // Insert new tag into the 'tags' table and retrieve the new tag ID
+                                $insertTagStmt = $conn->prepare('INSERT INTO tags (tag_name) VALUES (?)');
+                                $insertTagStmt->bind_param('s', $tag);
+                                $insertTagStmt->execute();
+                                $tag_id = $conn->insert_id; // Get the newly created tag ID
+                                $insertTagStmt->close();
+                            }
+
+                            $checkTagStmt->close();
+
+                            // Insert the relationship into the 'recipe_tags' table
+                            $insertRecipeTagStmt = $conn->prepare('INSERT INTO recipe_tags (tag_id, recipe_id) VALUES (?, ?)');
+                            $insertRecipeTagStmt->bind_param('ii', $tag_id, $recipe_id);
+
+                            if (!$insertRecipeTagStmt->execute()) {
+
+                                $flag = false;
+                                echo "Error executing query (Tags): " . $stmt_junction->error;
+                            }
+
+                            $insertRecipeTagStmt->close();
+                        }
+                    }
+
+                    if ($flag) {
+
+                        foreach ($cities as $city_name) {
+
+                            $city_name = trim($city_name);
+
+                            // Check if the city exists
+                            $stmt_check_city = $conn->prepare('SELECT city_id FROM cities WHERE city_name = ?');
+                            $stmt_check_city->bind_param('s', $city_name);
+                            $stmt_check_city->execute();
+                            $stmt_check_city->store_result();
+
+                            if ($stmt_check_city->num_rows > 0) {
+                                // City exists, retrieve city_id
+                                $stmt_check_city->bind_result($city_id);
+                                $stmt_check_city->fetch();
+                            } else {
+                                // City does not exist, insert it
+                                $stmt_insert_city = $conn->prepare('INSERT INTO cities (city_name) VALUES (?)');
+                                $stmt_insert_city->bind_param('s', $city_name);
+                                $stmt_insert_city->execute();
+                                $city_id = $stmt_insert_city->insert_id;
+                                $stmt_insert_city->close();
+                            }
+
+                            $stmt_check_city->close();
+
+                            // insert city_id and recipe_id into the recipe_cities table
+                            $stmt_recipe_cities = $conn->prepare('INSERT INTO recipe_cities (city_id, recipe_id) VALUES (?, ?)');
+                            $stmt_recipe_cities->bind_param('ii', $city_id, $recipe_id);
+
+                            if (!$stmt_recipe_cities->execute()) {
+
+                                $flag = false;
+                                echo "Error executing query (Cities): " . $stmt_junction->error;
+                            }
+
+                            $stmt_recipe_cities->close();
+                        }
+
+                        if ($flag) {
+
+                            mysqli_close($conn);
+
+                            header('Location: addRecipe.php');
+                            exit();
+                        } else {
+
+                            echo 'Error executing cities';
+                        }
+                    } else {
+
+                        echo 'Error executing tags';
+                    }
+                } else {
+
+                    echo 'Error executing dishes';
+                }
+            } else {
+
+                echo 'Error executing ingredients';
+            }
+        } else {
+
+            echo "Error executing query(Single Inputs): " . $stmt->error;
+            $stmt->close();
+        }
+    } else {
+        echo 'Only chef can add a recipe!';
+    }
 
     //........................***********.............
     // Store $ingredients in the database as plain text (without altering line breaks)
@@ -597,10 +793,10 @@ while ($row = mysqli_fetch_assoc($result)) {
                                 $note = array_map('trim', explode('<separatorForTitleAndDescription>', $note));
                         ?>
                                 <input type="text" name="notes[<?php echo $index; ?>][title]" class="form-control mb-2" placeholder="Note title (e.g., Tip about storage)"
-                                    value="<?php echo htmlspecialchars($note[0]); ?>" required>
+                                    value="<?php echo htmlspecialchars($note[0]); ?>">
 
                                 <textarea name="notes[<?php echo $index; ?>][description]" class="form-control mb-2" rows="3" placeholder="Add a note description (e.g., Keep in the fridge for 3 days)"
-                                    required><?php echo htmlspecialchars($note[1]); ?></textarea>
+                                    <?php echo !empty($note[0]) ? 'required' : ''; ?>><?php echo htmlspecialchars($note[1]); ?></textarea>
 
                                 <button type="button" class="btn btn-outline-danger remove-note">Remove</button>
                             <?php
@@ -609,7 +805,8 @@ while ($row = mysqli_fetch_assoc($result)) {
                             ?>
 
                             <input type="text" name="notes[0][title]" class="form-control mb-2" placeholder="Note title (e.g., Tip about storage)" required>
-                            <textarea name="notes[0][description]" class="form-control mb-2" rows="3" placeholder="Add a note description (e.g., Keep in the fridge for 3 days)" required></textarea>
+                            <textarea name="notes[0][description]" class="form-control mb-2" rows="3" placeholder="Add a note description (e.g., Keep in the fridge for 3 days)"
+                                <?php echo !empty($notes[0]['title']) ? 'required' : ''; ?>></textarea>
 
                             <button type="button" class="btn btn-outline-danger remove-note">Remove</button>
                         <?php
