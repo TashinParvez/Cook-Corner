@@ -21,7 +21,7 @@ $ingredients = $dishes = $notes = '';
 
 if (isset($_POST['submit_recipe'])) {
 
-    if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) { // Tashin
 
         $tempname = $_FILES['image']['tmp_name'];
 
@@ -425,7 +425,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         <h1 class="text-center text-danger mb-4">Add Recipe</h1>
         <p class="text-center">Uploading personal recipes is easy! Add yours to your favorites, share with friends, family, or the community.</p>
 
-        <form id="recipeForm" class="p-4 border bg-light rounded" action="addRecipe.php" method="post" enctype="multipart/form-data">
+        <form id="recipeForm" class="p-4 border bg-light rounded" action="addRecipe.php" method="post" enctype="multipart/form-data"> Tashin
 
             <!-- Recipe Title -->
             <div class="mb-3">
@@ -442,7 +442,7 @@ while ($row = mysqli_fetch_assoc($result)) {
             </div>
             <hr>
 
-            <!-- Photo Upload -->
+            <!-- Photo Upload --> Tashin
             <div class="mb-3 row">
                 <label for="image" class="form-label">Photo<small style="color: red;">*</small></label>
                 <div class="col-md-6">
