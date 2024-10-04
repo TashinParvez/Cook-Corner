@@ -78,7 +78,7 @@
 
                     <form>
                         <h5 class="text-center">Subscribe to our newsletter</h5>
-                        <p class="text-center">Monthly digest of what's new and exciting from us.</p>
+                        <p class="text-center">Monthly digest of what's new and exciting from us</p>
                         <div class="d-flex flex-column flex-sm-row w-100 gap-2 temp-mail-smart-button-wrapper">
                             <label for="newsletter1" class="visually-hidden">Email address</label>
                             <input id="newsletter1" type="text" class="form-control" placeholder="Email address">
