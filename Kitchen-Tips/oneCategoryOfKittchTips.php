@@ -3,7 +3,7 @@
 //...................... Database Connection ..............................
 include("../Includes/Database Connection/database_connection.php");
 
-// $clickedCatagory = "Cooking Techniques";  // get from click
+// $kitchenTipsCategoryName = "Cooking Techniques";  // get from click
 $kitchenTipsCategoryId = isset($_GET['kitchenTipsCategoryId']) ? htmlspecialchars($_GET['kitchenTipsCategoryId']) : '8'; //---------> this will come from kithhen tips dashboard
 
 $stmt = $conn->prepare('SELECT name FROM kitchen_tips_category WHERE id = ? LIMIT 1;');
@@ -33,7 +33,7 @@ $clickedCatagoryInfo = mysqli_fetch_all($resultantLabel)[0];   // conver to arra
 $sql = "SELECT kt.image, kt.tips_title, kt.description,
                 user_info.first_name , user_info.last_name,
                 likes,
-                kt.Directions
+                kt.Directions, kt.id
 
         FROM `kitchen_tips`  as kt
         INNER JOIN
@@ -55,7 +55,7 @@ $resultantLabel = mysqli_query($conn, $sql);
 
 $allTips = mysqli_fetch_all($resultantLabel);
 
-$forheroSegment = array_slice($allTips, 0, 3);
+$forheroSegment = array_slice($allTips, 0, 4);
 
 shuffle($allTips);
 
@@ -115,6 +115,20 @@ mysqli_close($conn);
     </div>
 
 
+    <!-- For all tips id pass to view page -->
+    <script>
+        function submitKitchenTipsForm(kitchenTipsId) {
+            const form = document.getElementById('kitchenTipsForm');
+            form.action = 'oneTipsPageView.php?kitchenTipsId=' + kitchenTipsId;
+            form.submit();
+        }
+    </script>
+
+    <form id="kitchenTipsForm" action="oneTipsPageView.php" method="post">
+        <!-- No hidden input needed -->
+    </form>
+
+
     <!-- ---------------------------- Hero Main Image Section ---------------------------------------- -->
 
     <div class="container mt-4">
@@ -145,7 +159,7 @@ mysqli_close($conn);
                         } ?>
 
                         <!-- Link to full details -->
-                        <a href="specificTipPage.php?tip_id=<?php echo htmlspecialchars($forheroSegment[0][0]); ?>" style="color: red; text-decoration: none;" class="mt-2">Read More</a>
+                        <a href="#" style="color: red; text-decoration: none;" class="mt-2" onclick="submitKitchenTipsForm(<?php echo $forheroSegment[0][7]; ?>)">Read More</a>
                     </div>
                 </div>
             </div>
@@ -154,7 +168,7 @@ mysqli_close($conn);
             <!-- Right Column with Thumbnails -->
             <div class="col-md-4">
                 <div class="row">
-                    <a href="some-link-to-tip-details.php" class="text-decoration-none text-dark">
+                    <a href="#" class="text-decoration-none text-dark" onclick="submitKitchenTipsForm(<?php echo $forheroSegment[1][7]; ?>)">
                         <div class="col-md-12 mb-3">
                             <div class="card">
                                 <div class="card-image">
@@ -167,7 +181,7 @@ mysqli_close($conn);
                         </div>
                     </a>
 
-                    <a href="some-link-to-tip-details.php" class="text-decoration-none text-dark">
+                    <a href="#" class="text-decoration-none text-dark" onclick="submitKitchenTipsForm(<?php echo $forheroSegment[2][7]; ?>)">
                         <div class="col-md-12 mb-3">
                             <div class="card">
                                 <div class="card-image">
@@ -180,14 +194,14 @@ mysqli_close($conn);
                         </div>
                     </a>
 
-                    <a href="some-link-to-tip-details.php" class="text-decoration-none text-dark">
+                    <a href="#" class="text-decoration-none text-dark" onclick="submitKitchenTipsForm(<?php echo $forheroSegment[3][7]; ?>)">
                         <div class="col-md-12 mb-3">
                             <div class="card">
                                 <div class="card-image">
-                                    <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($forheroSegment[2][0]); ?>" class="img-fluid" alt="Thumbnail">
+                                    <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($forheroSegment[3][0]); ?>" class="img-fluid" alt="Thumbnail">
                                 </div>
                                 <div class="card-body">
-                                    <p class="card-text"><?php echo htmlspecialchars($forheroSegment[2][1]); ?></p>
+                                    <p class="card-text"><?php echo htmlspecialchars($forheroSegment[3][1]); ?></p>
                                 </div>
                             </div>
                         </div>
@@ -241,7 +255,7 @@ mysqli_close($conn);
                 <div class="col-md-4 item mb-4">
                     <!-- card -->
                     <div class="card">
-                        <a href="some-link-to-tip-details.php" class="text-decoration-none text-dark">
+                        <a href="#" class="text-decoration-none text-dark" onclick="submitKitchenTipsForm(<?php echo $oneTip[7]; ?>)">
                             <!-- card image -->
                             <div class="card-image">
                                 <img src="../Images/Kitchen-Tips/<?php echo htmlspecialchars($oneTip[0]); ?>" class="img-fluid" alt="Care Tip">
