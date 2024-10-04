@@ -69,7 +69,7 @@ $heroItems = mysqli_fetch_all($resultantLabel);   // conver to array
 
 // --------------------- forPopularSeg-------------------
 $sql = "SELECT kt.tips_title, kt.description, kt.image, kt.difficulty_level, kt.estimated_time,  kt.likes,
-               ui.first_name, ui.last_name
+               ui.first_name, ui.last_name, kt.id
         FROM `kitchen_tips`  as kt
         INNER JOIN
         user_info  as ui
@@ -153,6 +153,22 @@ mysqli_close($conn);
 
 
 
+    <!-- For all tips id pass to view page -->
+    <script>
+        function submitKitchenTipsForm(kitchenTipsId) {
+            const form = document.getElementById('kitchenTipsForm');
+            form.action = 'oneTipsPageView.php?kitchenTipsId=' + kitchenTipsId;
+            form.submit();
+        }
+    </script>
+
+    <form id="kitchenTipsForm" action="oneTipsPageView.php" method="post">
+        <!-- No hidden input needed -->
+    </form>
+    <!-- .......................... -->
+
+
+
     <!-- -------------------------- ------------------------------------- -->
     <div class="container mt-5">
         <div class="row">
@@ -163,7 +179,7 @@ mysqli_close($conn);
 
             <!-- Left Side: Large Image with Heading and Subheading -->
             <div class="col-lg-6">
-                <a href="some-link-to-tip-details.php" class="text-decoration-none text-dark">
+                <a href="#" class="text-decoration-none text-dark" onclick="submitKitchenTipsForm(<?php echo $randomTips[0][9]; ?>)">
 
                     <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($randomTips[0][2]); ?>" alt="Large Tip" class="img-fluid" style="height: 550px; width: 100%; object-fit: cover;">
                     <h2 class="text-center mt-2"><?php echo htmlspecialchars($randomTips[0][0]); ?></h2>
@@ -176,7 +192,7 @@ mysqli_close($conn);
                 <div class="row">
                     <?php foreach (array_slice($randomTips, 1, 3) as $item) { ?>
                         <div class="col-md-4">
-                            <a href="some-link-to-tip-details.php" class="text-decoration-none text-dark">
+                            <a href="#" class="text-decoration-none text-dark" onclick="submitKitchenTipsForm(<?php echo $item[9]; ?>)">
 
                                 <div class="card">
                                     <!-- Set a fixed height for the image and use object-fit -->
@@ -196,7 +212,11 @@ mysqli_close($conn);
                     <ul class="list-unstyled">
                         <?php foreach (array_slice($randomTips, 4, 8) as $item) { ?>
                             <li class="mb-2">
-                                <h6><span class="me-2">🍽️</span><?php echo htmlspecialchars($item[0]); ?></h6>
+                                <h6>
+                                    <a href="#" class="text-decoration-none" onclick="submitKitchenTipsForm(<?php echo $item[9]; ?>)">
+                                        <span class="me-2">🍽️</span><?php echo htmlspecialchars($item[0]); ?>
+                                    </a>
+                                </h6>
                             </li>
                         <?php } ?>
                     </ul>
@@ -221,7 +241,7 @@ mysqli_close($conn);
             <?php foreach (array_slice($forPopularSeg, 0, 4) as $pitems) { ?>
                 <div class="col-md-3">
                     <!-- Card structure -->
-                    <a href="some-link-to-tip-details.php" class="text-decoration-none text-dark">
+                    <a href="#" class="text-decoration-none text-dark" onclick="submitKitchenTipsForm(<?php echo $pitems[8]; ?>)">
                         <div class="card mb-4">
                             <!-- Card image -->
                             <div class="card-image">
@@ -334,7 +354,7 @@ mysqli_close($conn);
                 <div class="col-md-4">
                     <!-- Card structure -->
                     <div class="card mb-4">
-                        <a href="some-link-to-tip-details.php" class="text-decoration-none text-dark">
+                        <a href="#" class="text-decoration-none text-dark" onclick="submitKitchenTipsForm(<?php echo $heroItem[9]; ?>)">
                             <!-- Card image -->
                             <div class="card-image">
                                 <img src="../Images/Kitchen-Tips/<?php echo htmlspecialchars($heroItem[2]); ?>" class="img-fluid" alt="Care Tip">

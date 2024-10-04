@@ -3,7 +3,16 @@
 //...................... Database Connection ..............................
 include("../Includes/Database Connection/database_connection.php");
 
-$clicked_tips_name = 'How to Get Perfectly Even Cookies'; // from other page
+// $clicked_tips_name = 'How to Get Perfectly Even Cookies'; // from other page
+$kitchenTipsId = isset($_GET['kitchenTipsId']) ? htmlspecialchars($_GET['kitchenTipsId']) : '8'; //---------> this will come from kithhen tips dashboard
+
+$stmt = $conn->prepare('SELECT tips_title FROM kitchen_tips WHERE id = ? LIMIT 1;');
+
+$stmt->bind_param('i', $kitchenTipsId);
+$stmt->execute();
+$stmt->bind_result($clicked_tips_name);
+$stmt->fetch();
+$stmt->close();
 
 
 // ------------------------- for all info
