@@ -14,6 +14,32 @@ $search_query = $search_query ?? '';
 include("../Includes/Database Connection/database_connection.php");  // for home page
 // include("../../Includes/Database Connection/database_connection.php");  // for only navbar
 
+
+
+
+// ----------------- For Searchbar Suggestion -----------------------------
+
+
+$sql = " ";
+
+$resultantLabel = mysqli_query($conn, $sql);   // get query result
+
+$all_Suggestions = mysqli_fetch_assoc($resultantLabel);
+// echo htmlspecialchars($all_Suggestions);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 $stmt = $conn->prepare('SELECT first_name FROM user_info WHERE id = ? LIMIT 1');
 $stmt->bind_param('i', $user_id);
 $stmt->execute();
@@ -57,22 +83,35 @@ mysqli_close($conn);
         <!-- navbar bg-dark sticky-top  -->
         <nav class="navbar navbar-expand-lg bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="/Home/Homepage.php"><img src="../../Images/logo/cook_Corner_LOGO-removebg.png" alt=""></a>
+                <a class="navbar-brand" href="#"><img src="../../Images/logo/cook_Corner_LOGO-removebg.png" alt=""></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse upper-nav" id="navbarSupportedContent">
 
 
-                    <!-- -------------------------------------------------------------- -->
-                    <!-- -------------------------------------------------------------- -->
-                    <!-- -------------------------------------------------------------- -->
-
-
                     <!-- tashin search change here -->
 
+                    <!-- Works -->
+                    <!-- <form class="d-flex" role="search" action="/Search/globalsearch.php" method="GET">
+                        <input class="form-control search me-2" type="search" name="query" placeholder="Search your Recipe" aria-label="Search" required>
+                        <button class="btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    </form>
+                -->
+
+
+                    <!-- new -->
+                    <!-- Works 2-->
+                    <!-- <form class="d-flex" role="search" action="globalsearch.php" method="GET">
+                        <input class="form-control search me-2" type="search" name="query" placeholder="Search your Recipe" aria-label="Search" required>
+                        <button class="btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    </form> -->
+
+
+
                     <form class="d-flex" role="search" action="/Search/globalsearch.php" method="GET">
-                        <input class="form-control search me-2" type="search" name="query" placeholder="Search your Recipe" aria-label="Search"
+                        <input class="form-control search me-2" type="search" name="query"
+                            placeholder="Search your Recipe" aria-label="Search"
                             value="<?= htmlspecialchars($search_query); ?>" required>
                         <button class="btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                     </form>

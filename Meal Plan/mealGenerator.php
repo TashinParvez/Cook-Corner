@@ -42,10 +42,8 @@
 <body>
 
     <?php
-    include('../Includes/Navbar/navbarMain.php');  // tashin  prev
-    // include('../Includes/Navbar/search1-forCopy.php');  // tashin
-    // include('../Includes/Navbar/search2.php');  // tashin
-    // include('../Includes/Navbar/search3.php');  // tashin
+    // include('../Includes/Navbar/navbarMain.php');  // tashin  prev 
+    include('../Includes/Navbar/navbarMain-Search-imp.php');  // tashin  prev 
 
     include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin
     ?>
