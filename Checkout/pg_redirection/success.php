@@ -132,7 +132,10 @@ be in contact with more details shortly </p>
 <div class="btn-wrapper mt-4">
 <!-- <a href="../Home/Homepage.php" class="cmn-btn btn-bg-1"> Go to Home </a> -->
 
-                        <a href="javascript:void(0)" class="cmn-btn btn-bg-1"> Go to Home </a>
+                        <!-- <a href="javascript:void(0)" class="cmn-btn btn-bg-1"> Go to Home </a> -->
+
+                        <a href="/home/Homepage.php" class="btn cmn-btn btn-bg-1"> Go to Home </a>
+
                     </div>
 </div> 
         </div> 
