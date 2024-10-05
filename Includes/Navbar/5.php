@@ -56,16 +56,15 @@
         }
 
         .search-bar {
-            margin-bottom: 10px;
+            margin-top: 15px;
         }
 
         .search-bar input {
             height: 35px;
-            width: 300px;
-            padding: 5px;
+            width: 400px;
+            padding: 0 10px 0 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            text-align: center;
         }
 
         .nav-links {
@@ -108,6 +107,17 @@
         .navbar {
             height: 80px;
         }
+
+        .search-btn {
+            height: 35px;
+            padding: 5px;
+            position: absolute;
+            top: 0;
+            right: 5px;
+            border: none;
+            outline: none;
+            background: transparent;
+        }
     </style>
 </head>
 
@@ -138,10 +148,10 @@
 
             <div class="navbar-center" style="display: flex; justify-content: center; align-items: center; width: 100%; position: absolute;">
                 <!----------------------------------------- Search bar ----------------------------------------->
-                <div class="search-bar" style="display: flex; justify-content: center; margin: 10px 0;"> <!-- Added flex styling here -->
-                    <form class="d-flex" role="search">
-                        <input class="form-control search me-2" type="search" placeholder="Search your Recipe" aria-label="Search">
-                        <button class="btn" type="submit">
+                <div class="search-bar"> <!-- Added flex styling here -->
+                    <form class="" role="search" style="position: relative;">
+                        <input class="form-control  " type="search" placeholder="Search your Recipe" aria-label="Search">
+                        <button type="submit" class="search-btn">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
                     </form>
