@@ -249,32 +249,31 @@ if ($conn->connect_error) {
             });
         });
 
-            function calculateCalories() {
-                const weight = document.getElementById('weight').value;
-                const height = document.getElementById('height').value;
-                const age = document.getElementById('age').value;
-                const gender = document.getElementById('gender').value;
-                const activity = document.getElementById('activity').value;
-                const goal = document.getElementById('goal').value;
+        function calculateCalories() {
+            const weight = document.getElementById('weight').value;
+            const height = document.getElementById('height').value;
+            const age = document.getElementById('age').value;
+            const gender = document.getElementById('gender').value;
+            const activity = document.getElementById('activity').value;
+            const goal = document.getElementById('goal').value;
 
-                let BMR;
+            let BMR;
 
-                if (gender === 'male') {
-                    BMR = 10 * weight + 6.25 * height - 5 * age + 5;
-                } else {
-                    BMR = 10 * weight + 6.25 * height - 5 * age - 161;
-                }
-
-                let activityMultiplier = 1.2; // Sedentary
-                if (activity === 'light') activityMultiplier = 1.375;
-                else if (activity === 'moderate') activityMultiplier = 1.55;
-                else if (activity === 'active') activityMultiplier = 1.725;
-
-                const totalCalories = BMR * activityMultiplier;
-
-                alert(`Your estimated daily calorie needs are ${totalCalories.toFixed(0)} calories.`);
+            if (gender === 'male') {
+                BMR = 10 * weight + 6.25 * height - 5 * age + 5;
+            } else {
+                BMR = 10 * weight + 6.25 * height - 5 * age - 161;
             }
 
+            let activityMultiplier = 1.2; // Sedentary
+            if (activity === 'light') activityMultiplier = 1.375;
+            else if (activity === 'moderate') activityMultiplier = 1.55;
+            else if (activity === 'active') activityMultiplier = 1.725;
+
+            const totalCalories = BMR * activityMultiplier;
+
+            alert(`Your estimated daily calorie needs are ${totalCalories.toFixed(0)} calories.`);
+        }
     </script>
 
 
