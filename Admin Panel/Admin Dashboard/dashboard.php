@@ -19,7 +19,8 @@
         // include '/Cook-Corner/Admin%20Panel/Includes/sidebar.php';
         ?>
         <?php
-        include '/Cook-Corner/Admin Panel/Includes/sidebar.php';
+        // include '/Cook-Corner/Admin Panel/Includes/sidebar.php'; tashin
+        include 'D:\All UIU Materials\8th Trimester\SAD Lab\Project\Cook-Corner\Admin Panel\Includes\sidebar.php';
         ?>
 
         <!-- Main content area -->
