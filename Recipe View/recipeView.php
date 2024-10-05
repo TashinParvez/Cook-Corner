@@ -1,5 +1,19 @@
 <?php
+//...................... Database Connection ..............................
+include("../Includes/Database Connection/database_connection.php");
 
+
+$recipe_id = isset($_GET['recipe_id']) ? htmlspecialchars($_GET['recipe_id']) : '1'; //---------> this will come from all category page
+
+$stmt = $conn->prepare('SELECT * FROM recipe_info WHERE recipe_id = ? LIMIT 1;');
+
+$stmt->bind_param('i', $recipe_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$recipe_info = $result->fetch_all(MYSQLI_ASSOC);
+
+$stmt->close();
+mysqli_close($conn);
 ?>
 
 <!doctype html>

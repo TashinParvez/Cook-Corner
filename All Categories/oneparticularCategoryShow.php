@@ -4,47 +4,117 @@
 include("../Includes/Database Connection/database_connection.php");
 
 
-$categoryId = isset($_GET['categoryId']) ? htmlspecialchars($_GET['categoryId']) : '1'; //---------> this will come from all category page
+$category_id = isset($_GET['category_id']) ? htmlspecialchars($_GET['category_id']) : '1'; //---------> this will come from all category page
 
 $stmt = $conn->prepare('SELECT name FROM recipe_category WHERE id = ? LIMIT 1;');
 
-$stmt->bind_param('i', $categoryId);
+$stmt->bind_param('i', $category_id);
 $stmt->execute();
-$stmt->bind_result($page_name);
+$stmt->bind_result($category_name);
 $stmt->fetch();
 $stmt->close();
 
-$categories_per_page = 24; // 6 rows * 4 categories per row
+
+// --------------- Sort by name/ recently/ most recipes with limit and offset -----------------
+
+$recipes_per_page = 16; // 4 rows * 4 categories per row
 $current_page = isset($_GET['page']) ? intval($_GET['page']) : 1;
-$offset = ($current_page - 1) * $categories_per_page;
+$offset = ($current_page - 1) * $recipes_per_page;
+
+// .......Set default value for order if not provided
+$sort = isset($_POST['sortInput']) ? $_POST['sortInput'] : 'namewise';
+
+switch ($sort) {
+    case 'namewise':
+        $sortBy = "ri.title";
+        break;
+    case 'recentlyAdded':
+        $sortBy = "ri.created_at DESC";
+        break;
+    case 'mostRecipes': // pending
+        $sortBy = "recipe_count DESC";
+        break;
+    default:
+        $sortBy = "ri.title"; // Default sorting
+        break;
+}
+
+// ..............If search something
+
+$search_text = '';
+$search_extended_query = '';
+
+if (isset($_POST['recipes_search'])) {
+    $search_text = $_POST['recipes_search'] ?? '';
+
+    if (!empty($search_text)) {
+        $search_extended_query = "AND (
+                            ri.title LIKE ? 
+                            OR ri.sub_title LIKE ? 
+                            OR ri.description LIKE ?
+                            OR ri.recipe_id IN (
+                                    SELECT rt.recipe_id 
+                                    FROM recipe_tags rt
+                                    JOIN tags t ON rt.tag_id = t.tag_id
+                                    WHERE t.tag_name LIKE ?
+                                ))";
+    }
+}
 
 
-$sql_count = "SELECT COUNT(*) 
-              FROM `recipe_category`";
+$sql = "SELECT SQL_CALC_FOUND_ROWS ri.recipe_id, ri.title, ri.description, rf.rating, ri.image, COUNT(ri.recipe_id) AS recipe_count
+        FROM
+            recipe_info ri LEFT JOIN recipe_feedback rf 
+        ON 
+            ri.recipe_id = rf.recipe_id
+        WHERE 
+            ri.recipe_id IN (
+                SELECT recipe_id FROM junction_recipe_info_recipe_category WHERE category_id = ?
+            )
+        $search_extended_query 
+        GROUP BY ri.recipe_id 
+        ORDER BY $sortBy
+        LIMIT ? OFFSET ?;";
 
+$stmt = $conn->prepare($sql);
 
-$total_categories = mysqli_fetch_array(mysqli_query($conn, $sql_count))[0];
+if (!empty($search_text)) {
 
+    $search_param = '%' . $search_text . '%';
 
-// Calculate total pages
-$total_pages = ceil($total_categories / $categories_per_page);
+    $stmt->bind_param('ssssi', $search_param, $search_param, $search_param, $search_param, $category_id, $recipes_per_page, $offset);
+} else {
 
+    $stmt->bind_param('iii', $category_id, $recipes_per_page, $offset);
+}
 
+$stmt->execute();
+$result = $stmt->get_result();
+$recipes = $result->fetch_all(MYSQLI_ASSOC);
 
-// --------------- Sort by name with limit and offset -----------------
-$sql = "SELECT * 
-        FROM  recipe_category
-        ORDER BY name 
-        LIMIT $categories_per_page OFFSET $offset";
+$total_recipes_result = $conn->query("SELECT FOUND_ROWS()");
+$total_recipes = $total_recipes_result->fetch_array()[0];
 
+$total_pages = ceil($total_recipes / $recipes_per_page);
 
-$result = mysqli_query($conn, $sql);
-$allcategories = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-
-
-mysqli_free_result($result);
+$stmt->close();
 mysqli_close($conn);
+
+// ----------------------------------------------------------------
+
+// Output format
+
+// $recipes = [
+//     [
+//         'recipe_id' => 1,                     
+//         'title' => 'Recipe Title',  
+//         'description' => 'Recipe Description',  
+//         'rating' => 3, 
+//         'image' => 'Image/Link',            
+//     ]
+// ]
+
+// ----------------------------------------------------------------
 
 ?>
 
@@ -54,7 +124,7 @@ mysqli_close($conn);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo htmlspecialchars($page_name); ?>
+    <title><?php echo htmlspecialchars($category_name); ?>
     </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -79,7 +149,7 @@ mysqli_close($conn);
 
     <!------------------------------------  Page info  ------------------------------------>
     <div class="container text-center">
-        <h2 class="text-center mt-5 mb-3">Recipe Category: <b><?php echo htmlspecialchars($page_name); ?></b> </h2>
+        <h2 class="text-center mt-5 mb-3">Recipe Category: <b><?php echo htmlspecialchars($category_name); ?></b> </h2>
         <p>Explore a wide range of categories, each offering unique recipes tailored to your taste.<br>Find your next favorite dish across different cuisines and cooking styles.</p>
     </div>
 
@@ -87,8 +157,9 @@ mysqli_close($conn);
         <div class="row justify-content-center">
             <!-------------------------------------------------- Search -------------------------------------------------->
             <div class="col-6 justify-content-center align-items-center">
-                <form class="w-100 me-3" role="search">
-                    <input type="search" class="form-control p-2" placeholder="Search Category..." aria-label="Search">
+                <form class="w-100 me-3" role="search" action="oneparticularCategoryShow.php" method="post">
+                    <input type="search" class="form-control p-2" placeholder="Search a recipe..." aria-label="Search"
+                        name="recipes_search" value="<?php echo htmlspecialchars($search_text); ?>">
                 </form>
             </div>
         </div>
@@ -101,29 +172,51 @@ mysqli_close($conn);
 
             <div class="col-3">
                 <h6><b>
-                        <!-- <?php echo htmlspecialchars($total_recipies); ?> -->
-                    </b> Matched Category </h6>
+                        <?php echo htmlspecialchars($total_recipes); ?>
+                    </b> Recipes </h6>
             </div>
 
             <div class="col-4">
                 <!------------------------ sort ------------------------>
+
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle dropdown-toggle-sort w-100" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        Sorted by: Name
+                        Sorted by: <?php
+                                    switch ($sort) {
+                                        case 'namewise':
+                                            echo 'Name';
+                                            break;
+                                        case 'recentlyAdded':
+                                            echo 'Recently Added';
+                                            break;
+                                        case 'mostRecipes':
+                                            echo 'Most Recipes';
+                                            break;
+                                    }
+                                    ?>
                     </button>
 
+                    <script>
+                        function submiSorttForm(sortInput) { // hidden input name
+                            document.getElementById('sortInput').value = sortInput; // hidden input id
+                            document.getElementById('sortForm').submit(); // form id
+                        }
+                    </script>
+
+                    <form id="sortForm" action="oneparticularCategoryShow.php" method="post">
+                        <input type="hidden" name="sortInput" id="sortInput">
+                    </form>
+
                     <ul class="dropdown-menu" aria-labelledby="sortDropdown">
-                        <li><a class="dropdown-item" href="#" onclick="changeSort('Name')"><span id="check-name">✔</span> Name</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeSort('Recently Added')"><span id="check-recent"></span> Recently Added</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeSort('Popularity')"><span id="check-popularity"></span> Most Recipes</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="submiSorttForm('namewise')"><span id="check-name"><?php echo ($sort == 'namewise') ? '✔' : ''; ?></span> Name</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="submiSorttForm('recentlyAdded')"><span id="check-recent"><?php echo ($sort == 'recentlyAdded') ? '✔' : ''; ?></span> Recently Added</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="submiSorttForm('mostRecipes')"><span id="check-popularity"><?php echo ($sort == 'mostRecipes') ? '✔' : ''; ?></span> Most Recipes</a></li>
                     </ul>
                 </div>
+
             </div>
         </div>
     </div>
-
-
-
 
 
     <div class="container mt-4">
@@ -373,72 +466,34 @@ mysqli_close($conn);
             <div class="col-9">
                 <div class="row row-cols-1 row-cols-md-4 g-4">
 
+                    <script>
+                        function submirecipeForm(recipe_id) {
+                            const form = document.getElementById('recipeForm');
+                            form.action = '../Recipe View/recipeView.php?recipe_id=' + recipe_id;
+                            form.submit();
+                        }
+                    </script>
 
-                    <div class="col">
-                        <div class="card">
-                            <img src="/Images/FoodImages/1.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            </div>
-                        </div>
-                    </div>
+                    <form id="recipeForm" action="../Recipe View/recipeView.php" method="post">
+                        <!-- No hidden input needed -->
+                    </form>
 
+                    <?php foreach ($recipes as $recipe) { ?>
 
-                    <div class="col">
-                        <div class="card">
-                            <img src="/Images/FoodImages/1.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            </div>
+                        <div class="col"> Mahbub/Tashin
+                            <a href="#" class="text-decoration-none text-dark" onclick="submirecipeForm(<?php echo $recipe['recipe_id']; ?>)">
+                                <div class="card">
+                                    <img src="<?php echo $recipe['image']; ?>" class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><?php echo $recipe['title']; ?></h5>
+                                        <p class="card-text"><?php echo $recipe['description']; ?></p>
+                                    </div>
+                                </div>
+                            </a>
                         </div>
-                    </div>
-                    <div class="col">
-                        <div class="card">
-                            <img src="/Images/FoodImages/1.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card">
-                            <img src="/Images/FoodImages/1.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card">
-                            <img src="/Images/FoodImages/1.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card">
-                            <img src="/Images/FoodImages/1.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card">
-                            <img src="/Images/FoodImages/1.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            </div>
-                        </div>
-                    </div>
+
+                    <?php } ?>
+
                 </div>
 
 

@@ -1,7 +1,8 @@
 <?php
 
 //...................... Database Connection ..............................
-include("/Cook-Corner/Includes/Database Connection/database_connection.php");
+// include("/Cook-Corner/Includes/Database Connection/database_connection.php");
+include("D:\All UIU Materials\8th Trimester\SAD Lab\Project\Cook-Corner\Includes\Database Connection\database_connection.php"); // Noman
 
 
 $recipe_id = 1;  // from another page
@@ -124,7 +125,8 @@ mysqli_close($conn);
     <div class="d-flex">
         <!-- Include the sidebar -->
         <?php
-        include '/Cook-Corner/Admin Panel/Includes/sidebar.php';
+        // include '/Cook-Corner/Admin Panel/Includes/sidebar.php'; tashin
+        include 'D:\All UIU Materials\8th Trimester\SAD Lab\Project\Cook-Corner\Admin Panel\Includes\sidebar.php';
         ?>
 
         <!-- Main content area -->
