@@ -63,46 +63,79 @@ mysqli_close($conn);
 
                     <!------------------ search Segment ------------------>
 
+                    <!-- Bootstrap CSS -->
+                    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+
+                    <!-- jQuery (optional, for Bootstrap 4) -->
+                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+                    <!-- Bootstrap JS -->
+                    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
 
-                    <!-- Include Bootstrap CSS -->
-                    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
-                    <!-- Include Font Awesome CSS for icons -->
-                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+                    <style>
+                        .small-input {
+                            width: 50px !important;
+                            /* Set the input width */
+                        }
 
-                    <!-- Include Bootstrap JS and dependencies -->
-                    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+                        /* Style for the sidebar input field */
+                        .sidebar-input {
+                            border: 1px solid #ccc;
+                            /* Normal border */
+                            border-radius: 4px;
+                            /* Rounded corners */
+                            transition: border-color 0.3s ease;
+                            /* Smooth transition */
+                        }
 
-                    <div class="search-bar" style="display: flex; justify-content: center; margin: 10px 0;">
-                        <form class="d-flex" role="search">
-                            <div class="input-group mb-3">
-                                <!-- Dropdown button -->
-                                <div class="dropdown">
-                                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        All
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#" onclick="showTips()">Tips</a></li>
-                                        <li><a class="dropdown-item" href="#">Recipes</a></li>
-                                        <li><a class="dropdown-item" href="#">More Options</a></li>
-                                    </ul>
-                                </div>
-                                <!-- Search input -->
-                                <input class="form-control search me-2" type="search" placeholder="Search your Recipe" aria-label="Search">
-                                <!-- Search button with icon -->
-                                <button class="btn btn-outline-secondary" type="submit" style="z-index: 10000;">
-                                    <i class="fa-solid fa-magnifying-glass"></i>
-                                </button>
-                            </div>
-                        </form>
+                        /* Remove default focus outline */
+                        .sidebar-input:focus {
+                            outline: none;
+                            /* Remove the default outline */
+                            border-color: #007bff;
+                            /* Change border color on focus */
+                            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+                            /* Optional: Add a soft glow effect */
+                        }
+                    </style>
+
+
+                    <div class="input-group mb-3">
+                        <!-- Dropdown Button -->
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                Dropdown
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <li><a class="dropdown-item" href="#" onclick="submitSortForm('action')">Action</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="submitSortForm('another')">Another action</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="submitSortForm('somethingElse')">Something else here</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#" onclick="submitSortForm('separated')">Separated link</a></li>
+                            </ul>
+                        </div>
+
+                        <!-- Search input -->
+                        <input class="form-control sidebar-input" type="text" placeholder="Search..." aria-label="Search">
+
+                        <!-- Search button with icon -->
+                        <button class="btn btn-outline-secondary" type="submit">
+                            <i class="fas fa-magnifying-glass"></i>
+                        </button>
                     </div>
 
                     <script>
-                        function showTips() {
-                            // Logic to show tips or filter the search results based on the selected option
-                            alert('Tips selected! Implement the logic here.');
+                        function submitSortForm(sortInput) {
+                            console.log("Selected sort option:", sortInput); // Log the selected option
+                            var dropdown = document.getElementById('dropdownMenuButton');
+                            var dropdownInstance = bootstrap.Dropdown.getInstance(dropdown); // Get the dropdown instance
+                            if (dropdownInstance) {
+                                dropdownInstance.hide(); // Hide the dropdown after selection
+                            }
                         }
                     </script>
 
