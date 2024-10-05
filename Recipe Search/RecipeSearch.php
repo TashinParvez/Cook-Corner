@@ -134,12 +134,22 @@
                 <div class="row">
                   <!-- Head -->
                   <div class="container">
-                   
+
                     <div class="row"> <!-- working -->
                       <!-- Added Filters -->
                       <div class="container">
                         <div class="row">
-                          <h3>Added Filters</h3>
+
+
+
+                          <div class="recipe-search mb-2">
+                            <form class="d-flex">
+                              <input class="form-control me-2" type="search" placeholder="Search your recipe here" aria-label="Search">
+                              <button class="btn btn-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                            </form>
+                          </div>
+
+
                         </div>
                         <div class="row">
                           <div class="container">
@@ -171,7 +181,7 @@
 
 
 
-                    <div class="row">
+                    <div class="row  mb-5">
                       <!-- Card -->
 
                       <div class=" row row-cols-1 row-cols-md-3 g-4">
@@ -251,6 +261,10 @@
 
 
   <script src="RecipeSearch.js"></script>
+
+  <?php
+  include('../Includes/Footer/footermain.php');  // tashin 
+  ?>
 
 </body>
 

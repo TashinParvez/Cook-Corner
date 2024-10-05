@@ -129,15 +129,15 @@ if ($conn->connect_error) {
                                                 <div class="row">
                                                     <div class="col-md-3">
                                                         <label for="weight">Weight (kg)</label>
-                                                        <input type="number" class="form-control" id="weight" placeholder="e.g 70" required>
+                                                        <input type="number" class="form-control" id="weight" placeholder="E.g 70" required>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <label for="height">Height (cm)</label>
-                                                        <input type="number" class="form-control" id="height" placeholder="e.g 70" required>
+                                                        <input type="number" class="form-control" id="height" placeholder="E.g 175" required>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <label for="age">Age</label>
-                                                        <input type="number" class="form-control" placeholder="35" id="age" required>
+                                                        <input type="number" class="form-control" placeholder="E.g 35" id="age" required>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <label for="gender">Gender</label>
@@ -166,7 +166,11 @@ if ($conn->connect_error) {
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <button type="button" class="btn  calculate-btn" onclick="calculateCalories()">Calculate</button>
+
+                                                <button type="button" class="btn calculate-btn" onclick="calculateCalories()">Calculate</button>
+
+                                                <!-- Placeholder for the alert -->
+                                                <div id="calorieAlert" class="mt-3"></div>
                                             </form>
                                         </section>
 
@@ -256,7 +260,10 @@ if ($conn->connect_error) {
             const activity = document.getElementById('activity').value;
             const goal = document.getElementById('goal').value;
 
+
             let BMR;
+
+
 
             if (gender === 'male') {
                 BMR = 10 * weight + 6.25 * height - 5 * age + 5;
@@ -271,7 +278,16 @@ if ($conn->connect_error) {
 
             const totalCalories = BMR * activityMultiplier;
 
-            alert(`Your estimated daily calorie needs are ${totalCalories.toFixed(0)} calories.`);
+
+            // Create the Bootstrap alert
+            const alertDiv = document.getElementById('calorieAlert');
+            alertDiv.innerHTML = `
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                Your estimated daily calorie needs are <strong>${totalCalories.toFixed(0)}</strong> calories.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        `;
+
         }
     </script>
 
