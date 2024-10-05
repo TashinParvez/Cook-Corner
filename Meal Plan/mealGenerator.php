@@ -42,13 +42,13 @@
 <body>
 
     <?php
-    include('../Includes/Navbar/navbarMain.php');  // tashin 
+    include('../Includes/Navbar/navbarMain.php');  // tashin  
     include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin
     ?>
 
 
     <div class="container meal-planner ">
-        <h1 class="mb-4">Put your diet on autopilot</h1>
+        <h1 class="mb-4">Put your diet on Autopilot</h1>
         <p>Eat This Much creates personalized meal plans based on your food preferences, budget, and schedule. Reach your diet and nutritional goals with our calorie calculator, weekly meal plans, grocery lists and more. Create your meal plan right here in seconds.
         <p>Let us know your diet.</p>
 
@@ -61,7 +61,7 @@
                     <p>Anything</p>
                 </div>
                 <div class="diet-option">
-                    <img src="../Images/Personalized-Recommendations/Paleo.jpeg" alt="Paleo">
+                    <img src="../Images/Personalized-Recommendations/Paleo.png" alt="Paleo">
                     <p>Paleo</p>
                 </div>
                 <div class="diet-option">
@@ -87,7 +87,7 @@
                     <div class="col-md-4">
                         <label for="calories" class="form-label">I want to eat</label>
                         <input type="number" class="form-control" id="calories" placeholder="Calories">
-                        <div class="form-text">Not sure? Estimate your calorie needs.</div>
+                        <div class="form-text">Not sure? <a href="#" class="text-decoration-none text-success fw-bold launch-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">Estimate your calorie needs</a></div>
 
 
                         <!-- ------------------------------------------------ -->
@@ -95,9 +95,12 @@
 
 
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+
+
+
+                        <!-- <button type="button" class="btn btn-primary launch-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             Launch demo modal
-                        </button>
+                        </button> -->
 
                         <!-- Modal -->
                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -248,13 +251,6 @@
                             </div>
                         </div>
 
-
-
-
-
-
-
-
                         <!-- ------------------------------------------------ -->
                     </div>
                     <div class="col-md-3">
@@ -267,7 +263,9 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary btn-calculate">Generate</button>
+
+
+                <button type="submit" class="btn btn-primary btn-calculate mb-4">Generate</button>
             </form>
         </div>
 

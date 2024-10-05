@@ -11,15 +11,13 @@
             right: -400px;
             width: 400px;
             height: 100%;
-            background-color: #f0f4f7;
+
+            /* background-color: #c6f7c6;  */
             background-color: #d9f2d9;
-            /* Softer background color */
-            box-shadow: -3px 0 10px rgba(0, 0, 0, 0.2);
-            /* Adds a subtle shadow */
-            transition: right 0.3s ease;
+
+
+            transition: 0.3s;
             z-index: 1000;
-            padding-top: 20px;
-            /* Add some padding to the top */
         }
 
         /* Open Sidebar when active */
@@ -27,25 +25,21 @@
             right: 0;
         }
 
-        /* Sidebar toggle button styling */
+        /* Toggle button for the right edge */
         #toggleSidebar {
             position: fixed;
             top: 50%;
-            right: 0;
+            right: -40px;
             background-color: #ff5252;
             color: white;
             cursor: pointer;
             z-index: 1001;
+            transition: right 0.3s;
             border-top-left-radius: 10px;
             border-bottom-left-radius: 10px;
-            width: 40px;
-            height: 60px;
-            text-align: center;
-            line-height: 60px;
-            font-size: 18px;
-            /* Make the arrows larger */
-            transition: right 0.3s ease;
-            box-shadow: -3px 0 8px rgba(0, 0, 0, 0.2);
+
+            width: 30px !important;
+
         }
 
         /* Move toggle button along with sidebar */
@@ -53,113 +47,122 @@
             right: 400px;
         }
 
-        /* Tabs */
-        .nav-tabs {
-            border-bottom: 1px solid #dee2e6;
+
+
+        #toggleSidebar {
+            position: fixed;
+            top: 50%;
+            right: 0px;
+            background-color: #ff5252;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 1001;
+            transition: right 0.3s;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            width: 40px;
+            height: 60px;
+            text-align: center;
+            line-height: 40px;
         }
 
-        .nav-tabs .nav-link {
-            color: #555;
-            /* Softer color */
-            font-weight: bold;
+        /* Move toggle button along with sidebar */
+        #mySidebar.active+#toggleSidebar {
+            right: 400px;
+            /* Adjust position when sidebar is active */
         }
 
-        .nav-tabs .nav-link.active {
+        .d-flex.text-center {
+            justify-content: center;
+            /* Center items horizontally */
+            margin-top: 20px;
+            /* Optional: add some margin for spacing */
+        }
+
+        tbody tr td .btn-primary {
+            background: transparent !important;
+            color: black;
+            border: none;
+        }
+
+        tbody tr td .btn-primary:hover {
+            background: transparent !important;
+            color: black;
+        }
+
+        /* Centering text in table headers and cells */
+        #mySidebar .table th,
+        #mySidebar .table td {
+            text-align: center;
+            /* Center-align the text */
+        }
+
+        /* Optional: To ensure all tables use this style */
+        table {
+            width: 100%;
+            /* Ensures the table takes full width */
+        }
+
+        .table-striped thead th {
             background-color: #72bf78;
             color: white;
-            border: none;
-            border-radius: 5px;
-        }
+      }
 
-        /* Tab content padding and heading style */
-        .tab-content {
-            padding: 20px;
-            background-color: #fff;
-            /* Clean background for content */
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        tbody tr .btn-primary {
+            outline: none;
+            border: none;
+
         }
 
         .tab-pane h4 {
             text-align: center;
-            color: #333;
-            font-size: 1.2rem;
-            margin-bottom: 15px;
         }
 
-        /* Table styling */
-        .table {
-            width: 100%;
+        .nav-tabs .nav-link {
+            color: black;
         }
 
-        .table thead th {
-            background-color: #72bf78;
-            color: white;
-            border: none;
+        .nav-tabs .nav-link.active {
+            background-color: #72BF78 !important;
+            /* Change background color */
+            color: white !important;
+            /* Change text color */
         }
 
-        .table tbody td {
-            text-align: center;
-        }
-
-        .btn-primary {
-            background-color: transparent;
-            color: #333;
-            border: none;
-        }
-
-        .btn-primary:hover {
-            color: #72bf78;
-        }
-
-        .btn-secondary {
-            background-color: #72bf78;
-            color: white;
-            border: none;
-        }
-
-        .btn-secondary:hover {
-            background-color: #5aa863;
-        }
-
-        /* Favorites list */
         .tab-pane .container ul li {
             list-style: none;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
         .tab-pane .container ul li a {
-            display: block;
-            width: 100%;
-            padding: 10px;
+            width: 90% !important;
+            line-height: 40px !important;
+            text-align: center !important;
             background-color: #f8f9fa;
-            color: #333;
             border: 1px solid #ced4da;
             border-radius: 5px;
-            transition: background-color 0.3s, color 0.3s;
-            text-align: center;
-            font-size: 1rem;
+            transition: background-color 0.3s, border-color 0.3s;
         }
 
+        /* Hover effect for links */
         .tab-pane .container ul li a:hover {
-            background-color: #72bf78;
-            color: white;
+            background-color: #72BF78;
+            border: 1px solid #72BF78;
+            color: white !important;
         }
 
-        /* Add button in Todo List */
+
         .todo-form {
             text-align: center;
-            margin-top: 10px;
         }
 
-        .todo-form .btn {
-            background-color: #72bf78;
+        #mySidebar .d-flex .btn {
+            background-color: #72BF78;
             color: white;
+            outline: none;
             border: none;
-        }
-
-        .todo-form .btn:hover {
-            background-color: #5aa863;
+            width: 150px;
         }
     </style>
 </head>
