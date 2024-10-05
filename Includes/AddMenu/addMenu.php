@@ -100,15 +100,15 @@
 
         <ul class="fab-options">
             <li>
-                <span class="fab-label"><a href="#">Add Recipe</a></span>
+                <span class="fab-label"><a href="/Recipe Add/addRecipe.php">Add Recipe</a></span>
                 <div class="fab-icon-holder">
-                    <a href="#"><i class="fa-solid fa-bowl-rice"></i></a>
+                    <a href="/Recipe Add/addRecipe.php"><i class="fa-solid fa-bowl-rice"></i></a>
                 </div>
             </li>
             <li>
-                <span class="fab-label"><a href="#">Add Tips</a></span>
+                <span class="fab-label"><a href="/Add-Kitchen-Tips/addKitchenTips.php">Add Tips</a></span>
                 <div class="fab-icon-holder">
-                    <a href="#"><i class="fa-solid fa-heart"></i></a>
+                    <a href="/Add-Kitchen-Tips/addKitchenTips.php"><i class="fa-solid fa-heart"></i></a>
                 </div>
             </li>
         </ul>
