@@ -111,3 +111,30 @@
 .tag-container {
     display: flex;
 }
+
+/* search */
+
+.recipe-search{
+    position: relative;
+    left: 4px;
+}
+
+.recipe-search .btn{
+    position: absolute;
+    right: 20px;
+    background: transparent !important;
+    color: black;
+    border: none;
+    
+}
+
+.recipe-search .btn:hover{
+    color: black !important;
+}
+
+.recipe-search .form-control {
+    width: 100%;
+    padding-right: 30px !important;
+}
+
+/*  */
