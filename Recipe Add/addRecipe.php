@@ -6,8 +6,352 @@ include('../Includes/Navbar/navbarMain.php');  // tashin
 //...................... Database Connection ..............................
 include("../Includes/Database Connection/database_connection.php");
 
-$recipePhoto = $recipeTitle = $description = $ingredients = $directions = $servings = $yield = $prepTime = $cookTime = $noteTitles = $noteDescriptions = $story = '';
 
+// .....................___________---------- For Adding a Recipe ----------___________ ...............
+
+// Single Inputs
+$title = $sub_title = $image = $description = $prep_time = $cook_time = $servings = $difficulty_level = $story_or_learn = '';
+
+// 1D Inputs ('$tags' in different table)
+$directions = $tags = $cities = '';
+
+// 2D Inputs ('$ingredients' & '$dishes' in different table)
+$ingredients = $dishes = $notes = '';
+
+
+if (isset($_POST['submit_recipe'])) {
+
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) { // Tashin
+
+        $tempname = $_FILES['image']['tmp_name'];
+
+        $file_name = $_FILES['image']['name'];
+        $file_ext = pathinfo($file_name, PATHINFO_EXTENSION);
+        $file_base_name = pathinfo($file_name, PATHINFO_FILENAME);
+
+        $upload_dir = '../../Images/Recipe-Images/';
+        // $upload_dir = 'D:\All UIU Materials\8th Trimester\SAD Lab\Project\Cook-Corner\Images\Recipe-Images\\';
+        if (!is_dir($upload_dir)) {
+            mkdir($upload_dir, 0777, true);
+        }
+
+        $counter = 0;
+        $target_file = $upload_dir . $file_base_name . '.' . $file_ext;
+
+        while (file_exists($target_file)) {
+            $counter++;
+            $new_file_name = $file_base_name . "($counter)" . '.' . $file_ext;
+            $target_file = $upload_dir . $new_file_name;
+        }
+
+        // Now move the file to the target directory with the new unique file name
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $target_file)) {
+            $image = isset($new_file_name) ? $new_file_name : $file_base_name . '.' . $file_ext;
+        } else {
+            echo "There was an error uploading the file.";
+        }
+    } else {
+        echo "No file was uploaded or there was an upload error.";
+    }
+
+
+    // Single Inputs
+    $title = $_POST['title'] ?? '';
+    $sub_title = $_POST['sub_title'] ?? '';
+
+    $image = isset($image) ?? '';
+
+    $description = $_POST['description'] ?? '';
+
+    $prep_time = $_POST['prep_time'] ?? '';
+    $cook_time = $_POST['cook_time'] ?? '';
+    $servings = $_POST['servings'] ?? '';
+    $difficulty_level = $_POST['difficulty_level'] ?? '';
+
+    $story_or_learn = $_POST['story_or_learn'] ?? '';
+
+    // 1D Inputs ('$tags' in different table) Split text doesn't include
+    $directions = $_POST['directions'] ?? [];
+    $directions = implode('<splitForDirection>', array_map('trim', $directions));
+
+    $cities = $_POST['cities'] ?? [];
+    $tags = $_POST['tags'] ?? [];
+
+    // 2D Inputs ('$ingredients' & '$dishes' in different table) working
+    $notes = $_POST['notes'] ?? [];
+
+    if (!empty($notes)) {
+
+        $tempNotes = [];
+        foreach ($notes as $note) {
+
+            $tempNotes[] = implode('<separatorForTitleAndDescription>', array_map('trim', $note));
+        }
+
+        $notes = implode('<separatorForEachNote>', array_map('trim', $tempNotes));
+    }
+
+    $ingredients = $_POST['ingredients'] ?? [];
+
+    $dishes = $_POST['dishes'] ?? [];
+
+    $stmt = $conn->prepare('SELECT CASE 
+                                    WHEN designation IS NULL THEN 0
+                                    ELSE 1
+                            END AS chef_status
+                            FROM user_info WHERE id = ?;');
+    $stmt->bind_param('i', $user_id);
+    $stmt->execute();
+    $stmt->bind_result($chef_status);
+    $stmt->fetch();
+    $stmt->close();
+
+    if ($chef_status == 1) {
+
+        // get the 'level' by 'level_name' from the 'skill_level' table
+        $stmt = $conn->prepare('SELECT level FROM skill_level WHERE level_name = ?');
+        $stmt->bind_param('s', $difficulty_level);
+        $stmt->execute();
+        $stmt->bind_result($difficulty_level);
+        $stmt->fetch();
+        $stmt->close();
+
+        $stmt = $conn->prepare('INSERT INTO recipe_info
+                    (title, subtitle, image, description, prep_time, cook_time, servings, skill_level, how_you_learn_or_story, directions, notes, author) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);');
+
+        $stmt->bind_param(
+            'ssssssssssss',
+            $title,
+            $sub_title,
+            $image,
+            $description,
+            $prepTime,
+            $cookTime,
+            $servings, // for how many person
+            $difficulty_level,
+            $story_or_learn,
+            $directions,
+            $notes,
+            $user_id
+        );
+
+
+        if ($stmt->execute()) {
+
+            $recipe_id = $conn->insert_id; // recipe_id after inserting into recipe_info
+            $stmt->close();
+
+            $flag = true;
+            foreach ($ingredients as $ingredient) {
+
+                $ingredient_name = trim($ingredient['name']);
+                $quantity = $ingredient['quantity'];
+                $unit_of_measurement = trim($ingredient['unit']);
+
+                //Check if the ingredient already exists in the 'ingredient_info' table
+                $stmt = $conn->prepare('SELECT ingredient_id FROM ingredient_info WHERE ingredient_name = ?');
+                $stmt->bind_param('s', $ingredient_name);
+                $stmt->execute();
+                $stmt->store_result();
+
+                if ($stmt->num_rows > 0) {
+                    // If the ingredient exists, fetch the ingredient_id
+                    $stmt->bind_result($ingredient_id);
+                    $stmt->fetch();
+                } else {
+                    // If the ingredient does not exist, insert it and get the new ingredient_id
+                    $stmt_insert = $conn->prepare('INSERT INTO ingredient_info (ingredient_name) VALUES (?)');
+                    $stmt_insert->bind_param('s', $ingredient_name);
+                    $stmt_insert->execute();
+                    $ingredient_id = $conn->insert_id;  // Get the inserted ingredient_id
+                    $stmt_insert->close();
+                }
+
+                $stmt->close();
+
+                // Insert into junction_recipe_ingredients (ingredient_id, recipe_id, quantity, unit_of_measurement)
+                $stmt_junction = $conn->prepare('INSERT INTO junction_recipe_ingredients (ingredient_id, recipe_id, quantity, unit_of_measurement) VALUES (?, ?, ?, ?)');
+                $stmt_junction->bind_param('iiis', $ingredient_id, $recipe_id, $quantity, $unit_of_measurement);
+
+                if (!$stmt_junction->execute()) {
+
+                    $flag = false;
+                    echo "Error executing query (Ingredients): " . $stmt_junction->error;
+                }
+
+                $stmt_junction->close();
+            }
+
+            if ($flag) {
+
+                foreach ($dishes as $dish) {
+
+                    $dish_name = trim($dish['name']);
+                    $quantity = $dish['quantity'];
+
+                    // Check if the dish already exists in the 'dishes' table
+                    $stmt = $conn->prepare('SELECT dish_id FROM dishes WHERE dish_name = ?');
+                    $stmt->bind_param('s', $dish_name);
+                    $stmt->execute();
+                    $stmt->store_result();
+
+                    if ($stmt->num_rows > 0) {
+
+                        // If dish exists, fetch the dish_id
+                        $stmt->bind_result($dish_id);
+                        $stmt->fetch();
+                    } else {
+                        // Step 2: If the dish does not exist, insert it and get the new dish_id
+                        $stmt_insert = $conn->prepare('INSERT INTO dishes (dish_name) VALUES (?)');
+                        $stmt_insert->bind_param('s', $dish_name);
+                        $stmt_insert->execute();
+                        $dish_id = $conn->insert_id;  // Get the inserted dish_id
+                        $stmt_insert->close();
+                    }
+
+                    $stmt->close();
+
+                    // Insert into junction_dishes_used_in_recipe (dish_id, recipe_id, quantity)
+                    $stmt_junction = $conn->prepare('INSERT INTO junction_dishes_used_in_recipe (dish_id, recipe_id, quantity) VALUES (?, ?, ?)');
+                    $stmt_junction->bind_param('iii', $dish_id, $recipe_id, $quantity);
+
+                    if (!$stmt_junction->execute()) {
+
+                        $flag = false;
+                        echo "Error executing query (Dishes): " . $stmt_junction->error;
+                    }
+
+                    $stmt_junction->close();
+                }
+
+                if ($flag) {
+
+                    if (!empty($tags)) {
+
+                        foreach ($tags as $tag) {
+
+                            $tag = trim($tag);
+
+                            // Check if the tag already exists in the 'tags' table
+                            $checkTagStmt = $conn->prepare('SELECT id FROM tags WHERE tag_name = ?');
+                            $checkTagStmt->bind_param('s', $tag);
+                            $checkTagStmt->execute();
+                            $checkTagStmt->store_result();
+
+                            if ($checkTagStmt->num_rows > 0) {
+                                // Tag exists, get the tag ID
+                                $checkTagStmt->bind_result($tag_id);
+                                $checkTagStmt->fetch();
+                            } else {
+                                // Insert new tag into the 'tags' table and retrieve the new tag ID
+                                $insertTagStmt = $conn->prepare('INSERT INTO tags (tag_name) VALUES (?)');
+                                $insertTagStmt->bind_param('s', $tag);
+                                $insertTagStmt->execute();
+                                $tag_id = $conn->insert_id; // Get the newly created tag ID
+                                $insertTagStmt->close();
+                            }
+
+                            $checkTagStmt->close();
+
+                            // Insert the relationship into the 'recipe_tags' table
+                            $insertRecipeTagStmt = $conn->prepare('INSERT INTO recipe_tags (tag_id, recipe_id) VALUES (?, ?)');
+                            $insertRecipeTagStmt->bind_param('ii', $tag_id, $recipe_id);
+
+                            if (!$insertRecipeTagStmt->execute()) {
+
+                                $flag = false;
+                                echo "Error executing query (Tags): " . $stmt_junction->error;
+                            }
+
+                            $insertRecipeTagStmt->close();
+                        }
+                    }
+
+                    if ($flag) {
+
+                        foreach ($cities as $city_name) {
+
+                            $city_name = trim($city_name);
+
+                            // Check if the city exists
+                            $stmt_check_city = $conn->prepare('SELECT city_id FROM cities WHERE city_name = ?');
+                            $stmt_check_city->bind_param('s', $city_name);
+                            $stmt_check_city->execute();
+                            $stmt_check_city->store_result();
+
+                            if ($stmt_check_city->num_rows > 0) {
+                                // City exists, retrieve city_id
+                                $stmt_check_city->bind_result($city_id);
+                                $stmt_check_city->fetch();
+                            } else {
+                                // City does not exist, insert it
+                                $stmt_insert_city = $conn->prepare('INSERT INTO cities (city_name) VALUES (?)');
+                                $stmt_insert_city->bind_param('s', $city_name);
+                                $stmt_insert_city->execute();
+                                $city_id = $stmt_insert_city->insert_id;
+                                $stmt_insert_city->close();
+                            }
+
+                            $stmt_check_city->close();
+
+                            // insert city_id and recipe_id into the recipe_cities table
+                            $stmt_recipe_cities = $conn->prepare('INSERT INTO recipe_cities (city_id, recipe_id) VALUES (?, ?)');
+                            $stmt_recipe_cities->bind_param('ii', $city_id, $recipe_id);
+
+                            if (!$stmt_recipe_cities->execute()) {
+
+                                $flag = false;
+                                echo "Error executing query (Cities): " . $stmt_junction->error;
+                            }
+
+                            $stmt_recipe_cities->close();
+                        }
+
+                        if ($flag) {
+
+                            mysqli_close($conn);
+
+                            header('Location: addRecipe.php');
+                            exit();
+                        } else {
+
+                            echo 'Error executing cities';
+                        }
+                    } else {
+
+                        echo 'Error executing tags';
+                    }
+                } else {
+
+                    echo 'Error executing dishes';
+                }
+            } else {
+
+                echo 'Error executing ingredients';
+            }
+        } else {
+
+            echo "Error executing query(Single Inputs): " . $stmt->error;
+            $stmt->close();
+        }
+    } else {
+        echo 'Only chef can add a recipe!';
+    }
+
+    //........................***********.............
+    // Store $ingredients in the database as plain text (without altering line breaks)
+
+    // When retrieving from the database, apply nl2br before displaying
+    // $storedIngredients = nl2br(htmlspecialchars($storedIngredientsFromDb));
+    //......................................................
+}
+
+// .....................___________---------- *************----------___________ ...............
+
+
+
+// .....................___________---------- For Suggestions----------___________ ...............
 
 // -------------------------- For ingredent suggestion -------------------------
 $sql = "SELECT ingredient_name FROM `ingredient_info`";
@@ -40,119 +384,8 @@ while ($row = mysqli_fetch_assoc($result)) {
     $allCities[] = $row['city_name'];
 }
 
-// ----------------------------------------------------------------------
+// .....................___________---------- *************----------___________ ...............
 
-
-
-if (isset($_POST['submitRecipe'])) {
-
-    if (isset($_FILES['recipePhoto']) && $_FILES['recipePhoto']['error'] === 0) {
-
-        $tempname = $_FILES['recipePhoto']['tmp_name'];
-
-        $file_name = $_FILES['recipePhoto']['name'];
-        $file_ext = pathinfo($file_name, PATHINFO_EXTENSION);
-        $file_base_name = pathinfo($file_name, PATHINFO_FILENAME);
-
-        $upload_dir = '../../Images/Recipe-Images/';
-        // $upload_dir = 'D:\All UIU Materials\8th Trimester\SAD Lab\Project\Cook-Corner\Images\Recipe-Images\\';
-        if (!is_dir($upload_dir)) {
-            mkdir($upload_dir, 0777, true);
-        }
-
-        $counter = 0;
-        $target_file = $upload_dir . $file_base_name . '.' . $file_ext;
-
-        while (file_exists($target_file)) {
-            $counter++;
-            $new_file_name = $file_base_name . "($counter)" . '.' . $file_ext;
-            $target_file = $upload_dir . $new_file_name;
-        }
-
-        // Now move the file to the target directory with the new unique file name
-        if (move_uploaded_file($_FILES['recipePhoto']['tmp_name'], $target_file)) {
-            $recipePhoto = isset($new_file_name) ? $new_file_name : $file_base_name . '.' . $file_ext;
-        } else {
-            echo "There was an error uploading the file.";
-        }
-    } else {
-        echo "No file was uploaded or there was an upload error.";
-    }
-
-    $recipePhoto = isset($recipePhoto) ?? '';
-
-    $recipeTitle = $_POST['recipeTitle'] ?? '';
-    $description = $_POST['description'] ?? '';
-
-    $ingredients = $_POST['ingredients'] ?? [];
-    $ingredients = implode('<splitForIngredient>', array_map('trim', $ingredients));
-
-    $directions = $_POST['directions'] ?? '';
-    $directions = implode('<splitForDirection>', array_map('trim', $directions));
-
-    $servings = $_POST['servings'] ?? '';
-    $yield = $_POST['yield'] ?? '';
-    $prepTime = $_POST['prepTime'] ?? '';
-    $cookTime = $_POST['cookTime'] ?? '';
-
-    $noteTitles = $_POST['noteTitles'] ?? '';
-    $noteTitles = implode('<splitForNoteTitles>', array_map('trim', $noteTitles));
-
-    $noteDescriptions = $_POST['noteDescriptions'] ?? '';
-    $noteDescriptions = implode('<splitForNoteDescriptions>', array_map('trim', $noteDescriptions));
-
-    $notes = $noteTitles . '<separatorForNoteTitlesAndNoteDescriptions>' . $noteDescriptions;
-
-
-    $stmt = $conn->prepare('SELECT CASE 
-                                    WHEN designation IS NULL THEN 0
-                                    ELSE 1
-                            END AS chef_status
-                            FROM user_info WHERE id = ?;');
-    $stmt->bind_param('i', $user_id);
-    $stmt->execute();
-    $stmt->bind_result($chef_status);
-    $stmt->fetch();
-    $stmt->close();
-
-    if ($chef_status == 1) {
-
-        $stmt = $conn->prepare('INSERT INTO recipe_info
-        (title, image, description, ingredients, directions, servings, yield, prep_time, cook_time, notes, author)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);');
-
-        $stmt->bind_param(
-            'sssssssssss',
-            $recipeTitle,
-            $recipePhoto,
-            $description,
-            $ingredients,
-            $directions,
-            $servings, // for how many person
-            $yield,
-            $prepTime,
-            $cookTime,
-            $notes,
-            $user_id
-        );
-        $stmt->execute();
-
-        $stmt->close();
-        mysqli_close($conn);
-
-        header('Location: #');
-        // exit();
-    } else {
-        echo 'Only chef can add a recipe!';
-    }
-
-    //........................***********.............
-    // Store $ingredients in the database as plain text (without altering line breaks)
-
-    // When retrieving from the database, apply nl2br before displaying
-    // $storedIngredients = nl2br(htmlspecialchars($storedIngredientsFromDb));
-    //......................................................
-}
 
 ?>
 
@@ -177,7 +410,7 @@ if (isset($_POST['submitRecipe'])) {
     <link rel="stylesheet" href="dish.css"> <!-- dish CSS -->
 
     <!-- javascript -->
-    <script src="addRecipe.js"></script>
+    <!-- <script src="addRecipe.js"></script> -->
 
 </head>
 
@@ -192,28 +425,28 @@ if (isset($_POST['submitRecipe'])) {
         <h1 class="text-center text-danger mb-4">Add Recipe</h1>
         <p class="text-center">Uploading personal recipes is easy! Add yours to your favorites, share with friends, family, or the community.</p>
 
-        <form id="recipeForm" class="p-4 border bg-light rounded" action="addRecipe.php" method="post" enctype="multipart/form-data">
+        <form id="recipeForm" class="p-4 border bg-light rounded" action="addRecipe.php" method="post" enctype="multipart/form-data"> Tashin
 
             <!-- Recipe Title -->
             <div class="mb-3">
-                <label for="recipeTitle" class="form-label">Recipe Title<small style="color: red;">*</small></label>
-                <input type="text" id="recipeTitle" name="recipeTitle" class="form-control" placeholder="Give your recipe a title"
-                    value="<?php echo htmlspecialchars($recipeTitle); ?>" required>
+                <label for="title" class="form-label">Recipe Title<small style="color: red;">*</small></label>
+                <input type="text" id="title" name="title" class="form-control" placeholder="Give your recipe a title"
+                    value="<?php echo htmlspecialchars($title); ?>" required>
             </div>
             <hr>
             <!-- Recipe SubTitle -->
             <div class="mb-3">
-                <label for="recipeTitle" class="form-label">Subtitle(Optional)</label>
-                <input type="text" id="recipeTitle" name="recipeTitle" class="form-control" placeholder="Give your recipe a title"
-                    value="<?php echo htmlspecialchars($recipeTitle); ?>" required>
+                <label for="sub_title" class="form-label">Subtitle(Optional)</label>
+                <input type="text" id="sub_title" name="sub_title" class="form-control" placeholder="Give your recipe a sub title"
+                    value="<?php echo htmlspecialchars($sub_title); ?>">
             </div>
             <hr>
 
-            <!-- Photo Upload -->
+            <!-- Photo Upload --> Tashin
             <div class="mb-3 row">
-                <label for="recipePhoto" class="form-label">Photo<small style="color: red;">*</small></label>
+                <label for="image" class="form-label">Photo<small style="color: red;">*</small></label>
                 <div class="col-md-6">
-                    <input type="file" id="recipePhoto" name="recipePhoto" class="form-control" accept="image/*">
+                    <input type="file" id="image" name="image" class="form-control" accept="image/*">
                 </div>
                 <small class="text-muted mt-2">Use JPEG or PNG. Must be at least 960 x 960. Max file size: 30MB</small>
             </div>
@@ -227,6 +460,10 @@ if (isset($_POST['submitRecipe'])) {
             <hr>
 
             <!-- Ingredients Section -->
+
+
+
+
             <div class="container mt-4">
                 <div class="form-group position-relative">
                     <h4 class="text-start">Ingredients</h4>
@@ -234,42 +471,68 @@ if (isset($_POST['submitRecipe'])) {
                         Enter ingredients with quantity and preparation instructions (e.g., '2 cups flour, sifted', '1 tablespoon butter, softened'). Use headers like 'Cake' or 'Frosting' to separate parts.
                     </small>
 
-                    <!-- Ingredient row -->
-                    <div class="row mb-2 ingredient-row">
-
-                        <!-- Name input with suggestions -->
-                        <div class="col-md-4 position-relative">
-                            <input type="text" class="form-control ingredient-name" placeholder="Ingredient name (e.g., flour, sifted)" autocomplete="off" />
-                            <!-- Suggestions will appear here -->
-                            <div class="suggestion-list"></div>
-                        </div>
-
-                        <!-- Quantity input -->
-                        <div class="col-md-3">
-                            <input type="number" class="form-control" placeholder="Quantity">
-                        </div>
-
-                        <!-- Unit dropdown -->
-                        <div class="col-md-3">
-                            <select class="form-control">
-                                <option value="" disabled selected>Select unit</option>
-                                <option value="Kilograms">Kilograms (kg)</option>
-                                <option value="Grams">Grams (g)</option>
-                                <option value="Liter">Liter</option>
-                                <option value="Milliliters">Milliliters (ml)</option>
-                                <option value="Pounds">Pounds (lbs)</option>
-                                <option value="Pieces">Pieces (pcs)</option>
-                                <option value="Tablespoon">Tablespoon</option>
-                                <option value="Teaspoon">Teaspoon</option>
-                                <option value="Ounce">Ounce</option>
-                                <option value="Cups">Cups</option>
-                            </select>
-                        </div>
-
-                        <!-- Remove button -->
-                        <div class="col-md-1">
-                            <button type="button" class="btn btn-danger remove-btn">&times;</button>
-                        </div>
+                    <!-- Ingredient rows container -->
+                    <div id="ingredient-rows">
+                        <?php if (!empty($ingredients)) : ?>
+                            <?php foreach ($ingredients as $index => $ingredient) : ?>
+                                <div class="row mb-2 ingredient-row">
+                                    <div class="col-md-4 position-relative">
+                                        <input type="text" name="ingredients[<?php echo $index; ?>][name]" class="form-control ingredient-name" placeholder="Ingredient name (e.g., flour, sifted)" autocomplete="off" value="<?php echo htmlspecialchars($ingredient['name']); ?>" required />
+                                        <div class="suggestion-list"></div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="number" name="ingredients[<?php echo $index; ?>][quantity]" class="form-control" placeholder="Quantity" value="<?php echo htmlspecialchars($ingredient['quantity']); ?>" required>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select name="ingredients[<?php echo $index; ?>][unit]" class="form-control">
+                                            <option value="" disabled <?php echo empty($ingredient['unit']) ? 'selected' : ''; ?>>Select unit</option>
+                                            <option value="Kilograms" <?php echo ($ingredient['unit'] == 'Kilograms') ? 'selected' : ''; ?>>Kilograms (kg)</option>
+                                            <option value="Grams" <?php echo ($ingredient['unit'] == 'Grams') ? 'selected' : ''; ?>>Grams (g)</option>
+                                            <option value="Liter" <?php echo ($ingredient['unit'] == 'Liter') ? 'selected' : ''; ?>>Liter</option>
+                                            <option value="Milliliters" <?php echo ($ingredient['unit'] == 'Milliliters') ? 'selected' : ''; ?>>Milliliters (ml)</option>
+                                            <option value="Pounds" <?php echo ($ingredient['unit'] == 'Pounds') ? 'selected' : ''; ?>>Pounds (lbs)</option>
+                                            <option value="Pieces" <?php echo ($ingredient['unit'] == 'Pieces') ? 'selected' : ''; ?>>Pieces (pcs)</option>
+                                            <option value="Tablespoon" <?php echo ($ingredient['unit'] == 'Tablespoon') ? 'selected' : ''; ?>>Tablespoon</option>
+                                            <option value="Teaspoon" <?php echo ($ingredient['unit'] == 'Teaspoon') ? 'selected' : ''; ?>>Teaspoon</option>
+                                            <option value="Ounce" <?php echo ($ingredient['unit'] == 'Ounce') ? 'selected' : ''; ?>>Ounce</option>
+                                            <option value="Cups" <?php echo ($ingredient['unit'] == 'Cups') ? 'selected' : ''; ?>>Cups</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <button type="button" class="btn btn-danger remove-btn">&times;</button>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else : ?>
+                            <!-- Placeholder for new ingredient input -->
+                            <div class="row mb-2 ingredient-row">
+                                <div class="col-md-4 position-relative">
+                                    <input type="text" name="ingredients[0][name]" class="form-control ingredient-name" placeholder="Ingredient name (e.g., flour, sifted)" autocomplete="off" required />
+                                    <div class="suggestion-list"></div>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="number" name="ingredients[0][quantity]" class="form-control" placeholder="Quantity" required>
+                                </div>
+                                <div class="col-md-3">
+                                    <select name="ingredients[0][unit]" class="form-control">
+                                        <option value="" disabled selected>Select unit</option>
+                                        <option value="Kilograms">Kilograms (kg)</option>
+                                        <option value="Grams">Grams (g)</option>
+                                        <option value="Liter">Liter</option>
+                                        <option value="Milliliters">Milliliters (ml)</option>
+                                        <option value="Pounds">Pounds (lbs)</option>
+                                        <option value="Pieces">Pieces (pcs)</option>
+                                        <option value="Tablespoon">Tablespoon</option>
+                                        <option value="Teaspoon">Teaspoon</option>
+                                        <option value="Ounce">Ounce</option>
+                                        <option value="Cups">Cups</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="button" class="btn btn-danger remove-btn">&times;</button>
+                                </div>
+                            </div>
+                        <?php endif; ?>
                     </div>
 
                     <!-- Add Ingredient Button -->
@@ -277,12 +540,12 @@ if (isset($_POST['submitRecipe'])) {
                 </div>
             </div>
 
-            <!--  -------------------- for Ingredients -------------- -->
+            <!-- JavaScript for handling ingredients -->
             <script>
                 let allIngredients = <?php echo json_encode($allingredents); ?>;
 
-                document.querySelectorAll('.ingredient-name').forEach(function(inputField) {
-                    // Handle input event
+                // Function to handle ingredient suggestions
+                function attachIngredientNameListener(inputField) {
                     inputField.addEventListener('input', function() {
                         const value = this.value.toLowerCase();
                         const suggestionList = this.nextElementSibling;
@@ -292,10 +555,9 @@ if (isset($_POST['submitRecipe'])) {
                             const filteredIngredients = allIngredients.filter(ingredient => ingredient.toLowerCase().includes(value));
 
                             filteredIngredients.forEach(ingredient => {
-                                const highlightedIngredient = highlightMatchingChars(value, ingredient);
                                 const suggestionItem = document.createElement('div');
                                 suggestionItem.className = 'suggestion-item';
-                                suggestionItem.innerHTML = highlightedIngredient;
+                                suggestionItem.textContent = ingredient;
 
                                 suggestionItem.addEventListener('click', () => {
                                     this.value = ingredient; // Set input to clicked suggestion
@@ -306,63 +568,59 @@ if (isset($_POST['submitRecipe'])) {
                             });
                         }
                     });
-
-                    // Handle Enter key press to select the first suggestion
-                    inputField.addEventListener('keydown', (e) => {
-                        if (e.key === 'Enter') {
-                            const suggestionList = this.nextElementSibling;
-                            if (suggestionList.firstChild) {
-                                this.value = suggestionList.firstChild.textContent; // Set input to the first suggestion
-                                suggestionList.innerHTML = ''; // Clear suggestions
-                            }
-                        }
-                    });
-                });
-
-                // Function to highlight matching characters
-                function highlightMatchingChars(input, ingredient) {
-                    const regex = new RegExp(`(${input})`, 'gi');
-                    return ingredient.replace(regex, '<span class="highlighted-text">$1</span>'); // Change color of matched chars
                 }
 
-                // Function to add new ingredient row
+                // Attach listeners to existing ingredient fields
+                document.querySelectorAll('.ingredient-name').forEach(attachIngredientNameListener);
+
+                // Add new ingredient row
                 document.getElementById('add-ingredient').addEventListener('click', function() {
-                    const newRow = document.querySelector('.ingredient-row').cloneNode(true);
-                    newRow.querySelectorAll('input').forEach(input => input.value = ''); // Reset input values
-                    document.querySelector('.form-group').insertBefore(newRow, this);
+                    const rows = document.querySelectorAll('.ingredient-row');
+                    const newIndex = rows.length; // Get new index based on the number of existing rows
 
-                    // Re-attach event listener to the new remove button
+                    const newRow = document.createElement('div');
+                    newRow.className = 'row mb-2 ingredient-row';
+                    newRow.innerHTML = `
+            <div class="col-md-4 position-relative">
+                <input type="text" name="ingredients[${newIndex}][name]" class="form-control ingredient-name" placeholder="Ingredient name (e.g., flour, sifted)" autocomplete="off" required />
+                <div class="suggestion-list"></div>
+            </div>
+            <div class="col-md-3">
+                <input type="number" name="ingredients[${newIndex}][quantity]" class="form-control" placeholder="Quantity" required>
+            </div>
+            <div class="col-md-3">
+                <select name="ingredients[${newIndex}][unit]" class="form-control">
+                    <option value="" disabled selected>Select unit</option>
+                    <option value="Kilograms">Kilograms (kg)</option>
+                    <option value="Grams">Grams (g)</option>
+                    <option value="Liter">Liter</option>
+                    <option value="Milliliters">Milliliters (ml)</option>
+                    <option value="Pounds">Pounds (lbs)</option>
+                    <option value="Pieces">Pieces (pcs)</option>
+                    <option value="Tablespoon">Tablespoon</option>
+                    <option value="Teaspoon">Teaspoon</option>
+                    <option value="Ounce">Ounce</option>
+                    <option value="Cups">Cups</option>
+                </select>
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="btn btn-danger remove-btn">&times;</button>
+            </div>
+        `;
+
+                    // Append the new row
+                    document.getElementById('ingredient-rows').appendChild(newRow);
+
+                    // Attach listeners to the new fields
+                    attachIngredientNameListener(newRow.querySelector('.ingredient-name'));
+
+                    // Attach remove button functionality
                     newRow.querySelector('.remove-btn').addEventListener('click', function() {
-                        this.closest('.row').remove();
-                    });
-
-                    // Re-attach event listener to new input field
-                    newRow.querySelector('.ingredient-name').addEventListener('input', function() {
-                        const value = this.value.toLowerCase();
-                        const suggestionList = this.nextElementSibling;
-                        suggestionList.innerHTML = ''; // Clear previous suggestions
-
-                        if (value) {
-                            const filteredIngredients = allIngredients.filter(ingredient => ingredient.toLowerCase().includes(value));
-
-                            filteredIngredients.forEach(ingredient => {
-                                const highlightedIngredient = highlightMatchingChars(value, ingredient);
-                                const suggestionItem = document.createElement('div');
-                                suggestionItem.className = 'suggestion-item';
-                                suggestionItem.innerHTML = highlightedIngredient;
-
-                                suggestionItem.addEventListener('click', () => {
-                                    this.value = ingredient; // Set input to clicked suggestion
-                                    suggestionList.innerHTML = ''; // Clear suggestions
-                                });
-
-                                suggestionList.appendChild(suggestionItem);
-                            });
-                        }
+                        newRow.remove();
                     });
                 });
 
-                // Function to remove ingredient row
+                // Remove ingredient row functionality
                 document.querySelectorAll('.remove-btn').forEach(function(button) {
                     button.addEventListener('click', function() {
                         this.closest('.row').remove();
@@ -378,29 +636,44 @@ if (isset($_POST['submitRecipe'])) {
                 <h3 class="text-danger">Dishes you need</h3>
                 <p>Enter one ingredient per line. Include the quantity (i.e. cups, tablespoons) and any special preparation (i.e. sifted, softened, chopped). Use optional headers to organize the different parts of the recipe (i.e. Cake, Frosting, Dressing).</p>
 
-                <div id="dishes-list"></div>
+                <div id="dishes-list">
+                    <?php
+                    if (!empty($dishes)) {
+                        foreach ($dishes as $index => $dish) {
+                    ?>
+                            <div class="dish-container">
+                                <input type="text" name="dishes[<?php echo $index; ?>][name]" placeholder="Dish name" class="form-control" value="<?php echo htmlspecialchars($dish['name']); ?>" required />
+                                <input type="number" name="dishes[<?php echo $index; ?>][quantity]" placeholder="Quantity" class="form-control" value="<?php echo htmlspecialchars($dish['quantity']); ?>" required />
+                                <button class="remove-btn" onclick="removeDish(this)">✖</button>
+                            </div>
+                    <?php
+                        }
+                    }
+                    ?>
+                </div>
 
                 <button id="add-dish" class="btn btn-primary add-dish-btn">+ ADD Dishes</button>
             </div>
 
             <script>
-                let dishCount = 0;
+                let dishCount = 0; // Initialize count with existing dishes
 
                 // Function to create a new dish input
                 function createDishInput() {
                     dishCount++;
-
                     const dishContainer = document.createElement('div');
                     dishContainer.className = 'dish-container';
 
                     dishContainer.innerHTML = `
-                <input type="text" placeholder="name" class="form-control" required />
-                <input type="text" placeholder="quantity" class="form-control" required />
-                <button class="remove-btn" onclick="removeDish(this)">✖</button>
-            `;
+            <input type="text" name="dishes[${dishCount}][name]" placeholder="Dish name" class="form-control" required />
+            <input type="number" name="dishes[${dishCount}][quantity]" placeholder="Quantity" class="form-control" required />
+            <button class="remove-btn" onclick="removeDish(this)">✖</button>
+        `;
 
                     document.getElementById('dishes-list').appendChild(dishContainer);
                     toggleAddButton();
+
+
                 }
 
                 // Function to remove a dish input
@@ -411,15 +684,12 @@ if (isset($_POST['submitRecipe'])) {
                     toggleAddButton();
                 }
 
-                // Function to toggle the Add Dish button
-                function toggleAddButton() {
-                    const addButton = document.getElementById('add-dish');
-                    if (dishCount > 0) {
-                        addButton.disabled = false;
-                    } else {
-                        addButton.disabled = true;
-                    }
-                }
+                // // Function to toggle the Add Dish button
+                // function toggleAddButton() {
+                //     const addButton = document.getElementById('add-dish');
+                //     addButton.disabled = dishCount <= 0; // Disable button if there are no dishes
+                // }
+
                 // Add event listener to Add Dish button
                 document.getElementById('add-dish').addEventListener('click', function(event) {
                     event.preventDefault();
@@ -428,8 +698,6 @@ if (isset($_POST['submitRecipe'])) {
             </script>
 
             <hr>
-
-
 
             <!-- Directions Section -->
 
@@ -473,27 +741,23 @@ if (isset($_POST['submitRecipe'])) {
                 // Add event listener to Add Step button
                 document.getElementById('addStep').addEventListener('click', createStepInput);
             </script>
-
-
-
-
             <hr>
 
             <!-- Time Section -->
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label for="prepTime" class="form-label">Prep Time (min)<small style="color: red;">*</small></label>
-                    <input type="number" id="prepTime" name="prepTime" class="form-control" placeholder="0" min="0"
-                        value="<?php echo htmlspecialchars($prepTime); ?>" required>
+                    <label for="prep_time" class="form-label">Prep Time (min)<small style="color: red;">*</small></label>
+                    <input type="number" id="prep_time" name="prep_time" class="form-control" placeholder="0" min="0"
+                        value="<?php echo htmlspecialchars($prep_time); ?>" required>
                 </div>
                 <div class="col-md-6">
-                    <label for="cookTime" class="form-label">Cook Time (min)<small style="color: red;">*</small></label>
-                    <input type="number" id="cookTime" name="cookTime" class="form-control" placeholder="0" min="0"
-                        value="<?php echo htmlspecialchars($cookTime); ?>">
+                    <label for="cook_time" class="form-label">Cook Time (min)<small style="color: red;">*</small></label>
+                    <input type="number" id="cook_time" name="cook_time" class="form-control" placeholder="0" min="0"
+                        value="<?php echo htmlspecialchars($cook_time); ?>" required>
                 </div>
             </div>
 
-            <!-- Servings and Yield -->
+            <!-- Servings -->
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label for="servings" class="form-label">Servings</label>
@@ -503,62 +767,71 @@ if (isset($_POST['submitRecipe'])) {
 
                 <!-- Difficulty Section -->
                 <div class="col-md-6">
-                    <label for="difficultyLevel" class="form-label">Difficulty Level</label>
-                    <select id="difficultyLevel" class="form-control" required>
+                    <label for="difficulty_level" class="form-label">Difficulty Level</label>
+                    <select id="difficulty_level" name="difficulty_level" class="form-control" required>
                         <option value="">Select Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Intermediate">Intermediate</option>
-                        <option value="Advanced">Advanced</option>
+                        <option value="Beginner" <?php echo ($difficulty_level == 'Beginner') ? 'selected' : ''; ?>>Beginner</option>
+                        <option value="Intermediate" <?php echo ($difficulty_level == 'Intermediate') ? 'selected' : ''; ?>>Intermediate</option>
+                        <option value="Advanced" <?php echo ($difficulty_level == 'Advanced') ? 'selected' : ''; ?>>Advanced</option>
                     </select>
                 </div>
             </div>
             <hr>
 
             <!-- Notes Section  -->
+
             <div class="mb-3">
                 <label class="form-label">Notes (Optional)</label>
                 <div id="notesList" class="mb-2">
-                    <?php
-                    $noteTitles = array_map('trim', explode('<splitForNoteTitles>', $noteTitles));
-                    $noteDescriptions = array_map('trim', explode('<splitForNoteDescriptions>', $noteDescriptions));
+                    <div class="note-entry mb-3">
+                        <?php
+                        if (!empty($notes)) {
 
-                    if (!empty($noteTitles) && !empty($noteDescriptions)) {
-                        foreach ($noteTitles as $index => $noteTitle) {
-                    ?>
-                            <div class="note-entry mb-3">
-                                <input type="text" name="noteTitles[]" class="form-control mb-2" placeholder="Note title (e.g., Tip about storage)" value="<?php echo htmlspecialchars($noteTitle); ?>" required>
-                                <textarea name="noteDescriptions[]" class="form-control mb-2" rows="3" placeholder="Add a note description (e.g., Keep in the fridge for 3 days)" required><?php echo htmlspecialchars($noteDescriptions[$index]); ?></textarea>
+                            $notes = array_map('trim', explode('<separatorForEachNote>', $notes));
+
+                            foreach ($notes as $index => $note) {
+                                $note = array_map('trim', explode('<separatorForTitleAndDescription>', $note));
+                        ?>
+                                <input type="text" name="notes[<?php echo $index; ?>][title]" class="form-control mb-2" placeholder="Note title (e.g., Tip about storage)"
+                                    value="<?php echo htmlspecialchars($note[0]); ?>">
+
+                                <textarea name="notes[<?php echo $index; ?>][description]" class="form-control mb-2" rows="3" placeholder="Add a note description (e.g., Keep in the fridge for 3 days)"
+                                    <?php echo !empty($note[0]) ? 'required' : ''; ?>><?php echo htmlspecialchars($note[1]); ?></textarea>
+
                                 <button type="button" class="btn btn-outline-danger remove-note">Remove</button>
-                            </div>
+                            <?php
+                            }
+                        } else {
+                            ?>
+
+                            <input type="text" name="notes[0][title]" class="form-control mb-2" placeholder="Note title (e.g., Tip about storage)" required>
+                            <textarea name="notes[0][description]" class="form-control mb-2" rows="3" placeholder="Add a note description (e.g., Keep in the fridge for 3 days)"
+                                <?php echo !empty($notes[0]['title']) ? 'required' : ''; ?>></textarea>
+
+                            <button type="button" class="btn btn-outline-danger remove-note">Remove</button>
                         <?php
                         }
-                    } else {
                         ?>
-                        <div class="note-entry mb-3">
-                            <input type="text" name="noteTitles[]" class="form-control mb-2" placeholder="Note title (e.g., Tip about storage)" required>
-                            <textarea name="noteDescriptions[]" class="form-control mb-2" rows="3" placeholder="Add a note description (e.g., Keep in the fridge for 3 days)" required></textarea>
-                            <button type="button" class="btn btn-outline-danger remove-note">Remove</button>
-                        </div>
-                    <?php
-                    }
-                    ?>
+                    </div>
                 </div>
                 <button type="button" class="btn btn-outline-danger" id="addNote">+ Add Note</button>
             </div>
             <hr>
 
             <script>
-                // Function to create a new note input
+                let noteCount = 1; // Start with 1 because the first note already exists in the form
+
                 function createNoteInput() {
                     const notesList = document.getElementById('notesList');
                     const noteEntry = document.createElement('div');
                     noteEntry.className = 'note-entry mb-3';
 
+                    // Use the noteCount to index the array properly for each new note
                     noteEntry.innerHTML = `
-            <input type="text" name="noteTitles[]" class="form-control mb-2" placeholder="Note title (e.g., Tip about storage)" required>
-            <textarea name="noteDescriptions[]" class="form-control mb-2" rows="3" placeholder="Add a note description (e.g., Keep in the fridge for 3 days)" required></textarea>
-            <button type="button" class="btn btn-outline-danger remove-note">Remove</button>
-        `;
+        <input type="text" name="notes[${noteCount}][title]" class="form-control mb-2" placeholder="Note title" required>
+        <textarea name="notes[${noteCount}][description]" class="form-control mb-2" rows="3" placeholder="Note description" required></textarea>
+        <button type="button" class="btn btn-outline-danger remove-note">Remove</button>
+    `;
 
                     notesList.appendChild(noteEntry);
 
@@ -566,52 +839,52 @@ if (isset($_POST['submitRecipe'])) {
                     noteEntry.querySelector('.remove-note').addEventListener('click', function() {
                         notesList.removeChild(noteEntry);
                     });
+
+                    noteCount++; // Increment the counter for the next note
                 }
 
-                // Add event listener to Add Note button
                 document.getElementById('addNote').addEventListener('click', createNoteInput);
-
-                // Event delegation for remove buttons
-                document.getElementById('notesList').addEventListener('click', function(event) {
-                    if (event.target.classList.contains('remove-note')) {
-                        const noteEntry = event.target.closest('.note-entry');
-                        if (noteEntry) {
-                            notesList.removeChild(noteEntry);
-                        }
-                    }
-                });
             </script>
 
 
-            <!-- --------------------------- tags input ---------------------------------- -->
+            <!-- --------------------------- tags input ------------------------ -->
             <div class="container mt-3">
                 <div class="form-group position-relative">
                     <label for="tags-input">Tag Information</label>
 
                     <!-- Moved the tag-container ABOVE the input field -->
-                    <div id="tag-container" class="tag-container mt-2"></div>
+                    <div id="tag-container" class="tag-container mt-2">
+                        <?php
+                        // PHP: Initialize the tag container with existing tags
+                        if (!empty($tags)) {
+                            foreach ($tags as $tag) {
+                                echo '<div class="tag"><span>' . htmlspecialchars($tag) . '</span><button class="remove-btn">&times;</button></div>';
+                            }
+                        }
+                        ?>
+                    </div>
 
                     <div class="tag-input position-relative">
-                        <input type="text" id="tags-input" class="form-control" placeholder="Add Tags" />
+                        <input type="text" id="tags-input" name="" class="form-control" placeholder="Add Tags" />
                     </div>
 
                     <!-- Suggestions will appear here -->
                     <div id="suggestions" class="list-group mt-1"></div>
                 </div>
             </div>
-            <hr>
 
+            <hr>
             <script>
-                // PHP tags array passed to JavaScript
                 const suggestions = <?php echo json_encode($allTage); ?>;
 
                 const input = document.getElementById('tags-input');
                 const tagContainer = document.getElementById('tag-container');
                 const suggestionBox = document.getElementById('suggestions');
 
+                // Event listener for input changes
                 input.addEventListener('input', function() {
                     const value = input.value.toLowerCase();
-                    suggestionBox.innerHTML = ''; // Clear previous suggestions
+                    suggestionBox.innerHTML = '';
 
                     if (value) {
                         const filteredSuggestions = suggestions.filter(s => s.toLowerCase().includes(value));
@@ -622,11 +895,10 @@ if (isset($_POST['submitRecipe'])) {
                             suggestionItem.innerHTML = highlightedTag;
                             suggestionItem.classList.add('list-group-item', 'list-group-item-action');
 
-                            // Add click functionality to add the tag as a tag element
                             suggestionItem.addEventListener('click', function() {
                                 addTag(tag);
                                 input.value = '';
-                                suggestionBox.innerHTML = ''; // Clear suggestions after click
+                                suggestionBox.innerHTML = '';
                             });
 
                             suggestionBox.appendChild(suggestionItem);
@@ -634,6 +906,7 @@ if (isset($_POST['submitRecipe'])) {
                     }
                 });
 
+                // Event listener for adding tags on Enter
                 input.addEventListener('keydown', function(event) {
                     if (event.key === 'Enter') {
                         event.preventDefault();
@@ -641,28 +914,38 @@ if (isset($_POST['submitRecipe'])) {
                         if (value && !Array.from(tagContainer.children).some(tag => tag.textContent.includes(value))) {
                             addTag(value);
                             input.value = '';
-                            suggestionBox.innerHTML = ''; // Clear suggestions
+                            suggestionBox.innerHTML = '';
                         }
                     }
                 });
 
-                // Add the tag to the tag container
+                // Function to add a tag
                 function addTag(value) {
                     const tag = document.createElement('div');
                     tag.className = 'tag';
                     tag.innerHTML = `<span>${value}</span><button class="remove-btn">&times;</button>`;
+
+                    const inputField = document.createElement('input');
+                    inputField.type = 'hidden';
+                    inputField.name = 'tags[]';
+                    inputField.value = value;
+
                     tag.querySelector('.remove-btn').addEventListener('click', () => {
                         tagContainer.removeChild(tag);
+                        inputField.remove(); // Ensure we remove the hidden input when tag is deleted
                     });
+
                     tagContainer.appendChild(tag);
+                    tagContainer.appendChild(inputField);
                 }
 
-                // Highlight matching part of the tag name
+                // Function to highlight matching text in suggestions
                 function highlightMatch(tag, query) {
                     const regex = new RegExp(`(${query})`, 'gi');
                     return tag.replace(regex, '<span style="color: red;">$1</span>');
                 }
             </script>
+
 
             <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
@@ -676,7 +959,7 @@ if (isset($_POST['submitRecipe'])) {
                     <div id="city-tag-container" class="tag-container mt-2"></div>
 
                     <div class="tag-input position-relative">
-                        <input type="text" id="city-input" class="form-control" placeholder="Add Cities" />
+                        <input type="text" id="city-input" name="cities[]" class="form-control" placeholder="Add Cities" />
                     </div>
 
                     <!-- Suggestions will appear here -->
@@ -687,6 +970,7 @@ if (isset($_POST['submitRecipe'])) {
             <script>
                 // PHP cities array passed to JavaScript
                 const citySuggestions = <?php echo json_encode($allCities); ?>;
+                const initialCities = <?php echo json_encode($cities); ?>; // Fetch existing cities from PHP
 
                 // Encapsulate city suggestion functionality
                 const citySuggestionModule = (() => {
@@ -698,6 +982,13 @@ if (isset($_POST['submitRecipe'])) {
                     const init = () => {
                         cityInput.addEventListener('input', filterSuggestions);
                         cityInput.addEventListener('keydown', addCityOnEnter);
+                        loadInitialCities(); // Load initial cities from PHP
+                    };
+
+                    const loadInitialCities = () => {
+                        initialCities.forEach(city => {
+                            addCityTag(city); // Add each city as a tag
+                        });
                     };
 
                     const filterSuggestions = () => {
@@ -715,9 +1006,11 @@ if (isset($_POST['submitRecipe'])) {
 
                                 // Add click functionality to add the city as a tag element
                                 suggestionItem.addEventListener('click', () => {
-                                    addCityTag(city);
-                                    cityInput.value = ''; // Clear input after selection
-                                    citySuggestionBox.innerHTML = ''; // Clear suggestions after click
+                                    if (city.trim()) { // Only add if the city is not blank
+                                        addCityTag(city);
+                                        cityInput.value = ''; // Clear input after selection
+                                        citySuggestionBox.innerHTML = ''; // Clear suggestions after click
+                                    }
                                 });
 
                                 citySuggestionBox.appendChild(suggestionItem);
@@ -739,13 +1032,26 @@ if (isset($_POST['submitRecipe'])) {
 
                     // Add the city to the tag container
                     const addCityTag = (value) => {
-                        const tag = document.createElement('div');
-                        tag.className = 'tag';
-                        tag.innerHTML = `<span>${value}</span><button class="remove-btn">&times;</button>`;
-                        tag.querySelector('.remove-btn').addEventListener('click', () => {
-                            cityTagContainer.removeChild(tag);
-                        });
-                        cityTagContainer.appendChild(tag);
+                        if (value.trim()) { // Prevent adding blank values
+                            const tag = document.createElement('div');
+                            tag.className = 'tag';
+                            tag.innerHTML = `<span>${value}</span><button class="remove-btn">&times;</button>`;
+
+                            // Create a hidden input to hold the city value
+                            const input = document.createElement('input');
+                            input.type = 'hidden';
+                            input.name = 'cities[]'; // Name should be the same as in the form
+                            input.value = value;
+
+                            tag.querySelector('.remove-btn').addEventListener('click', () => {
+                                cityTagContainer.removeChild(tag);
+                                // Remove hidden input when tag is deleted
+                                input.remove();
+                            });
+
+                            tag.appendChild(input); // Append the hidden input to the tag
+                            cityTagContainer.appendChild(tag);
+                        }
                     };
 
                     // Highlight matching part of the city name
@@ -764,6 +1070,7 @@ if (isset($_POST['submitRecipe'])) {
                 citySuggestionModule.init();
             </script>
 
+
             <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
 
@@ -772,8 +1079,8 @@ if (isset($_POST['submitRecipe'])) {
             <!-- --------------------------- ALL optionals ---------------------------------- -->
             <!-- Story -->
             <div class="mb-3">
-                <label for="description" class="form-label">Any story behind this recipe? or How did you learn/make this? (Optional)</label>
-                <textarea id="story" name="story" class="form-control" rows="4" placeholder="Share the story.."> <?php echo htmlspecialchars($story); ?> </textarea>
+                <label for="story_or_learn" class="form-label">Any story behind this recipe? or How did you learn/make this? (Optional)</label>
+                <textarea id="story_or_learn" name="story_or_learn" class="form-control" rows="4" placeholder="Share the story.."><?php echo htmlspecialchars($story_or_learn); ?></textarea>
             </div>
             <hr>
 
@@ -781,7 +1088,7 @@ if (isset($_POST['submitRecipe'])) {
             <!-- Buttons -->
             <div class="container d-flex justify-content-end">
                 <button type="button" class="btn btn-outline-secondary me-4" id="cancel">Cancel</button>
-                <button type="submit" class="btn btn-danger" id="submitRecipe" name="submitRecipe">Submit Recipe</button>
+                <button type="submit" class="btn btn-danger" id="submit_recipe" name="submit_recipe">Submit Recipe</button>
             </div>
 
         </form>

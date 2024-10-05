@@ -15,8 +15,8 @@
         }
 
         .fab-icon-holder {
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             border-radius: 100%;
             background: teal;
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
@@ -41,8 +41,8 @@
         }
 
         .fab {
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             background: #d23f31;
         }
 
@@ -50,7 +50,7 @@
             list-style-type: none;
             margin: 0;
             position: absolute;
-            bottom: 50px;
+            bottom: 55px;
             right: -5px;
             opacity: 0;
             transition: all 0.3s ease;

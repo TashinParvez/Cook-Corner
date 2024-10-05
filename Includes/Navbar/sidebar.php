@@ -104,6 +104,11 @@
             /* Ensures the table takes full width */
         }
 
+        .table-striped thead th {
+            background-color: #72bf78;
+            color: white;
+      }
+
         tbody tr .btn-primary {
             outline: none;
             border: none;
