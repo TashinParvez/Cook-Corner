@@ -326,21 +326,24 @@
         <!-------------------------------------- JS -------------------------------------->
         <script>
             // Toggle Sidebar with Navbar Buttons
-            document.getElementById('cartBtn').addEventListener('click', function() {
+            document.getElementById('cartBtn').addEventListener('click', function(event) {
+                event.stopPropagation(); // Prevent click from propagating to document
                 document.getElementById('mySidebar').classList.add('active');
                 var cartTab = new bootstrap.Tab(document.getElementById('cart-tab'));
                 cartTab.show();
                 updateToggleBtnText();
             });
 
-            document.getElementById('favBtn').addEventListener('click', function() {
+            document.getElementById('favBtn').addEventListener('click', function(event) {
+                event.stopPropagation(); // Prevent click from propagating to document
                 document.getElementById('mySidebar').classList.add('active');
                 var favoritesTab = new bootstrap.Tab(document.getElementById('favorites-tab'));
                 favoritesTab.show();
                 updateToggleBtnText();
             });
 
-            document.getElementById('todoBtn').addEventListener('click', function() {
+            document.getElementById('todoBtn').addEventListener('click', function(event) {
+                event.stopPropagation(); // Prevent click from propagating to document
                 document.getElementById('mySidebar').classList.add('active');
                 var todoTab = new bootstrap.Tab(document.getElementById('todo-tab'));
                 todoTab.show();
@@ -348,15 +351,20 @@
             });
 
             // Sidebar toggle button (<< / >>)
-            document.getElementById('toggleSidebar').addEventListener('click', function() {
+            document.getElementById('toggleSidebar').addEventListener('click', function(event) {
+                event.stopPropagation(); // Prevent click from propagating to document
                 document.getElementById('mySidebar').classList.toggle('active');
                 updateToggleBtnText();
             });
 
             // Close sidebar when clicking outside
-            document.querySelector('.content').addEventListener('click', function() {
-                if (document.getElementById('mySidebar').classList.contains('active')) {
-                    document.getElementById('mySidebar').classList.remove('active');
+            document.addEventListener('click', function(event) {
+                const sidebar = document.getElementById('mySidebar');
+                const toggleBtn = document.getElementById('toggleSidebar');
+
+                // Check if the click is outside the sidebar and not on the toggle button
+                if (!sidebar.contains(event.target) && !toggleBtn.contains(event.target)) {
+                    sidebar.classList.remove('active');
                     updateToggleBtnText();
                 }
             });
@@ -371,6 +379,7 @@
                     toggleBtn.innerHTML = '<<'; // Sidebar is closed
                 }
             }
+
 
 
 
