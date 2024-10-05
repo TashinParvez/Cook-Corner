@@ -61,7 +61,7 @@
                     <p>Anything</p>
                 </div>
                 <div class="diet-option">
-                    <img src="../Images/Personalized-Recommendations/Paleo.jpeg" alt="Paleo">
+                    <img src="../Images/Personalized-Recommendations/Paleo.png" alt="Paleo">
                     <p>Paleo</p>
                 </div>
                 <div class="diet-option">
@@ -87,7 +87,7 @@
                     <div class="col-md-4">
                         <label for="calories" class="form-label">I want to eat</label>
                         <input type="number" class="form-control" id="calories" placeholder="Calories">
-                        <div class="form-text">Not sure? Estimate your calorie needs.</div>
+                        <div class="form-text">Not sure? <a href="#" class="text-decoration-none text-success fw-bold launch-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">Estimate your calorie needs</a></div>
 
 
                         <!-- ------------------------------------------------ -->
@@ -263,12 +263,7 @@
                     </div>
                 </div>
 
-                <div class="d-flex justify-content-center mt-3" style="width: 100%;">
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary launch-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        Launch demo modal
-                    </button>
-                </div>
+
 
                 <button type="submit" class="btn btn-primary btn-calculate mb-4">Generate</button>
             </form>
