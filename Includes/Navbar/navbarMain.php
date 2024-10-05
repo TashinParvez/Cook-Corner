@@ -3,7 +3,7 @@
 session_start();
 
 $user_id = $_SESSION['user_id'] ?? '5';
- 
+
 
 
 //...................... Database Connection ..............................
@@ -57,37 +57,33 @@ mysqli_close($conn);
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="collapse navbar-collapse upper-nav" id="navbarSupportedContent">
                     <form class="d-flex" role="search">
                         <input class="form-control search me-2" type="search" placeholder="Search your Recipe" aria-label="Search">
                         <button class="btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></i>
                         </button>
                     </form>
 
-                    <!-- <div class="text-end">
-                        <a href="../../Login SignUp/Login.php" class="text-black text-decoration-none">Login</a>
-                        <span>|</span>
-                        <a href="../../Login SignUp/Signup.php" class=" text-black text-decoration-none">Sign Up</a>
-                    </div> -->
 
-                    <div class="text-end">
-                        <?php if ($user_id): ?>
-                            <span class="text-black">Welcome &nbsp;<?= htmlspecialchars($name); ?></span>
-                            <!-- <a href="../../User Account/logout.php" class="text-black text-decoration-none ms-3">Logout</a> -->
-                        <?php else: ?>
-                            <a href="../../Login SignUp/Login.php" class="text-black text-decoration-none">Login</a>
-                            <span>|</span>
-                            <a href="../../Login SignUp/Signup.php" class="text-black text-decoration-none">Sign Up</a>
-                        <?php endif; ?>
-                    </div>
+                    <div class="login-icon">
+                        <div class="text-end">
+                            <?php if ($user_id): ?>
+                                <span class="text-black">Welcome &nbsp;<?= htmlspecialchars($name); ?></span>
+                                <!-- <a href="../../User Account/logout.php" class="text-black text-decoration-none ms-3">Logout</a> -->
+                            <?php else: ?>
+                                <a href="../../Login SignUp/Login.php" class="text-black text-decoration-none">Login</a>
+                                <span>|</span>
+                                <a href="../../Login SignUp/Signup.php" class="text-black text-decoration-none">Sign Up</a>
+                            <?php endif; ?>
+                        </div>
 
-                    <!-- Sidebar -->
-
-                    <div class="icons">
-                        <a href="../../User Account/updateAccountInfo.php" class="text-black text-decoration-none" title="Profile"><i class="fa-solid fa-user"></i></a>
-                        <a href="#" class="text-black text-decoration-none" title="Glossary List" id="todoBtn"><i class="fa-solid fa-calendar-check"></i></a>
-                        <a href="#" class="text-black text-decoration-none" title="Cart" id="cartBtn"><i class="fa-solid fa-cart-shopping"></i></a>
-                        <a href="#" class="text-black text-decoration-none" title="Favourites" id="favBtn"><i class="fa-solid fa-heart"></i></a>
+                        <!-- Sidebar -->
+                        <div class="icons">
+                            <a href="../../User Account/updateAccountInfo.php" class="text-black text-decoration-none" title="Profile"><i class="fa-solid fa-user"></i></a>
+                            <a href="#" class="text-black text-decoration-none" title="Glossary List" id="todoBtn"><i class="fa-solid fa-calendar-check"></i></a>
+                            <a href="#" class="text-black text-decoration-none" title="Cart" id="cartBtn"><i class="fa-solid fa-cart-shopping"></i></a>
+                            <a href="#" class="text-black text-decoration-none" title="Favourites" id="favBtn"><i class="fa-solid fa-heart"></i></a>
+                        </div>
                     </div>
 
                 </div>
@@ -280,7 +276,7 @@ mysqli_close($conn);
                                     <div class="col-md-3">
                                         <div class="card">
                                             <a href="#" class="text-decoration-none">
-                                                <img  src="../Images/FoodImages/cookingClass.jpeg" class="card-img-top" alt="...">
+                                                <img src="../Images/FoodImages/cookingClass.jpeg" class="card-img-top" alt="...">
                                                 <div class="card-body">
 
                                                     <div class="row">
@@ -348,7 +344,7 @@ mysqli_close($conn);
                     <li class="nav-item">
                         <a class="nav-link" href="/Course/allCourses.php">Course</a>
                     </li>
-                   
+
 
                 </ul>
 
