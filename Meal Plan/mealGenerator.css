@@ -14,24 +14,26 @@
     text-align: center;
     cursor: pointer;
     transition: all 0.3s ease;
-    padding: 15px;
+    padding: 15px 15px 5px 15px;
     border-radius: 10px;
+    width: 150px;
 }
 
-.meal-planner .diet-options .diet-option img {
-    width: 50px;
+ .diet-option img {
+    width: 50px !important;
     height: 50px;
     margin-bottom: 10px;
 }
 
 .meal-planner .diet-options .diet-option.active {
-    background-color: #007bff;
-    color: white;
+    /* background-color: #007bff; */
+    background-color: #e0e0e0;
+    /* color: white; */
 }
 
-.meal-planner .diet-options .diet-option.active img {
-    filter: brightness(0) invert(1);
-}
+/* .meal-planner .diet-options .diet-option.active img { */
+    /* filter: brightness(0) invert(1); */
+/* } */
 
 .meal-planner .btn-calculate {
     margin-top: 20px;
@@ -40,4 +42,8 @@
 /* Optional: hover effect */
 .meal-planner .diet-options .diet-option:hover {
     background-color: #e0e0e0;
+}
+
+ul li{
+    list-style: none;
 }

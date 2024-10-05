@@ -48,7 +48,7 @@
 
 
     <div class="container meal-planner ">
-        <h1 class="mb-4">Put your diet on autopilot</h1>
+        <h1 class="mb-4">Put your diet on Autopilot</h1>
         <p>Eat This Much creates personalized meal plans based on your food preferences, budget, and schedule. Reach your diet and nutritional goals with our calorie calculator, weekly meal plans, grocery lists and more. Create your meal plan right here in seconds.
         <p>Let us know your diet.</p>
 
@@ -95,9 +95,12 @@
 
 
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+
+
+
+                        <!-- <button type="button" class="btn btn-primary launch-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             Launch demo modal
-                        </button>
+                        </button> -->
 
                         <!-- Modal -->
                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -248,13 +251,6 @@
                             </div>
                         </div>
 
-
-
-
-
-
-
-
                         <!-- ------------------------------------------------ -->
                     </div>
                     <div class="col-md-3">
@@ -267,7 +263,14 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary btn-calculate">Generate</button>
+                <div class="d-flex justify-content-center mt-3" style="width: 100%;">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary launch-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Launch demo modal
+                    </button>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-calculate mb-4">Generate</button>
             </form>
         </div>
 
