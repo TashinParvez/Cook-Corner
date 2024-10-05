@@ -160,7 +160,12 @@ switch ($tabId) {
     <!-- css  -->
     <link href="css/styles.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="../Includes/Navbar/navbarMain.css"> <!-- Navbar CSS -->
-
+    <style>
+        .custom-bg {
+            background-color: #0DCAF0 !important;
+            color: white !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -182,7 +187,7 @@ switch ($tabId) {
             </nav> -->
             <!-- /Breadcrumb -->
 
-            <div class="row gutters-sm">
+            <div class="row gutters-sm mt-3">
                 <!------------------------- 1st col ------------------------->
                 <div class="col-md-3 mb-3">
                     <!---------------------- seg1 ---------------------->
@@ -206,66 +211,53 @@ switch ($tabId) {
 
                     <div class="card mt-3">
                         <ul class="list-group list-group-flush">
+
+
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                 <h6 class="mb-0">
                                     <!-- Update Profile -->
-                                    <a class="nav-link <?php echo ($tabId == 'tab-update-profile') ? 'active' : ''; ?>" id="tab-update-profile" data-bs-toggle="tab" href="#content-update-profile" role="tab" aria-controls="content-update-profile" aria-selected="<?php echo ($tabId == 'tab-update-profile') ? 'true' : 'false'; ?>" onclick="submitForm('tab-update-profile')">Update Profile</a>
+                                    <a class="nav-link" href="updateAccountInfo.php">Update Profile</a>
                                 </h6>
                             </li>
+
+
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                 <h6 class="mb-0">
                                     <!-- Favourite Recipies -->
-                                    <a class="nav-link <?php echo ($tabId == 'tab-favorite-recipes') ? 'active' : ''; ?>" id="tab-favorite-recipes" data-bs-toggle="tab" href="#content-favorite-recipes" role="tab" aria-controls="content-favorite-recipes" aria-selected="<?php echo ($tabId == 'tab-favorite-recipes') ? 'true' : 'false'; ?>" onclick="submitForm('tab-favorite-recipes')">Favourite Recipies</a>
+                                    <a class="nav-link " href="FavouriteRecipies.php">Favourite Recipies</a>
                                 </h6>
                             </li>
+
+
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                 <h6 class="mb-0">
-                                    <!-- Your Recipie Collections -->
-                                    <a class="nav-link <?php echo ($tabId == 'tab-your-recipe-collections') ? 'active' : ''; ?>" id="tab-your-recipe-collections" data-bs-toggle="tab" href="YourRecipieCollections.php" role="tab"
-                                        aria-controls="content-your-recipe-collections" aria-selected="
-                                    <?php echo ($tabId == 'tab-your-recipe-collections') ? 'true' : 'false'; ?>" onclick="submitForm('tab-your-recipe-collections')">
-                                        Your Recipie Collections
+                                    <!-- Your Collections -->
+                                    <a class="nav-link " href="YourCollections.php">
+                                        Your Collections
                                     </a>
                                 </h6>
                             </li>
 
-                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+
+                            <li class="list-group-item custom-bg d-flex justify-content-between align-items-center flex-wrap">
                                 <h6 class="mb-0">
                                     <!-- Your Recipies -->
-                                    <a class="nav-link <?php echo ($tabId == 'tab-your-recipe-collections') ? 'active' : ''; ?>" id="tab-your-recipe-collections" data-bs-toggle="tab"
-                                        href="YourRecipieCollections.php" role="tab"
-                                        aria-controls="content-your-recipe-collections" aria-selected="
-                                    <?php echo ($tabId == 'tab-your-recipe-collections') ? 'true' : 'false'; ?>" onclick="submitForm('tab-your-recipe-collections')">
+                                    <a class="nav-link " href="YourRecipies.php">
                                         Your Recipies
                                     </a>
                                 </h6>
                             </li>
 
+
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                 <h6 class="mb-0">
                                     <!-- YourCart.php  -->
-                                    <a class="nav-link <?php echo ($tabId == 'tab-your-recipe-collections') ? 'active' : ''; ?>" id="tab-your-recipe-collections" data-bs-toggle="tab"
-                                        href="YourCart.php" role="tab"
-                                        aria-controls="content-your-recipe-collections" aria-selected="
-                                    <?php echo ($tabId == 'tab-your-recipe-collections') ? 'true' : 'false'; ?>" onclick="submitForm('tab-your-recipe-collections')">
+                                    <a class="nav-link" href="YourCart.php">
                                         Your Cart
                                     </a>
                                 </h6>
                             </li>
-
-
                         </ul>
-
-                        <form id="tabIdkForm" action="updateAccountInfo.php" method="post">
-                            <input type="hidden" name="tabId" id="tabIdInput">
-                        </form>
-
-                        <script>
-                            function submitForm(tabId) {
-                                document.getElementById('tabIdInput').value = tabId;
-                                document.getElementById('tabIdkForm').submit();
-                            }
-                        </script>
 
                     </div>
                     <!---------------------- seg2 end ---------------------->
@@ -282,13 +274,90 @@ switch ($tabId) {
                         <!--  noman -->
 
 
-
-
-
-
+                        <a href="../Recipe View/recipeView.php" style="text-decoration: none;">
+                            <div class="card mb-3 border-0" style="max-width: 100%;">
+                                <div class="row g-0">
+                                    <div class="col-md-4">
+                                        <img style="height: 200px;" src="/Images/curryInHand.jpg" class="img-fluid rounded-start" alt="...">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Cornflakes, Low-Fat Milk & Berries Recipe</h5>
+                                            <p class="card-text">Bite into these delightful Cheeseburger Tater Tot Cups for a fun twist on a classic favorite.</p>
+                                            <p class="card-text">
+                                                Cuisine: English || Course: English || Skill level: English
+                                            </p>
+                                            <p class="card-text"><small class="text-muted">Uploaded by Shafayet Ovi</small></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="../Recipe View/recipeView.php" style="text-decoration: none;">
+                            <div class="card mb-3 border-0" style="max-width: 100%;">
+                                <div class="row g-0">
+                                    <div class="col-md-4">
+                                        <img style="height: 200px;" src="/Images/curryInHand.jpg" class="img-fluid rounded-start" alt="...">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Cornflakes, Low-Fat Milk & Berries Recipe</h5>
+                                            <p class="card-text">Bite into these delightful Cheeseburger Tater Tot Cups for a fun twist on a classic favorite.</p>
+                                            <p class="card-text">
+                                                Cuisine: English || Course: English || Skill level: English
+                                            </p>
+                                            <p class="card-text"><small class="text-muted">Uploaded by Shafayet Ovi</small></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="../Recipe View/recipeView.php" style="text-decoration: none;">
+                            <div class="card mb-3 border-0" style="max-width: 100%;">
+                                <div class="row g-0">
+                                    <div class="col-md-4">
+                                        <img style="height: 200px;" src="/Images/curryInHand.jpg" class="img-fluid rounded-start" alt="...">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Cornflakes, Low-Fat Milk & Berries Recipe</h5>
+                                            <p class="card-text">Bite into these delightful Cheeseburger Tater Tot Cups for a fun twist on a classic favorite.</p>
+                                            <p class="card-text">
+                                                Cuisine: English || Course: English || Skill level: English
+                                            </p>
+                                            <p class="card-text"><small class="text-muted">Uploaded by Shafayet Ovi</small></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="../Recipe View/recipeView.php" style="text-decoration: none;">
+                            <div class="card mb-3 border-0" style="max-width: 100%;">
+                                <div class="row g-0">
+                                    <div class="col-md-4">
+                                        <img style="height: 200px;" src="/Images/curryInHand.jpg" class="img-fluid rounded-start" alt="...">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Cornflakes, Low-Fat Milk & Berries Recipe</h5>
+                                            <p class="card-text">Bite into these delightful Cheeseburger Tater Tot Cups for a fun twist on a classic favorite.</p>
+                                            <p class="card-text">
+                                                Cuisine: English || Course: English || Skill level: English
+                                            </p>
+                                            <p class="card-text"><small class="text-muted">Uploaded by Shafayet Ovi</small></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
 
                         <!--  Main end -->
                     </div>
+
+                    <div class="d-flex justify-content-center"">
+                    <button type=" button" class="btn btn-danger">Show More</button>
+                    </div>
+
                 </div>
                 <!------------------------- End Second col ------------------------->
 
