@@ -226,8 +226,14 @@
             </table>
 
             <div class="d-flex text-center">
-                <button type="button" class="btn btn-secondary btn-sm add" onclick="addTodoItem()">Add</button>
+                <button type="button" class="btn btn-secondary" style="margin-right: 10px; padding: 4px 8px; font-size: 12px;  " onclick="">
+                    Remove
+                </button>
+                <button type="button" class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px; " onclick="addTodoItem()">
+                    Add
+                </button>
             </div>
+
         </div>
 
 
@@ -289,7 +295,7 @@
             </table>
 
             <div class="d-flex text-center ">
-                <a type="button" class="btn btn-secondary btn-sm" href="../All Categories/allCategories.php">See All</a>
+                <a type="button" class="btn btn-secondary btn-sm" href="/User Account/YourCart.php">See All</a>
             </div>
 
 
@@ -309,7 +315,7 @@
                 </ul>
             </div>
             <div class="d-flex text-center ">
-                <a type="button" class="btn btn-secondary btn-sm" href="../All Categories/allCategories.php">See All</a>
+                <a type="button" class="btn btn-secondary btn-sm" href="/User Account/YourCollections.php">See All</a>
             </div>
         </div>
 

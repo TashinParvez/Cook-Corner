@@ -206,24 +206,63 @@ switch ($tabId) {
 
                     <div class="card mt-3">
                         <ul class="list-group list-group-flush">
+
+
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                 <h6 class="mb-0">
                                     <!-- Update Profile -->
                                     <a class="nav-link <?php echo ($tabId == 'tab-update-profile') ? 'active' : ''; ?>" id="tab-update-profile" data-bs-toggle="tab" href="#content-update-profile" role="tab" aria-controls="content-update-profile" aria-selected="<?php echo ($tabId == 'tab-update-profile') ? 'true' : 'false'; ?>" onclick="submitForm('tab-update-profile')">Update Profile</a>
                                 </h6>
                             </li>
+
+
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                 <h6 class="mb-0">
                                     <!-- Favourite Recipies -->
                                     <a class="nav-link <?php echo ($tabId == 'tab-favorite-recipes') ? 'active' : ''; ?>" id="tab-favorite-recipes" data-bs-toggle="tab" href="#content-favorite-recipes" role="tab" aria-controls="content-favorite-recipes" aria-selected="<?php echo ($tabId == 'tab-favorite-recipes') ? 'true' : 'false'; ?>" onclick="submitForm('tab-favorite-recipes')">Favourite Recipies</a>
                                 </h6>
                             </li>
+
+
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                 <h6 class="mb-0">
-                                    <!-- Your Recipie Collections -->
-                                    <a class="nav-link <?php echo ($tabId == 'tab-your-recipe-collections') ? 'active' : ''; ?>" id="tab-your-recipe-collections" data-bs-toggle="tab" href="#content-your-recipe-collections" role="tab" aria-controls="content-your-recipe-collections" aria-selected="<?php echo ($tabId == 'tab-your-recipe-collections') ? 'true' : 'false'; ?>" onclick="submitForm('tab-your-recipe-collections')">Your Recipie Collections</a>
+                                    <!-- Your Collections -->
+                                    <a class="nav-link <?php echo ($tabId == 'tab-your-recipe-collections') ? 'active' : ''; ?>" id="tab-your-recipe-collections" data-bs-toggle="tab"
+                                        href="YourCollections.php" role="tab"
+                                        aria-controls="content-your-recipe-collections" aria-selected="
+                                    <?php echo ($tabId == 'tab-your-recipe-collections') ? 'true' : 'false'; ?>" onclick="submitForm('tab-your-recipe-collections')">
+                                        Your Collections
+                                    </a>
                                 </h6>
                             </li>
+
+
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6 class="mb-0">
+                                    <!-- Your Recipies -->
+                                    <a class="nav-link <?php echo ($tabId == 'tab-your-recipe-collections') ? 'active' : ''; ?>" id="tab-your-recipe-collections" data-bs-toggle="tab"
+                                        href="YourRecipieCollections.php" role="tab"
+                                        aria-controls="content-your-recipe-collections" aria-selected="
+                                    <?php echo ($tabId == 'tab-your-recipe-collections') ? 'true' : 'false'; ?>" onclick="submitForm('tab-your-recipe-collections')">
+                                        Your Recipies
+                                    </a>
+                                </h6>
+                            </li> 
+                            
+                            
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6 class="mb-0">
+                                    <!-- YourCart.php  -->
+                                    <a class="nav-link <?php echo ($tabId == 'tab-your-recipe-collections') ? 'active' : ''; ?>" id="tab-your-recipe-collections" data-bs-toggle="tab"
+                                        href="YourCart.php" role="tab"
+                                        aria-controls="content-your-recipe-collections" aria-selected="
+                                    <?php echo ($tabId == 'tab-your-recipe-collections') ? 'true' : 'false'; ?>" onclick="submitForm('tab-your-recipe-collections')">
+                                    Your Cart
+                                    </a>
+                                </h6>
+                            </li>
+
+
                         </ul>
 
                         <form id="tabIdkForm" action="updateAccountInfo.php" method="post">

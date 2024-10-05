@@ -2,6 +2,7 @@
 
 include("../Includes/Database Connection/database_connection.php");  // for home page
 
+include('../Includes/Navbar/navbarMain.php');  // tashin  prev 
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -34,8 +35,6 @@ if ($conn->connect_error) {
 <body>
 
     <?php
-    // include('../Includes/Navbar/navbarMain.php');  // tashin  prev 
-    include('../Includes/Navbar/navbarMain-Search-imp.php');  // tashin  prev 
 
     include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin
     ?>
@@ -261,7 +260,10 @@ if ($conn->connect_error) {
             const activity = document.getElementById('activity').value;
             const goal = document.getElementById('goal').value;
 
+
             let BMR;
+
+
 
             if (gender === 'male') {
                 BMR = 10 * weight + 6.25 * height - 5 * age + 5;
@@ -276,6 +278,7 @@ if ($conn->connect_error) {
 
             const totalCalories = BMR * activityMultiplier;
 
+
             // Create the Bootstrap alert
             const alertDiv = document.getElementById('calorieAlert');
             alertDiv.innerHTML = `
@@ -284,6 +287,7 @@ if ($conn->connect_error) {
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         `;
+
         }
     </script>
 
