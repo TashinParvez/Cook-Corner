@@ -11,7 +11,11 @@
             right: -400px;
             width: 400px;
             height: 100%;
-            background-color: #f5fcf0;
+
+            /* background-color: #c6f7c6;  */
+            background-color: #d9f2d9;
+
+
             transition: 0.3s;
             z-index: 1000;
         }
@@ -99,6 +103,11 @@
             width: 100%;
             /* Ensures the table takes full width */
         }
+
+        .table-striped thead th {
+            background-color: #72bf78;
+            color: white;
+      }
 
         tbody tr .btn-primary {
             outline: none;

@@ -143,7 +143,7 @@ mysqli_close($conn);
 
     // include('../Includes/Navbar/navbarMain.php');  // Navbar // tahsin 
     include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin   
-    include "../Includes/AddMenu/addMenu.php"; 
+    include "../Includes/AddMenu/addMenu.php";
     ?>
 
     <!-------------------------------------------- search section ---------------------------------------------------->

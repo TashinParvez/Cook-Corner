@@ -48,6 +48,7 @@ include('../Includes/Navbar/navbarMain.php');  // tashin (From now)
 
     <?php
     include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin
+    include "../Includes/AddMenu/addMenu.php";
     ?>
 
     <!--  -->

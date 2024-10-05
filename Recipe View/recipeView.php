@@ -50,19 +50,19 @@
                 <!-- Time segment -->
                 <div class="row">
                     <div class="col-auto">
-                        <h6>Total Time</h6>
+                        <h5>Total Time</h5>
                         <p>55 minutes</p>
                     </div>
                     <!-- <div class="vr" style="width: 2px;"></div> -->
 
                     <div class="col-auto">
-                        <h6>Prep Time</h6>
+                        <h5>Prep Time</h5>
                         <p>55 minutes</p>
                     </div>
                     <!-- <div class="vr" style="width: 2px;"></div> -->
 
                     <div class="col-auto">
-                        <h6>Cook Time</h6>
+                        <h5>Cook Time</h5>
                         <p>55 minutes</p>
                     </div>
                 </div>
@@ -170,14 +170,11 @@
                                 <div class="step-number">1</div>
                                 <div class="step-title">Make the egg cream (or substitute 3/4 to 1 cup bottled sauce):</div>
                             </div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy eirmod tempor in vid unt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et acc usam et justo duo dolores et ea rebum.</p>
-                            <div class="images">
-                                <img src="image1.jpg" alt="Cooking process">
-                                <img src="image2.jpg" alt="Dish">
-                            </div>
+                            <p class="ms-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy eirmod tempor in vid unt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et acc usam et justo duo dolores et ea rebum.</p>
+
                         </div>
                         <div class="markSection">
-                            <input type="checkbox" id="mark-complete-1">
+                            <input type="checkbox" id="mark-complete-1" >
                             <label for="mark-complete-1">Mark as complete</label>
                         </div>
                     </div>
@@ -189,11 +186,8 @@
                                 <div class="step-number">2</div>
                                 <div class="step-title">Prepare the sauce:</div>
                             </div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy eirmod tempor in vid unt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et acc usam et justo duo dolores et ea rebum.</p>
-                            <div class="images">
-                                <img src="image1.jpg" alt="Cooking process">
-                                <img src="image2.jpg" alt="Dish">
-                            </div>
+                            <p class="ms-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy eirmod tempor in vid unt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et acc usam et justo duo dolores et ea rebum.</p>
+
                         </div>
                         <div class="markSection">
                             <input type="checkbox" id="mark-complete-2">
@@ -208,11 +202,8 @@
                                 <div class="step-number">3</div>
                                 <div class="step-title">Serve the dish:</div>
                             </div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy eirmod tempor in vid unt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et acc usam et justo duo dolores et ea rebum.</p>
-                            <div class="images">
-                                <img src="image1.jpg" alt="Cooking process">
-                                <img src="image2.jpg" alt="Dish">
-                            </div>
+                            <p class="ms-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy eirmod tempor in vid unt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et acc usam et justo duo dolores et ea rebum.</p>
+
                         </div>
                         <div class="markSection">
                             <input type="checkbox" id="mark-complete-3">
@@ -228,22 +219,27 @@
 
                 <div class="container">
                     <div>
-                        <h6 class="step-number">1</h6>
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde minima qui nam nostrum exercitationem possimus sequi quae hic voluptates aspernatur.</p>
+                        <div class="step-header">
+                            <div class="step-number">1</div>
+                            <div class="step-title">Note 1</div>
+                        </div>
+                        <p class="ms-5">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde minima qui nam nostrum exercitationem possimus sequi quae hic voluptates aspernatur.</p>
                     </div>
                     <div>
-                        <h6 class="step-number">2</h6>
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde minima qui nam nostrum exercitationem possimus sequi quae hic voluptates aspernatur.</p>
+                        <div class="step-header">
+                            <div class="step-number">2</div>
+                            <div class="step-title">Note 2</div>
+                        </div>
+                        <p class="ms-5">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde minima qui nam nostrum exercitationem possimus sequi quae hic voluptates aspernatur.</p>
                     </div>
                     <div>
-                        <h6 class="step-number">3</h6>
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde minima qui nam nostrum exercitationem possimus sequi quae hic voluptates aspernatur.</p>
+                        <div class="step-header">
+                            <div class="step-number">2</div>
+                            <div class="step-title">Note 2</div>
+                        </div>
+                        <p class="ms-5">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde minima qui nam nostrum exercitationem possimus sequi quae hic voluptates aspernatur.</p>
                     </div>
                 </div>
-
-
-
-
 
                 <!---  __________________________________________   Segment 1 End __________________________________________  -->
             </div>
@@ -323,17 +319,6 @@
                         <div class="bordered-container">
                             <div class="title-on-border">Category</div>
                             <div class="container text-center">
-
-
-                                <!-- <div class="row justify-content-center">
-                                    <div class="col-md-4">
-                                        <div class="image-container text-center">
-                                            <img src="/Images/IMG-20240131-WA0004.jpg" alt="Circular Image" class="circle-image">
-                                        </div>
-                                    </div>
-                                    <div class="image-title">Tashin Parvez</div>
-                                </div> -->
-
                                 <!-- ------------------ tashin -->
                                 <div class="row row-cols-1 row-cols-md-3 g-4">
 

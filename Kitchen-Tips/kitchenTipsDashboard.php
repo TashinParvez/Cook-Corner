@@ -69,7 +69,7 @@ $heroItems = mysqli_fetch_all($resultantLabel);   // conver to array
 
 // --------------------- forPopularSeg-------------------
 $sql = "SELECT kt.tips_title, kt.description, kt.image, kt.difficulty_level, kt.estimated_time,  kt.likes,
-               ui.first_name, ui.last_name
+               ui.first_name, ui.last_name, kt.id
         FROM `kitchen_tips`  as kt
         INNER JOIN
         user_info  as ui
@@ -129,8 +129,6 @@ mysqli_close($conn);
 
         <!-- First Row of Navigation Links -->
         <div class="d-flex justify-content-center flex-wrap mb-3 kitchen-tips-container">
-
-
             <script>
                 function submitKitchenTipsCategoryForm(kitchenTipsCategoryId) {
                     const form = document.getElementById('kitchenTipsCategoryForm');
@@ -144,7 +142,7 @@ mysqli_close($conn);
             </form>
 
             <?php foreach ($allCategorisOfKitchenTips as $category) { ?>
-                <a href="#" class="me-3 text-dark fw-bold text-decoration-none" onclick="submitKitchenTipsCategoryForm(<?php echo $category[0]; ?>)">
+                <a href="#" class="me-3 text-dark fw-bold text-decoration-none navigation-link" onclick="submitKitchenTipsCategoryForm(<?php echo $category[0]; ?>)">
                     <?php echo htmlspecialchars($category[1]); ?>
                 </a>
             <?php } ?>
@@ -153,44 +151,27 @@ mysqli_close($conn);
 
     </div>
 
-    <style>
-        .kitchen-tips-container {
-            max-width: 70%;
-            /* Set the max-width to 80% */
-            margin: 0 auto;
-            /* Center the container */
-        }
 
-        .kitchen-tips-container a {
-            flex: 0 1 auto;
-            /* Make the links flexible */
-            margin-bottom: 10px;
-            /* Space between rows */
-        }
-    </style>
 
+    <!-- For all tips id pass to view page -->
+    <script>
+        function submitKitchenTipsForm(kitchenTipsId) {
+            const form = document.getElementById('kitchenTipsForm');
+            form.action = 'oneTipsPageView.php?kitchenTipsId=' + kitchenTipsId;
+            form.submit();
+        }
+    </script>
+
+    <form id="kitchenTipsForm" action="oneTipsPageView.php" method="post">
+        <!-- No hidden input needed -->
+    </form>
+    <!-- .......................... -->
 
 
 
     <!-- -------------------------- ------------------------------------- -->
     <div class="container mt-5">
         <div class="row">
-            <!-- Hero Segment-->
-
-            <!-- <script>
-                function submitKitchenTipsCategoryForm(kitchenTipsCategoryId) {
-                    const form = document.getElementById('kitchenTipsCategoryForm');
-                    form.action = 'oneCategoryOfKittchTips.php?kitchenTipsCategoryId=' + kitchenTipsCategoryId;
-                    form.submit();
-                }
-            </script>
-
-            <form id="kitchenTipsCategoryForm" action="oneCategoryOfKittchTips.php" method="post">
-                <!-- No hidden input needed -->
-            <!-- </form>
-            onclick="submitKitchenTipsCategoryForm(<?php // echo $category[0]; 
-                                                    ?>)" -->
-
             <?php
             $randomTips = $heroItems;
             shuffle($randomTips);
@@ -198,76 +179,53 @@ mysqli_close($conn);
 
             <!-- Left Side: Large Image with Heading and Subheading -->
             <div class="col-lg-6">
-                <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($randomTips[0][2]);  ?>" alt="Turkey" class="img-fluid">
-                <!-- <h6 class="text-uppercase text-center mt-3" style="letter-spacing: 1px;">Skills</h6> -->
-                <h2 class="text-center mt-2"><?php echo htmlspecialchars($randomTips[0][0]);  ?></h2>
-                <p class="text-center">By <?php echo htmlspecialchars($randomTips[0][5]);
-                                            echo " ";
-                                            echo htmlspecialchars($randomTips[0][6]);  ?></p>
+                <a href="#" class="text-decoration-none text-dark" onclick="submitKitchenTipsForm(<?php echo $randomTips[0][9]; ?>)">
+
+                    <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($randomTips[0][2]); ?>" alt="Large Tip" class="img-fluid" style="height: 550px; width: 100%; object-fit: cover;">
+                    <h2 class="text-center mt-2"><?php echo htmlspecialchars($randomTips[0][0]); ?></h2>
+                    <p class="text-center">By <?php echo htmlspecialchars($randomTips[0][5]) . " " . htmlspecialchars($randomTips[0][6]); ?></p>
+                </a>
             </div>
 
             <!-- Right Side: Articles Grid with Thumbnails and Headings -->
             <div class="col-lg-6">
                 <div class="row">
-
-
                     <?php foreach (array_slice($randomTips, 1, 3) as $item) { ?>
                         <div class="col-md-4">
-                            <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($item[2]);  ?>" alt="Egg Cartons" class="img-fluid">
-                            <h6 class="mt-2"> <?php echo htmlspecialchars($item[0]);  ?> </h6>
+                            <a href="#" class="text-decoration-none text-dark" onclick="submitKitchenTipsForm(<?php echo $item[9]; ?>)">
+
+                                <div class="card">
+                                    <!-- Set a fixed height for the image and use object-fit -->
+                                    <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($item[2]); ?>" alt="Tip Thumbnail" class="img-fluid card-img-top" style="height: 150px; object-fit: cover;">
+                                    <div class="card-body">
+                                        <h6 class="card-title"><?php echo htmlspecialchars($item[0]); ?></h6>
+                                    </div>
+                                </div>
+                            </a>
                         </div>
+
                     <?php } ?>
-
-
-                    <!-- First Card -->
-                    <!-- <div class="col-md-4">
-                        <img src="../Images/FoodImages/2.jpg" alt="Egg Cartons" class="img-fluid">
-                        <h6 class="mt-2">Cage-Free vs. Free-Range vs. Pasture-Raised: How to Decode Egg Cartons</h6>
-                    </div> -->
-                    <!-- Second Card -->
-                    <!-- <div class="col-md-4">
-                        <img src="../Images/FoodImages/2.jpg" alt="Roasted Potatoes" class="img-fluid">
-                        <h6 class="mt-2">The Easy Italian Trick for the Perfect Roasted Potatoes</h6>
-                    </div> -->
-                    <!-- Third Card -->
-                    <!-- <div class="col-md-4">
-                        <img src="../Images/FoodImages/2.jpg" alt="Cumin" class="img-fluid">
-                        <h6 class="mt-2">What Is Cumin? (Plus How to Use it in Your Cooking)</h6>
-                    </div> -->
                 </div>
 
                 <!-- Article Links -->
                 <div class="mt-4">
                     <ul class="list-unstyled">
-
-                        <?php foreach (array_slice($heroItems, 4, 8) as $item) { ?>
-
+                        <?php foreach (array_slice($randomTips, 4, 8) as $item) { ?>
                             <li class="mb-2">
-                                <h6><span class="me-2">🍽️</span><?php echo htmlspecialchars($item[0]);  ?></h6>
+                                <h6>
+                                    <a href="#" class="text-decoration-none" onclick="submitKitchenTipsForm(<?php echo $item[9]; ?>)">
+                                        <span class="me-2">🍽️</span><?php echo htmlspecialchars($item[0]); ?>
+                                    </a>
+                                </h6>
                             </li>
-
                         <?php } ?>
-
-
-
-
-
-                        <!-- <li class="mb-2">
-                            <h6><span class="me-2">🍽️</span>My Cooking Tip for Irresistibly Creamy Soup –Without a Drop of Cream</h6>
-                        </li>
-                        <li class="mb-2">
-                            <h6><span class="me-2">🍽️</span>This Brilliant Pillsbury Cookie Dough Hack Will Upgrade Your Fall Baking</h6>
-                        </li>
-                        <li class="mb-2">
-                            <h6><span class="me-2">🍽️</span>This Cheap Canned Bean Cooking Trick Is My Go-To Lazy Dinner</h6>
-                        </li> -->
-
-
                     </ul>
                 </div>
             </div>
         </div>
     </div>
+
+
 
     <!-- -------------------------- ------------------------------------- -->
 
@@ -280,19 +238,27 @@ mysqli_close($conn);
     <div class="container mt-5">
         <h3>Popular Tips</h3>
         <div class="row">
-
             <?php foreach (array_slice($forPopularSeg, 0, 4) as $pitems) { ?>
                 <div class="col-md-3">
-                    <img src="../Images/Kitchen-Tips/<?php echo htmlspecialchars($pitems[2]); ?> " class="img-fluid" alt="Article">
-                    <!-- image chnage tashin -->
-                    <h5> <?php echo htmlspecialchars($pitems[0]); ?></h5>
-                    <p> <?php echo htmlspecialchars($pitems[0]); ?></p>
+                    <!-- Card structure -->
+                    <a href="#" class="text-decoration-none text-dark" onclick="submitKitchenTipsForm(<?php echo $pitems[8]; ?>)">
+                        <div class="card mb-4">
+                            <!-- Card image -->
+                            <div class="card-image">
+                                <img src="../Images/Kitchen-Tips/<?php echo htmlspecialchars($pitems[2]); ?>" class="img-fluid" alt="Article">
+                            </div>
+                            <!-- Card body -->
+                            <div class="card-body">
+                                <h5 class="card-title"> <?php echo htmlspecialchars($pitems[0]); ?></h5>
+                                <p class="card-text"> <?php echo htmlspecialchars($pitems[1]); ?></p>
+                            </div>
+                        </div>
+                    </a>
                 </div>
             <?php } ?>
-
-            <!-- Add more articles here -->
         </div>
     </div>
+
 
     <!-- -------------------------------------------------------------------------------------------------------------------------- -->
     <!-- ALL Tips -->
@@ -328,7 +294,7 @@ mysqli_close($conn);
                 </div>
             </div>
 
-            <!------------------------ sort btn ------------------------> working
+            <!------------------------ sort btn ------------------------>
 
             <div class="col-md-4">
                 <div class="dropdown">
@@ -379,38 +345,36 @@ mysqli_close($conn);
         <div class="row" id="recipeContainer">
             <?php
             // Assuming $heroItems is defined and contains your items
-            $heroItems = array_slice($heroItems, 0); // Replace this with your actual items
-
-            // Example of populating $heroItems for demonstration
-            // for ($i = 1; $i <= 100; $i++) {
-            //     $heroItems[] = ["Tip " . $i, "", "", "", "", "Author " . $i, "Surname " . $i, "Category " . $i];
-            // }
-
-            // Randomly shuffle the $heroItems array
-            // shuffle($heroItems);
-
-
-            // Number of items to show initially
             $itemsPerPage = 12;
             $currentIndex = 0;
 
             // Load initial items
-            foreach (array_slice($heroItems, $currentIndex, $itemsPerPage) as $heroItem) { // Changed variable name here
+            foreach (array_slice($heroItems, $currentIndex, $itemsPerPage) as $heroItem) {
             ?>
-                <div class="col-md-4 item">
-                    <img src="../Images/Kitchen-Tips/<?php echo htmlspecialchars($heroItem[2]); ?>" class="img-fluid" alt="Care Tip">
-                    <!-- image chnage tashin -->
-
-                    <h5><?php echo htmlspecialchars($heroItem[0]); ?></h5> <!-- Changed $item to $heroItem -->
-                    <small>(<?php echo htmlspecialchars($heroItem[7]); ?>)</small> <!-- Changed $item to $heroItem -->
-                    <p>by <?php echo htmlspecialchars($heroItem[5]) . " " . htmlspecialchars($heroItem[6]); ?></p> <!-- Changed $item to $heroItem -->
+                <div class="col-md-4">
+                    <!-- Card structure -->
+                    <div class="card mb-4">
+                        <a href="#" class="text-decoration-none text-dark" onclick="submitKitchenTipsForm(<?php echo $heroItem[9]; ?>)">
+                            <!-- Card image -->
+                            <div class="card-image">
+                                <img src="../Images/Kitchen-Tips/<?php echo htmlspecialchars($heroItem[2]); ?>" class="img-fluid" alt="Care Tip">
+                            </div>
+                            <!-- Card body -->
+                            <div class="card-body">
+                                <h5 class="card-title"><?php echo htmlspecialchars($heroItem[0]); ?></h5>
+                                <small class="card-category">(<?php echo htmlspecialchars($heroItem[7]); ?>)</small>
+                                <p class="card-text">by <?php echo htmlspecialchars($heroItem[5]) . " " . htmlspecialchars($heroItem[6]); ?></p>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             <?php
                 $currentIndex++;
             }
             ?>
         </div>
-        <!-- liad more btn -->
+
+        <!-- Load More Button -->
         <div class="row justify-content-center">
             <button id="loadMore" class="btn btn-primary mt-3 col-3">Load More</button>
         </div>
@@ -429,16 +393,27 @@ mysqli_close($conn);
                     // Load the next set of items
                     const itemsToShow = heroItems.slice(currentIndex, currentIndex + itemsPerPage);
 
-                    itemsToShow.forEach(heroItem => { // Changed variable name here
+                    itemsToShow.forEach(heroItem => {
                         const itemDiv = document.createElement("div");
                         itemDiv.classList.add("col-md-4", "item");
-                        // chnage here tashin tashin
+
+                        // Create the HTML for the new item
                         itemDiv.innerHTML = `
-                    <img src="../Images/kitchen-Tips/${heroItem[2]}" class="img-fluid" alt="Care Tip">
-                    <h5>${heroItem[0]}</h5> <!-- Changed $item to $heroItem -->
-                    <small>(${heroItem[7]})</small> <!-- Changed $item to $heroItem -->
-                    <p>by ${heroItem[5]} ${heroItem[6]}</p> <!-- Changed $item to $heroItem -->
+                    <div class="card mb-4">
+                        <a href="some-link-to-tip-details.php" class="text-decoration-none text-dark">
+                        <div class="card-image">
+                            <img src="../Images/Kitchen-Tips/${heroItem[2]}" class="img-fluid" alt="Care Tip">
+                        </div>
+                        <div class="card-body">
+                            <h5>${heroItem[0]}</h5>
+                            <small>(${heroItem[7]})</small>
+                            <p>by ${heroItem[5]} ${heroItem[6]}</p>
+                        </div>
+                        </a>
+                    </div>
                 `;
+
+                        // Append the newly created item to the container
                         recipeContainer.appendChild(itemDiv);
                     });
 

@@ -1,5 +1,46 @@
 <?php
+include('../Includes/Navbar/navbarMain.php');
+include("../Includes/Database Connection/database_connection.php");
+
+$clickedCourseID = 1;
+
+$sql = "SELECT `course_id`,`course_title`,`playlist_link`
+        FROM `course` 
+        WHERE course_id = $clickedCourseID;";
+
+$resultantLabel = mysqli_query($conn, $sql);
+$course_Info = mysqli_fetch_assoc($resultantLabel);
+
+$playlistID =  $course_Info['playlist_link'];
+
+$apiKey =  "AIzaSyBm4S9TTRDo8Loo3xpFkm9ihwYRjOrSl7c"; // Tashin API Key
+
+
+$apiUrl = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId={$playlistID}&key={$apiKey}";
+$response = file_get_contents($apiUrl);
+$data = json_decode($response, true);
+$allVideos = [];
+
+if (!empty($data['items'])) {
+
+    foreach ($data['items'] as $item) {
+        $videoTitle = $item['snippet']['title'];
+        $videoId = $item['snippet']['resourceId']['videoId'];
+        $videoLink = "https://www.youtube.com/embed/{$videoId}"; // Embed format
+        $allVideos[] = [
+            'name' => $videoTitle,
+            'link' => $videoLink
+        ];
+    }
+}
+
+// print_r($allVideos);
+
+
+mysqli_free_result($resultantLabel);
+mysqli_close($conn);
 ?>
+
 
 <!doctype html>
 <html lang="en">
@@ -11,10 +52,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-
     <!-- favicon -->
     <link rel="icon" href="../Images/logo/fav-icon.png" />
-
 
     <!-- css  -->
     <link rel="stylesheet" href="../Includes/Navbar/navbarMain.css"> <!-- Navbar CSS -->
@@ -25,6 +64,24 @@
             padding-top: 70px;
         }
 
+        /* Main flex container for right content */
+        .right-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 70px);
+            margin-left: 280px;
+        }
+
+        /* Container for centering content */
+        .container-content {
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Embedded video adjustments */
         .embed-responsive {
             position: relative;
             display: block;
@@ -42,154 +99,74 @@
             height: 100%;
         }
 
+        /* Buttons alignment */
         .buttons-container {
             display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
+            justify-content: center;
+            gap: 10px;
         }
     </style>
 </head>
 
-
 <body>
 
     <?php
-    include('../Includes/Navbar/navbarMain.php');  // tashin 
     include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin
     ?>
 
 
     <div class="container row">
 
-
         <!-------------------- Left side sidebar -------------------->
 
         <div class="col-3">
-            <div class="flex-shrink-0 p-3 bg-white" style="width: 280px; height: 100vh; overflow-y: auto; position: fixed;">
+            <div class="flex-shrink-0 p-3 bg-white sidebar" style="width: 280px; height: 100vh; overflow-y: auto; position: fixed;">
                 <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
-                   
                     <span class="fs-5 fw-semibold">Project 2024</span>
                 </a>
                 <ul class="list-unstyled ps-0">
-                    <li class="mb-1">
-                        <a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Class 1</a>
-                    </li>
-                    <li class="mb-1">
-                        <a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Class 2</a>
-                    </li>
-                    <li class="mb-1">
-                        <a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Class 3</a>
-                    </li>
-                    <li class="mb-1">
-                        <a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Class 4</a>
-                    </li>
-                    <li class="mb-1">
-                        <a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Class 5</a>
-                    </li>
-                    <li class="mb-1">
-                        <a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Class 6</a>
-                    </li>
-                    <li class="mb-1">
-                        <a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Class 7</a>
-                    </li>
-                    <li class="mb-1">
-                        <a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Class 8</a>
-                    </li>
-                    <li class="mb-1">
-                        <a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Class 9</a>
-                    </li>
-                    <li class="mb-1">
-                        <a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Class 10</a>
-                    </li>
-                    <li class="mb-1">
-                        <a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Class 10</a>
-                    </li>
-                    <li class="mb-1">
-                        <a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Class 10</a>
-                    </li>
-                    <li class="mb-1">
-                        <a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Class 10</a>
-                    </li>
-                    <li class="mb-1">
-                        <a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Class 10</a>
-                    </li>
-                    <li class="mb-1">
-                        <a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Class 10</a>
-                    </li>
-                    <li class="mb-1">
-                        <a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Class 10</a>
-                    </li>
-                    <li class="mb-1">
-                        <a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Class 10</a>
-                    </li>
-                    <li class="mb-1">
-                        <a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Class 10</a>
-                    </li>
-                    <li class="mb-1">
-                        <a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Class 10</a>
-                    </li>
-                    <li class="mb-1">
-                        <a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Class 10</a>
-                    </li>
-                    <li class="mb-1">
-                        <a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Class 10</a>
-                    </li>
-                    <li class="mb-1">
-                        <a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Class 10</a>
-                    </li>
-                    <li class="mb-1">
-                        <a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Class 10</a>
-                    </li>
-                    <li class="mb-1">
-                        <a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Class 10</a>
-                    </li>
-                    <li class="mb-1">
-                        <a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Class 10</a>
-                    </li>
-                    <li class="mb-1">
-                        <a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Class 10</a>
-                    </li>
-                    <li class="mb-1">
-                        <a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Class 10</a>
-                    </li>
-                    <li class="mb-1">
-                        <a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Class 10</a>
-                    </li>
-
+                    <?php
+                    $itr = 1;
+                    foreach ($allVideos as $oneClass) { ?>
+                        <li class="mb-1">
+                            <a href="#" class="class-link" data-videolink="<?php echo htmlspecialchars($oneClass['link']); ?>">
+                                Class <?php echo htmlspecialchars($itr); ?>
+                            </a>
+                        </li>
+                    <?php
+                        $itr += 1;
+                    } ?>
                     <li class="border-top my-3"></li>
                 </ul>
             </div>
         </div>
 
-
-
         <!-------------------- right side -------------------->
         <div class="col-9">
-
-
-            <!-- Course Progress Bar -->
-            <div class="container mt-4">
-                <h5>Course Progress</h5>
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-                        50%
+            <!-- Main container for centering content -->
+            <div class="right-container">
+                <!-- Content wrapper -->
+                <div class="container-content">
+                    <!-- Course Progress Bar -->
+                    <div class="container mt-4">
+                        <h5>Course Progress</h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
+                        </div>
                     </div>
-                </div>
-            </div>
 
-
-           
-                <div class="container">
                     <!-- Class Title -->
-                    <h2>Class Title: Introduction to Topic</h2>
+                    <h2 id="classTitle">Class Title: Introduction to Topic</h2>
 
                     <!-- Class Description -->
                     <p class="mt-3">This class introduces the fundamental concepts of the topic. It provides an overview of the key areas to be covered and the learning objectives you should achieve by the end of the session.</p>
 
                     <!-- Embedded Video -->
                     <div class="embed-responsive">
-                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                        <iframe id="classVideo" class="embed-responsive-item" src="" allowfullscreen></iframe>
                     </div>
+
+
 
                     <!-- Buttons: Go to Previous Class, Mark as Complete -->
                     <div class="buttons-container mt-4">
@@ -197,20 +174,41 @@
                         <a href="#" class="btn btn-success">Mark as Complete</a>
                     </div>
                 </div>
-        
-
+            </div>
         </div>
-
     </div>
 
+    <script>
+        // Get all sidebar links
+        const classLinks = document.querySelectorAll('.class-link');
+        const classVideo = document.getElementById('classVideo');
+        const classTitle = document.getElementById('classTitle');
 
+        // Add event listener to each class link
+        classLinks.forEach((link, index) => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
 
+                // Remove active class from all links
+                classLinks.forEach((link) => link.classList.remove('active'));
 
+                // Add active class to the clicked link
+                this.classList.add('active');
 
-    <!-- ============================== Footer ==================================== -->
-    <?php
-    // include('../Includes/Footer/footermain.php');  // tashin 
-    ?>
+                // Get video link from the data attribute
+                const videoLink = this.getAttribute('data-videolink');
+
+                // Debugging: Log the video link to the console
+                console.log("Selected video link:", videoLink);
+
+                // Update video iframe source
+                classVideo.src = videoLink;
+
+                // Update class title dynamically
+                classTitle.textContent = `Class Title: Class ${index + 1}`;
+            });
+        });
+    </script>
 </body>
 
 </html>

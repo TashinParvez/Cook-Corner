@@ -1,0 +1,16 @@
+SELECT recipe_info.recipe_id, recipe_info.title, recipe_info.description, 
+                        IFNULL(AVG(recipe_feedback.rating), "No rating") AS average_rating, recipe_info.image
+                    FROM
+                        recipe_info LEFT JOIN recipe_feedback
+                    ON
+                        recipe_info.recipe_id = recipe_feedback.recipe_id
+                    WHERE
+                        recipe_info.recipe_id IN
+                            (SELECT recipe_id FROM junction_meal_type_recipe_info WHERE meal_type_id IN
+                            (SELECT meal_type_id FROM junction_meal_type_day_chunk WHERE chunk_id =
+                            (SELECT chunk_id FROM day_chunk WHERE chunk_name = 'night')))
+                    GROUP BY recipe_info.recipe_id
+                    LIMIT 20;
+
+
+

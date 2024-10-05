@@ -3,7 +3,7 @@
 //...................... Database Connection ..............................
 include("../Includes/Database Connection/database_connection.php");
 
-// $clickedCatagory = "Cooking Techniques";  // get from click
+// $kitchenTipsCategoryName = "Cooking Techniques";  // get from click
 $kitchenTipsCategoryId = isset($_GET['kitchenTipsCategoryId']) ? htmlspecialchars($_GET['kitchenTipsCategoryId']) : '8'; //---------> this will come from kithhen tips dashboard
 
 $stmt = $conn->prepare('SELECT name FROM kitchen_tips_category WHERE id = ? LIMIT 1;');
@@ -33,7 +33,7 @@ $clickedCatagoryInfo = mysqli_fetch_all($resultantLabel)[0];   // conver to arra
 $sql = "SELECT kt.image, kt.tips_title, kt.description,
                 user_info.first_name , user_info.last_name,
                 likes,
-                kt.Directions
+                kt.Directions, kt.id
 
         FROM `kitchen_tips`  as kt
         INNER JOIN
@@ -55,7 +55,7 @@ $resultantLabel = mysqli_query($conn, $sql);
 
 $allTips = mysqli_fetch_all($resultantLabel);
 
-$forheroSegment = array_slice($allTips, 0, 3);
+$forheroSegment = array_slice($allTips, 0, 4);
 
 shuffle($allTips);
 
@@ -115,6 +115,20 @@ mysqli_close($conn);
     </div>
 
 
+    <!-- For all tips id pass to view page -->
+    <script>
+        function submitKitchenTipsForm(kitchenTipsId) {
+            const form = document.getElementById('kitchenTipsForm');
+            form.action = 'oneTipsPageView.php?kitchenTipsId=' + kitchenTipsId;
+            form.submit();
+        }
+    </script>
+
+    <form id="kitchenTipsForm" action="oneTipsPageView.php" method="post">
+        <!-- No hidden input needed -->
+    </form>
+
+
     <!-- ---------------------------- Hero Main Image Section ---------------------------------------- -->
 
     <div class="container mt-4">
@@ -145,7 +159,7 @@ mysqli_close($conn);
                         } ?>
 
                         <!-- Link to full details -->
-                        <a href="specificTipPage.php?tip_id=<?php echo htmlspecialchars($forheroSegment[0][0]); ?>" style="color: red; text-decoration: none;" class="mt-2">Read More</a>
+                        <a href="#" style="color: red; text-decoration: none;" class="mt-2" onclick="submitKitchenTipsForm(<?php echo $forheroSegment[0][7]; ?>)">Read More</a>
                     </div>
                 </div>
             </div>
@@ -154,36 +168,44 @@ mysqli_close($conn);
             <!-- Right Column with Thumbnails -->
             <div class="col-md-4">
                 <div class="row">
-                    <div class="col-md-12 mb-3">
-                        <div class="card">
-                            <div class="card-image">
-                                <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($forheroSegment[1][0]); ?>" class="img-fluid" alt="Thumbnail">
-                            </div>
-                            <div class="card-body">
-                                <p class="card-text"><?php echo htmlspecialchars($forheroSegment[1][1]); ?></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12 mb-3">
-                        <div class="card">
-                            <div class="card-image">
-                                <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($forheroSegment[2][0]); ?>" class="img-fluid" alt="Thumbnail">
-                            </div>
-                            <div class="card-body">
-                                <p class="card-text"><?php echo htmlspecialchars($forheroSegment[2][1]); ?></p>
+                    <a href="#" class="text-decoration-none text-dark" onclick="submitKitchenTipsForm(<?php echo $forheroSegment[1][7]; ?>)">
+                        <div class="col-md-12 mb-3">
+                            <div class="card">
+                                <div class="card-image">
+                                    <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($forheroSegment[1][0]); ?>" class="img-fluid" alt="Thumbnail">
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text"><?php echo htmlspecialchars($forheroSegment[1][1]); ?></p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-12 mb-3">
-                        <div class="card">
-                            <div class="card-image">
-                                <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($forheroSegment[2][0]); ?>" class="img-fluid" alt="Thumbnail">
-                            </div>
-                            <div class="card-body">
-                                <p class="card-text"><?php echo htmlspecialchars($forheroSegment[2][1]); ?></p>
+                    </a>
+
+                    <a href="#" class="text-decoration-none text-dark" onclick="submitKitchenTipsForm(<?php echo $forheroSegment[2][7]; ?>)">
+                        <div class="col-md-12 mb-3">
+                            <div class="card">
+                                <div class="card-image">
+                                    <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($forheroSegment[2][0]); ?>" class="img-fluid" alt="Thumbnail">
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text"><?php echo htmlspecialchars($forheroSegment[2][1]); ?></p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
+
+                    <a href="#" class="text-decoration-none text-dark" onclick="submitKitchenTipsForm(<?php echo $forheroSegment[3][7]; ?>)">
+                        <div class="col-md-12 mb-3">
+                            <div class="card">
+                                <div class="card-image">
+                                    <img src="/Images/Kitchen-Tips/<?php echo htmlspecialchars($forheroSegment[3][0]); ?>" class="img-fluid" alt="Thumbnail">
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text"><?php echo htmlspecialchars($forheroSegment[3][1]); ?></p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -193,20 +215,31 @@ mysqli_close($conn);
     <!-----------------------------------------------------------  All Tips ----------------------------------------------------------->
     <div class="container mt-5">
         <div class="explore-section">
-            <h1 class="explore-title">All <?php echo htmlspecialchars($clickedCatagoryInfo[1]); ?> Tips</h1>
-            <!-- Search Bar -->
-            <div class="search-bar">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Find a recipe or ingredient">
-                    <button class="btn btn-outline-secondary" type="button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-search" viewBox="0 0 16 16">
-                            <path
-                                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zm-5.442 1.102a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z" />
-                        </svg>
-                    </button>
+
+            <div class="container">
+                <div class="row align-items-center mb-4">
+                    <div class="col-md-6">
+                        <h1 class="explore-title">All <?php echo htmlspecialchars($clickedCatagoryInfo[1]); ?> Tips</h1>
+                    </div>
+                    <div class="col-md-6">
+                        <!-- Search Bar -->
+                        <div class="search-bar">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Find a recipe or ingredient">
+                                <button class="btn btn-outline-secondary" type="button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-search" viewBox="0 0 16 16">
+                                        <path
+                                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zm-5.442 1.102a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+
         </div>
         <hr>
 
@@ -218,20 +251,23 @@ mysqli_close($conn);
             <?php
             $initialTips = array_slice($allTips, 0, 12); // Get first 12 tips
             foreach ($initialTips as $oneTip) { ?>
+
                 <div class="col-md-4 item mb-4">
                     <!-- card -->
                     <div class="card">
-                        <!-- card image -->
-                        <div class="card-image">
-                            <img src="../Images/Kitchen-Tips/<?php echo htmlspecialchars($oneTip[0]); ?>" class="img-fluid" alt="Care Tip">
-                        </div>
-                        <!-- card body -->
-                        <div class="card-body">
-                            <!-- title -->
-                            <h5 class="card-title"><?php echo htmlspecialchars($oneTip[1]); ?></h5>
-                            <!-- user added by -->
-                            <p class="card-text">by <?php echo htmlspecialchars($oneTip[3]) . " " . htmlspecialchars($oneTip[4]); ?></p>
-                        </div>
+                        <a href="#" class="text-decoration-none text-dark" onclick="submitKitchenTipsForm(<?php echo $oneTip[7]; ?>)">
+                            <!-- card image -->
+                            <div class="card-image">
+                                <img src="../Images/Kitchen-Tips/<?php echo htmlspecialchars($oneTip[0]); ?>" class="img-fluid" alt="Care Tip">
+                            </div>
+                            <!-- card body -->
+                            <div class="card-body">
+                                <!-- title -->
+                                <h5 class="card-title"><?php echo htmlspecialchars($oneTip[1]); ?></h5>
+                                <!-- user added by -->
+                                <p class="card-text">by <?php echo htmlspecialchars($oneTip[3]) . " " . htmlspecialchars($oneTip[4]); ?></p>
+                            </div>
+                        </a>
                     </div>
                 </div>
             <?php } ?>
