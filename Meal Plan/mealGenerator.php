@@ -136,15 +136,15 @@
                                                 <div class="row">
                                                     <div class="col-md-3">
                                                         <label for="weight">Weight (kg)</label>
-                                                        <input type="number" class="form-control" id="weight" placeholder="e.g 70" required>
+                                                        <input type="number" class="form-control" id="weight" placeholder="E.g 70" required>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <label for="height">Height (cm)</label>
-                                                        <input type="number" class="form-control" id="height" placeholder="e.g 70" required>
+                                                        <input type="number" class="form-control" id="height" placeholder="E.g 175" required>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <label for="age">Age</label>
-                                                        <input type="number" class="form-control" placeholder="35" id="age" required>
+                                                        <input type="number" class="form-control" placeholder="E.g 35" id="age" required>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <label for="gender">Gender</label>
@@ -173,7 +173,11 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <button type="button" class="btn  calculate-btn" onclick="calculateCalories()">Calculate</button>
+
+                                                <button type="button" class="btn calculate-btn" onclick="calculateCalories()">Calculate</button>
+
+                                                <!-- Placeholder for the alert -->
+                                                <div id="calorieAlert" class="mt-3"></div>
                                             </form>
                                         </section>
 
@@ -255,32 +259,38 @@
             });
         });
 
-            function calculateCalories() {
-                const weight = document.getElementById('weight').value;
-                const height = document.getElementById('height').value;
-                const age = document.getElementById('age').value;
-                const gender = document.getElementById('gender').value;
-                const activity = document.getElementById('activity').value;
-                const goal = document.getElementById('goal').value;
+        function calculateCalories() {
+            const weight = document.getElementById('weight').value;
+            const height = document.getElementById('height').value;
+            const age = document.getElementById('age').value;
+            const gender = document.getElementById('gender').value;
+            const activity = document.getElementById('activity').value;
+            const goal = document.getElementById('goal').value;
 
-                let BMR;
+            let BMR;
 
-                if (gender === 'male') {
-                    BMR = 10 * weight + 6.25 * height - 5 * age + 5;
-                } else {
-                    BMR = 10 * weight + 6.25 * height - 5 * age - 161;
-                }
-
-                let activityMultiplier = 1.2; // Sedentary
-                if (activity === 'light') activityMultiplier = 1.375;
-                else if (activity === 'moderate') activityMultiplier = 1.55;
-                else if (activity === 'active') activityMultiplier = 1.725;
-
-                const totalCalories = BMR * activityMultiplier;
-
-                alert(`Your estimated daily calorie needs are ${totalCalories.toFixed(0)} calories.`);
+            if (gender === 'male') {
+                BMR = 10 * weight + 6.25 * height - 5 * age + 5;
+            } else {
+                BMR = 10 * weight + 6.25 * height - 5 * age - 161;
             }
 
+            let activityMultiplier = 1.2; // Sedentary
+            if (activity === 'light') activityMultiplier = 1.375;
+            else if (activity === 'moderate') activityMultiplier = 1.55;
+            else if (activity === 'active') activityMultiplier = 1.725;
+
+            const totalCalories = BMR * activityMultiplier;
+
+            // Create the Bootstrap alert
+            const alertDiv = document.getElementById('calorieAlert');
+            alertDiv.innerHTML = `
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                Your estimated daily calorie needs are <strong>${totalCalories.toFixed(0)}</strong> calories.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        `;
+        }
     </script>
 
 
