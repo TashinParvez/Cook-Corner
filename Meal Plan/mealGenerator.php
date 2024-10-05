@@ -42,9 +42,11 @@
 <body>
 
     <?php
-    include('../Includes/Navbar/navbarMain.php');  // tashin  
+    // include('../Includes/Navbar/navbarMain.php');  // tashin  prev
+    // include('../Includes/Navbar/search1-forCopy.php');  // tashin
+    include('../Includes/Navbar/search2.php');  // tashin
     include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin
-    ?>
+     ?>
 
 
     <div class="container meal-planner ">

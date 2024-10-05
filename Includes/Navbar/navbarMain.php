@@ -3,7 +3,7 @@
 session_start();
 
 $user_id = $_SESSION['user_id'] ?? '5';
- 
+
 
 
 //...................... Database Connection ..............................
@@ -280,7 +280,7 @@ mysqli_close($conn);
                                     <div class="col-md-3">
                                         <div class="card">
                                             <a href="#" class="text-decoration-none">
-                                                <img  src="../Images/FoodImages/cookingClass.jpeg" class="card-img-top" alt="...">
+                                                <img src="../Images/FoodImages/cookingClass.jpeg" class="card-img-top" alt="...">
                                                 <div class="card-body">
 
                                                     <div class="row">
@@ -348,7 +348,7 @@ mysqli_close($conn);
                     <li class="nav-item">
                         <a class="nav-link" href="/Course/allCourses.php">Course</a>
                     </li>
-                   
+
 
                 </ul>
 
@@ -359,7 +359,8 @@ mysqli_close($conn);
 
         <!-- ============================== Sidebar ==================================== -->
         <?php
-        include('../Includes/Navbar/sidebar.php');  // tashin 
+        // include('../Includes/Navbar/sidebar.php');  // tashin 
+        include('/Cook-Corner/Includes/Navbar/sidebar-2.php');  // tashin change
         ?>
 
     </header>

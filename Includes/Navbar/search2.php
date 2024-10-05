@@ -59,17 +59,44 @@ mysqli_close($conn);
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <form class="d-flex" role="search">
-                        <input class="form-control search me-2" type="search" placeholder="Search your Recipe" aria-label="Search">
-                        <button class="btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></i>
-                        </button>
-                    </form>
 
-                    <!-- <div class="text-end">
-                        <a href="../../Login SignUp/Login.php" class="text-black text-decoration-none">Login</a>
-                        <span>|</span>
-                        <a href="../../Login SignUp/Signup.php" class=" text-black text-decoration-none">Sign Up</a>
-                    </div> -->
+
+                    <!------------------ search Segment ------------------>
+
+
+
+                    <div class="search-bar" style="display: flex; justify-content: center; margin: 10px 0;">
+                        <form class="d-flex" role="search">
+                            <div class="input-group mb-3">
+                                <!-- Dropdown button -->
+                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    All
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#" onclick="showTips()">Tips</a></li>
+                                    <li><a class="dropdown-item" href="#">Recipes</a></li>
+                                    <li><a class="dropdown-item" href="#">More Options</a></li>
+                                </ul>
+                                <!-- Search input -->
+                                <input class="form-control search me-2" type="search" placeholder="Search your Recipe" aria-label="Search">
+                                <!-- Search button with icon -->
+                                <button class="btn btn-outline-secondary" type="submit">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <script>
+                        function showTips() {
+                            // Logic to show tips or filter the search results based on the selected option
+                            alert('Tips selected! Implement the logic here.');
+                        }
+                    </script>
+
+
+                    <!------------------ search Segment END ------------------>
+
 
                     <div class="text-end">
                         <?php if (isset($user_id)): ?>
@@ -361,7 +388,7 @@ mysqli_close($conn);
 
         <!-- ============================== Sidebar ==================================== -->
         <?php
-        include('../Includes/Navbar/sidebar.php');  // tashin  
+        include('/Cook-Corner/Includes/Navbar/sidebar-2.php');  // tashin change        
         ?>
 
     </header>
