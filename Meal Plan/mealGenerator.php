@@ -42,7 +42,7 @@
 <body>
 
     <?php
-    include('../Includes/Navbar/navbarMain.php');  // tashin 
+    include('../Includes/Navbar/navbarMain.php');  // tashin  
     include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin
     ?>
 
