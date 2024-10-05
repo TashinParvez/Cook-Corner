@@ -15,7 +15,9 @@ $course_info = mysqli_fetch_all($resultantLabel)[0];
 // ---------------------------------------- FOR outlin
 $playlistID =  $course_info[2];
 
-$apiKey =  "AIzaSyBm4S9TTRDo8Loo3xpFkm9ihwYRjOrSl7c"; // Replace with your API Key
+
+$apiKey =  "AIzaSyBm4S9TTRDo8Loo3xpFkm9ihwYRjOrSl7c"; //-------- Tashin API Key [HAHAHHAHAHHAHAHHA] 
+
 
 function getVideoInfoFromPlaylist($playlistID, $apiKey)
 {
