@@ -1,19 +1,11 @@
 <?php
-// Database table name:  
 
-//...................... Database Connection ..............................
-// include("../Includes/Database Connection/database_connection.php");
+include("../Includes/Database Connection/database_connection.php");  // for home page
 
 
-// sql query
-// $sql = " ";
-
-// $resultantLabel = mysqli_query($conn, $sql);   // get query result
-
-// $labels = mysqli_fetch_all($resultantLabel);   // conver to array
-
-// mysqli_free_result($resultantLabel);
-// mysqli_close($conn);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
 ?>
 

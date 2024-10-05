@@ -4,20 +4,42 @@ include("/Cook-Corner/Includes/Database Connection/database_connection.php");
 // Get the search query
 $search_query = $_GET['query'] ?? '';
 
-
-// include("/Cook-Corner/Includes/Navbar/navbarMain-Search-imp.php");  // main tashin
-include("/Cook-Corner/Includes/Navbar/navbarMain-Search-imp.php"); // try
-
-// Process the search query, for example, querying the database
-if ($search_query) {
-    // Perform your search query here
-    // Example: SELECT * FROM recipes WHERE title LIKE '%$search_query%'
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
-// Ensure the connection is closed at the end
-// mysqli_close($conn);
-?>
+// Include the navbar
+include("/Cook-Corner/Includes/Navbar/navbarMain-Search-imp.php");
 
+if ($search_query) {
+    // Escape the search query for security
+    $search_query = $conn->real_escape_string($search_query);
+
+    // Perform your search query here
+    $sql = "SELECT * FROM recipes WHERE title LIKE '%$search_query%' OR description LIKE '%$search_query%'"; // Modify based on your table structure
+
+    $result = $conn->query($sql);
+
+    if ($result) {
+        // Check if any results were found
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                // Display each result (customize this based on your needs)
+                echo "<div class='search-result'>";
+                echo "<h3>" . htmlspecialchars($row['title']) . "</h3>";
+                echo "<p>" . htmlspecialchars($row['description']) . "</p>";
+                echo "</div>";
+            }
+        } else {
+            echo "<p>No results found for: " . htmlspecialchars($search_query) . "</p>";
+        }
+    } else {
+        echo "Error: " . $conn->error; // Display SQL error if query fails
+    }
+}
+
+// $conn->close(); // Close the database connection
+?>
 
 <!doctype html>
 <html lang="en">
@@ -32,26 +54,15 @@ if ($search_query) {
     <link rel="icon" href="../Images/logo/fav-icon.png" />
     <!-- css  -->
     <link rel="stylesheet" href="../Includes/Navbar/navbarMain.css"> <!-- Navbar CSS -->
-
 </head>
 
 <body>
-
-    <?php
-    include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin
-    include "../Includes/AddMenu/addMenu.php";
-    ?>
-
-
-
-
-
-    <!-- ============================== Footer ==================================== -->
-    <?php
-    include('../Includes/Footer/footermain.php');  // tashin 
-    ?>
-    <!-- ============================== Footer End ==================================== -->
-
+    <div class="container mt-4">
+        <?php if ($search_query): ?>
+            <h2>Search Results for: <?= htmlspecialchars($search_query); ?></h2>
+            <!-- Display your search results here -->
+        <?php endif; ?>
+    </div>
 </body>
 
 </html>
