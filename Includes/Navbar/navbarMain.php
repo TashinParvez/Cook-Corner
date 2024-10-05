@@ -355,8 +355,8 @@ mysqli_close($conn);
 
         <!-- ============================== Sidebar ==================================== -->
         <?php
-        // include('../Includes/Navbar/sidebar.php');  // tashin 
-        include('/Cook-Corner/Includes/Navbar/sidebar-2.php');  // tashin change
+        include('../Includes/Navbar/sidebar.php');  // tashin
+        // include('/Cook-Corner/Includes/Navbar/sidebar-2.php');  // tashin change
         ?>
 
     </header>
