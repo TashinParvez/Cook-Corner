@@ -372,36 +372,36 @@ mysqli_close($conn);
 
 
 
-             <!-- Swiper for all categories -->
-        <div class="swiper mySwiper swiper-category">
-            <div class="swiper-wrapper">
-                <?php foreach ([1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as $key => $value): ?>
-                    <div class="swiper-slide">
-                        <a href="javascript:void(0);" class="category-tab" data-target="content-<?php echo $key; ?>">
-                        <!-- <div class="row justify-content-center">
+            <!-- Swiper for all categories -->
+            <div class="swiper mySwiper swiper-category">
+                <div class="swiper-wrapper">
+                    <?php foreach ([1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as $key => $value): ?>
+                        <div class="swiper-slide">
+                            <a href="javascript:void(0);" class="category-tab" data-target="content-<?php echo $key; ?>">
+                                <!-- <div class="row justify-content-center">
                         <div class="col-md"> -->
 
-                            <div class="card text-center bg-transparent border-0">
-                                <img src="../../../Images/FoodImages/2.jpg" class="card-img-top rounded-circle mx-auto d-block" alt="..." style="width: 100px; height: 100px; object-fit: cover;">
-                                <div class="card-body">
-                                    <h5 class="card-title">Eid al-Fitr <?php echo $key; ?></h5>
+                                <div class="card text-center bg-transparent border-0">
+                                    <img src="../../../Images/FoodImages/2.jpg" class="card-img-top rounded-circle mx-auto d-block" alt="..." style="width: 100px; height: 100px; object-fit: cover;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Eid al-Fitr <?php echo $key; ?></h5>
+                                    </div>
                                 </div>
-                            </div>
-                        <!-- </div>
+                                <!-- </div>
                         </div> -->
-                        </a>
-                    </div>
-                <?php endforeach; ?>
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
             </div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-pagination"></div>
-        </div>
-         
 
 
 
-           
+
+
 
 
     </section>

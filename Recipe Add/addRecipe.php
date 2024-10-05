@@ -1,4 +1,5 @@
 <?php
+ob_start();
 
 include('../Includes/Navbar/navbarMain.php');  // tashin
 // echo $user_id;
@@ -126,8 +127,8 @@ if (isset($_POST['submit_recipe'])) {
             $sub_title,
             $image,
             $description,
-            $prepTime,
-            $cookTime,
+            $prep_time,
+            $cook_time,
             $servings, // for how many person
             $difficulty_level,
             $story_or_learn,
@@ -386,6 +387,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 
 // .....................___________---------- *************----------___________ ...............
 
+ob_end_flush();
 
 ?>
 

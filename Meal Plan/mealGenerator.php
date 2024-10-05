@@ -1,19 +1,12 @@
 <?php
-// Database table name:  
 
-//...................... Database Connection ..............................
-// include("../Includes/Database Connection/database_connection.php");
+include("../Includes/Database Connection/database_connection.php");  // for home page
 
+include('../Includes/Navbar/navbarMain.php');  // tashin  prev 
 
-// sql query
-// $sql = " ";
-
-// $resultantLabel = mysqli_query($conn, $sql);   // get query result
-
-// $labels = mysqli_fetch_all($resultantLabel);   // conver to array
-
-// mysqli_free_result($resultantLabel);
-// mysqli_close($conn);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
 ?>
 
@@ -42,7 +35,7 @@
 <body>
 
     <?php
-    include('../Includes/Navbar/navbarMain.php');  // tashin  
+
     include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin
     ?>
 
@@ -114,21 +107,21 @@
                                         <!--  Modal Main content  -->
                                         <!-- Hero Section -->
                                         <section class="hero">
-                                            <div class="container">
-                                                <h1>Estimate Your Calorie Needs</h1>
+                                            <div class="container mb-3">
+                                                <h4>Estimate Your Calorie Needs</h4>
                                                 <p>Not sure how many calories you should be eating? Use our guide to learn more about daily calorie requirements based on your activity level, goals, and dietary preferences. Get personalized recommendations to better understand how food categories contribute to your overall calorie intake.</p>
                                             </div>
                                         </section>
 
                                         <!-- Section 1: What Are Calories -->
-                                        <section class="container">
-                                            <h2 class="section-title">What Are Calories?</h2>
+                                        <section class="container  mb-3">
+                                            <h4 class="section-title">What Are Calories?</h4>
                                             <p>Calories are a unit of energy that your body uses for everything from breathing to running. Understanding how many calories are in your food helps manage weight, health, and overall nutrition.</p>
                                         </section>
 
                                         <!-- Section 2: Daily Calorie Needs -->
-                                        <section class="container calculator-section">
-                                            <h2 class="section-title">Daily Calorie Needs</h2>
+                                        <section class="container  mb-3 calculator-section">
+                                            <h4 class="section-title">Daily Calorie Needs</h4>
                                             <p>Daily calorie needs vary based on age, gender, activity level, and weight goals.</p>
 
                                             <!-- Calorie Calculator -->
@@ -136,15 +129,15 @@
                                                 <div class="row">
                                                     <div class="col-md-3">
                                                         <label for="weight">Weight (kg)</label>
-                                                        <input type="number" class="form-control" id="weight" required>
+                                                        <input type="number" class="form-control" id="weight" placeholder="E.g 70" required>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <label for="height">Height (cm)</label>
-                                                        <input type="number" class="form-control" id="height" required>
+                                                        <input type="number" class="form-control" id="height" placeholder="E.g 175" required>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <label for="age">Age</label>
-                                                        <input type="number" class="form-control" id="age" required>
+                                                        <input type="number" class="form-control" placeholder="E.g 35" id="age" required>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <label for="gender">Gender</label>
@@ -173,13 +166,17 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <button type="button" class="btn btn-primary calculate-btn" onclick="calculateCalories()">Calculate</button>
+
+                                                <button type="button" class="btn calculate-btn" onclick="calculateCalories()">Calculate</button>
+
+                                                <!-- Placeholder for the alert -->
+                                                <div id="calorieAlert" class="mt-3"></div>
                                             </form>
                                         </section>
 
                                         <!-- Section 3: Calories in Common Food Categories -->
-                                        <section class="container">
-                                            <h2 class="section-title">Calories in Common Food Categories</h2>
+                                        <section class="container  mb-3">
+                                            <h4 class="section-title">Calories in Common Food Categories</h4>
                                             <ul>
                                                 <li>Vegetarian Meals: 300–500 calories per meal</li>
                                                 <li>Vegan Meals: 250–450 calories per meal</li>
@@ -190,8 +187,8 @@
                                         </section>
 
                                         <!-- Section 4: How to Estimate Calories in Your Meals -->
-                                        <section class="container">
-                                            <h2 class="section-title">How to Estimate Calories in Your Meals</h2>
+                                        <section class="container  mb-3">
+                                            <h4 class="section-title">How to Estimate Calories in Your Meals</h4>
                                             <p>There are various ways to estimate calories in your meals:</p>
                                             <ul class="tips-list">
                                                 <li><strong>Use Apps or Websites:</strong> Tools like MyFitnessPal can help you log meals and estimate calories.</li>
@@ -201,8 +198,8 @@
                                         </section>
 
                                         <!-- Section 5: Tips for Managing Calorie Intake -->
-                                        <section class="container">
-                                            <h2 class="section-title">Tips for Managing Calorie Intake</h2>
+                                        <section class="container  mb-3">
+                                            <h4 class="section-title">Tips for Managing Calorie Intake</h4>
                                             <ul class="tips-list">
                                                 <li><strong>Meal Prep:</strong> Plan meals ahead to ensure balanced nutrition.</li>
                                                 <li><strong>Portion Control:</strong> Learn the correct serving sizes to avoid overeating.</li>
@@ -210,42 +207,11 @@
                                             </ul>
                                         </section>
 
-
-
-                                        <!-- JavaScript to handle calorie calculation -->
-                                        <script>
-                                            function calculateCalories() {
-                                                const weight = document.getElementById('weight').value;
-                                                const height = document.getElementById('height').value;
-                                                const age = document.getElementById('age').value;
-                                                const gender = document.getElementById('gender').value;
-                                                const activity = document.getElementById('activity').value;
-                                                const goal = document.getElementById('goal').value;
-
-                                                let BMR;
-
-                                                if (gender === 'male') {
-                                                    BMR = 10 * weight + 6.25 * height - 5 * age + 5;
-                                                } else {
-                                                    BMR = 10 * weight + 6.25 * height - 5 * age - 161;
-                                                }
-
-                                                let activityMultiplier = 1.2; // Sedentary
-                                                if (activity === 'light') activityMultiplier = 1.375;
-                                                else if (activity === 'moderate') activityMultiplier = 1.55;
-                                                else if (activity === 'active') activityMultiplier = 1.725;
-
-                                                const totalCalories = BMR * activityMultiplier;
-
-                                                alert(`Your estimated daily calorie needs are ${totalCalories.toFixed(0)} calories.`);
-                                            }
-                                        </script>
-
                                         <!-- ---------------------------- -->
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                        <button type="button" class="btn close-btn" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn save-btn">Save changes</button>
                                     </div>
                                 </div>
                             </div>
@@ -285,6 +251,44 @@
                 this.classList.add('active');
             });
         });
+
+        function calculateCalories() {
+            const weight = document.getElementById('weight').value;
+            const height = document.getElementById('height').value;
+            const age = document.getElementById('age').value;
+            const gender = document.getElementById('gender').value;
+            const activity = document.getElementById('activity').value;
+            const goal = document.getElementById('goal').value;
+
+
+            let BMR;
+
+
+
+            if (gender === 'male') {
+                BMR = 10 * weight + 6.25 * height - 5 * age + 5;
+            } else {
+                BMR = 10 * weight + 6.25 * height - 5 * age - 161;
+            }
+
+            let activityMultiplier = 1.2; // Sedentary
+            if (activity === 'light') activityMultiplier = 1.375;
+            else if (activity === 'moderate') activityMultiplier = 1.55;
+            else if (activity === 'active') activityMultiplier = 1.725;
+
+            const totalCalories = BMR * activityMultiplier;
+
+
+            // Create the Bootstrap alert
+            const alertDiv = document.getElementById('calorieAlert');
+            alertDiv.innerHTML = `
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                Your estimated daily calorie needs are <strong>${totalCalories.toFixed(0)}</strong> calories.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        `;
+
+        }
     </script>
 
 

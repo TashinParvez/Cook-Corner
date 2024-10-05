@@ -2,7 +2,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMVq49X6LT1ql2e2nU0f3G7U6rYvZ6sDq2sor" crossorigin="anonymous">
     <!-- Other head elements like title, meta tags, etc. -->
 
-
     <style>
         /* Sidebar styling */
         #mySidebar {
@@ -11,11 +10,7 @@
             right: -400px;
             width: 400px;
             height: 100%;
-
-            /* background-color: #c6f7c6;  */
             background-color: #d9f2d9;
-
-
             transition: 0.3s;
             z-index: 1000;
         }
@@ -26,29 +21,6 @@
         }
 
         /* Toggle button for the right edge */
-        #toggleSidebar {
-            position: fixed;
-            top: 50%;
-            right: -40px;
-            background-color: #ff5252;
-            color: white;
-            cursor: pointer;
-            z-index: 1001;
-            transition: right 0.3s;
-            border-top-left-radius: 10px;
-            border-bottom-left-radius: 10px;
-
-            width: 30px !important;
-
-        }
-
-        /* Move toggle button along with sidebar */
-        #mySidebar.active+#toggleSidebar {
-            right: 400px;
-        }
-
-
-
         #toggleSidebar {
             position: fixed;
             top: 50%;
@@ -67,52 +39,24 @@
             line-height: 40px;
         }
 
-        /* Move toggle button along with sidebar */
-        #mySidebar.active+#toggleSidebar {
-            right: 400px;
-            /* Adjust position when sidebar is active */
-        }
-
         .d-flex.text-center {
             justify-content: center;
-            /* Center items horizontally */
             margin-top: 20px;
-            /* Optional: add some margin for spacing */
         }
 
-        tbody tr td .btn-primary {
-            background: transparent !important;
-            color: black;
-            border: none;
-        }
-
-        tbody tr td .btn-primary:hover {
-            background: transparent !important;
-            color: black;
-        }
-
-        /* Centering text in table headers and cells */
         #mySidebar .table th,
         #mySidebar .table td {
             text-align: center;
-            /* Center-align the text */
         }
 
         /* Optional: To ensure all tables use this style */
         table {
             width: 100%;
-            /* Ensures the table takes full width */
         }
 
         .table-striped thead th {
             background-color: #72bf78;
             color: white;
-        }
-
-        tbody tr .btn-primary {
-            outline: none;
-            border: none;
-
         }
 
         .tab-pane h4 {
@@ -125,24 +69,7 @@
 
         .nav-tabs .nav-link.active {
             background-color: #72BF78 !important;
-            /* Change background color */
             color: white !important;
-            /* Change text color */
-        }
-
-        .tab-pane .container ul li {
-            list-style: none;
-            margin-bottom: 5px;
-        }
-
-        .tab-pane .container ul li a {
-            width: 90% !important;
-            line-height: 40px !important;
-            text-align: center !important;
-            background-color: #f8f9fa;
-            border: 1px solid #ced4da;
-            border-radius: 5px;
-            transition: background-color 0.3s, border-color 0.3s;
         }
 
         /* Hover effect for links */
@@ -150,11 +77,6 @@
             background-color: #72BF78;
             border: 1px solid #72BF78;
             color: white !important;
-        }
-
-
-        .todo-form {
-            text-align: center;
         }
 
         #mySidebar .d-flex .btn {
@@ -167,46 +89,23 @@
     </style>
 </head>
 
-<!-- CSS -->
-
-
-<!------------------------------ main Content ------------------------------>
-
 <!-- Sidebar -->
 <div id="mySidebar">
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" id="myTab" role="tablist">
-
-
-
-        <!-- Todo List  -->
         <li class="nav-item fs-6" role="presentation">
             <a class="nav-link" id="todo-tab" data-bs-toggle="tab" href="#todo" role="tab" aria-controls="todo" aria-selected="false">Todo List</a>
         </li>
-
-
-
-        <!-- Cart -->
         <li class="nav-item fs-6" role="presentation">
             <a class="nav-link active" id="cart-tab" data-bs-toggle="tab" href="#cart" role="tab" aria-controls="cart" aria-selected="true">Cart</a>
         </li>
-
-
-
-        <!-- Favourite -->
         <li class="nav-item fs-6" role="presentation">
             <a class="nav-link" id="favorites-tab" data-bs-toggle="tab" href="#favorites" role="tab" aria-controls="favorites" aria-selected="false">Favorites</a>
         </li>
-
-
     </ul>
 
     <!-- Tab content -->
     <div class="tab-content p-3">
-
-
-
-
         <!-- Todo List content-->
         <div class="tab-pane fade" id="todo" role="tabpanel" aria-labelledby="todo-tab">
             <h4>Todo List</h4>
@@ -220,85 +119,55 @@
                         <th scope="col">Quantity</th>
                     </tr>
                 </thead>
-                <tbody id="todoTableBody"> <!-- Added ID for tbody -->
-
-                </tbody>
+                <tbody id="todoTableBody"></tbody>
             </table>
-
             <div class="d-flex text-center">
-                <button type="button" class="btn btn-secondary" style="margin-right: 10px; padding: 4px 8px; font-size: 12px;  " onclick="">
-                    Remove
-                </button>
-                <button type="button" class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px; " onclick="addTodoItem()">
-                    Add
-                </button>
+                <button type="button" class="btn btn-secondary btn-sm add" onclick="addTodoItem()">Add</button>
             </div>
-
         </div>
-
 
         <!-- Cart content-->
         <div class="tab-pane fade show active" id="cart" role="tabpanel" aria-labelledby="cart-tab">
             <h4>Cart Items</h4>
-
             <table class="table table-striped">
-
                 <thead>
                     <tr class="table-dark">
-
                         <th scope="col">Item</th>
                         <th scope="col">Quantity</th>
-                        <th scope="col">Total Parice</th>
+                        <th scope="col">Total Price</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-
-
                     <tr>
-                        <!-- items:  -->
-
                         <td>Tomatoes</td>
-
-
                         <td>
                             <button type="button" class="btn btn-primary btn-sm" onclick="changeQuantity(this, -1)">-</button>
-                            <span class="quantity">1</span> <!-- Using span for quantity -->
+                            <span class="quantity">1</span>
                             <button type="button" class="btn btn-primary btn-sm" onclick="changeQuantity(this, 1)">+</button>
                         </td>
-
                         <td>20Tk</td>
                         <td>
                             <button type="button" class="btn btn-primary btn-sm"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>
-
                     <tr>
-                        <!-- items:  -->
-
                         <td>Broccoli</td>
-
                         <td>
                             <button type="button" class="btn btn-primary btn-sm" onclick="changeQuantity(this, -1)">-</button>
-                            <span class="quantity">1</span> <!-- Using span for quantity -->
+                            <span class="quantity">1</span>
                             <button type="button" class="btn btn-primary btn-sm" onclick="changeQuantity(this, 1)">+</button>
                         </td>
-
                         <td>20Tk</td>
                         <td>
                             <button type="button" class="btn btn-primary btn-sm"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>
-
                 </tbody>
-
             </table>
-
-            <div class="d-flex text-center ">
-                <a type="button" class="btn btn-secondary btn-sm" href="/User Account/YourCart.php">See All</a>
+            <div class="d-flex text-center">
+                <a type="button" class="btn btn-secondary btn-sm" href="../All Categories/allCategories.php">See All</a>
             </div>
-
-
         </div>
 
         <!-- Favorite content-->
@@ -314,12 +183,10 @@
                     <li><a class="dropdown-item" href="#">Desserts</a></li>
                 </ul>
             </div>
-            <div class="d-flex text-center ">
-                <a type="button" class="btn btn-secondary btn-sm" href="/User Account/YourCollections.php">See All</a>
+            <div class="d-flex text-center">
+                <a type="button" class="btn btn-secondary btn-sm" href="../All Categories/allCategories.php">See All</a>
             </div>
         </div>
-
-
     </div>
 </div>
 
@@ -328,28 +195,25 @@
     <<
         </div>
 
-
         <!-------------------------------------- JS -------------------------------------->
+
         <script>
             // Toggle Sidebar with Navbar Buttons
-            document.getElementById('cartBtn').addEventListener('click', function(event) {
-                event.stopPropagation(); // Prevent click from propagating to document
+            document.getElementById('cartBtn').addEventListener('click', function() {
                 document.getElementById('mySidebar').classList.add('active');
                 var cartTab = new bootstrap.Tab(document.getElementById('cart-tab'));
                 cartTab.show();
                 updateToggleBtnText();
             });
 
-            document.getElementById('favBtn').addEventListener('click', function(event) {
-                event.stopPropagation(); // Prevent click from propagating to document
+            document.getElementById('favBtn').addEventListener('click', function() {
                 document.getElementById('mySidebar').classList.add('active');
                 var favoritesTab = new bootstrap.Tab(document.getElementById('favorites-tab'));
                 favoritesTab.show();
                 updateToggleBtnText();
             });
 
-            document.getElementById('todoBtn').addEventListener('click', function(event) {
-                event.stopPropagation(); // Prevent click from propagating to document
+            document.getElementById('todoBtn').addEventListener('click', function() {
                 document.getElementById('mySidebar').classList.add('active');
                 var todoTab = new bootstrap.Tab(document.getElementById('todo-tab'));
                 todoTab.show();
@@ -357,8 +221,7 @@
             });
 
             // Sidebar toggle button (<< / >>)
-            document.getElementById('toggleSidebar').addEventListener('click', function(event) {
-                event.stopPropagation(); // Prevent click from propagating to document
+            document.getElementById('toggleSidebar').addEventListener('click', function() {
                 document.getElementById('mySidebar').classList.toggle('active');
                 updateToggleBtnText();
             });
@@ -368,8 +231,8 @@
                 const sidebar = document.getElementById('mySidebar');
                 const toggleBtn = document.getElementById('toggleSidebar');
 
-                // Check if the click is outside the sidebar and not on the toggle button
-                if (!sidebar.contains(event.target) && !toggleBtn.contains(event.target)) {
+                // Check if the clicked element is outside the sidebar and toggle button
+                if (sidebar.classList.contains('active') && !sidebar.contains(event.target) && event.target !== toggleBtn) {
                     sidebar.classList.remove('active');
                     updateToggleBtnText();
                 }
@@ -386,9 +249,7 @@
                 }
             }
 
-
-
-
+            // Add Todo Item function
             function addTodoItem() {
                 // Create a new table row
                 const newRow = document.createElement('tr');
@@ -400,9 +261,9 @@
             <th scope="col"></th>
             <th scope="col"></th>
             <td>
-            <button type="button" class="btn btn-primary btn-sm" onclick="changeQuantity(this, -1)">-</button>
-            <span class="quantity">1</span> <!-- Using span for quantity -->
-            <button type="button" class="btn btn-primary btn-sm" onclick="changeQuantity(this, 1)">+</button>
+                <button type="button" class="btn btn-primary btn-sm" onclick="changeQuantity(this, -1)">-</button>
+                <span class="quantity">1</span>
+                <button type="button" class="btn btn-primary btn-sm" onclick="changeQuantity(this, 1)">+</button>
             </td>
         `;
 
@@ -413,10 +274,9 @@
             // Function to change the quantity
             function changeQuantity(button, delta) {
                 const quantitySpan = button.parentNode.querySelector('.quantity');
-                let currentQuantity = parseInt(quantitySpan.textContent); // Get the current quantity
+                let currentQuantity = parseInt(quantitySpan.textContent);
 
-                // Update the quantity based on delta
-                if (currentQuantity + delta > 0) { // Prevent quantity from going below 1
+                if (currentQuantity + delta > 0) {
                     quantitySpan.textContent = currentQuantity + delta;
                 }
             }

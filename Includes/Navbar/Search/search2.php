@@ -5,20 +5,10 @@ session_start();
 $user_id = $_SESSION['user_id'] ?? '5';
 
 
-// for search
-// Check if the variable is defined; if not, set it to an empty string
-$search_query = $search_query ?? '';
-
 
 //...................... Database Connection ..............................
 include("../Includes/Database Connection/database_connection.php");  // for home page
 // include("../../Includes/Database Connection/database_connection.php");  // for only navbar
-
-
-
-$sql = "SELECT event_id, event_name FROM event_info";
-$result = $conn->query($sql);
-
 
 $stmt = $conn->prepare('SELECT first_name FROM user_info WHERE id = ? LIMIT 1');
 $stmt->bind_param('i', $user_id);
@@ -52,6 +42,7 @@ mysqli_close($conn);
 
     <!-- CSS -->
     <link rel="stylesheet" href="navbarMain.css">
+    <link rel="stylesheet" href="navbarMain-try.php.css">
     <!-- <link rel="stylesheet" href="sidebar.css"> -->
     <!-- sidebar -->
 </head>
@@ -63,53 +54,82 @@ mysqli_close($conn);
         <!-- navbar bg-dark sticky-top  -->
         <nav class="navbar navbar-expand-lg bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="/Home/Homepage.php"><img src="../../Images/logo/cook_Corner_LOGO-removebg.png" alt=""></a>
+                <a class="navbar-brand" href="#"><img src="../../Images/logo/cook_Corner_LOGO-removebg.png" alt=""></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse upper-nav" id="navbarSupportedContent">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
 
-                    <!-- -------------------------------------------------------------- -->
-                    <!-- -------------------------------------------------------------- -->
-                    <!-- -------------------------------------------------------------- -->
-
-
-                    <!-- tashin search change here -->
-
-                    <form class="d-flex" role="search" action="/Search/globalsearch.php" method="GET">
-                        <input class="form-control search me-2" type="search" name="query" placeholder="Search your Recipe" aria-label="Search"
-                            value="<?= htmlspecialchars($search_query); ?>" required>
-                        <button class="btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-                    </form>
+                    <!------------------ search Segment ------------------>
 
 
 
+                    <!-- Include Bootstrap CSS -->
+                    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
-                    <!-- -------------------------------------------------------------- -->
-                    <!-- -------------------------------------------------------------- -->
-                    <!-- -------------------------------------------------------------- -->
+                    <!-- Include Font Awesome CSS for icons -->
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+                    <!-- Include Bootstrap JS and dependencies -->
+                    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+                    <div class="search-bar" style="display: flex; justify-content: center; margin: 10px 0;">
+                        <form class="d-flex" role="search">
+                            <div class="input-group mb-3">
+                                <!-- Dropdown button -->
+                                <div class="dropdown">
+                                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        All
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#" onclick="showTips()">Tips</a></li>
+                                        <li><a class="dropdown-item" href="#">Recipes</a></li>
+                                        <li><a class="dropdown-item" href="#">More Options</a></li>
+                                    </ul>
+                                </div>
+                                <!-- Search input -->
+                                <input class="form-control search me-2" type="search" placeholder="Search your Recipe" aria-label="Search">
+                                <!-- Search button with icon -->
+                                <button class="btn btn-outline-secondary" type="submit" style="z-index: 10000;">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <script>
+                        function showTips() {
+                            // Logic to show tips or filter the search results based on the selected option
+                            alert('Tips selected! Implement the logic here.');
+                        }
+                    </script>
 
 
-                    <div class="login-icon">
-                        <div class="text-end">
-                            <?php if ($user_id): ?>
-                                <span class="text-black">Welcome &nbsp;<?= htmlspecialchars($name); ?></span>
-                                <!-- <a href="../../User Account/logout.php" class="text-black text-decoration-none ms-3">Logout</a> -->
-                            <?php else: ?>
-                                <a href="../../Login SignUp/Login.php" class="text-black text-decoration-none">Login</a>
-                                <span>|</span>
-                                <a href="../../Login SignUp/Signup.php" class="text-black text-decoration-none">Sign Up</a>
-                            <?php endif; ?>
-                        </div>
 
-                        <!-- Sidebar -->
-                        <div class="icons">
-                            <a href="../../User Account/updateAccountInfo.php" class="text-black text-decoration-none" title="Profile"><i class="fa-solid fa-user"></i></a>
-                            <a href="#" class="text-black text-decoration-none" title="Glossary List" id="todoBtn"><i class="fa-solid fa-calendar-check"></i></a>
-                            <a href="#" class="text-black text-decoration-none" title="Cart" id="cartBtn"><i class="fa-solid fa-cart-shopping"></i></a>
-                            <a href="#" class="text-black text-decoration-none" title="Favourites" id="favBtn"><i class="fa-solid fa-heart"></i></a>
-                        </div>
+                    <!------------------ search Segment END ------------------>
+
+
+                    <div class="text-end">
+                        <?php if (isset($user_id)): ?>
+                            <span class="text-black">Welcome &nbsp;<?= htmlspecialchars($name); ?></span>
+                            <a href="../../User Account/logout.php" class="text-black text-decoration-none ms-3">Logout</a>
+                        <?php else: ?>
+                            <a href="../../Login SignUp/Login.php" class="text-black text-decoration-none">Login</a>
+                            <span>|</span>
+                            <a href="../../Login SignUp/Signup.php" class="text-black text-decoration-none">Sign Up</a>
+                        <?php endif; ?>
+                    </div>
+
+
+                    <!-- Sidebar -->
+
+                    <div class="icons">
+                        <a href="../../User Account/updateAccountInfo.php" class="text-black text-decoration-none" title="Profile"><i class="fa-solid fa-user"></i></a>
+                        <a href="#" class="text-black text-decoration-none" title="Glossary List" id="todoBtn"><i class="fa-solid fa-calendar-check"></i></a>
+                        <a href="#" class="text-black text-decoration-none" title="Cart" id="cartBtn"><i class="fa-solid fa-cart-shopping"></i></a>
+                        <a href="#" class="text-black text-decoration-none" title="Favourites" id="favBtn"><i class="fa-solid fa-heart"></i></a>
                     </div>
 
                 </div>
@@ -214,34 +234,7 @@ mysqli_close($conn);
                         <ul class="dropdown-menu occasion-menu">
                             <div class="container-fluid">
                                 <div class="row nav-row">
-                                    <?php
-                                    if ($result->num_rows > 0) {
-                                        while ($row = $result->fetch_assoc()) {
-                                            $event_name = $row['event_name'];
-                                            $event_id = $row['event_id'];
-                                             // Display event name and dynamic href
-                        echo '<div class="col-md-2">';
-                        // echo '<h6>' . $event_name . '</h6>';
-                        echo '<ul>';
-                        echo '<li><a class="dropdown-item" href="/Occasions/occasion_main.php?event_id=' . $event_id . '">' . $event_name . '</a></li>';
-                        echo '</ul>';
-                        echo '</div>';
-                        // Display dynamic href for each event
-                // echo '<li><a class="dropdown-item" href="/Occasions/occasion_main.php?event_id=' . $event_id . '">' . $event_name . '</a></li>';
-                    }
-                } else {
-                    echo "<div>No occasions found</div>";
-                }
-                ?>
-                                </div>
-                            </div>
-                            <div class="go-next ">
-            <a href="/Occasions/occasion_main.php">View all Occasions <i class="fa-solid fa-angles-right"></i></a>
-        </div>
-    </ul>
-</li>
-
-                                    <!-- <div class="col-md-2">
+                                    <div class="col-md-2">
                                         <h6>Islamic</h6>
                                         <ul>
                                             <li><a class="dropdown-item" href="#">Eid ul Fitr</a></li>
@@ -290,7 +283,7 @@ mysqli_close($conn);
                         </ul>
                     </li>
 
- -->
+
 
 
 
@@ -389,7 +382,7 @@ mysqli_close($conn);
                     </li> -->
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/Meal Plan/mealGenerator.php">MealPlan</a>
+                        <a class="nav-link" href="/Meal Plan/mealPlan.php">MealPlan</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Shop</a>
@@ -408,8 +401,7 @@ mysqli_close($conn);
 
         <!-- ============================== Sidebar ==================================== -->
         <?php
-        include('../Includes/Navbar/sidebar.php');  // tashin
-        // include('/Cook-Corner/Includes/Navbar/sidebar-2.php');  // tashin change
+        include('/Cook-Corner/Includes/Navbar/sidebar-2.php');  // tashin change        
         ?>
 
     </header>

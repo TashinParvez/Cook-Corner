@@ -22,10 +22,21 @@
         }
 
         .footer-img {
-            margin-left: 200px !important;
+            /* margin-left: 200px !important; */
             height: auto;
-            width: 170px;
+            width: 150px;
             object-fit: cover;
+        }
+
+        .sub-img {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #newsletter1 {
+            width: 25rem !important;
         }
     </style>
 
@@ -72,7 +83,7 @@
                     </ul>
                 </div>
 
-                <div class="col-md-5 offset-md-1 mb-3">
+                <div class="col-md-5 offset-md-1 mb-3 sub-img">
 
                     <img class="footer-img" src="../../Images/logo/fav-icon.png" alt="logo">
 
@@ -80,7 +91,6 @@
                         <h5 class="text-center">Subscribe to our newsletter</h5>
                         <p class="text-center">Monthly digest of what's new and exciting from us</p>
                         <div class="d-flex flex-column flex-sm-row w-100 gap-2 temp-mail-smart-button-wrapper">
-                            <label for="newsletter1" class="visually-hidden">Email address</label>
                             <input id="newsletter1" type="text" class="form-control" placeholder="Email address">
                             <button class="btn btn-primary" type="button">Subscribe</button>
                         </div>

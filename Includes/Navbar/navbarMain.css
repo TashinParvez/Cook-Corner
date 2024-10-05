@@ -15,9 +15,25 @@
 
 /* search */
 .navbar .d-flex {
-    margin-left: 31.25rem;
-    position: relative;
+    /* margin-left: auto;
+    position: relative; */
     width: 500px;
+}
+
+.navbar .d-flex .form-control{
+    padding-right: 30px !important;
+}
+
+.login-icon{
+    position: absolute;
+    right: 0;
+    display: flex;
+
+}
+
+.upper-nav{
+    display: flex;
+    justify-content: center;
 }
 
 .navbar .d-flex button {

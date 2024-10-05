@@ -5,20 +5,10 @@ session_start();
 $user_id = $_SESSION['user_id'] ?? '5';
 
 
-// for search
-// Check if the variable is defined; if not, set it to an empty string
-$search_query = $search_query ?? '';
-
 
 //...................... Database Connection ..............................
 include("../Includes/Database Connection/database_connection.php");  // for home page
 // include("../../Includes/Database Connection/database_connection.php");  // for only navbar
-
-
-
-$sql = "SELECT event_id, event_name FROM event_info";
-$result = $conn->query($sql);
-
 
 $stmt = $conn->prepare('SELECT first_name FROM user_info WHERE id = ? LIMIT 1');
 $stmt->bind_param('i', $user_id);
@@ -52,6 +42,7 @@ mysqli_close($conn);
 
     <!-- CSS -->
     <link rel="stylesheet" href="navbarMain.css">
+    <link rel="stylesheet" href="navbarMain-try.php.css">
     <!-- <link rel="stylesheet" href="sidebar.css"> -->
     <!-- sidebar -->
 </head>
@@ -63,53 +54,115 @@ mysqli_close($conn);
         <!-- navbar bg-dark sticky-top  -->
         <nav class="navbar navbar-expand-lg bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="/Home/Homepage.php"><img src="../../Images/logo/cook_Corner_LOGO-removebg.png" alt=""></a>
+                <a class="navbar-brand" href="#"><img src="../../Images/logo/cook_Corner_LOGO-removebg.png" alt=""></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse upper-nav" id="navbarSupportedContent">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
 
-                    <!-- -------------------------------------------------------------- -->
-                    <!-- -------------------------------------------------------------- -->
-                    <!-- -------------------------------------------------------------- -->
+                    <!------------------ search Segment ------------------>
 
+                    <!-- Bootstrap CSS -->
+                    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
 
-                    <!-- tashin search change here -->
+                    <!-- jQuery (optional, for Bootstrap 4) -->
+                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-                    <form class="d-flex" role="search" action="/Search/globalsearch.php" method="GET">
-                        <input class="form-control search me-2" type="search" name="query" placeholder="Search your Recipe" aria-label="Search"
-                            value="<?= htmlspecialchars($search_query); ?>" required>
-                        <button class="btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-                    </form>
-
+                    <!-- Bootstrap JS -->
+                    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
 
 
-                    <!-- -------------------------------------------------------------- -->
-                    <!-- -------------------------------------------------------------- -->
-                    <!-- -------------------------------------------------------------- -->
+                    <style>
+                        .small-input {
+                            width: 50px !important;
+                            /* Set the input width */
+                        }
+
+                        /* Style for the sidebar input field */
+                        .sidebar-input {
+                            border: 1px solid #ccc;
+                            /* Normal border */
+                            border-radius: 4px;
+                            /* Rounded corners */
+                            transition: border-color 0.3s ease;
+                            /* Smooth transition */
+                        }
+
+                        /* Remove default focus outline */
+                        .sidebar-input:focus {
+                            outline: none;
+                            /* Remove the default outline */
+                            border-color: #007bff;
+                            /* Change border color on focus */
+                            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+                            /* Optional: Add a soft glow effect */
+                        }
+                    </style>
 
 
-                    <div class="login-icon">
-                        <div class="text-end">
-                            <?php if ($user_id): ?>
-                                <span class="text-black">Welcome &nbsp;<?= htmlspecialchars($name); ?></span>
-                                <!-- <a href="../../User Account/logout.php" class="text-black text-decoration-none ms-3">Logout</a> -->
-                            <?php else: ?>
-                                <a href="../../Login SignUp/Login.php" class="text-black text-decoration-none">Login</a>
-                                <span>|</span>
-                                <a href="../../Login SignUp/Signup.php" class="text-black text-decoration-none">Sign Up</a>
-                            <?php endif; ?>
+                    <div class="input-group mb-3">
+                        <!-- Dropdown Button -->
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                Dropdown
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <li><a class="dropdown-item" href="#" onclick="submitSortForm('action')">Action</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="submitSortForm('another')">Another action</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="submitSortForm('somethingElse')">Something else here</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#" onclick="submitSortForm('separated')">Separated link</a></li>
+                            </ul>
                         </div>
 
-                        <!-- Sidebar -->
-                        <div class="icons">
-                            <a href="../../User Account/updateAccountInfo.php" class="text-black text-decoration-none" title="Profile"><i class="fa-solid fa-user"></i></a>
-                            <a href="#" class="text-black text-decoration-none" title="Glossary List" id="todoBtn"><i class="fa-solid fa-calendar-check"></i></a>
-                            <a href="#" class="text-black text-decoration-none" title="Cart" id="cartBtn"><i class="fa-solid fa-cart-shopping"></i></a>
-                            <a href="#" class="text-black text-decoration-none" title="Favourites" id="favBtn"><i class="fa-solid fa-heart"></i></a>
-                        </div>
+                        <!-- Search input -->
+                        <input class="form-control sidebar-input" type="text" placeholder="Search..." aria-label="Search">
+
+                        <!-- Search button with icon -->
+                        <button class="btn btn-outline-secondary" type="submit">
+                            <i class="fas fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+
+                    <script>
+                        function submitSortForm(sortInput) {
+                            console.log("Selected sort option:", sortInput); // Log the selected option
+                            var dropdown = document.getElementById('dropdownMenuButton');
+                            var dropdownInstance = bootstrap.Dropdown.getInstance(dropdown); // Get the dropdown instance
+                            if (dropdownInstance) {
+                                dropdownInstance.hide(); // Hide the dropdown after selection
+                            }
+                        }
+                    </script>
+
+
+
+                    <!------------------ search Segment END ------------------>
+
+
+                    <div class="text-end">
+                        <?php if (isset($user_id)): ?>
+                            <span class="text-black">Welcome &nbsp;<?= htmlspecialchars($name); ?></span>
+                            <a href="../../User Account/logout.php" class="text-black text-decoration-none ms-3">Logout</a>
+                        <?php else: ?>
+                            <a href="../../Login SignUp/Login.php" class="text-black text-decoration-none">Login</a>
+                            <span>|</span>
+                            <a href="../../Login SignUp/Signup.php" class="text-black text-decoration-none">Sign Up</a>
+                        <?php endif; ?>
+                    </div>
+
+
+                    <!-- Sidebar -->
+
+                    <div class="icons">
+                        <a href="../../User Account/updateAccountInfo.php" class="text-black text-decoration-none" title="Profile"><i class="fa-solid fa-user"></i></a>
+                        <a href="#" class="text-black text-decoration-none" title="Glossary List" id="todoBtn"><i class="fa-solid fa-calendar-check"></i></a>
+                        <a href="#" class="text-black text-decoration-none" title="Cart" id="cartBtn"><i class="fa-solid fa-cart-shopping"></i></a>
+                        <a href="#" class="text-black text-decoration-none" title="Favourites" id="favBtn"><i class="fa-solid fa-heart"></i></a>
                     </div>
 
                 </div>
@@ -214,34 +267,7 @@ mysqli_close($conn);
                         <ul class="dropdown-menu occasion-menu">
                             <div class="container-fluid">
                                 <div class="row nav-row">
-                                    <?php
-                                    if ($result->num_rows > 0) {
-                                        while ($row = $result->fetch_assoc()) {
-                                            $event_name = $row['event_name'];
-                                            $event_id = $row['event_id'];
-                                             // Display event name and dynamic href
-                        echo '<div class="col-md-2">';
-                        // echo '<h6>' . $event_name . '</h6>';
-                        echo '<ul>';
-                        echo '<li><a class="dropdown-item" href="/Occasions/occasion_main.php?event_id=' . $event_id . '">' . $event_name . '</a></li>';
-                        echo '</ul>';
-                        echo '</div>';
-                        // Display dynamic href for each event
-                // echo '<li><a class="dropdown-item" href="/Occasions/occasion_main.php?event_id=' . $event_id . '">' . $event_name . '</a></li>';
-                    }
-                } else {
-                    echo "<div>No occasions found</div>";
-                }
-                ?>
-                                </div>
-                            </div>
-                            <div class="go-next ">
-            <a href="/Occasions/occasion_main.php">View all Occasions <i class="fa-solid fa-angles-right"></i></a>
-        </div>
-    </ul>
-</li>
-
-                                    <!-- <div class="col-md-2">
+                                    <div class="col-md-2">
                                         <h6>Islamic</h6>
                                         <ul>
                                             <li><a class="dropdown-item" href="#">Eid ul Fitr</a></li>
@@ -290,7 +316,7 @@ mysqli_close($conn);
                         </ul>
                     </li>
 
- -->
+
 
 
 
@@ -389,7 +415,7 @@ mysqli_close($conn);
                     </li> -->
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/Meal Plan/mealGenerator.php">MealPlan</a>
+                        <a class="nav-link" href="/Meal Plan/mealPlan.php">MealPlan</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Shop</a>
@@ -408,8 +434,7 @@ mysqli_close($conn);
 
         <!-- ============================== Sidebar ==================================== -->
         <?php
-        include('../Includes/Navbar/sidebar.php');  // tashin
-        // include('/Cook-Corner/Includes/Navbar/sidebar-2.php');  // tashin change
+        include('/Cook-Corner/Includes/Navbar/sidebar-2.php');  // tashin change        
         ?>
 
     </header>
