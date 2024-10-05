@@ -1,0 +1,38 @@
+    SELECT title AS combined_info FROM `recipe_info` WHERE title IS NOT NULL 
+    UNION
+    SELECT subtitle AS combined_info FROM `recipe_info` WHERE subtitle IS NOT NULL
+
+
+    UNION
+    SELECT ingredient_name AS combined_info FROM `ingredient_info` WHERE ingredient_name IS NOT NULL
+    UNION
+    SELECT category AS combined_info FROM `ingredient_info` WHERE category IS NOT NULL 
+    
+    UNION
+    SELECT name AS combined_info FROM `recipe_category` WHERE name IS NOT NULL 
+    UNION
+    SELECT cuisine_name AS combined_info FROM `cuisine_type` WHERE cuisine_name IS NOT NULL 
+    UNION
+    SELECT meal_name AS combined_info FROM `meal_type` WHERE meal_name IS NOT NULL 
+    UNION
+    SELECT method_name AS combined_info FROM `cooking_method` WHERE method_name IS NOT NULL
+    UNION
+    SELECT spice_name AS combined_info FROM `spices` WHERE spice_name IS NOT NULL
+    UNION
+    SELECT city_name AS combined_info FROM `cities` WHERE city_name IS NOT NULL
+    UNION
+    SELECT event_name AS combined_info FROM `event_info` WHERE event_name IS NOT NULL
+    UNION
+    SELECT preference_name AS combined_info FROM `dietary_preferences` WHERE preference_name IS NOT NULL
+    UNION
+    SELECT focus_name AS combined_info FROM `health_focus` WHERE focus_name IS NOT NULL
+    UNION
+    SELECT tips_title AS combined_info FROM `kitchen_tips` WHERE tips_title IS NOT NULL
+    UNION
+    SELECT description AS combined_info FROM `kitchen_tips` WHERE description IS NOT NULL
+    UNION
+    SELECT name AS combined_info FROM `kitchen_tips_category` WHERE name IS NOT NULL
+    UNION
+    SELECT description AS combined_info FROM `kitchen_tips_category` WHERE description IS NOT NULL
+    ORDER BY RAND() 
+    LIMIT 8

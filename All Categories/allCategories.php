@@ -64,8 +64,6 @@ $total_pages = ceil($total_categories / $categories_per_page);
 $stmt->close();
 mysqli_close($conn);
 
-
-
 // ----------------------------------------------------------------
 
 // Output format
@@ -220,9 +218,9 @@ mysqli_close($conn);
             <div class="row g-4">
 
                 <script>
-                    function submitCategoryForm(categoryId) {
+                    function submitCategoryForm(category_id) {
                         const form = document.getElementById('categoryForm');
-                        form.action = 'oneparticularCategoryShow.php?categoryId=' + categoryId;
+                        form.action = 'oneparticularCategoryShow.php?category_id=' + category_id;
                         form.submit();
                     }
                 </script>
