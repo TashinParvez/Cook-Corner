@@ -45,7 +45,7 @@ body,
 
 /* Optional: hover effect */
 .meal-planner .diet-options .diet-option:hover {
-    background-color: #e0e0e0;
+    background-color: rgb(113, 248, 113);
 }
 
 ul li {
