@@ -70,8 +70,124 @@
                     </div>
                 </div>
             </div>
+
             <!-- Add more cards here -->
+
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="/Images/Kitchen-Tips/batch_cooking.jpg" alt="Recipe Image">
+                    <div class="card-body">
+                        <h5 class="card-title">Delicious Pasta</h5>
+                        <p class="card-text">Added by: Chef John</p>
+                        <p class="ratings">⭐⭐⭐⭐☆</p>
+                    </div>
+                    <div class="card-hover-details">
+                        <h6>Recipe Details</h6>
+                        <p>Prep Time: 15 min</p>
+                        <p>Cook Time: 30 min</p>
+                        <p>Servings: 4</p>
+                    </div>
+                </div>
+            </div> <div class="col-md-4">
+                <div class="card">
+                    <img src="/Images/Kitchen-Tips/batch_cooking.jpg" alt="Recipe Image">
+                    <div class="card-body">
+                        <h5 class="card-title">Delicious Pasta</h5>
+                        <p class="card-text">Added by: Chef John</p>
+                        <p class="ratings">⭐⭐⭐⭐☆</p>
+                    </div>
+                    <div class="card-hover-details">
+                        <h6>Recipe Details</h6>
+                        <p>Prep Time: 15 min</p>
+                        <p>Cook Time: 30 min</p>
+                        <p>Servings: 4</p>
+                    </div>
+                </div>
+            </div> <div class="col-md-4">
+                <div class="card">
+                    <img src="/Images/Kitchen-Tips/batch_cooking.jpg" alt="Recipe Image">
+                    <div class="card-body">
+                        <h5 class="card-title">Delicious Pasta</h5>
+                        <p class="card-text">Added by: Chef John</p>
+                        <p class="ratings">⭐⭐⭐⭐☆</p>
+                    </div>
+                    <div class="card-hover-details">
+                        <h6>Recipe Details</h6>
+                        <p>Prep Time: 15 min</p>
+                        <p>Cook Time: 30 min</p>
+                        <p>Servings: 4</p>
+                    </div>
+                </div>
+            </div> <div class="col-md-4">
+                <div class="card">
+                    <img src="/Images/Kitchen-Tips/batch_cooking.jpg" alt="Recipe Image">
+                    <div class="card-body">
+                        <h5 class="card-title">Delicious Pasta</h5>
+                        <p class="card-text">Added by: Chef John</p>
+                        <p class="ratings">⭐⭐⭐⭐☆</p>
+                    </div>
+                    <div class="card-hover-details">
+                        <h6>Recipe Details</h6>
+                        <p>Prep Time: 15 min</p>
+                        <p>Cook Time: 30 min</p>
+                        <p>Servings: 4</p>
+                    </div>
+                </div>
+            </div> <div class="col-md-4">
+                <div class="card">
+                    <img src="/Images/Kitchen-Tips/batch_cooking.jpg" alt="Recipe Image">
+                    <div class="card-body">
+                        <h5 class="card-title">Delicious Pasta</h5>
+                        <p class="card-text">Added by: Chef John</p>
+                        <p class="ratings">⭐⭐⭐⭐☆</p>
+                    </div>
+                    <div class="card-hover-details">
+                        <h6>Recipe Details</h6>
+                        <p>Prep Time: 15 min</p>
+                        <p>Cook Time: 30 min</p>
+                        <p>Servings: 4</p>
+                    </div>
+                </div>
+            </div> <div class="col-md-4">
+                <div class="card">
+                    <img src="/Images/Kitchen-Tips/batch_cooking.jpg" alt="Recipe Image">
+                    <div class="card-body">
+                        <h5 class="card-title">Delicious Pasta</h5>
+                        <p class="card-text">Added by: Chef John</p>
+                        <p class="ratings">⭐⭐⭐⭐☆</p>
+                    </div>
+                    <div class="card-hover-details">
+                        <h6>Recipe Details</h6>
+                        <p>Prep Time: 15 min</p>
+                        <p>Cook Time: 30 min</p>
+                        <p>Servings: 4</p>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
