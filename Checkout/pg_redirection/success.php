@@ -50,14 +50,109 @@ error_reporting(0);
 ini_set('display_errors', 0);
 ?>
 <!DOCTYPE html>
+<html lang="en">
+
 
 <head>
-    <meta name="author" content="SSLCommerz">
+<meta charset="UTF-8">
+
+    <!-- <meta name="author" content="SSLCommerz">
     <title>Successful Transaction - SSLCommerz</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"> -->
+    <title>success</title>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Latest compiled and minified CSS -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="success.css">
+
+
+    <!-- favicon -->
+    <link rel="icon" href="../Images/logo/fav-icon.png" />
+
+
+    <!-- css  -->
+    <link rel="stylesheet" href="../Includes/Navbar/navbarMain.css"> <!-- Navbar CSS -->
+
+
 </head>
 
 <body>
+
+<?php
+    include('../Includes/Navbar/navbarMain.php');
+    ?>
+<?php
+    include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin
+    ?>
+
+    <!--  -->
+    <!-- remove -->
+    <?php foreach ($allcategories as $category) { ?>
+        <?php echo htmlspecialchars($category['name']); ?>
+    <?php } ?>
+    <!-- remove -->
+
+
+
+
+<!-- 
+<div class="congratulation-area text-center mt-5">
+        <div class="container">
+            <div class="congratulation-wrapper">
+                <div class="congratulation-contents center-text">
+                    <div class="congratulation-contents-icon">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <h4 class="congratulation-contents-title"> Congratulations! </h4>
+                    <p class="congratulation-contents-para"> Your account is ready to submit proposals and get work. </p>
+                    <div class="btn-wrapper mt-4">
+                        <a href="javascript:void(0)" class="cmn-btn btn-bg-1"> Go to Home </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+<!--.........................................new code............................................-->
+<div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="message-box _success">
+                     <i class="fa fa-check-circle" aria-hidden="true"></i>
+                    <h2> Your payment was successful </h2>
+                   <p> Thank you for your payment. we will <br>
+be in contact with more details shortly </p>      
+<div class="btn-wrapper mt-4">
+<!-- <a href="../Home/Homepage.php" class="cmn-btn btn-bg-1"> Go to Home </a> -->
+
+                        <a href="javascript:void(0)" class="cmn-btn btn-bg-1"> Go to Home </a>
+                    </div>
+</div> 
+        </div> 
+    </div> 
+  
+  
+  
+  <!-- <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="message-box _success _failed">
+                     <i class="fa fa-times-circle" aria-hidden="true"></i>
+                    <h2> Your payment failed </h2>
+             <p>  Try again later </p> 
+         
+            </div> 
+        </div> 
+    </div> 
+   -->
+
+<!--......................................... old code............................................-->
     <div class="container">
         <div class="row" style="margin-top: 10%;">
             <div class="col-md-8 offset-md-2">
@@ -142,4 +237,12 @@ ini_set('display_errors', 0);
             </div>
         </div>
     </div>
+
+    
+    <!-- ============================== Footer ==================================== -->
+    <?php
+    include('../Includes/Footer/footermain.php');  // tashin 
+    ?>
+    <!-- ============================== Footer End ==================================== -->
 </body>
+</html>
