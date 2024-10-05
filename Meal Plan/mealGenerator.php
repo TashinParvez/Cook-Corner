@@ -2,6 +2,7 @@
 
 include("../Includes/Database Connection/database_connection.php");  // for home page
 
+include('../Includes/Navbar/navbarMain.php');  // tashin  prev 
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -34,8 +35,6 @@ if ($conn->connect_error) {
 <body>
 
     <?php
-    // include('../Includes/Navbar/navbarMain.php');  // tashin  prev 
-    include('../Includes/Navbar/navbarMain-Search-imp.php');  // tashin  prev 
 
     include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin
     ?>
