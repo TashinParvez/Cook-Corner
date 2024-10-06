@@ -315,7 +315,7 @@ OR cuisine_type.cuisine_name LIKE '%aaaa%'
 OR ingredient_info.ingredient_name LIKE '%aaaa%';
 
 
----------------------  tips all ------------------------
+---------------------  tips all -------------------------
 
 
 SELECT kt.id, kt.tips_title, kt.description, kt.image, kt.created_at

@@ -111,7 +111,7 @@ if ($search_query) {
     $matchtips = [];
 
 
-    // Fetch up to 10 items at a time (initial load)
+    // Fetch up to 10 items at a time  (initial load)
     $recipes_count = count($matchrecipes);
     // $recipes_count = 0;
     $tips_count = count($matchtips);
