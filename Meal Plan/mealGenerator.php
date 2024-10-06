@@ -2,7 +2,8 @@
 
 include("../Includes/Database Connection/database_connection.php");  // for home page
 
-include('../Includes/Navbar/navbarMain.php');  // tashin  prev 
+// include('../Includes/Navbar/navbarMain.php');  // tashin  prev 
+include('../Includes/Navbar/n1.php');  // new
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
