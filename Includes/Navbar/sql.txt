@@ -142,3 +142,196 @@ OR ri.notes LIKE '%aaaa%'
 OR event_info.event_name LIKE '%aaaa%';
 
 ----------------------------------------------
+SELECT ri.recipe_id as id, ri.title as title, ri.description as description, ri.rating as rating, 
+       ri.image as img
+       
+FROM recipe_info as ri
+LEFT JOIN
+junction_event_recipes  AS  jer   -- event 
+On jer.recipe_id = ri.recipe_id
+JOIN
+event_info
+ON event_info.event_id = jer.event_id
+
+LEFT JOIN 
+junction_meal_type_recipe_info as jmt  -- meal
+ON jmt.recipe_id = ri.recipe_id
+INNER JOIN
+meal_type
+ON meal_type.meal_type_id = jmt.meal_type_id
+
+
+WHERE  
+ri.title LIKE '%aaaa%'
+OR ri.subtitle LIKE '%aaaa%'
+OR ri.description LIKE '%aaaa%'
+OR ri.notes LIKE '%aaaa%'
+OR event_info.event_name LIKE '%aaaa%'
+OR meal_type.meal_name LIKE '%aaaa%'
+OR meal_type.description LIKE '%aaaa%'
+;
+
+----------------------------
+
+SELECT ri.recipe_id as id, ri.title as title, ri.description as description, ri.rating as rating, 
+       ri.image as img
+       
+FROM recipe_info as ri
+LEFT JOIN
+junction_event_recipes  AS  jer   -- event 
+On jer.recipe_id = ri.recipe_id
+JOIN
+event_info
+ON event_info.event_id = jer.event_id
+
+LEFT JOIN 
+junction_meal_type_recipe_info as jmt  -- meal
+ON jmt.recipe_id = ri.recipe_id
+INNER JOIN
+meal_type
+ON meal_type.meal_type_id = jmt.meal_type_id
+
+LEFT JOIN 
+junction_recipe_info_recipe_category as jrrc  -- category
+ON jrrc.recipe_id = ri.recipe_id
+INNER JOIN
+recipe_category
+ON recipe_category.id = jrrc.category_id
+
+
+WHERE  
+ri.title LIKE '%aaaa%'
+OR ri.subtitle LIKE '%aaaa%'
+OR ri.description LIKE '%aaaa%'
+OR ri.notes LIKE '%aaaa%'
+OR event_info.event_name LIKE '%aaaa%'
+OR meal_type.meal_name LIKE '%aaaa%'
+OR meal_type.description LIKE '%aaaa%'
+OR recipe_category.name LIKE '%aaaa%';
+
+
+
+--------------------------------------------------
+
+SELECT ri.recipe_id as id, ri.title as title, ri.description as description, ri.rating as rating, 
+       ri.image as img
+       
+FROM recipe_info as ri
+LEFT JOIN
+junction_event_recipes  AS  jer   -- event 
+On jer.recipe_id = ri.recipe_id
+JOIN
+event_info
+ON event_info.event_id = jer.event_id
+
+LEFT JOIN 
+junction_meal_type_recipe_info as jmt  -- meal
+ON jmt.recipe_id = ri.recipe_id
+INNER JOIN
+meal_type
+ON meal_type.meal_type_id = jmt.meal_type_id
+
+LEFT JOIN 
+junction_recipe_info_recipe_category as jrrc  -- category
+ON jrrc.recipe_id = ri.recipe_id
+INNER JOIN
+recipe_category
+ON recipe_category.id = jrrc.category_id
+
+LEFT JOIN 
+junction_cuisine_recipe as jcr  -- cuisine
+ON jcr.recipe_id = ri.recipe_id
+INNER JOIN
+cuisine_type
+ON cuisine_type.id = jcr.cuisine_id
+
+
+WHERE  
+ri.title LIKE '%aaaa%'
+OR ri.subtitle LIKE '%aaaa%'
+OR ri.description LIKE '%aaaa%'
+OR ri.notes LIKE '%aaaa%'
+OR event_info.event_name LIKE '%aaaa%'
+OR meal_type.meal_name LIKE '%aaaa%'
+OR meal_type.description LIKE '%aaaa%'
+OR recipe_category.name LIKE '%aaaa%'
+OR cuisine_type.cuisine_name LIKE '%aaaa%'
+;
+
+--------------------     recipe all      ---------------------------------
+
+SELECT ri.recipe_id as id, ri.title as title, ri.description as description, ri.rating as rating, 
+       ri.image as img
+       
+FROM recipe_info as ri
+LEFT JOIN
+junction_event_recipes  AS  jer   -- event 
+On jer.recipe_id = ri.recipe_id
+JOIN
+event_info
+ON event_info.event_id = jer.event_id
+
+LEFT JOIN 
+junction_meal_type_recipe_info as jmt  -- meal
+ON jmt.recipe_id = ri.recipe_id
+INNER JOIN
+meal_type
+ON meal_type.meal_type_id = jmt.meal_type_id
+
+LEFT JOIN 
+junction_recipe_info_recipe_category as jrrc  -- category
+ON jrrc.recipe_id = ri.recipe_id
+INNER JOIN
+recipe_category
+ON recipe_category.id = jrrc.category_id
+
+LEFT JOIN 
+junction_cuisine_recipe as jcr  -- cuisine
+ON jcr.recipe_id = ri.recipe_id
+INNER JOIN
+cuisine_type
+ON cuisine_type.id = jcr.cuisine_id
+
+
+LEFT JOIN 
+junction_recipe_ingredients as jri  -- cuisine
+ON jri.recipe_id = ri.recipe_id
+INNER JOIN
+ingredient_info
+ON ingredient_info.ingredient_id = jri.ingredient_id
+
+
+
+WHERE  
+ri.title LIKE '%aaaa%'
+OR ri.subtitle LIKE '%aaaa%'
+OR ri.description LIKE '%aaaa%'
+OR ri.notes LIKE '%aaaa%'
+OR event_info.event_name LIKE '%aaaa%'
+OR meal_type.meal_name LIKE '%aaaa%'
+OR meal_type.description LIKE '%aaaa%'
+OR recipe_category.name LIKE '%aaaa%'
+OR cuisine_type.cuisine_name LIKE '%aaaa%'
+OR ingredient_info.ingredient_name LIKE '%aaaa%';
+
+
+---------------------  tips all -------------------------
+
+
+SELECT kt.id, kt.tips_title, kt.description, kt.image, kt.created_at
+FROM kitchen_tips as kt
+
+LEFT JOIN
+junction_kitchen_tips_into_category  AS  jktc   -- event 
+On jktc.tip_id = kt.id
+JOIN
+kitchen_tips_category as tc
+ON tc.id = jktc.category_id
+
+WHERE
+kt.tips_title LIKE '%aaaa%'
+OR kt.description LIKE '%aaaa%'
+OR kt.Directions LIKE '%aaaa%';
+
+
+
