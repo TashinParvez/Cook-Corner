@@ -1,3 +1,52 @@
+<?php
+
+//...................... Database Connection ..............................
+include("../Includes/Database Connection/database_connection.php");
+
+
+// .............. Recipe search ....................
+
+$searched_text = htmlspecialchars($_GET['searched_text'] ?? ''); // comes from home page
+
+$searched_text = htmlspecialchars($_POST['recipes_search'] ?? '');
+
+if (!empty($search_text)) {
+
+  $sql = "SELECT SQL_CALC_FOUND_ROWS ri.recipe_id, ri.title, ri.description, rf.rating, ri.image
+        FROM
+            recipe_info ri LEFT JOIN recipe_feedback rf 
+        ON 
+            ri.recipe_id = rf.recipe_id
+        WHERE  
+            ri.title LIKE ? 
+            OR ri.sub_title LIKE ? 
+            OR ri.description LIKE ?
+            OR ri.recipe_id IN (
+                    SELECT rt.recipe_id 
+                    FROM recipe_tags rt
+                    JOIN tags t ON rt.tag_id = t.tag_id
+                    WHERE t.tag_name LIKE ?
+                );";
+
+  $stmt = $conn->prepare($sql);
+  $search_param = '%' . $search_text . '%';
+  $stmt->bind_param('',);
+  $stmt->execute();
+
+  $result = $stmt->get_result();
+  $recipes = $result->fetch_all(MYSQLI_ASSOC);
+
+  $total_recipes_result = $conn->query("SELECT FOUND_ROWS()");
+  $total_recipes = $total_recipes_result->fetch_array()[0];
+
+  $stmt->close();
+  mysqli_close($conn);
+}
+
+
+?>
+
+
 <!doctype html>
 <html lang="en">
 
@@ -134,7 +183,7 @@
                 <div class="row">
                   <!-- Head -->
                   <div class="container">
-                   
+
                     <div class="row"> <!-- working -->
                       <!-- Added Filters -->
                       <div class="container">
