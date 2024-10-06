@@ -20,6 +20,10 @@
     width: 500px;
 }
 
+.navbar .d-flex .form-control{
+    padding-right: 30px !important;
+}
+
 .login-icon{
     position: absolute;
     right: 0;

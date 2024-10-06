@@ -14,6 +14,12 @@ $search_query = $search_query ?? '';
 include("../Includes/Database Connection/database_connection.php");  // for home page
 // include("../../Includes/Database Connection/database_connection.php");  // for only navbar
 
+
+
+$sql = "SELECT event_id, event_name FROM event_info";
+$result = $conn->query($sql);
+
+
 $stmt = $conn->prepare('SELECT first_name FROM user_info WHERE id = ? LIMIT 1');
 $stmt->bind_param('i', $user_id);
 $stmt->execute();
@@ -208,7 +214,34 @@ mysqli_close($conn);
                         <ul class="dropdown-menu occasion-menu">
                             <div class="container-fluid">
                                 <div class="row nav-row">
-                                    <div class="col-md-2">
+                                    <?php
+                                    if ($result->num_rows > 0) {
+                                        while ($row = $result->fetch_assoc()) {
+                                            $event_name = $row['event_name'];
+                                            $event_id = $row['event_id'];
+                                             // Display event name and dynamic href
+                        echo '<div class="col-md-2">';
+                        // echo '<h6>' . $event_name . '</h6>';
+                        echo '<ul>';
+                        echo '<li><a class="dropdown-item" href="/Occasions/occasion_main.php?event_id=' . $event_id . '">' . $event_name . '</a></li>';
+                        echo '</ul>';
+                        echo '</div>';
+                        // Display dynamic href for each event
+                // echo '<li><a class="dropdown-item" href="/Occasions/occasion_main.php?event_id=' . $event_id . '">' . $event_name . '</a></li>';
+                    }
+                } else {
+                    echo "<div>No occasions found</div>";
+                }
+                ?>
+                                </div>
+                            </div>
+                            <div class="go-next ">
+            <a href="/Occasions/occasion_main.php">View all Occasions <i class="fa-solid fa-angles-right"></i></a>
+        </div>
+    </ul>
+</li>
+
+                                    <!-- <div class="col-md-2">
                                         <h6>Islamic</h6>
                                         <ul>
                                             <li><a class="dropdown-item" href="#">Eid ul Fitr</a></li>
@@ -257,7 +290,7 @@ mysqli_close($conn);
                         </ul>
                     </li>
 
-
+ -->
 
 
 
