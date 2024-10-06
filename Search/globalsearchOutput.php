@@ -12,7 +12,53 @@ if ($conn->connect_error) {
 include("/Cook-Corner/Includes/Navbar/n1.php");
 
 if ($search_query) {
-    // write result query here
+
+    // Prepare the SQL query for searching
+    $sql = "SELECT title AS combined_info FROM `recipe_info` WHERE title IS NOT NULL AND title LIKE '%$search_query%'
+            UNION
+            SELECT subtitle AS combined_info FROM `recipe_info` WHERE subtitle IS NOT NULL AND subtitle LIKE '%$search_query%'
+            UNION
+            SELECT description AS combined_info FROM `recipe_info` WHERE description IS NOT NULL AND description LIKE '%$search_query%'
+            UNION
+            SELECT notes AS combined_info FROM `recipe_info` WHERE notes IS NOT NULL AND notes LIKE '%$search_query%'
+            UNION
+            SELECT ingredient_name AS combined_info FROM `ingredient_info` WHERE ingredient_name IS NOT NULL AND ingredient_name LIKE '%$search_query%'
+            UNION
+            SELECT category AS combined_info FROM `ingredient_info` WHERE category IS NOT NULL AND category LIKE '%$search_query%'";
+
+
+
+
+$sql ="SELECT ri.recipe_id as id, ri.title as title, ri.description as description, ri.rating as rating, 
+       ri.image as img 
+
+        FROM recipe_info as ri
+        WHERE  
+        ri.title LIKE '%aaaa%'
+        OR ri.subtitle LIKE '%aaaa%'
+        OR ri.description LIKE '%aaaa%'
+        OR ri.notes LIKE '%aaaa%';
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        ";
+
+    // Execute the query
+    $resultantLabel = mysqli_query($conn, $sql); // Get query result
+
+    $data = array();
+    if ($resultantLabel) {
+        // Convert to array
+        while ($item = mysqli_fetch_assoc($resultantLabel)) {
+            $data[] = $item['combined_info'];
+        }
+    }
 
     $matchrecipes = [];
     $matchtips = [];
