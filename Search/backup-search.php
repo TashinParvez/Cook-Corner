@@ -1,3 +1,4 @@
+
 <?php
 // include("D:\All UIU Materials\8th Trimester\SAD Lab\Project\Cook-Corner\Includes\Navbar\\n1.php");
 include("/Cook-Corner/Includes/Navbar/n1.php");
@@ -162,55 +163,58 @@ if ($search_query) {
 
             <!----------------------------------- Recipe Section ----------------------------------->
             <h3>Recipes</h3>
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-                <?php
-                foreach ($rrr as $item) {
-                ?>
-
-
-
-                    <div class="card" style="width: 18rem;">
-                        <img src="/Images/Recipe-Images/frozen_vegetables.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h4 class="card-text"> <?php echo htmlspecialchars($item[1]) ?></h4>
-                            <p class="card-text"> <?php echo htmlspecialchars($item[2]) ?></p>
+            <div id="recipe-section">
+                <?php if ($recipes_count > 0): ?>
+                    <?php for ($i = 0; $i < min(10, $recipes_count); $i++): ?>
+                        <div class="card mb-3" style="max-width: 540px;">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <img src="<?= $matchrecipes[$i]['image_url']; ?>" class="img-fluid rounded-start" alt="...">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><?= htmlspecialchars($matchrecipes[$i]['title']); ?></h5>
+                                        <p class="card-text"><?= htmlspecialchars($matchrecipes[$i]['description']); ?></p>
+                                        <p class="card-text"><small class="text-muted">Last updated <?= $matchrecipes[$i]['last_updated']; ?> ago</small></p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-
-
-                <?php
-
-                }
-                ?>
-
+                    <?php endfor; ?>
+                <?php else: ?>
+                    <p>No recipes found.</p>
+                <?php endif; ?>
             </div>
 
-
+            
             <?php if ($recipes_count > 10): ?>
                 <button id="load-more-recipes" class="btn btn-primary" data-offset="10">Load More Recipes</button>
             <?php endif; ?>
 
 
             <!--------------------------------------- Tips Section --------------------------------------->
-            <h3>Tips</h3>
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-                <?php
-                foreach ($ttt as $item) {
-                ?>
-                    <div class="card" style="width: 18rem;">
-                        <img src="/Images/Recipe-Images/frozen_vegetables.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h4 class="card-text"> <?php echo htmlspecialchars($item[1]) ?></h4>
-                            <p class="card-text"> <?php echo htmlspecialchars($item[2]) ?></p>
+            <h3 class="mt-5">Tips</h3>
+            <div id="tips-section">
+                <?php if ($tips_count > 0): ?>
+                    <?php for ($i = 0; $i < min(10, $tips_count); $i++): ?>
+                        <div class="card mb-3" style="max-width: 540px;">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <img src="<?= $matchtips[$i]['image_url']; ?>" class="img-fluid rounded-start" alt="...">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><?= htmlspecialchars($matchtips[$i]['title']); ?></h5>
+                                        <p class="card-text"><?= htmlspecialchars($matchtips[$i]['description']); ?></p>
+                                        <p class="card-text"><small class="text-muted">Last updated <?= $matchtips[$i]['last_updated']; ?> ago</small></p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-
-
-                <?php
-
-                }
-                ?>
-
+                    <?php endfor; ?>
+                <?php else: ?>
+                    <p>No tips found.</p>
+                <?php endif; ?>
             </div>
             <?php if ($tips_count > 10): ?>
                 <button id="load-more-tips" class="btn btn-primary" data-offset="10">Load More Tips</button>

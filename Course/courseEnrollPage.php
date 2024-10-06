@@ -2,7 +2,7 @@
 include('../Includes/Navbar/navbarMain.php');
 include("../Includes/Database Connection/database_connection.php");
 
-$course_id = 1; // from another page 
+$course_id = isset($_GET['course_id']) ? htmlspecialchars($_GET['course_id']) : '1';; // from another page 
 
 $sql = "SELECT course.*,   
               user_info.first_name, user_info.last_name       -- index : 13 14
