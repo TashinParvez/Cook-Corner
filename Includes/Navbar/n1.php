@@ -14,7 +14,8 @@ $search_query = $search_query ?? '';
 // include("../Includes/Database Connection/database_connection.php");  // for home page
 // include("../../Includes/Database Connection/database_connection.php");  // for only navbar
 
-include("/Cook-Corner/Includes/Database-connection-new/database_connection.php");   // new for search
+// include("/Cook-Corner/Includes/Database-connection-new/database_connection.php");   // new for search
+include("D:\All UIU Materials\8th Trimester\SAD Lab\Project\Cook-Corner\Includes\Database-connection-new\database_connection.php");   // new for search
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -544,6 +545,7 @@ mysqli_close($conn);
         <!-- ============================== Sidebar ==================================== -->
         <?php
         // include('../Includes/Navbar/sidebar.php');  // tashin prev
+        // include('/Cook-Corner/Includes/Navbar/sidebar.php');  // tashin
         include('/Cook-Corner/Includes/Navbar/sidebar.php');  // tashin
         // include('/Cook-Corner/Includes/Navbar/sidebar-2.php');  // tashin change
         ?>

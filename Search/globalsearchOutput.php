@@ -1,15 +1,18 @@
 <?php
-include("/Cook-Corner/Includes/Database Connection/database_connection.php");
+include("D:\All UIU Materials\8th Trimester\SAD Lab\Project\Cook-Corner\Includes\Navbar\\n1.php");
+
+// include("/Cook-Corner/Includes/Database Connection/database_connection.php");
+include("D:\All UIU Materials\8th Trimester\SAD Lab\Project\Cook-Corner\Includes\Database-connection-new\database_connection.php");
 
 // Get the search query
-$search_query = $_GET['query'] ?? '';
+$search_query = $_GET['query'] ?? 'chicken';
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
 // Include the navbar
-include("/Cook-Corner/Includes/Navbar/n1.php");
+// include("/Cook-Corner/Includes/Navbar/n1.php");
 
 if ($search_query) {
 
@@ -66,6 +69,17 @@ if ($search_query) {
             OR cuisine_type.cuisine_name LIKE '%$search_query%'
             OR ingredient_info.ingredient_name LIKE '%$search_query%';";
 
+    $sql = "SELECT ri.recipe_id as id, ri.title as title, ri.description as description, ri.rating as rating, 
+                   ri.image as img
+       
+            FROM recipe_info as ri
+             
+            WHERE  
+            ri.title LIKE '%$search_query%'
+            OR ri.subtitle LIKE '%$search_query%'
+            OR ri.description LIKE '%$search_query%'
+            OR ri.notes LIKE '%$search_query%';";
+
 
     $resultofsql = mysqli_query($conn, $sql);   // get query result
 
@@ -93,22 +107,25 @@ if ($search_query) {
             OR kt.description LIKE '%aaaa%'
             OR kt.Directions LIKE '%aaaa%';";
 
+    $sql = "SELECT kt.id, kt.tips_title, kt.description, kt.image, kt.created_at
+            FROM kitchen_tips as kt
+
+           
+            WHERE
+            kt.tips_title LIKE '%aaaa%'
+            OR kt.description LIKE '%aaaa%'
+            OR kt.Directions LIKE '%aaaa%';";
+
 
 
 
     // Execute the query
     $resultantLabel = mysqli_query($conn, $sql); // Get query result
 
-    $data = array();
-    if ($resultantLabel) {
-        // Convert to array
-        while ($item = mysqli_fetch_assoc($resultantLabel)) {
-            $data[] = $item['combined_info'];
-        }
-    }
+    $ttt = mysqli_fetch_all($resultantLabel);   // conver to array
 
-    $matchrecipes = [];
-    $matchtips = [];
+    $matchrecipes = $rrr;
+    $matchtips = $ttt;
 
 
     // Fetch up to 10 items at a time  (initial load)
