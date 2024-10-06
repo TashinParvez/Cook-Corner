@@ -145,6 +145,8 @@ mysqli_close($conn);
     <?php
     include('../Includes/Navbar/navbarMain.php');  // Navbar 
     include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin    
+    include "../Includes/AddMenu/addMenu.php";
+
     ?>
 
     <!------------------------------------  Page info  ------------------------------------>
