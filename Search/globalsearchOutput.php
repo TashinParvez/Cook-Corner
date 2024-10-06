@@ -13,41 +13,88 @@ include("/Cook-Corner/Includes/Navbar/n1.php");
 
 if ($search_query) {
 
-    // Prepare the SQL query for searching
-    $sql = "SELECT title AS combined_info FROM `recipe_info` WHERE title IS NOT NULL AND title LIKE '%$search_query%'
-            UNION
-            SELECT subtitle AS combined_info FROM `recipe_info` WHERE subtitle IS NOT NULL AND subtitle LIKE '%$search_query%'
-            UNION
-            SELECT description AS combined_info FROM `recipe_info` WHERE description IS NOT NULL AND description LIKE '%$search_query%'
-            UNION
-            SELECT notes AS combined_info FROM `recipe_info` WHERE notes IS NOT NULL AND notes LIKE '%$search_query%'
-            UNION
-            SELECT ingredient_name AS combined_info FROM `ingredient_info` WHERE ingredient_name IS NOT NULL AND ingredient_name LIKE '%$search_query%'
-            UNION
-            SELECT category AS combined_info FROM `ingredient_info` WHERE category IS NOT NULL AND category LIKE '%$search_query%'";
+    // ---------------------- Recipe -------------------------------- 
+    $sql = "SELECT ri.recipe_id as id, ri.title as title, ri.description as description, ri.rating as rating, 
+                   ri.image as img
+       
+            FROM recipe_info as ri
+            LEFT JOIN
+            junction_event_recipes  AS  jer   -- event 
+            On jer.recipe_id = ri.recipe_id
+            JOIN
+            event_info
+            ON event_info.event_id = jer.event_id
+
+            LEFT JOIN 
+            junction_meal_type_recipe_info as jmt  -- meal
+            ON jmt.recipe_id = ri.recipe_id
+            INNER JOIN
+            meal_type
+            ON meal_type.meal_type_id = jmt.meal_type_id
+
+            LEFT JOIN 
+            junction_recipe_info_recipe_category as jrrc  -- category
+            ON jrrc.recipe_id = ri.recipe_id
+            INNER JOIN
+            recipe_category
+            ON recipe_category.id = jrrc.category_id
+
+            LEFT JOIN 
+            junction_cuisine_recipe as jcr  -- cuisine
+            ON jcr.recipe_id = ri.recipe_id
+            INNER JOIN
+            cuisine_type
+            ON cuisine_type.id = jcr.cuisine_id
+
+
+            LEFT JOIN 
+            junction_recipe_ingredients as jri  -- cuisine
+            ON jri.recipe_id = ri.recipe_id
+            INNER JOIN
+            ingredient_info
+            ON ingredient_info.ingredient_id = jri.ingredient_id
+
+            WHERE  
+            ri.title LIKE '%$search_query%'
+            OR ri.subtitle LIKE '%$search_query%'
+            OR ri.description LIKE '%$search_query%'
+            OR ri.notes LIKE '%$search_query%'
+            OR event_info.event_name LIKE '%$search_query%'
+            OR meal_type.meal_name LIKE '%$search_query%'
+            OR meal_type.description LIKE '%$search_query%'
+            OR recipe_category.name LIKE '%$search_query%'
+            OR cuisine_type.cuisine_name LIKE '%$search_query%'
+            OR ingredient_info.ingredient_name LIKE '%$search_query%';";
+
+
+    $resultofsql = mysqli_query($conn, $sql);   // get query result
+
+    $rrr = mysqli_fetch_all($resultofsql);   // conver to array
+
+    print_r($rrr);
+
+    mysqli_free_result($resultofsql);
+
+
+    // ---------------------- Recipe -------------------------------- 
+
+    $sql = "SELECT kt.id, kt.tips_title, kt.description, kt.image, kt.created_at
+            FROM kitchen_tips as kt
+
+            LEFT JOIN
+            junction_kitchen_tips_into_category  AS  jktc   -- event
+            On jktc.tip_id = kt.id
+            JOIN
+            kitchen_tips_category as tc
+            ON tc.id = jktc.category_id
+
+            WHERE
+            kt.tips_title LIKE '%aaaa%'
+            OR kt.description LIKE '%aaaa%'
+            OR kt.Directions LIKE '%aaaa%';";
 
 
 
-
-$sql ="SELECT ri.recipe_id as id, ri.title as title, ri.description as description, ri.rating as rating, 
-       ri.image as img 
-
-        FROM recipe_info as ri
-        WHERE  
-        ri.title LIKE '%aaaa%'
-        OR ri.subtitle LIKE '%aaaa%'
-        OR ri.description LIKE '%aaaa%'
-        OR ri.notes LIKE '%aaaa%';
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        ";
 
     // Execute the query
     $resultantLabel = mysqli_query($conn, $sql); // Get query result
