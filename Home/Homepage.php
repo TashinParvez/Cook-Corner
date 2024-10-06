@@ -1,6 +1,6 @@
 <?php
 
-include('../Includes/Navbar/navbarMain.php');  // Mahbub  
+include('../Includes/Navbar/navbarMain.php');  // Mahbub 
 // echo $user_id;
 
 //...................... Database Connection .............................. 
@@ -352,7 +352,7 @@ mysqli_close($conn);
 
 
 
-    <section class="all-categories m-5">working
+    <section class="all-categories m-5">
         <div class="container">
             <div class="identity m-2">
                 <h2 class="m-0 p-0">All Categories</h2>
