@@ -1,6 +1,6 @@
 <?php
 
-include('../Includes/Navbar/navbarMain.php');  // Mahbub 
+include('../Includes/Navbar/navbarMain.php');  // Mahbub  
 // echo $user_id;
 
 //...................... Database Connection .............................. 

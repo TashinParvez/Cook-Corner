@@ -32,8 +32,5 @@ if ($resultantLabel) {
     }
 }
 
-
-
 print_r($data);
-
 $conn->close();
