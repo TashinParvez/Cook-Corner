@@ -1,6 +1,6 @@
 <?php
 
-include('../Includes/Navbar/navbarMain.php');  // Mahbub  
+include('../Includes/Navbar/navbarMain.php');  // Mahbub 
 // echo $user_id;
 
 //...................... Database Connection .............................. 
@@ -42,23 +42,25 @@ if ($current_time >= '06:00:00' && $current_time < '12:00:00') {
 // echo 'Greetings: ' . $greetings;
 
 // Load Chunk Recipes from DB                       is it necessary to take all information about a recipe???
-$stmt = $conn->prepare('SELECT recipe_info.recipe_id, recipe_info.title, recipe_info.description, 
-                                recipe_feedback.rating, recipe_info.image
-                        FROM
-                            recipe_info LEFT JOIN recipe_feedback
-                        ON
-                            recipe_info.recipe_id = recipe_feedback.recipe_id
-                        WHERE
-                            recipe_info.recipe_id IN
-                                (SELECT recipe_id FROM junction_meal_type_recipe_info WHERE meal_type_id IN
-                                (SELECT meal_type_id FROM junction_meal_type_day_chunk WHERE chunk_id =
-                                (SELECT chunk_id FROM day_chunk WHERE chunk_name = ?))) LIMIT 20;');
+$stmt = $conn->prepare('SELECT r.recipe_id, r.title, r.description, r.rating, r.image 
+                    FROM day_chunk as c 
+                    INNER JOIN
+                    junction_meal_type_day_chunk as jmt
+                    ON c.chunk_id = jmt.chunk_id
+                    INNER JOIN
+                    junction_meal_type_recipe_info as jmtr
+                    ON jmtr.meal_type_id = jmt.meal_type_id
+                    INNER JOIN
+                    recipe_info as r
+                    ON r.recipe_id = jmtr.recipe_id
+                    WHERE c.chunk_name = ? LIMIT 20;');
+
 $stmt->bind_param('s', $current_chunk);
 $stmt->execute();
 $result = $stmt->get_result();
 $chunk_recipes = $result->fetch_all();
 $stmt->close();
-// print_r($chunk_recipes[0]);
+// print_r($chunk_recipes);
 
 // Load Best Rcipes from DB                       is it necessary to take all information about a recipe???
 $stmt = $conn->prepare('SELECT recipe_info.recipe_id, recipe_info.title, recipe_feedback.rating, recipe_info.image
@@ -66,12 +68,10 @@ $stmt = $conn->prepare('SELECT recipe_info.recipe_id, recipe_info.title, recipe_
                             recipe_info LEFT JOIN recipe_feedback
                         ON
                             recipe_info.recipe_id = recipe_feedback.recipe_id
-                        ORDER BY recipe_feedback.rating DESC LIMIT 12;');
+                        ORDER BY recipe_feedback.rating DESC LIMIT 20;');
 $stmt->execute();
 $result = $stmt->get_result();
 $best_recipes = $result->fetch_all();
-// print_r($best_recipes[0]);
-
 $stmt->close();
 
 // Load Latest Rcipes from DB                       is it necessary to take all information about a recipe and all recipes as well???
@@ -84,7 +84,6 @@ $stmt = $conn->prepare('SELECT recipe_info.recipe_id, recipe_info.title, recipe_
 $stmt->execute();
 $result = $stmt->get_result();
 $latest_recipes = $result->fetch_all();
-// print_r($latest_recipes[0]);
 $stmt->close();
 
 // Load All Categories from DB working
@@ -92,18 +91,52 @@ $stmt = $conn->prepare('SELECT * FROM recipe_category;');
 $stmt->execute();
 $result = $stmt->get_result();
 $categories = $result->fetch_all();
-// print_r($categories[0]);
 $stmt->close();
 
+
+// ---------- For hero segment ---------------
+$sql = "SELECT 
+            c.course_id,
+            c.course_title,
+            c.description,
+            c.price,
+            c.rating,
+            c.image,
+            COUNT(jctu.user_id) AS enrolled_user_count,
+            IF(EXISTS(
+                SELECT 1 
+                FROM `junction_course_taken_user` jctu2
+                WHERE jctu2.user_id = '$user_id' 
+                AND jctu2.course_id = c.course_id
+            ), 1, 0) AS found
+        FROM 
+            course c
+        LEFT JOIN 
+            junction_course_taken_user jctu 
+            ON c.course_id = jctu.course_id
+        WHERE 
+            c.course_id = 1
+        GROUP BY 
+            c.course_id;";
+
+$resultantLabel = mysqli_query($conn, $sql);
+
+$heropage = mysqli_fetch_assoc($resultantLabel);
+// echo $heropage['course_id'];
+
 // Load Popular Courses from DB              there is no parameter for being polular a course???
-$stmt = $conn->prepare('SELECT c.course_id, c.course_title, c.image, c.rating, c.price
-                        FROM course AS c 
-                        LIMIT 3;');
+$stmt = $conn->prepare('SELECT c.course_id, c.course_title, c.image, c.rating, c.price, COUNT(j.user_id) AS taken_by_count
+                    FROM
+                        course AS c JOIN junction_course_taken_user AS j
+                    ON
+                        c.course_id = j.course_id
+                    GROUP BY
+                        c.course_id, c.course_title, c.price
+                    ORDER BY
+                        taken_by_count DESC LIMIT 20;');
 $stmt->execute();
 $result = $stmt->get_result();
 $popular_courses = $result->fetch_all();
-// print_r($popular_courses[0]);
-
 
 
 $stmt->close();
@@ -188,14 +221,29 @@ mysqli_close($conn);
 
 
             <!-------------------------------------------- Image sliding section ------------------------------------------------------->
+            <script>
+                function submirecipeForm(recipe_id) {
+                    const form = document.getElementById('recipeForm');
+                    form.action = '../Recipe View/recipeView.php?recipe_id=' + recipe_id;
+                    form.submit();
+                }
+            </script>
+
+            <form id="recipeForm" action="../Recipe View/recipeView.php" method="post">
+                <!-- No hidden input needed -->
+            </form>
+
+            <?php foreach ($chunk_recipes as $recipe) {
+
+                //echo $recipe[0];
+            } ?>
+
             <!-- Swiper for categories -->
             <div class="swiper mySwiper">
                 <div class="swiper-wrapper">
                     <?php foreach ($chunk_recipes as $key => $recipe): ?>
-
-
                         <div class="swiper-slide">
-                            <a href="javascript:void(0);" class="category-tab" data-target="content-<?php echo $recipe[0]; ?>">
+                            <a href="javascript:void(0);" class="category-tab" data-target="content-<?php echo $recipe[0]; ?>" onclick="submirecipeForm(<?php echo $recipe[0]; ?>)">
 
                                 <div class="row justify-content-center">
                                     <div class="col-md">
@@ -204,12 +252,7 @@ mysqli_close($conn);
                                                 <h5 class="card-title"><?php echo $recipe[1]; ?></h5>
                                                 <p class="card-text"><?php echo $recipe[2]; ?></p>
                                             </div>
-
-                                            <!-- <img src="/Images/Recipe-Images/<?php
-                                                                                    // echo $recipe[4]; 
-                                                                                    ?>" class="card-img carouselImg" alt="..."> -->
-                                            <img src="/Images/Recipe-Images/10.jpg" class="card-img carouselImg" alt="...">
-
+                                            <img src="<?php echo $recipe[4]; ?>" class="card-img carouselImg" alt="...">
                                         </div>
                                     </div>
                                 </div>
@@ -223,16 +266,25 @@ mysqli_close($conn);
                 <div class="swiper-pagination"></div>
             </div>
 
-
-
-
-
         </div>
     </section>
 
 
     <!------------------------------------------------- Course section  ----------------------------------------------->
+    <script>
+        function submitCourseForm(course_id) {
+            const form = document.getElementById('courseForm');
+            // form.action = 'Course\\courseEnrollPage.php?course_id=' + course_id;
+            form.action = '../Course/courseEnrollPage.php?course_id=' + course_id; // noman
+            form.submit();
+        }
+    </script>
 
+    <!-- <form id="courseForm" action="Course\courseEnrollPage.php" method="post"> -->
+    <!-- <form id="courseForm" action="D:/All UIU Materials/8th Trimester/SAD Lab/Project/Cook-Corner/Course/courseEnrollPage.php" method="post"> noman -->
+    <form id="courseForm" action="../Course/courseEnrollPage.php" method="post"> <!--noman-->
+        <!-- No hidden input needed -->
+    </form>
     <section class="course m-4">
         <div class="container">
             <div class="identity m-2">
@@ -243,15 +295,12 @@ mysqli_close($conn);
 
             <div class="row row-cols-1 row-cols-md-3 g-4">
                 <!-- course_id, course_title, image, price, rating, taken_by_count -->
-                <?php foreach ($popular_courses  as $course) { ?>
+                <?php foreach ($popular_courses as $course) { ?>
 
                     <div class="col">
-                        <a href="#">
+                        <a href="#" onclick="submitCourseForm(<?php echo $course[0]; ?>)">
                             <div class="card">
-                                <!-- <img src="<?php
-                                                // echo $course[2] ;
-                                                ?>" class="card-img-top" alt="..."> -->
-                                <img src="/Images/Course-Image/cookingClass.jpeg" class="card-img-top" alt="...">
+                                <img src="<?php echo $course[2] ?>" class="card-img-top" alt="...">
                                 <div class="card-body">
 
                                     <p class="card-text"><?php echo $course[1] ?></p>
@@ -265,27 +314,21 @@ mysqli_close($conn);
 
                                                 $i = floor($rating);
 
-                                                // while ($i > 0) {
-                                                // 
+                                                while ($i > 0) {
                                                 ?>
 
-                                                <!-- //     <i class="fa-solid fa-star"></i> -->
+                                                    <i class="fa-solid fa-star"></i>
 
+                                                    <?php
+                                                    if ($i == 1 && $decimal != 0) {
+                                                    ?>
+                                                        <i class="fa-solid fa-star-half-stroke"></i>
                                                 <?php
-                                                //     if ($i == 1 && $decimal != 0) {
-                                                //         
-                                                ?>
-                                                <!-- //         <i class="fa-solid fa-star-half-stroke"></i> -->
-                                                <?php
-                                                //     }
+                                                    }
 
-                                                //     $i--;
-                                                // }
-                                                // 
+                                                    $i--;
+                                                }
                                                 ?>
-                                                <i class="fa-solid fa-star"></i>
-                                                <i class="fa-solid fa-star"></i>
-                                                <i class="fa-solid fa-star"></i>
 
                                             </div>
                                         </div>
@@ -301,15 +344,23 @@ mysqli_close($conn);
     </section>
 
 
-    <!-- cooking class section -->
-    <section class="cooking-class">
-        <div class="class-info">
-            <h1>Join Our Cooking Class,<br>Become a Chef</h1>
-            <p>Want to cook like a chef? Our cooking online courses offer step-by-step guidance and expert tips to
-                transform your cooking. Join us now!</p>
-            <a href="#" class="btn">Register Now</a>
-        </div>
-    </section>
+    <!-- Hero Segment -->
+    <?php
+    if ($heropage['found'] == 0) {
+    ?>
+        <!-- cooking class section -->
+        <section class="cooking-class">
+            <div class="class-info">
+                <h1>Join Our Cooking Class,<br>Become a Chef</h1>
+                <p>Want to cook like a chef? Our cooking online courses offer step-by-step guidance and expert tips to
+                    transform your cooking. Join us now!</p>
+
+                <a href="#" class="btn" onclick="submitCourseForm(<?php echo $heropage['course_id']; ?>)">Register Now</a>
+            </div>
+        </section>
+    <?php
+    }
+    ?>
 
     <!------------------------------------------------- Best Recipe section  ----------------------------------------------->
 
@@ -325,14 +376,9 @@ mysqli_close($conn);
 
                 <?php foreach ($best_recipes as $recipe) { ?>
                     <div class="col">
-                        <a href="#">
+                        <a href="#" onclick="submirecipeForm(<?php echo $recipe[0]; ?>)">
                             <div class="card">
-                                <!-- <img src="-->
-                                <?php
-                                // echo $recipe[3];
-                                ?>
-                                <!-- " class="card-img-top" alt="..."> -->
-                                <img src="/Images/Recipe-Images/4.jpg" class="card-img-top" alt="...">
+                                <img src="<?php echo $recipe[3] ?>" class="card-img-top" alt="...">
                                 <div class="card-body text-center">
                                     <h5 class="card-title"><?php echo $recipe[1] ?></h5>
                                     <div>
@@ -379,30 +425,32 @@ mysqli_close($conn);
             <div class="identity m-2">
                 <h2 class="m-0 p-0">All Categories</h2>
             </div>
+            <script>
+                function submitCategoryForm(category_id) {
+                    const form = document.getElementById('categoryForm');
+                    form.action = 'oneparticularCategoryShow.php?category_id=' + category_id;
+                    form.submit();
+                }
+            </script>
 
+            <form id="categoryForm" action="oneparticularCategoryShow.php" method="post">
+                <!-- No hidden input needed -->
+            </form>
 
 
             <!-- Swiper for all categories -->
             <div class="swiper mySwiper swiper-category">
                 <div class="swiper-wrapper">
-                    <!-- <?php
-                            // foreach ([1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as $key => $value):
-                            ?> -->
-                    <?php foreach ($categories as  $value): ?>
+                    <?php foreach ($categories as $value): ?>
                         <div class="swiper-slide">
-                            <a href="javascript:void(0);" class="category-tab" data-target="content-<?php echo $key; ?>">
+                            <a href="javascript:void(0);" class="category-tab" data-target="content-<?php echo $key; ?>" onclick="submitCategoryForm(<?php echo $value[0]; ?>)">
                                 <!-- <div class="row justify-content-center">
                         <div class="col-md"> -->
 
                                 <div class="card text-center bg-transparent border-0">
                                     <img src="../../../Images/FoodImages/2.jpg" class="card-img-top rounded-circle mx-auto d-block" alt="..." style="width: 100px; height: 100px; object-fit: cover;">
                                     <div class="card-body">
-                                        <!-- <h5 class="card-title">Eid al-Fitr -->
-                                        <?php
-                                        // echo $key; 
-                                        ?>
-                                        <!-- </h5> -->
-                                        <h5 class="card-title"> <?php echo $value[0]; ?></h5>
+                                        <h5 class="card-title">Eid al-Fitr <?php echo $key; ?></h5>
                                     </div>
                                 </div>
                                 <!-- </div>
@@ -425,7 +473,7 @@ mysqli_close($conn);
     </section>
     <!------------------------------------------------- Latest Recipe section  ----------------------------------------------->
 
-    <section class="Latest Recipe m-4">
+    <section class="Latest Recipe m-4">working
         <div class="container">
             <div class="identity m-2">
                 <h2 class="m-0 p-0">Latest Recipe</h2>
@@ -434,24 +482,14 @@ mysqli_close($conn);
 
 
             <div class="row row-cols-1 row-cols-md-4 g-4">
-                <!-- recipe_info.recipe_id, recipe_info.title, recipe_info.description, recipe_feedback.rating, recipe_info.image -->
+                recipe_info.recipe_id, recipe_info.title, recipe_info.description, recipe_feedback.rating, recipe_info.image
                 <?php foreach ($latest_recipes as $recipe) { ?>
                     <div class="col">
-                        <a href="#">
+                        <a href="#" onclick="submirecipeForm(<?php echo $recipe[0]; ?>)">
                             <div class="card">
-                                <img src="/Images/Recipe-Images/frozen_vegetables.jpg" class="card-img-top" alt="...">
-                                <!-- <img src="/Images/Recipe-Images/ -->
-                                <?php
-                                // echo $recipe[3] 
-                                ?>
-                                <!-- " class="card-img-top" alt="..."> -->
+                                <img src="<?php echo $recipe['image'] ?>" class="card-img-top" alt="...">
                                 <div class="card-body text-center">
-                                    <h5 class="card-title">
-                                        <?php
-                                        // echo $recipe[0] 
-                                        ?>
-                                    </h5>
-                                    <h5 class="card-title"><?php echo $recipe[1] ?></h5>
+                                    <h5 class="card-title"><?php echo $recipe['title'] ?></h5>
                                 </div>
                             </div>
                         </a>
@@ -590,6 +628,19 @@ mysqli_close($conn);
         });
     </script>
 
+
+
+
+    <!-- $stmt = $conn->prepare('SELECT recipe_info.recipe_id, recipe_info.title, recipe_info.description, recipe_feedback.rating, recipe_info.image
+    FROM
+    recipe_info LEFT JOIN recipe_feedback
+    ON
+    recipe_info.recipe_id = recipe_feedback.recipe_id
+    WHERE
+    recipe_info.recipe_id IN
+    (SELECT recipe_id FROM junction_meal_type_recipe_info WHERE meal_type_id IN
+    (SELECT meal_type_id FROM junction_meal_type_day_chunk WHERE chunk_id =
+    (SELECT chunk_id FROM day_chunk WHERE chunk_name = ?))) LIMIT 20;'); -->
 
 
 
