@@ -7,36 +7,10 @@ include("../Includes/Database Connection/database_connection.php");
 $sql = "SELECT event_id, event_name, description FROM event_info";
 $result = $conn->query($sql);
 
-$meal_type_sql = "SELECT meal_type_id, meal_name, description FROM meal_type";
-$meal_type_result = $conn->query($meal_type_sql);
-
 // Get the event_id from URL or set default
 $selected_event_id = isset($_GET['event_id']) ? intval($_GET['event_id']) : null;
 
-$recipe_per_page = 9; // 6 rows * 4 categories per row
-$current_page = isset($_GET['page']) ? intval($_GET['page']) : 1;
-$offset = ($current_page - 1) * $recipe_per_page;
-
-
-$sql_count = "SELECT COUNT(DISTINCT r.recipe_id) FROM recipe_info r
-JOIN junction_event_recipes jer ON r.recipe_id = jer.recipe_id 
-JOIN event_info e ON jer.event_id = e.event_id";
-
-
-$total_recipes = mysqli_fetch_array(mysqli_query($conn, $sql_count))[0];
-
-// Calculate total pages
-$total_pages = ceil($total_recipes / $recipe_per_page);
-
 $event__name = ''; // Default value in case no event is found
-
-// if (isset($_POST['meal_type'])) 
-// {
-//     print_r($_POST['meal_type']);
-//     // array to comma separated string
-//     $meal_type = implode(',', $_POST['meal_type']);
-//     print_r($meal_type);
-// }
 
 if ($selected_event_id) {
     // Use a prepared statement to safely handle the event_id
@@ -76,9 +50,7 @@ FROM recipe_info r
 INNER JOIN junction_event_recipes jer ON r.recipe_id = jer.recipe_id
 LEFT JOIN junction_recipe_ingredients jri ON r.recipe_id = jri.recipe_id
 WHERE jer.event_id = $selected_event_id
-GROUP BY r.recipe_id, r.title, r.image, r.description, r.author, r.rating, r.prep_time, r.cook_time 
-LIMIT $recipe_per_page OFFSET $offset
-";
+GROUP BY r.recipe_id, r.title, r.image, r.description, r.author, r.rating, r.prep_time, r.cook_time";
     $recipe_result = $conn->query($recipe_sql);
 } else {
     $recipe_sql = "
@@ -86,8 +58,7 @@ LIMIT $recipe_per_page OFFSET $offset
 FROM recipe_info r
 INNER JOIN junction_event_recipes jer ON r.recipe_id = jer.recipe_id
 LEFT JOIN junction_recipe_ingredients jri ON r.recipe_id = jri.recipe_id
-GROUP BY r.recipe_id, r.title, r.image, r.description, r.author, r.rating, r.prep_time, r.cook_time 
-        LIMIT $recipe_per_page OFFSET $offset";
+GROUP BY r.recipe_id, r.title, r.image, r.description, r.author, r.rating, r.prep_time, r.cook_time";
     $recipe_result = $conn->query($recipe_sql);
 }
 
@@ -104,8 +75,8 @@ GROUP BY r.recipe_id, r.title, r.image, r.description, r.author, r.rating, r.pre
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../Includes/Navbar/navbarMain.css">
     <link rel="stylesheet" href="./Occasion-style.css">
-    <!-- <link rel="stylesheet" href="CSS/pagination.css">-->
-    <link rel="stylesheet" href="../All Categories/CSS/filterPageOfOneCategory.css"> 
+    <!-- <link rel="stylesheet" href="CSS/pagination.css">
+    <link rel="stylesheet" href="CSS/filterPageOfOneCategory.css"> -->
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
@@ -196,21 +167,29 @@ GROUP BY r.recipe_id, r.title, r.image, r.description, r.author, r.rating, r.pre
                             <span>Meal</span>
                             <span id="mealIcon">+</span>
                         </div>
-                        <!-- <form method='post' id='meal_type_form' action='occasion_main.php'> <tr> -->
-                            <div class="collapse" id="mealFilters"><!-- collapse seg -->
-                            <?php if($meal_type_result->num_rows > 0): ?>
-                                <?php while($row = $meal_type_result-> fetch_assoc()): ?>    
-                                    <div class="filter-option ms-3">
-                                        <input type="checkbox" name='meal_type' id="<?php echo $row['meal_type_id']; ?>" class="form-check-input filter-checkbox" value="<?php echo $row['meal_type_id']; ?>">
-                                        <label for="breakfast" class="form-check-label"><?php echo htmlspecialchars($row['meal_name']); ?></label>
-                                    </div>
-                                <?php endwhile; ?>
-                            <?php else: ?>
-                                <p>No Occasions Found</p>
-                                <?php endif; ?>
+                        <div class="collapse" id="mealFilters"><!-- collapse seg -->
+                            <div class="filter-option ms-3">
+                                <input type="checkbox" id="breakfast" class="form-check-input">
+                                <label for="breakfast" class="form-check-label">Breakfast</label>
                             </div>
-                            <!-- <button type="submit">Submit</button>
-                        </form> -->
+                            <div class="filter-option ms-3">
+                                <input type="checkbox" id="dinner" class="form-check-input">
+                                <label for="dinner" class="form-check-label">Dinner</label>
+                            </div>
+                            <div class="filter-option ms-3">
+                                <input type="checkbox" id="entree" class="form-check-input">
+                                <label for="entree" class="form-check-label">Entree</label>
+                            </div>
+                            <div class="filter-option ms-3">
+                                <input type="checkbox" id="side" class="form-check-input">
+                                <label for="side" class="form-check-label">Side</label>
+                            </div>
+                            <div class="filter-option ms-3">
+                                <input type="checkbox" id="snack" class="form-check-input">
+                                <label for="snack" class="form-check-label">Snack</label>
+                            </div>
+                        </div>
+
                         <!-- Dish Type Section -->
                         <div class="filter-category" data-bs-toggle="collapse" href="#dishTypeFilters" role="button" aria-expanded="false" aria-controls="dishTypeFilters">
                             <span>Dish Type</span>
@@ -442,6 +421,24 @@ GROUP BY r.recipe_id, r.title, r.image, r.description, r.author, r.rating, r.pre
                     <div class="container mt-5">
 
                         <!---------------------------------- Logo Pagination Section ---------------------------------->
+                        <div class="logo-pagination d-flex justify-content-center align-items-center mb-3">
+                            <!-- Previous Button -->
+                            <a href="?page=<?php echo $current_page - 1; ?>"
+                                class="prev-arrow me-4 <?php if ($current_page <= 1) echo 'disabled'; ?>">
+                                &lt;&lt;
+                            </a>
+
+                            <!-- Logo or Center Text -->
+                            <div class="logo-box">
+                                <img src="../Images/logo/cook_Corner_LOGO-removebg-mainPartOnly.png" alt="Logo" style=" width: 100px;">
+                            </div>
+
+                            <!-- Next Button -->
+                            <a href="?page=<?php echo $current_page + 1; ?>"
+                                class="next-arrow ms-4 <?php if ($current_page >= $total_pages) echo 'disabled'; ?>">
+                                &gt;&gt;
+                            </a>
+                        </div>
 
                         <!---------------------------------- Pagination Section ---------------------------------->
                         <nav aria-label="Page navigation example">
@@ -502,8 +499,6 @@ GROUP BY r.recipe_id, r.title, r.image, r.description, r.author, r.rating, r.pre
             // },
         });
     </script>
-      <script src="occasion.js"></script>
-
 </body>
 
 </html>

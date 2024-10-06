@@ -62,7 +62,7 @@ if (isset($_POST['recipes_search'])) {
 }
 
 
-$sql = "SELECT SQL_CALC_FOUND_ROWS ri.recipe_id, ri.title, ri.description, rf.rating, ri.image, COUNT(ri.recipe_id) AS recipe_count
+$sql = "SELECT SQL_CALC_FOUND_ROWS ri.recipe_id, ri.title, ri.description, rf.rating, ri.image
         FROM
             recipe_info ri LEFT JOIN recipe_feedback rf 
         ON 
@@ -145,6 +145,8 @@ mysqli_close($conn);
     <?php
     include('../Includes/Navbar/navbarMain.php');  // Navbar 
     include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin    
+    include "../Includes/AddMenu/addMenu.php";
+
     ?>
 
     <!------------------------------------  Page info  ------------------------------------>

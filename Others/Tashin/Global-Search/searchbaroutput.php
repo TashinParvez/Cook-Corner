@@ -1,29 +1,31 @@
 <?php
-// Connect to database
-session_start();
-include("/Cook-Corner/Includes/Database-connection-new/database_connection.php");
- 
-// Check connection
-if (!$conn) {
-    die("Sorry, failed to connect: " . mysqli_connect_error());
-}
-
-// Check if the search query is provided
-if (isset($_POST['query'])) {
-    $search_query = mysqli_real_escape_string($conn, $_POST['query']);
-
-    // Query the database for matching titles
-    $sql = "SELECT LEFT(title, 105) as title FROM notes WHERE title LIKE '%$search_query%' LIMIT 10";
-    $result = mysqli_query($conn, $sql);
-
-    $suggestions = [];
-    while ($row = mysqli_fetch_assoc($result)) {
-        $suggestions[] = $row['title'];
-    }
-
-    // Return the results as JSON
-    echo json_encode($suggestions);
-}
-
-mysqli_close($conn);
+$searchQuery = isset($_GET['query']) ? $_GET['query'] : '';
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <title>Search Results</title>
+</head>
+
+<body>
+    <?php
+    include 'navbar.php';  // Include your navbar file
+    ?>
+
+    <script>
+        $(document).ready(function() {
+            // Set the search input to the query value on page load
+            let searchQuery = "<?php echo $searchQuery; ?>";
+            $('#search-input').val(searchQuery); // Set the search input value
+        });
+    </script>
+
+    <!-- Your search results content goes here -->
+</body>
+
+</html>

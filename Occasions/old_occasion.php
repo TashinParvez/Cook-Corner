@@ -1,96 +1,5 @@
 <?php
 
-include('../Includes/Navbar/navbarMain.php');
-include("../Includes/Database Connection/database_connection.php");
-
-// SQL query to fetch event details
-$sql = "SELECT event_id, event_name, description FROM event_info";
-$result = $conn->query($sql);
-
-$meal_type_sql = "SELECT meal_type_id, meal_name, description FROM meal_type";
-$meal_type_result = $conn->query($meal_type_sql);
-
-// Get the event_id from URL or set default
-$selected_event_id = isset($_GET['event_id']) ? intval($_GET['event_id']) : null;
-
-$recipe_per_page = 9; // 6 rows * 4 categories per row
-$current_page = isset($_GET['page']) ? intval($_GET['page']) : 1;
-$offset = ($current_page - 1) * $recipe_per_page;
-
-
-$sql_count = "SELECT COUNT(DISTINCT r.recipe_id) FROM recipe_info r
-JOIN junction_event_recipes jer ON r.recipe_id = jer.recipe_id 
-JOIN event_info e ON jer.event_id = e.event_id";
-
-
-$total_recipes = mysqli_fetch_array(mysqli_query($conn, $sql_count))[0];
-
-// Calculate total pages
-$total_pages = ceil($total_recipes / $recipe_per_page);
-
-$event__name = ''; // Default value in case no event is found
-
-// if (isset($_POST['meal_type'])) 
-// {
-//     print_r($_POST['meal_type']);
-//     // array to comma separated string
-//     $meal_type = implode(',', $_POST['meal_type']);
-//     print_r($meal_type);
-// }
-
-if ($selected_event_id) {
-    // Use a prepared statement to safely handle the event_id
-    $event_name_sql = "SELECT event_name FROM event_info WHERE event_id = ?";
-    
-    if ($stmt = $conn->prepare($event_name_sql)) {
-        // Bind the event_id as an integer parameter
-        $stmt->bind_param("i", $selected_event_id);
-        $stmt->execute();
-        
-        // Get the result
-        $resultantLabel = $stmt->get_result();
-        
-        // Check if any rows are returned
-        if ($resultantLabel->num_rows > 0) {
-            // Fetch the event name from the first row
-            $row = $resultantLabel->fetch_assoc();
-            $event__name = $row['event_name'];
-        } else {
-            // If no event is found, set a default message
-            $event__name = "Event not found";
-        }
-        
-        // Close the statement
-        $stmt->close();
-    } else {
-        // Handle SQL preparation failure
-        echo "Error preparing the SQL statement.";
-    }
-}
-
-// Fetch recipes for the selected event_id
-if ($selected_event_id) {
-    $recipe_sql = "
-SELECT r.recipe_id, r.title, r.image, r.description, r.author, r.rating, r.prep_time, r.cook_time, COUNT(jri.ingredient_id) AS ingredient_count
-FROM recipe_info r
-INNER JOIN junction_event_recipes jer ON r.recipe_id = jer.recipe_id
-LEFT JOIN junction_recipe_ingredients jri ON r.recipe_id = jri.recipe_id
-WHERE jer.event_id = $selected_event_id
-GROUP BY r.recipe_id, r.title, r.image, r.description, r.author, r.rating, r.prep_time, r.cook_time 
-LIMIT $recipe_per_page OFFSET $offset
-";
-    $recipe_result = $conn->query($recipe_sql);
-} else {
-    $recipe_sql = "
-       SELECT r.recipe_id, r.title, r.image, r.description, r.author, r.rating, r.prep_time, r.cook_time, COUNT(jri.ingredient_id) AS ingredient_count
-FROM recipe_info r
-INNER JOIN junction_event_recipes jer ON r.recipe_id = jer.recipe_id
-LEFT JOIN junction_recipe_ingredients jri ON r.recipe_id = jri.recipe_id
-GROUP BY r.recipe_id, r.title, r.image, r.description, r.author, r.rating, r.prep_time, r.cook_time 
-        LIMIT $recipe_per_page OFFSET $offset";
-    $recipe_result = $conn->query($recipe_sql);
-}
-
 ?>
 
 <!doctype html>
@@ -104,8 +13,8 @@ GROUP BY r.recipe_id, r.title, r.image, r.description, r.author, r.rating, r.pre
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../Includes/Navbar/navbarMain.css">
     <link rel="stylesheet" href="./Occasion-style.css">
-    <!-- <link rel="stylesheet" href="CSS/pagination.css">-->
-    <link rel="stylesheet" href="../All Categories/CSS/filterPageOfOneCategory.css"> 
+    <!-- <link rel="stylesheet" href="CSS/pagination.css">
+    <link rel="stylesheet" href="CSS/filterPageOfOneCategory.css"> -->
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
@@ -116,14 +25,16 @@ GROUP BY r.recipe_id, r.title, r.image, r.description, r.author, r.rating, r.pre
 
 <body>
 
-   
+    <?php
+    include('../Includes/Navbar/navbarMain.php');
+    ?>
 
     <section class="best-recipe">
         <div class="container">
             <div class="row g-0 text-center">
                 <div class="col-12">
-                <h2 class="m-0 p-0">Occasions <?php echo htmlspecialchars($event__name ?? ''); ?></h2>
-                <p class="m-0 p-0">Plan your special moments with ease and discover personalized recipes, menus and ideas for every
+                    <h2 class="m-0 p-0">Occasions</h2>
+                    <p class="m-0 p-0">Plan your special moments with ease and discover personalized recipes, menus and ideas for every
                         celebration, from birthdays to anniversaries, all in one place.</p>
                 </div>
             </div>
@@ -136,36 +47,59 @@ GROUP BY r.recipe_id, r.title, r.image, r.description, r.author, r.rating, r.pre
         <!-- Swiper for categories -->
         <div class="swiper mySwiper">
             <div class="swiper-wrapper">
-                <?php if($result->num_rows > 0): ?>
-                    <?php while($row = $result-> fetch_assoc()): ?>
-                        <?php 
-                            // Check if the current event is the selected one
-                             $is_active = ($row['event_id'] == $selected_event_id) ? 'active' : '';
-                            ?>
+                <?php foreach ([1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as $key => $value): ?>
                     <div class="swiper-slide">
-                        <a href="?event_id=<?php echo $row['event_id']; ?>" class="category-tab <?php echo $is_active; ?>" data-target="content-<?php echo $row['event_id']; ?>">
+                        <a href="javascript:void(0);" class="category-tab" data-target="content-<?php echo $key; ?>">
                             <div class="card text-center bg-transparent border-0">
                                 <img src="../../../Images/FoodImages/2.jpg" class="card-img-top rounded-circle mx-auto d-block" alt="..." style="width: 70px; height: 70px; object-fit: cover;">
                                 <div class="card-body">
-                                    <h5 class="card-title"><?php echo htmlspecialchars($row['event_name']); ?></h5>
+                                    <h5 class="card-title">Eid al-Fitr <?php echo $key; ?></h5>
                                 </div>
                             </div>
                         </a>
                     </div>
-                <?php endwhile; ?>
-                <?php else: ?>
-                    <p>No Occasions Found</p>
-            </div>
-            <?php endif; ?>
+                <?php endforeach; ?>
             </div>
             <div class="swiper-button-next"></div>
             <div class="swiper-button-prev"></div>
             <div class="swiper-pagination"></div>
         </div>
 
-      
+        <!-- Tab Content Area (this does not slide) -->
+        <!-- <div class="tab-content">
+            <?php foreach ([1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as $key => $value): ?>
+                <div class="tab-pane fade <?php echo ($key == 0) ? 'show active' : ''; ?>" id="content-<?php echo $key; ?>">
+                    <div class="special-category">
+                        <h3>Special Occasion: Eid al-Fitr <?php echo $key; ?></h3>
+                        <div class="child-list"> -->
+                            <a href="#" class="text-decoration-none">Eid al-Fitr</a>
+                            <a href="#" class="text-decoration-none">Eid al-Fitr</a>
+                            <a href="#" class="text-decoration-none">Eid al-Fitr</a>
+                            <a href="#" class="text-decoration-none">Eid al-Fitr</a>
+                            <a href="#" class="text-decoration-none">Eid al-Fitr</a>
+                            <a href="#" class="text-decoration-none">Eid al-Fitr</a>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
     </div>
-   
+    <!-- <section>
+        <div class="container">
+            
+
+      <div class="child-list">
+                                <a href="#" class="text-decoration-none">Eid al-Fitr</a>
+                                <a href="#" class="text-decoration-none">Eid al-Fitr</a>
+                                <a href="#" class="text-decoration-none">Eid al-Fitr</a>
+                                <a href="#" class="text-decoration-none">Eid al-Fitr</a>
+                                <a href="#" class="text-decoration-none">Eid al-Fitr</a>
+                                <a href="#" class="text-decoration-none">Eid al-Fitr</a>
+                            </div>
+    </div>
+
+      </section> -->
+
     <div class="container">
 
         <div class="container mt-4">
@@ -196,21 +130,29 @@ GROUP BY r.recipe_id, r.title, r.image, r.description, r.author, r.rating, r.pre
                             <span>Meal</span>
                             <span id="mealIcon">+</span>
                         </div>
-                        <!-- <form method='post' id='meal_type_form' action='occasion_main.php'> <tr> -->
-                            <div class="collapse" id="mealFilters"><!-- collapse seg -->
-                            <?php if($meal_type_result->num_rows > 0): ?>
-                                <?php while($row = $meal_type_result-> fetch_assoc()): ?>    
-                                    <div class="filter-option ms-3">
-                                        <input type="checkbox" name='meal_type' id="<?php echo $row['meal_type_id']; ?>" class="form-check-input filter-checkbox" value="<?php echo $row['meal_type_id']; ?>">
-                                        <label for="breakfast" class="form-check-label"><?php echo htmlspecialchars($row['meal_name']); ?></label>
-                                    </div>
-                                <?php endwhile; ?>
-                            <?php else: ?>
-                                <p>No Occasions Found</p>
-                                <?php endif; ?>
+                        <div class="collapse" id="mealFilters"><!-- collapse seg -->
+                            <div class="filter-option ms-3">
+                                <input type="checkbox" id="breakfast" class="form-check-input">
+                                <label for="breakfast" class="form-check-label">Breakfast</label>
                             </div>
-                            <!-- <button type="submit">Submit</button>
-                        </form> -->
+                            <div class="filter-option ms-3">
+                                <input type="checkbox" id="dinner" class="form-check-input">
+                                <label for="dinner" class="form-check-label">Dinner</label>
+                            </div>
+                            <div class="filter-option ms-3">
+                                <input type="checkbox" id="entree" class="form-check-input">
+                                <label for="entree" class="form-check-label">Entree</label>
+                            </div>
+                            <div class="filter-option ms-3">
+                                <input type="checkbox" id="side" class="form-check-input">
+                                <label for="side" class="form-check-label">Side</label>
+                            </div>
+                            <div class="filter-option ms-3">
+                                <input type="checkbox" id="snack" class="form-check-input">
+                                <label for="snack" class="form-check-label">Snack</label>
+                            </div>
+                        </div>
+
                         <!-- Dish Type Section -->
                         <div class="filter-category" data-bs-toggle="collapse" href="#dishTypeFilters" role="button" aria-expanded="false" aria-controls="dishTypeFilters">
                             <span>Dish Type</span>
@@ -405,43 +347,99 @@ GROUP BY r.recipe_id, r.title, r.image, r.description, r.author, r.rating, r.pre
 
                 <!-- ------------------------------- recipies --------------------------------------- -->
                 <div class="col-9">
-    <div class="row row-cols-1 row-cols-md-4 g-4">
-        <?php if($recipe_result->num_rows > 0): ?>
-            <?php while($recipe_row = $recipe_result->fetch_assoc()): ?>
-                <div class="col-md-4">
-                    <div class="card recipe-card">
-                        <div class="recipe-img">
-                            <img src="/Images/FoodImages/<?php echo htmlspecialchars($recipe_row['image']); ?>.jpg" class="card-img-top" alt="Recipe Image">
-                            <i class="fas fa-bookmark save-icon"></i> <!-- Bookmark icon -->
-                        </div>
-                        <div class="card-body recipe-info">
-                            <h5 class="recipe-title"><?php echo htmlspecialchars($recipe_row['title']); ?></h5>
-                            <p class="added-by">Added by: <strong><?php echo htmlspecialchars($recipe_row['author']); ?></strong></p>
-                            <div class="ratings">
-                                <span>★★★★☆</span>
-                                <small>(<?php echo htmlspecialchars($recipe_row['rating']); ?>)</small> <!-- Display rating -->
+                    <div class="row row-cols-1 row-cols-md-4 g-4">
+
+
+                        <div class="col">
+                            <div class="card">
+                                <img src="/Images/FoodImages/1.jpg" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">Card title</h5>
+                                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                </div>
                             </div>
                         </div>
-                        <div class="hover-details">
-                            <p><strong>Prep Time:</strong> <?php echo htmlspecialchars($recipe_row['prep_time']); ?> mins</p>
-                            <p><strong>Cook Time:</strong> <?php echo htmlspecialchars($recipe_row['cook_time']); ?> mins</p>
-                            <p><strong>Ingredients:</strong> <?php echo htmlspecialchars($recipe_row['ingredient_count']); ?></p> <!-- Ingredient count -->
+
+
+                        <div class="col">
+                            <div class="card">
+                                <img src="/Images/FoodImages/1.jpg" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">Card title</h5>
+                                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card">
+                                <img src="/Images/FoodImages/1.jpg" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">Card title</h5>
+                                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card">
+                                <img src="/Images/FoodImages/1.jpg" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">Card title</h5>
+                                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card">
+                                <img src="/Images/FoodImages/1.jpg" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">Card title</h5>
+                                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card">
+                                <img src="/Images/FoodImages/1.jpg" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">Card title</h5>
+                                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card">
+                                <img src="/Images/FoodImages/1.jpg" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">Card title</h5>
+                                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            <?php endwhile; ?>
-        <?php else: ?>
-            <p>No recipes found for this event.</p>
-        <?php endif; ?>
-    </div>
-</div>
-
 
 
                     <!----------------------------------------- Pagination Section ----------------------------------------->
                     <div class="container mt-5">
 
                         <!---------------------------------- Logo Pagination Section ---------------------------------->
+                        <div class="logo-pagination d-flex justify-content-center align-items-center mb-3">
+                            <!-- Previous Button -->
+                            <a href="?page=<?php echo $current_page - 1; ?>"
+                                class="prev-arrow me-4 <?php if ($current_page <= 1) echo 'disabled'; ?>">
+                                &lt;&lt;
+                            </a>
+
+                            <!-- Logo or Center Text -->
+                            <div class="logo-box">
+                                <img src="../Images/logo/cook_Corner_LOGO-removebg-mainPartOnly.png" alt="Logo" style=" width: 100px;">
+                            </div>
+
+                            <!-- Next Button -->
+                            <a href="?page=<?php echo $current_page + 1; ?>"
+                                class="next-arrow ms-4 <?php if ($current_page >= $total_pages) echo 'disabled'; ?>">
+                                &gt;&gt;
+                            </a>
+                        </div>
 
                         <!---------------------------------- Pagination Section ---------------------------------->
                         <nav aria-label="Page navigation example">
@@ -470,7 +468,7 @@ GROUP BY r.recipe_id, r.title, r.image, r.description, r.author, r.rating, r.pre
 
                 </div>
 
-                                </div>
+
 
             </div>
         </div>
@@ -502,9 +500,91 @@ GROUP BY r.recipe_id, r.title, r.image, r.description, r.author, r.rating, r.pre
             // },
         });
     </script>
-      <script src="occasion.js"></script>
+    <!-- <script>
+    document.querySelectorAll('.category-tab').forEach(function (element) {
+        element.addEventListener('click', function () {
+            // Remove active class from all tab panes
+            document.querySelectorAll('.tab-pane').forEach(function (pane) {
+                pane.classList.remove('show', 'active');
+            });
+
+            // Get the target pane ID from the clicked category's data-target attribute
+            var target = this.getAttribute('data-target');
+
+            // Add active class to the targeted tab pane
+            document.getElementById(target).classList.add('show', 'active');
+        });
+    });
+</script> -->
+
+    <!-- <script>
+    document.querySelectorAll('.category-tab').forEach(function (element) {
+        element.addEventListener('click', function () {
+            // Remove active class from all tab panes
+            document.querySelectorAll('.tab-pane').forEach(function (pane) {
+                pane.classList.remove('show', 'active');
+            });
+
+            // Remove 'active-tab' class from all category tabs
+            document.querySelectorAll('.category-tab').forEach(function (tab) {
+                tab.classList.remove('active-tab');
+            });
+
+            // Get the target pane ID from the clicked category's data-target attribute
+            var target = this.getAttribute('data-target');
+
+            // Add active class to the targeted tab pane
+            document.getElementById(target).classList.add('show', 'active');
+
+            // Add 'active-tab' class to the clicked category tab
+            this.classList.add('active-tab');
+        });
+    });
+</script> -->
+
+    <script>
+        document.querySelectorAll('.category-tab').forEach(function(element) {
+            element.addEventListener('click', function() {
+                // Remove active class from all tab panes
+                document.querySelectorAll('.tab-pane').forEach(function(pane) {
+                    pane.classList.remove('show', 'active');
+                });
+
+                // Remove 'active-tab' class from all category tabs
+                document.querySelectorAll('.category-tab').forEach(function(tab) {
+                    tab.classList.remove('active-tab');
+                });
+
+                // Get the target pane ID from the clicked category's data-target attribute
+                var target = this.getAttribute('data-target');
+
+                // Add active class to the targeted tab pane
+                document.getElementById(target).classList.add('show', 'active');
+
+                // Add 'active-tab' class to the clicked category tab
+                this.classList.add('active-tab');
+            });
+        });
+    </script>
+
 
 </body>
 
 </html>
 
+
+
+
+
+
+
+
+<!-- 
+<div class="child-list">
+                                <a href="#" class="text-decoration-none">Eid al-Fitr</a>
+                                <a href="#" class="text-decoration-none">Eid al-Fitr</a>
+                                <a href="#" class="text-decoration-none">Eid al-Fitr</a>
+                                <a href="#" class="text-decoration-none">Eid al-Fitr</a>
+                                <a href="#" class="text-decoration-none">Eid al-Fitr</a>
+                                <a href="#" class="text-decoration-none">Eid al-Fitr</a>
+                            </div> -->
