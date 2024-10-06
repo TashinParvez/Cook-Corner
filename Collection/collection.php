@@ -2,7 +2,7 @@
 // Database table name:  
 
 //...................... Database Connection ..............................
-// include("../Includes/Database Connection/database_connection.php");
+include("../Includes/Database Connection/database_connection.php");
 
 $page_name = "My Favourite Breakfast List";
 
@@ -42,17 +42,19 @@ $page_name = "My Favourite Breakfast List";
 
 <body>
     <!-- Include Spinner -->
-    <?php 
-    //include('/Cook-Corner/Includes/Spinner/spinnerBasic.php'); // ovi
-     include('../Includes/Spinner/spinnerBasic.php'); ?> // ovi
-    
+    <?php
+    include('../Includes/Spinner/spinnerBasic.php');
+    ?>
+
 
     <!------------------------------------------ Main content ------------------------------------------>
     <div id="mainContent" style="display:none;">
         <?php
         // Include your navbar, footer, and other content here
         include('../Includes/Navbar/navbarMain.php');
+
         include '../Includes/Scroll UP/scrollUpBtn.php';
+        include "../Includes/AddMenu/addMenu.php";
         ?>
         <!-- ============================== breadcrumb ==================================== -->
         <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
@@ -93,170 +95,170 @@ $page_name = "My Favourite Breakfast List";
                             <li><a class="dropdown-item" href="#" onclick="changeSort('Popularity')"><span id="check-popularity"></span> Most Recipes</a></li>
                         </ul>
                     </div>
-                </div> 
+                </div>
 
-            <hr>
+                <hr>
 
 
-            <a href="../Recipe View/recipeView.php" style="text-decoration: none;">
-                <div class="card mb-3 border-0" style="max-width: 100%;">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <img src="/Images/curryInHand.jpg" class="img-fluid rounded-start" alt="...">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title">Cornflakes, Low-Fat Milk & Berries Recipe</h5>
-                                <p class="card-text">Bite into these delightful Cheeseburger Tater Tot Cups for a fun twist on a classic favorite.</p>
-                                <p class="card-text">
-                                    Cuisine: English || Course: English || Skill level: English
-                                </p>
-                                <p class="card-text"><small class="text-muted">Uploaded by Shafayet Ovi</small></p>
+                <a href="../Recipe View/recipeView.php" style="text-decoration: none;">
+                    <div class="card mb-3 border-0" style="max-width: 100%;">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="/Images/curryInHand.jpg" class="img-fluid rounded-start" alt="...">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">Cornflakes, Low-Fat Milk & Berries Recipe</h5>
+                                    <p class="card-text">Bite into these delightful Cheeseburger Tater Tot Cups for a fun twist on a classic favorite.</p>
+                                    <p class="card-text">
+                                        Cuisine: English || Course: English || Skill level: English
+                                    </p>
+                                    <p class="card-text"><small class="text-muted">Uploaded by Shafayet Ovi</small></p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </a>
+                </a>
 
 
-            <!-- --------------REMOVE----------------------- -->
-            <a href="../Recipe View/recipeView.php" style="text-decoration: none;">
-                <div class="card mb-3 border-0" style="max-width: 100%;">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <img src="/Images/curryInHand.jpg" class="img-fluid rounded-start" alt="...">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title">Cornflakes, Low-Fat Milk & Berries Recipe</h5>
-                                <p class="card-text">Bite into these delightful Cheeseburger Tater Tot Cups for a fun twist on a classic favorite.</p>
-                                <p class="card-text">
-                                    Cuisine: English || Course: English || Skill level: English
-                                </p>
-                                <p class="card-text"><small class="text-muted">Uploaded by Shafayet Ovi</small></p>
+                <!-- --------------REMOVE----------------------- -->
+                <a href="../Recipe View/recipeView.php" style="text-decoration: none;">
+                    <div class="card mb-3 border-0" style="max-width: 100%;">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="/Images/curryInHand.jpg" class="img-fluid rounded-start" alt="...">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">Cornflakes, Low-Fat Milk & Berries Recipe</h5>
+                                    <p class="card-text">Bite into these delightful Cheeseburger Tater Tot Cups for a fun twist on a classic favorite.</p>
+                                    <p class="card-text">
+                                        Cuisine: English || Course: English || Skill level: English
+                                    </p>
+                                    <p class="card-text"><small class="text-muted">Uploaded by Shafayet Ovi</small></p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </a> <a href="../Recipe View/recipeView.php" style="text-decoration: none;">
-                <div class="card mb-3 border-0" style="max-width: 100%;">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <img src="/Images/curryInHand.jpg" class="img-fluid rounded-start" alt="...">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title">Cornflakes, Low-Fat Milk & Berries Recipe</h5>
-                                <p class="card-text">Bite into these delightful Cheeseburger Tater Tot Cups for a fun twist on a classic favorite.</p>
-                                <p class="card-text">
-                                    Cuisine: English || Course: English || Skill level: English
-                                </p>
-                                <p class="card-text"><small class="text-muted">Uploaded by Shafayet Ovi</small></p>
+                </a> <a href="../Recipe View/recipeView.php" style="text-decoration: none;">
+                    <div class="card mb-3 border-0" style="max-width: 100%;">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="/Images/curryInHand.jpg" class="img-fluid rounded-start" alt="...">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">Cornflakes, Low-Fat Milk & Berries Recipe</h5>
+                                    <p class="card-text">Bite into these delightful Cheeseburger Tater Tot Cups for a fun twist on a classic favorite.</p>
+                                    <p class="card-text">
+                                        Cuisine: English || Course: English || Skill level: English
+                                    </p>
+                                    <p class="card-text"><small class="text-muted">Uploaded by Shafayet Ovi</small></p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </a> <a href="../Recipe View/recipeView.php" style="text-decoration: none;">
-                <div class="card mb-3 border-0" style="max-width: 100%;">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <img src="/Images/curryInHand.jpg" class="img-fluid rounded-start" alt="...">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title">Cornflakes, Low-Fat Milk & Berries Recipe</h5>
-                                <p class="card-text">Bite into these delightful Cheeseburger Tater Tot Cups for a fun twist on a classic favorite.</p>
-                                <p class="card-text">
-                                    Cuisine: English || Course: English || Skill level: English
-                                </p>
-                                <p class="card-text"><small class="text-muted">Uploaded by Shafayet Ovi</small></p>
+                </a> <a href="../Recipe View/recipeView.php" style="text-decoration: none;">
+                    <div class="card mb-3 border-0" style="max-width: 100%;">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="/Images/curryInHand.jpg" class="img-fluid rounded-start" alt="...">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">Cornflakes, Low-Fat Milk & Berries Recipe</h5>
+                                    <p class="card-text">Bite into these delightful Cheeseburger Tater Tot Cups for a fun twist on a classic favorite.</p>
+                                    <p class="card-text">
+                                        Cuisine: English || Course: English || Skill level: English
+                                    </p>
+                                    <p class="card-text"><small class="text-muted">Uploaded by Shafayet Ovi</small></p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </a> <a href="../Recipe View/recipeView.php" style="text-decoration: none;">
-                <div class="card mb-3 border-0" style="max-width: 100%;">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <img src="/Images/curryInHand.jpg" class="img-fluid rounded-start" alt="...">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title">Cornflakes, Low-Fat Milk & Berries Recipe</h5>
-                                <p class="card-text">Bite into these delightful Cheeseburger Tater Tot Cups for a fun twist on a classic favorite.</p>
-                                <p class="card-text">
-                                    Cuisine: English || Course: English || Skill level: English
-                                </p>
-                                <p class="card-text"><small class="text-muted">Uploaded by Shafayet Ovi</small></p>
+                </a> <a href="../Recipe View/recipeView.php" style="text-decoration: none;">
+                    <div class="card mb-3 border-0" style="max-width: 100%;">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="/Images/curryInHand.jpg" class="img-fluid rounded-start" alt="...">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">Cornflakes, Low-Fat Milk & Berries Recipe</h5>
+                                    <p class="card-text">Bite into these delightful Cheeseburger Tater Tot Cups for a fun twist on a classic favorite.</p>
+                                    <p class="card-text">
+                                        Cuisine: English || Course: English || Skill level: English
+                                    </p>
+                                    <p class="card-text"><small class="text-muted">Uploaded by Shafayet Ovi</small></p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </a> <a href="../Recipe View/recipeView.php" style="text-decoration: none;">
-                <div class="card mb-3 border-0" style="max-width: 100%;">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <img src="/Images/curryInHand.jpg" class="img-fluid rounded-start" alt="...">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title">Cornflakes, Low-Fat Milk & Berries Recipe</h5>
-                                <p class="card-text">Bite into these delightful Cheeseburger Tater Tot Cups for a fun twist on a classic favorite.</p>
-                                <p class="card-text">
-                                    Cuisine: English || Course: English || Skill level: English
-                                </p>
-                                <p class="card-text"><small class="text-muted">Uploaded by Shafayet Ovi</small></p>
+                </a> <a href="../Recipe View/recipeView.php" style="text-decoration: none;">
+                    <div class="card mb-3 border-0" style="max-width: 100%;">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="/Images/curryInHand.jpg" class="img-fluid rounded-start" alt="...">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">Cornflakes, Low-Fat Milk & Berries Recipe</h5>
+                                    <p class="card-text">Bite into these delightful Cheeseburger Tater Tot Cups for a fun twist on a classic favorite.</p>
+                                    <p class="card-text">
+                                        Cuisine: English || Course: English || Skill level: English
+                                    </p>
+                                    <p class="card-text"><small class="text-muted">Uploaded by Shafayet Ovi</small></p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </a>
-            <!-- --------------REMOVE----------------------- -->
+                </a>
+                <!-- --------------REMOVE----------------------- -->
 
-            <!-- Buttons -->
-            <div class="container d-flex justify-content-between mt-5">
-                <button type="button" class="btn btn-primary btn-sm">
-                    << Prev</button>
-                        <p>My Favourite Breakfast List</p>
-                        <button type="button" class="btn btn-primary btn-sm">Next >></button>
+                <!-- Buttons -->
+                <div class="container d-flex justify-content-between mt-5">
+                    <button type="button" class="btn btn-primary btn-sm">
+                        << Prev</button>
+                            <p>My Favourite Breakfast List</p>
+                            <button type="button" class="btn btn-primary btn-sm">Next >></button>
+                </div>
+
+
             </div>
 
+            <!-------------------------------- Second Seg -------------------------------->
+            <div class="col-md-2">
 
+                <div class="card" style="width: 100%;">
+                    <div class="card-header">
+                        All Collections
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item ">Collection NO-1 </li>
+                        <li class="list-group-item">Collection NO-2 </li>
+                        <li class="list-group-item">Collection NO-3</li>
+                    </ul>
+                </div>
+
+                <!-- Add Collection -->
+                <div class="mt-3 text-center">
+                    <button type="button" class="btn btn-outline-secondary btn-sm" id="addStep">+ Add Collection</button>
+                </div>
+
+
+
+            </div>
         </div>
 
-        <!-------------------------------- Second Seg -------------------------------->
-        <div class="col-md-2">
-
-            <div class="card" style="width: 100%;">
-                <div class="card-header">
-                    All Collections
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item ">Collection NO-1 </li>
-                    <li class="list-group-item">Collection NO-2 </li>
-                    <li class="list-group-item">Collection NO-3</li>
-                </ul>
-            </div>
-
-            <!-- Add Collection -->
-            <div class="mt-3 text-center">
-                <button type="button" class="btn btn-outline-secondary btn-sm" id="addStep">+ Add Collection</button>
-            </div>
-
-
-
-        </div>
-    </div>
 
 
 
 
 
-
-    <!-- ============================== Footer ==================================== -->
-    <?php
-    include('../Includes/Footer/footermain.php');  // tashin 
-    ?>
+        <!-- ============================== Footer ==================================== -->
+        <?php
+        include('../Includes/Footer/footermain.php');  // tashin 
+        ?>
 
     </div>
     <!------------------------------------------ End of Main content ------------------------------------------>
