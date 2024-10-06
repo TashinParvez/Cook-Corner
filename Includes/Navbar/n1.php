@@ -6,28 +6,117 @@ $user_id = $_SESSION['user_id'] ?? '5';
 
 
 // for search
-$search_query = $search_query ?? ''; // Check if the variable is defined; if not, set it to an empty string
+// Check if the variable is defined; if not, set it to an empty string
+$search_query = $search_query ?? '';
 
 
 //...................... Database Connection ..............................
-include("../Includes/Database Connection/database_connection.php");  // for home page
+// include("../Includes/Database Connection/database_connection.php");  // for home page
 // include("../../Includes/Database Connection/database_connection.php");  // for only navbar
 
+include("/Cook-Corner/Includes/Database-connection-new/database_connection.php");   // new for search
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
+} else {
+    // echo "Database connected successfully!";
 }
+
+
+
+$sql = "SELECT event_id, event_name FROM event_info";
+$result = $conn->query($sql);
+
 
 $stmt = $conn->prepare('SELECT first_name FROM user_info WHERE id = ? LIMIT 1');
 $stmt->bind_param('i', $user_id);
 $stmt->execute();
 $stmt->bind_result($name);
 $stmt->fetch();
+
 $stmt->close();
+
+
+// --------------------------------------------- fetch data For search ------------------------
+$data = array();
+
+// Fetch data ( FROM recipe_info and ingredient_info tables )
+
+// $sql = "SELECT title AS combined_info FROM `recipe_info` WHERE title IS NOT NULL 
+//         UNION
+//         SELECT subtitle AS combined_info FROM `recipe_info` WHERE subtitle IS NOT NULL
+//         UNION
+//         SELECT ingredient_name AS combined_info FROM `ingredient_info` WHERE ingredient_name IS NOT NULL
+//         UNION
+//         SELECT category AS combined_info FROM `ingredient_info` WHERE category IS NOT NULL";
+
+
+
+$sql = "    SELECT title AS combined_info FROM `recipe_info` WHERE title IS NOT NULL 
+            UNION
+            SELECT subtitle AS combined_info FROM `recipe_info` WHERE subtitle IS NOT NULL
+            UNION
+            SELECT ingredient_name AS combined_info FROM `ingredient_info` WHERE ingredient_name IS NOT NULL
+            UNION
+            SELECT category AS combined_info FROM `ingredient_info` WHERE category IS NOT NULL 
+            UNION
+            SELECT name AS combined_info FROM `recipe_category` WHERE name IS NOT NULL 
+            UNION
+            SELECT cuisine_name AS combined_info FROM `cuisine_type` WHERE cuisine_name IS NOT NULL 
+            UNION
+            SELECT meal_name AS combined_info FROM `meal_type` WHERE meal_name IS NOT NULL 
+            UNION
+            SELECT method_name AS combined_info FROM `cooking_method` WHERE method_name IS NOT NULL
+            UNION
+            SELECT spice_name AS combined_info FROM `spices` WHERE spice_name IS NOT NULL
+            UNION
+            SELECT city_name AS combined_info FROM `cities` WHERE city_name IS NOT NULL
+            UNION
+            SELECT event_name AS combined_info FROM `event_info` WHERE event_name IS NOT NULL
+            UNION
+            SELECT preference_name AS combined_info FROM `dietary_preferences` WHERE preference_name IS NOT NULL
+            UNION
+            SELECT focus_name AS combined_info FROM `health_focus` WHERE focus_name IS NOT NULL
+            UNION
+            SELECT tips_title AS combined_info FROM `kitchen_tips` WHERE tips_title IS NOT NULL
+            UNION
+            SELECT description AS combined_info FROM `kitchen_tips` WHERE description IS NOT NULL
+            UNION
+            SELECT name AS combined_info FROM `kitchen_tips_category` WHERE name IS NOT NULL
+            UNION
+            SELECT description AS combined_info FROM `kitchen_tips_category` WHERE description IS NOT NULL
+            ORDER BY RAND() 
+            -- LIMIT 8 ";
+
+
+
+$resultForSuggestion = mysqli_query($conn, $sql);  // get query result 
+
+foreach ($resultForSuggestion as $row) {
+    $data[] = $row['combined_info'];
+}
+
+// Return data if it's an AJAX request
+if (isset($_POST['query'])) {
+    $search_query = strtolower($_POST['query']);
+    $filtered_data = array_filter($data, function ($item) use ($search_query) {
+        return stripos($item, $search_query) !== false;
+    });
+
+    echo json_encode(array_values($filtered_data)); // return filtered suggestions as JSON
+    exit();
+}
+
+// ------------------------------------------------------------------------------------------------
+
+
+
+mysqli_free_result($resultForSuggestion);
 mysqli_close($conn);
 
-?>
+// echo $name;
 
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -48,25 +137,8 @@ mysqli_close($conn);
 
     <!-- CSS -->
     <link rel="stylesheet" href="navbarMain.css">
-
-
-    <style>
-        /* FOR SUGGESTIONS */
-        .suggestion-item {
-            padding: 10px;
-            cursor: pointer;
-            border-bottom: 1px solid #ddd;
-            /* Optional: for separation */
-        }
-
-        .suggestion-item:hover {
-            background-color: #f0f0f0;
-            /* Optional: hover effect */
-        }
-
-        /* Start as hidden */
-    </style>
-
+    <!-- <link rel="stylesheet" href="sidebar.css"> -->
+    <!-- sidebar -->
 </head>
 
 <body>
@@ -76,7 +148,7 @@ mysqli_close($conn);
         <!-- navbar bg-dark sticky-top  -->
         <nav class="navbar navbar-expand-lg bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#"><img src="../../Images/logo/cook_Corner_LOGO-removebg.png" alt=""></a>
+                <a class="navbar-brand" href="/Home/Homepage.php"><img src="../../Images/logo/cook_Corner_LOGO-removebg.png" alt=""></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -87,82 +159,97 @@ mysqli_close($conn);
                     <!-- -------------------------------------------------------------- -->
                     <!-- -------------------------------------------------------------- -->
 
-                    <!------------------- tashin search change here ------------------->
 
+                    <!-- tashin search change here -->
 
-
-                    <form class="d-flex" role="search" action="/Search/globalsearch.php" method="GET">
-                        <input
-                            class="form-control search me-2"
-                            type="text"
-                            name="query"
-                            placeholder="Search......"
-                            aria-label="Search"
-                            id="searchInput"
-                            value="<?= htmlspecialchars($search_query); ?>"
-                            required
-                            autocomplete="off">
+                    <form class="d-flex" role="search" action="/Search/globalsearchOutput.php" method="GET">
+                        <input class="form-control search me-2" id="search-input" type="search" name="query" placeholder="Search your Recipe" aria-label="Search" value="<?= htmlspecialchars($search_query); ?>" required autocomplete="off">
+                        <div id="suggestions" class="list-group position-absolute" style="width: 100%; max-height: 200px; z-index: 1000; overflow-y: auto;"></div>
                         <button class="btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                     </form>
-                    <div id="suggestions" class="suggestions"></div>
 
+                    <!-- Include jQuery -->
+                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
                     <script>
-                        document.addEventListener("DOMContentLoaded", function() {
-                            const searchInput = document.getElementById("searchInput");
-                            const suggestionsDiv = document.getElementById("suggestions");
+                        $(document).ready(function() {
+                            let selectedIndex = -1; // Tracks the current selection index
+                            let suggestions = [];
 
-                            function displaySuggestions(data) {
-                                suggestionsDiv.innerHTML = '';
-                                if (data.length > 0) {
-                                    suggestionsDiv.style.display = 'block';
-                                    data.forEach(item => {
-                                        const suggestion = document.createElement("div");
-                                        suggestion.textContent = item;
-                                        suggestion.classList.add("suggestion-item");
-                                        suggestion.addEventListener("click", function() {
-                                            searchInput.value = item;
-                                            suggestionsDiv.innerHTML = '';
-                                            suggestionsDiv.style.display = 'none';
-                                        });
-                                        suggestionsDiv.appendChild(suggestion);
-                                    });
-                                } else {
-                                    suggestionsDiv.style.display = 'none';
-                                }
-                            }
-
-
-                            searchInput.addEventListener("input", function() {
-                                const query = this.value.trim(); // Trim whitespace
+                            // AJAX for getting suggestions as user types
+                            $('#search-input').on('input', function() {
+                                let query = $(this).val();
 
                                 if (query.length > 0) {
-                                    fetch(`suggestions.php?query=${encodeURIComponent(query)}`)
-                                        .then(response => response.json())
-                                        .then(data => {
-                                            console.log('Suggestions received:', data); // Debugging line
-                                            displaySuggestions(data);
-                                        })
-                                        .catch(error => console.error('Error fetching suggestions:', error));
+                                    $.ajax({
+                                        url: '/Cook-Corner/Includes/Navbar/navbar.php', // Ensure this is the correct PHP file path
+                                        type: 'POST',
+                                        data: {
+                                            query: query
+                                        },
+                                        success: function(data) {
+                                            suggestions = JSON.parse(data); // Parse the suggestions JSON
+                                            $('#suggestions').empty();
+                                            selectedIndex = -1; // Reset the selected index
+
+                                            if (suggestions.length > 0) {
+                                                suggestions.forEach(function(suggestion) {
+                                                    $('#suggestions').append('<a href="#" class="list-group-item list-group-item-action">' + suggestion + '</a>');
+                                                });
+                                            }
+                                        }
+                                    });
                                 } else {
-                                    suggestionsDiv.innerHTML = ''; // Clear suggestions when input is empty
+                                    $('#suggestions').empty();
                                 }
                             });
 
-                            // Show top suggestions when the input is focused
-                            searchInput.addEventListener("focus", function() {
-                                if (this.value.length === 0) { // Only fetch if input is empty
-                                    fetch(`suggestions.php`)
-                                        .then(response => response.json())
-                                        .then(data => {
-                                            console.log('Top suggestions received:', data); // Debugging line
-                                            displaySuggestions(data);
-                                        })
-                                        .catch(error => console.error('Error fetching top suggestions:', error));
+                            // Handle up/down key navigation for suggestions
+                            $('#search-input').on('keydown', function(e) {
+                                if (suggestions.length > 0) {
+                                    if (e.key === 'ArrowDown') {
+                                        e.preventDefault();
+                                        selectedIndex = (selectedIndex + 1) % suggestions.length;
+                                        highlightSuggestion(selectedIndex);
+                                    } else if (e.key === 'ArrowUp') {
+                                        e.preventDefault();
+                                        selectedIndex = (selectedIndex - 1 + suggestions.length) % suggestions.length;
+                                        highlightSuggestion(selectedIndex);
+                                    } else if (e.key === 'Enter') {
+                                        e.preventDefault();
+                                        if (selectedIndex >= 0) {
+                                            // If a suggestion is selected, set its value in the search box and submit the form
+                                            $('#search-input').val(suggestions[selectedIndex]);
+                                            $('#suggestions').empty();
+                                            $('form').submit(); // Programmatically submit the form
+                                        }
+                                    }
+                                }
+                            });
+
+                            // Handle clicking on a suggestion
+                            $('#suggestions').on('click', '.list-group-item', function() {
+                                $('#search-input').val($(this).text()); // Update the search input with the clicked suggestion
+                                $('#suggestions').empty(); // Clear suggestions after selection
+                                $('form').submit(); // Submit the form when a suggestion is clicked
+                            });
+
+                            // Highlight the currently selected suggestion
+                            function highlightSuggestion(index) {
+                                $('#suggestions .list-group-item').removeClass('active'); // Remove active class from all items
+                                $('#suggestions .list-group-item').eq(index).addClass('active'); // Add active class to the current item
+                            }
+
+                            // Hide suggestions when clicking outside the input or suggestion box
+                            $(document).click(function(e) {
+                                if (!$(e.target).closest('#search-input, #suggestions').length) {
+                                    $('#suggestions').empty();
                                 }
                             });
                         });
                     </script>
+
+
 
 
                     <!-- -------------------------------------------------------------- -->
@@ -293,7 +380,34 @@ mysqli_close($conn);
                         <ul class="dropdown-menu occasion-menu">
                             <div class="container-fluid">
                                 <div class="row nav-row">
-                                    <div class="col-md-2">
+                                    <?php
+                                    if ($result->num_rows > 0) {
+                                        while ($row = $result->fetch_assoc()) {
+                                            $event_name = $row['event_name'];
+                                            $event_id = $row['event_id'];
+                                            // Display event name and dynamic href
+                                            echo '<div class="col-md-2">';
+                                            // echo '<h6>' . $event_name . '</h6>';
+                                            echo '<ul>';
+                                            echo '<li><a class="dropdown-item" href="/Occasions/occasion_main.php?event_id=' . $event_id . '">' . $event_name . '</a></li>';
+                                            echo '</ul>';
+                                            echo '</div>';
+                                            // Display dynamic href for each event
+                                            // echo '<li><a class="dropdown-item" href="/Occasions/occasion_main.php?event_id=' . $event_id . '">' . $event_name . '</a></li>';
+                                        }
+                                    } else {
+                                        echo "<div>No occasions found</div>";
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                            <div class="go-next ">
+                                <a href="/Occasions/occasion_main.php">View all Occasions <i class="fa-solid fa-angles-right"></i></a>
+                            </div>
+                        </ul>
+                    </li>
+
+                    <!-- <div class="col-md-2">
                                         <h6>Islamic</h6>
                                         <ul>
                                             <li><a class="dropdown-item" href="#">Eid ul Fitr</a></li>
@@ -342,7 +456,7 @@ mysqli_close($conn);
                         </ul>
                     </li>
 
-
+ -->
 
 
 
@@ -410,36 +524,6 @@ mysqli_close($conn);
                         </ul>
                     </li>
 
-
-
-
-                    <!-- <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="/Kitchen-Tips/kitchenTipsDashboard.php" role="button" aria-expanded="false">
-                            Kitchen Tips
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end kitchen-menu">
-                            <li><a class="dropdown-item" href="#">Cooking Techniques</a></li>
-                            <li><a class="dropdown-item" href="#">Ingredient Storage</a></li>
-                            <li><a class="dropdown-item" href="#">Time-Saving Hacks</a></li>
-                            <li><a class="dropdown-item" href="#">Meal Prep Tips</a></li>
-                            <li><a class="dropdown-item" href="#">Food Safety</a></li>
-                            <li><a class="dropdown-item" href="#">Baking Tips</a></li>
-                            <li><a class="dropdown-item" href="#">Healthy Cooking</a></li>
-                            <li><a class="dropdown-item" href="#">Baking Tips</a></li>
-                            <li><a class="dropdown-item" href="#">Healthy Cooking</a></li>
-                            <li><a class="dropdown-item" href="#">Baking Tips</a></li>
-                            <li><a class="dropdown-item" href="#">Healthy Cooking</a></li>
-                            <li><a class="dropdown-item" href="#">Baking Tips</a></li>
-                            <li><a class="dropdown-item" href="#">Healthy Cooking</a></li>
-
-
-                            <div class="go-next ">
-                                <a href="/Kitchen-Tips/kitchenTipsDashboard.php">View all Kitchen tips <i class="fa-solid fa-angles-right"></i></a>
-                            </div>
-                        </ul>
-
-                    </li> -->
-
                     <li class="nav-item">
                         <a class="nav-link" href="/Meal Plan/mealGenerator.php">MealPlan</a>
                     </li>
@@ -450,7 +534,6 @@ mysqli_close($conn);
                         <a class="nav-link" href="/Course/allCourses.php">Course</a>
                     </li>
 
-
                 </ul>
 
             </div>
@@ -460,7 +543,8 @@ mysqli_close($conn);
 
         <!-- ============================== Sidebar ==================================== -->
         <?php
-        include('../Includes/Navbar/sidebar.php');  // tashin
+        // include('../Includes/Navbar/sidebar.php');  // tashin prev
+        include('/Cook-Corner/Includes/Navbar/sidebar.php');  // tashin
         // include('/Cook-Corner/Includes/Navbar/sidebar-2.php');  // tashin change
         ?>
 

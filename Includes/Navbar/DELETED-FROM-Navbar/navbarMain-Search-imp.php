@@ -3,7 +3,9 @@ session_start();
 $user_id = $_SESSION['user_id'] ?? '5'; // Default user ID if not set
 $search_query = $_GET['query'] ?? ''; // Get the search query
 
-include("../Includes/Database Connection/database_connection.php");
+// include("../Includes/Database Connection/database_connection.php");
+// include("./Includes/Database-connection-new/database_connection.php");
+include("/Cook-Corner/Includes/Database-connection-new/database_connection.php");
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);

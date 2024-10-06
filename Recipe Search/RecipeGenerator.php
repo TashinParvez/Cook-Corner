@@ -46,6 +46,22 @@
         .tag-container {
             display: flex;
         }
+
+        .recipe-generate {
+            position: relative;
+        }
+
+        .recipe-generate .btn {
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            border-bottom-left-radius: 0 !important;
+            border-top-left-radius: 0 !important;
+        }
+
+        .recipe-generate .form-control {
+            padding-right: 108px;
+        }
     </style>
 
     <link rel="stylesheet" href="RecipeSearch.css">
@@ -162,26 +178,24 @@
                                 <div class="row">
                                     <!-- Head -->
                                     <div class="container">
-                                        
-                                            <div class="form-group">
-                                                <div class="tag-input">
-                                                    <input type="text" id="allergy-input" class="form-control" placeholder="Ingrediants" />
-                                                    <div id="tag-container" class="tag-container mt-2">
 
-                                                    </div>
+                                        <div class="form-group recipe-generate">
+                                            <div class="tag-input">
+                                                <input type="text" id="allergy-input" class="form-control" placeholder="Ingrediants" />
+                                                <div id="tag-container" class="tag-container mt-2">
+
                                                 </div>
-                                                <button class="btn btn-danger">Generate</button>
                                             </div>
+                                            <button class="btn btn-danger">Generate</button>
+                                        </div>
 
 
-                                        
+
 
                                         <div class="row"> <!-- working -->
                                             <!-- Added Filters -->
                                             <div class="container">
-                                                <div class="row">
-                                                    <h3>Added Filters</h3>
-                                                </div>
+
                                                 <div class="row">
                                                     <div class="container">
                                                         <div class="row">
@@ -212,7 +226,7 @@
 
 
 
-                                        <div class="row">
+                                        <div class="row mb-5">
                                             <!-- Card -->
 
                                             <div class=" row row-cols-1 row-cols-md-3 g-4">
@@ -325,6 +339,10 @@
 
     <script src="RecipeSearch.js"></script>
 
+
+    <?php
+    include('../Includes/Footer/footermain.php');  // tashin 
+    ?>
 </body>
 
 </html>
