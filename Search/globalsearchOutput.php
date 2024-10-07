@@ -18,68 +18,27 @@ if ($conn->connect_error) {
 if ($search_query) {
 
     // ---------------------- Recipe -------------------------------- 
-    $sql = "SELECT ri.recipe_id as id, ri.title as title, ri.description as description, ri.rating as rating, 
-                   ri.image as img
-       
-            FROM recipe_info as ri
-            LEFT JOIN
-            junction_event_recipes  AS  jer   -- event 
-            On jer.recipe_id = ri.recipe_id
-            JOIN
-            event_info
-            ON event_info.event_id = jer.event_id
-
-            LEFT JOIN 
-            junction_meal_type_recipe_info as jmt  -- meal
-            ON jmt.recipe_id = ri.recipe_id
-            INNER JOIN
-            meal_type
-            ON meal_type.meal_type_id = jmt.meal_type_id
-
-            LEFT JOIN 
-            junction_recipe_info_recipe_category as jrrc  -- category
-            ON jrrc.recipe_id = ri.recipe_id
-            INNER JOIN
-            recipe_category
-            ON recipe_category.id = jrrc.category_id
-
-            LEFT JOIN 
-            junction_cuisine_recipe as jcr  -- cuisine
-            ON jcr.recipe_id = ri.recipe_id
-            INNER JOIN
-            cuisine_type
-            ON cuisine_type.id = jcr.cuisine_id
+    $sql = "SELECT recipe_id, title, description, rating, image
+          FROM
+            recipe_info
+          WHERE 
+                title LIKE ?
+            OR subtitle LIKE ?
+            OR description LIKE ?
+            OR recipe_id IN (
+                    SELECT rt.recipe_id 
+                    FROM recipe_tags rt
+                    JOIN tags t ON rt.tag_id = t.id
+                    WHERE t.tag_name LIKE ?
+                )
+                OR recipe_id IN (
+                    SELECT jri.recipe_id 
+                    FROM junction_recipe_ingredients jri
+                    JOIN ingredient_info ii ON jri.ingredient_id = ii.ingredient_id
+                    WHERE ii.ingredient_name LIKE ?
+                );";
 
 
-            LEFT JOIN 
-            junction_recipe_ingredients as jri  -- cuisine
-            ON jri.recipe_id = ri.recipe_id
-            INNER JOIN
-            ingredient_info
-            ON ingredient_info.ingredient_id = jri.ingredient_id
-
-            WHERE  
-            ri.title LIKE '%$search_query%'
-            OR ri.subtitle LIKE '%$search_query%'
-            OR ri.description LIKE '%$search_query%'
-            OR ri.notes LIKE '%$search_query%'
-            OR event_info.event_name LIKE '%$search_query%'
-            OR meal_type.meal_name LIKE '%$search_query%'
-            OR meal_type.description LIKE '%$search_query%'
-            OR recipe_category.name LIKE '%$search_query%'
-            OR cuisine_type.cuisine_name LIKE '%$search_query%'
-            OR ingredient_info.ingredient_name LIKE '%$search_query%';";
-
-    $sql = "SELECT ri.recipe_id as id, ri.title as title, ri.description as description, ri.rating as rating, 
-                   ri.image as img
-       
-            FROM recipe_info as ri
-             
-            WHERE  
-            ri.title LIKE '%$search_query%'
-            OR ri.subtitle LIKE '%$search_query%'
-            OR ri.description LIKE '%$search_query%'
-            OR ri.notes LIKE '%$search_query%';";
 
 
     $resultofsql = mysqli_query($conn, $sql);   // get query result
@@ -93,29 +52,26 @@ if ($search_query) {
 
     // ---------------------- Recipe -------------------------------- 
 
-    $sql = "SELECT kt.id, kt.tips_title, kt.description, kt.image, kt.created_at
-            FROM kitchen_tips as kt
+    $sql = "SELECT recipe_id, title, description, rating, image
+          FROM
+            recipe_info
+          WHERE 
+                title LIKE ?
+            OR subtitle LIKE ?
+            OR description LIKE ?
+            OR recipe_id IN (
+                    SELECT rt.recipe_id 
+                    FROM recipe_tags rt
+                    JOIN tags t ON rt.tag_id = t.id
+                    WHERE t.tag_name LIKE ?
+                )
+                OR recipe_id IN (
+                    SELECT jri.recipe_id 
+                    FROM junction_recipe_ingredients jri
+                    JOIN ingredient_info ii ON jri.ingredient_id = ii.ingredient_id
+                    WHERE ii.ingredient_name LIKE ?
+                );";
 
-            LEFT JOIN
-            junction_kitchen_tips_into_category  AS  jktc   -- event
-            On jktc.tip_id = kt.id
-            JOIN
-            kitchen_tips_category as tc
-            ON tc.id = jktc.category_id
-
-            WHERE
-            kt.tips_title LIKE '%aaaa%'
-            OR kt.description LIKE '%aaaa%'
-            OR kt.Directions LIKE '%aaaa%';";
-
-    $sql = "SELECT kt.id, kt.tips_title, kt.description, kt.image, kt.created_at
-            FROM kitchen_tips as kt
-
-           
-            WHERE
-            kt.tips_title LIKE '%aaaa%'
-            OR kt.description LIKE '%aaaa%'
-            OR kt.Directions LIKE '%aaaa%';";
 
 
 
@@ -266,3 +222,56 @@ if ($search_query) {
 </body>
 
 </html>
+
+
+<!-- $sql = "SELECT ri.recipe_id as id, ri.title as title, ri.description as description, ri.rating as rating,
+ri.image as img
+
+FROM recipe_info as ri
+LEFT JOIN
+junction_event_recipes AS jer -- event
+On jer.recipe_id = ri.recipe_id
+JOIN
+event_info
+ON event_info.event_id = jer.event_id
+
+LEFT JOIN
+junction_meal_type_recipe_info as jmt -- meal
+ON jmt.recipe_id = ri.recipe_id
+INNER JOIN
+meal_type
+ON meal_type.meal_type_id = jmt.meal_type_id
+
+LEFT JOIN
+junction_recipe_info_recipe_category as jrrc -- category
+ON jrrc.recipe_id = ri.recipe_id
+INNER JOIN
+recipe_category
+ON recipe_category.id = jrrc.category_id
+
+LEFT JOIN
+junction_cuisine_recipe as jcr -- cuisine
+ON jcr.recipe_id = ri.recipe_id
+INNER JOIN
+cuisine_type
+ON cuisine_type.id = jcr.cuisine_id
+
+
+LEFT JOIN
+junction_recipe_ingredients as jri -- cuisine
+ON jri.recipe_id = ri.recipe_id
+INNER JOIN
+ingredient_info
+ON ingredient_info.ingredient_id = jri.ingredient_id
+
+WHERE
+ri.title LIKE '%$search_query%'
+OR ri.subtitle LIKE '%$search_query%'
+OR ri.description LIKE '%$search_query%'
+OR ri.notes LIKE '%$search_query%'
+OR event_info.event_name LIKE '%$search_query%'
+OR meal_type.meal_name LIKE '%$search_query%'
+OR meal_type.description LIKE '%$search_query%'
+OR recipe_category.name LIKE '%$search_query%'
+OR cuisine_type.cuisine_name LIKE '%$search_query%'
+OR ingredient_info.ingredient_name LIKE '%$search_query%';"; -->
