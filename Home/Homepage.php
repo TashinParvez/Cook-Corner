@@ -85,6 +85,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 $latest_recipes = $result->fetch_all();
 $stmt->close();
+// print_r($latest_recipes[0]);
 
 // Load All Categories from DB working
 $stmt = $conn->prepare('SELECT * FROM recipe_category;');
@@ -126,17 +127,20 @@ $heropage = mysqli_fetch_assoc($resultantLabel);
 
 // Load Popular Courses from DB              there is no parameter for being polular a course???
 $stmt = $conn->prepare('SELECT c.course_id, c.course_title, c.image, c.rating, c.price, COUNT(j.user_id) AS taken_by_count
-                    FROM
-                        course AS c JOIN junction_course_taken_user AS j
-                    ON
+                        FROM
+                        course AS c 
+                        LEFT JOIN junction_course_taken_user AS j
+                        ON
                         c.course_id = j.course_id
-                    GROUP BY
+                        GROUP BY
                         c.course_id, c.course_title, c.price
-                    ORDER BY
+                        ORDER BY
                         taken_by_count DESC LIMIT 20;');
 $stmt->execute();
 $result = $stmt->get_result();
 $popular_courses = $result->fetch_all();
+// print_r($popular_courses[0]);
+
 
 
 $stmt->close();
@@ -172,6 +176,135 @@ mysqli_close($conn);
     <!-- Javascript -->
     <script src="bmi.js"></script>
 
+    <style>
+        /* Set the height of the swiper-slide */
+        .swiper-slide {
+            display: flex;
+            /* Make the slide a flex container */
+            justify-content: center;
+            /* Center the card horizontally */
+            align-items: center;
+            /* Center the card vertically */
+            height: 100px;
+            /* Set the desired height for the swiper slides */
+        }
+
+        /* Style for the cards */
+        .custom-card {
+            height: 100%;
+            /* Make the card take full height of the slide */
+            width: 250px;
+            /* Set a fixed width for the card */
+            overflow: hidden;
+            /* Prevent overflow */
+            display: flex;
+            /* Flex display to help center content */
+            flex-direction: column;
+            /* Align content vertically */
+            margin: 0 auto;
+            /* Center the card within the swiper */
+        }
+
+        /* Image styles */
+        .carouselImg {
+            height: 100px;
+            /* Fixed height for images */
+            width: 100%;
+            /* Ensure the image takes full width */
+            object-fit: cover;
+            /* Crop the image to cover the area */
+        }
+
+        /* Ensure text overlay is styled correctly */
+        .card-img-overlay {
+            flex-grow: 1;
+            /* Allow the overlay to take up remaining space */
+            display: flex;
+            /* Flex display for vertical alignment */
+            flex-direction: column;
+            /* Arrange title and text vertically */
+            justify-content: flex-end;
+            /* Align content to the bottom */
+            font-size: 0.8rem;
+            /* Adjust font size for smaller overlay text */
+        }
+
+        .card-title {
+            margin: 0;
+            /* Remove default margin */
+            font-size: 0.8rem;
+            /* Set a specific font size */
+        }
+
+        .card-text {
+            font-size: 0.6rem;
+            /* Adjust font size for the text */
+        }
+
+        /* Set the height of the swiper-slide */
+        .swiper-slide {
+            display: flex;
+            /* Make the slide a flex container */
+            justify-content: center;
+            /* Center the card horizontally */
+            align-items: center;
+            /* Center the card vertically */
+            height: 100px;
+            /* Set the desired height for the swiper slides */
+        }
+
+        /* Style for the cards */
+        .custom-card {
+            height: 100%;
+            /* Make the card take full height of the slide */
+            width: 250px;
+            /* Set a fixed width for the card */
+            overflow: hidden;
+            /* Prevent overflow */
+            display: flex;
+            /* Flex display to help center content */
+            flex-direction: column;
+            /* Align content vertically */
+            margin: 0 auto;
+            /* Center the card within the swiper */
+        }
+
+        /* Image styles */
+        .carouselImg {
+            height: 100px;
+            /* Fixed height for images */
+            width: 100%;
+            /* Ensure the image takes full width */
+            object-fit: cover;
+            /* Crop the image to cover the area */
+        }
+
+        /* Ensure text overlay is styled correctly */
+        .card-img-overlay {
+            flex-grow: 1;
+            /* Allow the overlay to take up remaining space */
+            display: flex;
+            /* Flex display for vertical alignment */
+            flex-direction: column;
+            /* Arrange title and text vertically */
+            justify-content: flex-end;
+            /* Align content to the bottom */
+            font-size: 0.8rem;
+            /* Adjust font size for smaller overlay text */
+        }
+
+        .card-title {
+            margin: 0;
+            /* Remove default margin */
+            font-size: 0.8rem;
+            /* Set a specific font size */
+        }
+
+        .card-text {
+            font-size: 0.6rem;
+            /* Adjust font size for the text */
+        }
+    </style>
 
 </head>
 
@@ -233,30 +366,29 @@ mysqli_close($conn);
                 <!-- No hidden input needed -->
             </form>
 
-            <?php foreach ($chunk_recipes as $recipe) {
 
-                //echo $recipe[0];
-            } ?>
 
+            <!-- r.recipe_id, r.title, r.description, r.rating, r.image  -->
             <!-- Swiper for categories -->
+
             <div class="swiper mySwiper">
                 <div class="swiper-wrapper">
                     <?php foreach ($chunk_recipes as $key => $recipe): ?>
                         <div class="swiper-slide">
                             <a href="javascript:void(0);" class="category-tab" data-target="content-<?php echo $recipe[0]; ?>" onclick="submirecipeForm(<?php echo $recipe[0]; ?>)">
-
-                                <div class="row justify-content-center">
-                                    <div class="col-md">
-                                        <div class="card text-white">
-                                            <div class="card-img-overlay d-flex flex-column justify-content-end">
-                                                <h5 class="card-title"><?php echo $recipe[1]; ?></h5>
-                                                <p class="card-text"><?php echo $recipe[2]; ?></p>
-                                            </div>
-                                            <img src="<?php echo $recipe[4]; ?>" class="card-img carouselImg" alt="...">
-                                        </div>
+                                <div class="card text-white custom-card"> <!-- Move the card here -->
+                                    <img src="/Images/Recipe-Images/<?php echo $recipe[4]; ?>" class="card-img carouselImg" alt="...">
+                                    
+                                    <div class="card-img-overlay d-flex flex-column justify-content-end">
+                                        <h5 class="card-title"><?php 
+                                        // echo $recipe[1]; 
+                                        ?></h5>
+                                        <p class="card-text"><?php 
+                                        // echo $recipe[2]; 
+                                         ?></p>
                                     </div>
-                                </div>
 
+                                </div>
                             </a>
                         </div>
                     <?php endforeach; ?>
@@ -265,6 +397,24 @@ mysqli_close($conn);
                 <div class="swiper-button-prev"></div>
                 <div class="swiper-pagination"></div>
             </div>
+
+
+
+
+            <script>
+                var swiper = new Swiper('.mySwiper', {
+                    slidesPerView: 3, // Adjust according to how many cards you want to show
+                    spaceBetween: 10, // Space between cards
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    },
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true,
+                    },
+                });
+            </script>
 
         </div>
     </section>
@@ -292,15 +442,21 @@ mysqli_close($conn);
                 <h2 class="m-0 p-0">Popular Courses</h2>
             </div>
 
+            <!--  c.course_id, c.course_title, c.image, c.rating, c.price, COUNT(j.user_id) AS -->
 
             <div class="row row-cols-1 row-cols-md-3 g-4">
                 <!-- course_id, course_title, image, price, rating, taken_by_count -->
+                <?php
+                $len = count($popular_courses);
+
+                // echo $len;
+                ?>
                 <?php foreach ($popular_courses as $course) { ?>
 
                     <div class="col">
                         <a href="#" onclick="submitCourseForm(<?php echo $course[0]; ?>)">
                             <div class="card">
-                                <img src="<?php echo $course[2] ?>" class="card-img-top" alt="...">
+                                <img src="/Images/Course-Image/<?php echo $course[2] ?>" class="card-img-top" alt="...">
                                 <div class="card-body">
 
                                     <p class="card-text"><?php echo $course[1] ?></p>
@@ -309,7 +465,7 @@ mysqli_close($conn);
                                             <div><?php echo $course[3] ?></div>
                                             <div>
                                                 <?php
-                                                $rating = (float)$course[4];
+                                                $rating = (float)$course[3];
                                                 $decimal = $rating - floor($rating);
 
                                                 $i = floor($rating);
@@ -368,62 +524,65 @@ mysqli_close($conn);
     <section class="best-recipe m-4">
         <div class="container">
             <div class="identity m-2">
-                <h2 class="m-0 p-0">The Best Recipe</h2>
+                <h2 class="m-0 p-0 m-5">The Best Recipes</h2>
             </div>
             <!-- recipe_id, title, rating, image, description -->
 
+            <style>
+                .card-img-top {
+                    width: 100%;
+                    height: 200px;
+                    /* Fixed height for all images */
+                    object-fit: cover;
+                    /* Ensures image scales to cover the frame */
+                    object-position: center;
+                    /* Centers the image within the frame */
+                }
+            </style>
             <div class="row row-cols-1 row-cols-md-4 g-4">
-
                 <?php foreach ($best_recipes as $recipe) { ?>
                     <div class="col">
                         <a href="#" onclick="submirecipeForm(<?php echo $recipe[0]; ?>)">
                             <div class="card">
-                                <img src="<?php echo $recipe[3] ?>" class="card-img-top" alt="...">
+                                <img src="/Images/Recipe-Images/<?php echo $recipe[3]; ?>" class="card-img-top" alt="...">
                                 <div class="card-body text-center">
-                                    <h5 class="card-title"><?php echo $recipe[1] ?></h5>
+                                    <h5 class="card-title"><?php echo $recipe[1]; ?></h5>
                                     <div>
                                         <?php
                                         $rating = (float)$recipe[2];
                                         $decimal = $rating - floor($rating);
 
                                         $i = floor($rating);
-
                                         while ($i > 0) {
                                         ?>
-
                                             <i class="fa-solid fa-star"></i>
-
-                                            <?php
-                                            if ($i == 1 && $decimal != 0) {
-                                            ?>
+                                            <?php if ($i == 1 && $decimal != 0) { ?>
                                                 <i class="fa-solid fa-star-half-stroke"></i>
-                                        <?php
-                                            }
-
+                                        <?php }
                                             $i--;
-                                        }
-                                        ?>
-
+                                        } ?>
                                     </div>
                                 </div>
                             </div>
                         </a>
                     </div>
-
                 <?php } ?>
             </div>
+
+
+
+
+
         </div>
     </section>
 
 
     <!------------------------------------------------- All Categories section  ----------------------------------------------->
 
-
-
     <section class="all-categories m-5">
         <div class="container">
             <div class="identity m-2">
-                <h2 class="m-0 p-0">All Categories</h2>
+                <h2 class="m-0 p-0 mb-4">All Categories</h2>
             </div>
             <script>
                 function submitCategoryForm(category_id) {
@@ -441,7 +600,9 @@ mysqli_close($conn);
             <!-- Swiper for all categories -->
             <div class="swiper mySwiper swiper-category">
                 <div class="swiper-wrapper">
-                    <?php foreach ($categories as $value): ?>
+                    <?php foreach ($categories as $value):
+                        // echo "atasa";
+                    ?>
                         <div class="swiper-slide">
                             <a href="javascript:void(0);" class="category-tab" data-target="content-<?php echo $key; ?>" onclick="submitCategoryForm(<?php echo $value[0]; ?>)">
                                 <!-- <div class="row justify-content-center">
@@ -463,33 +624,26 @@ mysqli_close($conn);
                 <div class="swiper-button-prev"></div>
                 <div class="swiper-pagination"></div>
             </div>
-
-
-
-
-
-
-
     </section>
+
+
     <!------------------------------------------------- Latest Recipe section  ----------------------------------------------->
 
-    <section class="Latest Recipe m-4">working
+    <section class="Latest Recipe m-4">
         <div class="container">
             <div class="identity m-2">
-                <h2 class="m-0 p-0">Latest Recipe</h2>
+                <h2 class="m-0 p-0 mb-4">Latest Recipe</h2>
             </div>
 
-
-
             <div class="row row-cols-1 row-cols-md-4 g-4">
-                recipe_info.recipe_id, recipe_info.title, recipe_info.description, recipe_feedback.rating, recipe_info.image
+                <!-- recipe_info.recipe_id, recipe_info.title, recipe_info.description, recipe_feedback.rating, recipe_info.image -->
                 <?php foreach ($latest_recipes as $recipe) { ?>
                     <div class="col">
                         <a href="#" onclick="submirecipeForm(<?php echo $recipe[0]; ?>)">
                             <div class="card">
-                                <img src="<?php echo $recipe['image'] ?>" class="card-img-top" alt="...">
+                                <img src="/Images/Recipe-Images/<?php echo $recipe[3] ?>" class="card-img-top" alt="...">
                                 <div class="card-body text-center">
-                                    <h5 class="card-title"><?php echo $recipe['title'] ?></h5>
+                                    <h5 class="card-title"><?php echo $recipe[1] ?></h5>
                                 </div>
                             </div>
                         </a>
@@ -506,7 +660,8 @@ mysqli_close($conn);
     </section>
 
     <!------------------------------------------------- BMI section  ----------------------------------------------->
-    <section class="BMISection bg-light pt-4 mt-5">
+    <!-- <section class="BMISection bg-light pt-4 mt-5"> -->
+    <section id="bmiSection" class="BMISection bg-light pt-4 mt-5">
 
         <div class="container">
             <div class="row">
