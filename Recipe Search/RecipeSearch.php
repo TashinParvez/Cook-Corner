@@ -8,33 +8,40 @@ include("../Includes/Database Connection/database_connection.php");
 
 $searched_text = htmlspecialchars($_GET['searched_text'] ?? ''); // comes from home page
 
-$searched_text = htmlspecialchars($_POST['recipes_search'] ?? '');
+// $searched_text = htmlspecialchars($_POST['recipes_search'] ?? '');
+// echo $searched_text;
 
-if (!empty($search_text)) {
+if (!empty($searched_text)) {
 
-  $sql = "SELECT SQL_CALC_FOUND_ROWS ri.recipe_id, ri.title, ri.description, rf.rating, ri.image
-        FROM
-            recipe_info ri LEFT JOIN recipe_feedback rf 
-        ON 
-            ri.recipe_id = rf.recipe_id
-        WHERE  
-            ri.title LIKE ? 
-            OR ri.sub_title LIKE ? 
-            OR ri.description LIKE ?
-            OR ri.recipe_id IN (
+  $sql = "SELECT SQL_CALC_FOUND_ROWS recipe_id, title, description, rating, image
+          FROM
+            recipe_info
+          WHERE 
+                title LIKE ?
+            OR subtitle LIKE ?
+            OR description LIKE ?
+            OR recipe_id IN (
                     SELECT rt.recipe_id 
                     FROM recipe_tags rt
-                    JOIN tags t ON rt.tag_id = t.tag_id
+                    JOIN tags t ON rt.tag_id = t.id
                     WHERE t.tag_name LIKE ?
+                )
+                OR recipe_id IN (
+                    SELECT jri.recipe_id 
+                    FROM junction_recipe_ingredients jri
+                    JOIN ingredient_info ii ON jri.ingredient_id = ii.ingredient_id
+                    WHERE ii.ingredient_name LIKE ?
                 );";
 
   $stmt = $conn->prepare($sql);
-  $search_param = '%' . $search_text . '%';
-  $stmt->bind_param('',);
+  $search_param = '%' . $searched_text . '%';
+  $stmt->bind_param('sssss', $search_param, $search_param, $search_param, $search_param, $search_param);
   $stmt->execute();
 
   $result = $stmt->get_result();
-  $recipes = $result->fetch_all(MYSQLI_ASSOC);
+  $recipes = $result->fetch_all();
+  // echo 'search';
+  // print_r($recipes); output confirm
 
   $total_recipes_result = $conn->query("SELECT FOUND_ROWS()");
   $total_recipes = $total_recipes_result->fetch_array()[0];
@@ -193,7 +200,8 @@ if (!empty($search_text)) {
 
                           <div class="recipe-search mb-2">
                             <form class="d-flex">
-                              <input class="form-control me-2" type="search" placeholder="Search your recipe here" aria-label="Search">
+                              <input class="form-control me-2" type="search" placeholder="Search your recipe here" aria-label="Search"
+                                value="<?php echo !empty($searched_text) ? 'Searched By: ' . htmlspecialchars($searched_text) : ''; ?>">
                               <button class="btn btn-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                             </form>
                           </div>
@@ -231,65 +239,37 @@ if (!empty($search_text)) {
 
 
                     <div class="row  mb-5">
+
+                      <script>
+                        function submirecipeForm(recipe_id) {
+                          const form = document.getElementById('recipeForm');
+                          form.action = '../Recipe View/recipeView.php?recipe_id=' + recipe_id;
+                          form.submit();
+                        }
+                      </script>
+
+                      <form id="recipeForm" action="../Recipe View/recipeView.php" method="post">
+                        <!-- No hidden input needed -->
+                      </form>
+
                       <!-- Card -->
-
                       <div class=" row row-cols-1 row-cols-md-3 g-4">
-
-                        <div class="col">
-                          <a href="#" class="text-decoration-none">
-                            <div class="card">
-                              <img src="../Images/FoodImages/cookingClass.jpeg" class="card-img-top" alt="...">
-                              <div class="card-body">
-                                <p class="card-text mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus nihil nulla,</p>
+                        <!-- recipe_id, title, description, rating, image -->
+                        <?php foreach ($recipes as $recipe) { ?>
+                          <div class="col">
+                            <a href="#" class="text-decoration-none" onclick="submirecipeForm(<?php echo $recipe[0]; ?>)">
+                              <div class="card">
+                                <img src="../Images/FoodImages/cookingClass.jpeg" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                  <h5 class="card-text mb-0"><?php echo htmlentities($recipe[1]) ?></h5>
+                                  <p class="card-text mb-0"><?php echo htmlentities($recipe[2]) ?></p>
+                                </div>
                               </div>
-                            </div>
-                          </a>
-                        </div>
-                        <div class="col">
-                          <a href="#" class="text-decoration-none">
-                            <div class="card">
-                              <img src="../Images/FoodImages/cookingClass.jpeg" class="card-img-top" alt="...">
-                              <div class="card-body">
-                                <p class="card-text mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus nihil nulla,</p>
-                              </div>
-                            </div>
-                          </a>
-                        </div>
-                        <div class="col">
-                          <a href="#" class="text-decoration-none">
-                            <div class="card">
-                              <img src="../Images/FoodImages/cookingClass.jpeg" class="card-img-top" alt="...">
-                              <div class="card-body">
-                                <p class="card-text mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus nihil nulla,</p>
-                              </div>
-                            </div>
-                          </a>
-                        </div>
-                        <div class="col">
-                          <a href="#" class="text-decoration-none">
-                            <div class="card">
-                              <img src="../Images/FoodImages/cookingClass.jpeg" class="card-img-top" alt="...">
-                              <div class="card-body">
-                                <p class="card-text mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus nihil nulla,</p>
-                              </div>
-                            </div>
-                          </a>
-                        </div>
-                        <div class="col">
-                          <a href="#" class="text-decoration-none">
-                            <div class="card">
-                              <img src="../Images/FoodImages/cookingClass.jpeg" class="card-img-top" alt="...">
-                              <div class="card-body">
-                                <p class="card-text mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus nihil nulla,</p>
-                              </div>
-                            </div>
-                          </a>
-                        </div>
-
+                            </a>
+                          </div>
+                        <?php } ?>
 
                       </div>
-
-
                     </div>
 
 
