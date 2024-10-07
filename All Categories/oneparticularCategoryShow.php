@@ -26,16 +26,16 @@ $sort = isset($_POST['sortInput']) ? $_POST['sortInput'] : 'namewise';
 
 switch ($sort) {
     case 'namewise':
-        $sortBy = "ri.title";
+        $sortBy = "title";
         break;
     case 'recentlyAdded':
-        $sortBy = "ri.created_at DESC";
+        $sortBy = "created_at DESC";
         break;
     case 'mostRecipes': // pending
         $sortBy = "recipe_count DESC";
         break;
     default:
-        $sortBy = "ri.title"; // Default sorting
+        $sortBy = "title"; // Default sorting
         break;
 }
 
@@ -49,30 +49,28 @@ if (isset($_POST['recipes_search'])) {
 
     if (!empty($search_text)) {
         $search_extended_query = "AND (
-                            ri.title LIKE ? 
-                            OR ri.sub_title LIKE ? 
-                            OR ri.description LIKE ?
-                            OR ri.recipe_id IN (
+                            title LIKE ? 
+                            OR subtitle LIKE ? 
+                            OR description LIKE ?
+                            OR recipe_id IN (
                                     SELECT rt.recipe_id 
                                     FROM recipe_tags rt
-                                    JOIN tags t ON rt.tag_id = t.tag_id
+                                    JOIN tags t ON rt.tag_id = t.id
                                     WHERE t.tag_name LIKE ?
                                 ))";
     }
 }
 
 
-$sql = "SELECT SQL_CALC_FOUND_ROWS ri.recipe_id, ri.title, ri.description, rf.rating, ri.image
+$sql = "SELECT SQL_CALC_FOUND_ROWS recipe_id, title, description, rating, image
         FROM
-            recipe_info ri LEFT JOIN recipe_feedback rf 
-        ON 
-            ri.recipe_id = rf.recipe_id
+            recipe_info
         WHERE 
-            ri.recipe_id IN (
+            recipe_id IN (
                 SELECT recipe_id FROM junction_recipe_info_recipe_category WHERE category_id = ?
             )
         $search_extended_query 
-        GROUP BY ri.recipe_id 
+        GROUP BY recipe_id 
         ORDER BY $sortBy
         LIMIT ? OFFSET ?;";
 
@@ -90,7 +88,9 @@ if (!empty($search_text)) {
 
 $stmt->execute();
 $result = $stmt->get_result();
-$recipes = $result->fetch_all(MYSQLI_ASSOC);
+$recipes = $result->fetch_all();
+
+print_r($recipes);
 
 $total_recipes_result = $conn->query("SELECT FOUND_ROWS()");
 $total_recipes = $total_recipes_result->fetch_array()[0];
@@ -479,16 +479,16 @@ mysqli_close($conn);
                     <form id="recipeForm" action="../Recipe View/recipeView.php" method="post">
                         <!-- No hidden input needed -->
                     </form>
-
+                    <!-- recipe_id, title, description, rating, image -->
                     <?php foreach ($recipes as $recipe) { ?>
 
                         <div class="col"> Mahbub/Tashin
-                            <a href="#" class="text-decoration-none text-dark" onclick="submirecipeForm(<?php echo $recipe['recipe_id']; ?>)">
+                            <a href="#" class="text-decoration-none text-dark" onclick="submirecipeForm(<?php echo $recipe[0]; ?>)">
                                 <div class="card">
-                                    <img src="<?php echo $recipe['image']; ?>" class="card-img-top" alt="...">
+                                    <img src="<?php echo $recipe[4]; ?>" class="card-img-top" alt="...">
                                     <div class="card-body">
-                                        <h5 class="card-title"><?php echo $recipe['title']; ?></h5>
-                                        <p class="card-text"><?php echo $recipe['description']; ?></p>
+                                        <h5 class="card-title"><?php echo $recipe[1]; ?></h5>
+                                        <p class="card-text"><?php echo $recipe[2]; ?></p>
                                     </div>
                                 </div>
                             </a>
