@@ -792,7 +792,7 @@ ob_end_flush();
                             $notes = array_map('trim', explode('<separatorForEachNote>', $notes));
 
                             foreach ($notes as $index => $note) {
-                                $note = array_map('trim', explode('<separatorForTitleAndDescription>', $note));
+                                $note = array_map('trim', explode(': ', $note));
                         ?>
                                 <input type="text" name="notes[<?php echo $index; ?>][title]" class="form-control mb-2" placeholder="Note title (e.g., Tip about storage)"
                                     value="<?php echo htmlspecialchars($note[0]); ?>">
