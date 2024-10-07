@@ -187,29 +187,65 @@ mysqli_close($conn);
 
     <!-------------------------------------------- search section ---------------------------------------------------->
 
-
     <section class="get-start">
         <h1>Hungry? Get started</h1>
         <div class="search">
-            <form action="#">
+            <form id="searchedForm" action="../Recipe Search/RecipeSearch.php" method="post">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" name="" id="" placeholder="Search your recipe here">
-                <!-- <button type="submit"></button> -->
+                <input type="text" name="searchField" id="searchField" placeholder="Search your recipe here">
 
                 <div class="search-items">
-                    <span class="items">Chicken</span>
-                    <span class="items">Beef</span>
-                    <span class="items">Vegetable</span>
-                    <span class="items">Fish</span>
-                    <span class="items">Cookies</span>
-                    <span class="items">Sweet</span>
-                    <span class="items">Juice</span>
+                    <a href="#" style="text-decoration: none;" onclick="searchedForm(<?php echo 'Chicken'; ?>)"><span class="items">Chicken</span></a>
+                    <a href="#" style="text-decoration: none;" onclick="searchedForm(<?php echo 'Beef'; ?>)"><span class="items">Beef</span></a>
+                    <a href="#" style="text-decoration: none;" onclick="searchedForm(<?php echo 'Vegetable'; ?>)"><span class="items">Vegetable</span></a>
+                    <a href="#" style="text-decoration: none;" onclick="searchedForm(<?php echo 'Fish'; ?>)"><span class="items">Fish</span></a>
+                    <a href="#" style="text-decoration: none;" onclick="searchedForm(<?php echo 'Cookies'; ?>)"><span class="items">Cookies</span></a>
+                    <a href="#" style="text-decoration: none;" onclick="searchedForm(<?php echo 'Sweet'; ?>)"><span class="items">Sweet</span></a>
+                    <a href="#" style="text-decoration: none;" onclick="searchedForm(<?php echo 'Juice'; ?>)"><span class="items">Juice</span></a>
                 </div>
             </form>
+
+            <script>
+                function searchedForm(searchedText) {
+                    const form = document.getElementById('searchedForm');
+                    form.action = '../Recipe Search/RecipeSearch.php?searched_text=' + searchedText;
+                    form.submit();
+                }
+
+                // Modify form action based on the input value before submitting the form
+                document.getElementById('searchField').addEventListener('keypress', function(event) {
+                    if (event.key === 'Enter') {
+                        event.preventDefault(); // Prevent default form submission
+                        const searchedText = event.target.value.trim();
+
+                        // Modify the form action dynamically
+                        const form = document.getElementById('searchedForm');
+                        form.action = '../Recipe Search/RecipeSearch.php?searched_text=' + encodeURIComponent(searchedText);
+
+                        // Submit the form
+                        form.submit();
+                    }
+                });
+
+                // Allow clicking on span items to trigger the search
+                document.querySelectorAll('.search-items .items').forEach(function(span) {
+                    span.addEventListener('click', function() {
+                        const searchedText = span.textContent.trim();
+
+                        // Set the input value to the clicked item
+                        document.getElementById('searchField').value = searchedText;
+
+                        // Modify the form action dynamically
+                        const form = document.getElementById('searchedForm');
+                        form.action = '../Recipe Search/RecipeSearch.php?searched_text=' + encodeURIComponent(searchedText);
+
+                        // Submit the form
+                        form.submit();
+                    });
+                });
+            </script>
         </div>
     </section>
-
-
 
 
     <section class="suggestion m-4">
@@ -223,7 +259,7 @@ mysqli_close($conn);
             <!-------------------------------------------- Image sliding section ------------------------------------------------------->
             <script>
                 function submirecipeForm(recipe_id) {
-                    const form = document.getElementById('recipeForm');
+                    const form = document.getElementById(' recipeForm');
                     form.action = '../Recipe View/recipeView.php?recipe_id=' + recipe_id;
                     form.submit();
                 }
