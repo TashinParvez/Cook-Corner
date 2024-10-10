@@ -84,7 +84,8 @@ if (!empty($searched_text)) {
 
 
   <?php
-  include('../Includes/Navbar/navbarMain.php');  // Navbar 
+  // include('../Includes/Navbar/navbarMain.php');  // Navbar 
+  include('../Includes/Navbar/n1.php');
   include '../Includes/Scroll UP/scrollUpBtn.php'; // scroll up // tashin    
   ?>
 
@@ -133,23 +134,23 @@ if (!empty($searched_text)) {
                       <div class="accordion-item">
                         <h2 class="accordion-header">
                           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                            Accordion Item #1
+                            Ingredients
                           </button>
                         </h2>
                         <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                           <div class="accordion-body">
                             <ul class="list-group">
                               <li class="list-group-item">
-                                <input class="form-check-input me-1 filter-checkbox" type="checkbox" value="First checkbox" data-filter="include" id="firstCheckbox">
-                                <label class="form-check-label" for="firstCheckbox">First checkbox</label>
+                                <input class="form-check-input me-1 filter-checkbox" type="checkbox" value="Chicken" data-filter="include" id="firstCheckbox">
+                                <label class="form-check-label" for="firstCheckbox">Chicken</label>
                               </li>
                               <li class="list-group-item">
-                                <input class="form-check-input me-1 filter-checkbox" type="checkbox" value="Second checkbox" data-filter="include" id="secondCheckbox">
-                                <label class="form-check-label" for="secondCheckbox">Second checkbox</label>
+                                <input class="form-check-input me-1 filter-checkbox" type="checkbox" value="Beef" data-filter="include" id="secondCheckbox">
+                                <label class="form-check-label" for="secondCheckbox">Beef</label>
                               </li>
                               <li class="list-group-item">
-                                <input class="form-check-input me-1 filter-checkbox" type="checkbox" value="Third checkbox" data-filter="include" id="thirdCheckbox">
-                                <label class="form-check-label" for="thirdCheckbox">Third checkbox</label>
+                                <input class="form-check-input me-1 filter-checkbox" type="checkbox" value="Vegetable" data-filter="include" id="thirdCheckbox">
+                                <label class="form-check-label" for="thirdCheckbox">Vegetable</label>
                               </li>
                             </ul>
                           </div>
@@ -159,19 +160,19 @@ if (!empty($searched_text)) {
                       <div class="accordion-item">
                         <h2 class="accordion-header">
                           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                            Accordion Item #2
+                            Cuisine
                           </button>
                         </h2>
                         <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                           <div class="accordion-body">
                             <ul class="list-group">
                               <li class="list-group-item">
-                                <input class="form-check-input me-1 filter-checkbox" type="checkbox" value="Another checkbox" data-filter="exclude" id="firstExcludeCheckbox">
-                                <label class="form-check-label" for="firstExcludeCheckbox">Another checkbox</label>
+                                <input class="form-check-input me-1 filter-checkbox" type="checkbox" value="Chinise" data-filter="exclude" id="firstExcludeCheckbox">
+                                <label class="form-check-label" for="firstExcludeCheckbox">Chinise</label>
                               </li>
                               <li class="list-group-item">
-                                <input class="form-check-input me-1 filter-checkbox" type="checkbox" value="Another second checkbox" data-filter="exclude" id="secondExcludeCheckbox">
-                                <label class="form-check-label" for="secondExcludeCheckbox">Another second checkbox</label>
+                                <input class="form-check-input me-1 filter-checkbox" type="checkbox" value="Thi" data-filter="exclude" id="secondExcludeCheckbox">
+                                <label class="form-check-label" for="secondExcludeCheckbox">Thi</label>
                               </li>
                             </ul>
                           </div>
@@ -259,7 +260,7 @@ if (!empty($searched_text)) {
                           <div class="col">
                             <a href="#" class="text-decoration-none" onclick="submirecipeForm(<?php echo $recipe[0]; ?>)">
                               <div class="card">
-                                <img src="../Images/FoodImages/cookingClass.jpeg" class="card-img-top" alt="...">
+                                <img style="height: 200px; width: auto;" src="/Images/Recipe-Images/<?php echo $recipe[4]; ?>" class="card-img-top" alt="...">
                                 <div class="card-body">
                                   <h5 class="card-text mb-0"><?php echo htmlentities($recipe[1]) ?></h5>
                                   <p class="card-text mb-0"><?php echo htmlentities($recipe[2]) ?></p>

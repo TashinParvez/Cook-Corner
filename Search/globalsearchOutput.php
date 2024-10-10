@@ -22,20 +22,20 @@ if ($search_query) {
           FROM
             recipe_info
           WHERE 
-                title LIKE ?
-            OR subtitle LIKE ?
-            OR description LIKE ?
+                title LIKE '%$search_query%'
+            OR subtitle LIKE '%$search_query%'
+            OR description LIKE '%$search_query%'
             OR recipe_id IN (
                     SELECT rt.recipe_id 
                     FROM recipe_tags rt
                     JOIN tags t ON rt.tag_id = t.id
-                    WHERE t.tag_name LIKE ?
+                    WHERE t.tag_name LIKE '%$search_query%'
                 )
                 OR recipe_id IN (
                     SELECT jri.recipe_id 
                     FROM junction_recipe_ingredients jri
                     JOIN ingredient_info ii ON jri.ingredient_id = ii.ingredient_id
-                    WHERE ii.ingredient_name LIKE ?
+                    WHERE ii.ingredient_name LIKE '%$search_query%'
                 );";
 
 
@@ -56,20 +56,20 @@ if ($search_query) {
           FROM
             recipe_info
           WHERE 
-                title LIKE ?
-            OR subtitle LIKE ?
-            OR description LIKE ?
+                title LIKE '%$search_query%'
+            OR subtitle LIKE '%$search_query%'
+            OR description LIKE '%$search_query%'
             OR recipe_id IN (
                     SELECT rt.recipe_id 
                     FROM recipe_tags rt
                     JOIN tags t ON rt.tag_id = t.id
-                    WHERE t.tag_name LIKE ?
+                    WHERE t.tag_name LIKE '%$search_query%'
                 )
                 OR recipe_id IN (
                     SELECT jri.recipe_id 
                     FROM junction_recipe_ingredients jri
                     JOIN ingredient_info ii ON jri.ingredient_id = ii.ingredient_id
-                    WHERE ii.ingredient_name LIKE ?
+                    WHERE ii.ingredient_name LIKE '%$search_query%'
                 );";
 
 
