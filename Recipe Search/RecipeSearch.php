@@ -7,6 +7,9 @@ include("../Includes/Database Connection/database_connection.php");
 // .............. Recipe search ....................
 
 $searched_text = htmlspecialchars($_GET['searched_text'] ?? ''); // comes from home page
+if (isset($_POST['searchButton'])) {
+  $searched_text = isset($_POST['search']) ?? '';
+}
 
 // $searched_text = htmlspecialchars($_POST['recipes_search'] ?? '');
 // echo $searched_text;
@@ -199,10 +202,10 @@ if (!empty($searched_text)) {
 
 
                           <div class="recipe-search mb-2">
-                            <form class="d-flex">
-                              <input class="form-control me-2" type="search" placeholder="Search your recipe here" aria-label="Search"
+                            <form class="d-flex" action="RecipeSearch.php" method=" post">
+                              <input class="form-control me-2" type="search" placeholder="Search your recipe here" aria-label="Search" name="search"
                                 value="<?php echo !empty($searched_text) ? 'Searched By: ' . htmlspecialchars($searched_text) : ''; ?>">
-                              <button class="btn btn-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                              <button class="btn btn-success" name="searchButton" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                             </form>
                           </div>
 
