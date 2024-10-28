@@ -1,0 +1,26 @@
+# Cook Corner Project Requirements
+
+
+# PHP Version
+php >=7.4
+
+
+# PHP Installation Instructions:
+#  - To install PHP, visit the official website: https://www.php.net/downloads
+#  - Follow the instructions based on your operating system.
+
+
+# Frontend Libraries (CDN links; no local installations needed)
+# Bootstrap for responsive design
+bootstrap==5.3.3
+
+# jQuery for DOM manipulation (optional, depending on your project needs)
+jquery==3.6.4
+
+# Font Awesome for icons
+font-awesome==6.5.2
+
+# Example: Axios for HTTP requests (if using JS)
+axios==0.21.1
+
+# Note: All libraries are linked via CDNs; no local installations required.
