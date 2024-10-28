@@ -411,7 +411,7 @@ GROUP BY r.recipe_id, r.title, r.image, r.description, r.author, r.rating, r.pre
                 <div class="col-md-4">
                     <div class="card recipe-card">
                         <div class="recipe-img">
-                            <img src="/Images/FoodImages/<?php echo htmlspecialchars($recipe_row['image']); ?>.jpg" class="card-img-top" alt="Recipe Image">
+                            <img src="/Images/Recipe-Images/<?php echo htmlspecialchars($recipe_row['image']); ?>" class="card-img-top" alt="Recipe Image">
                             <i class="fas fa-bookmark save-icon"></i> <!-- Bookmark icon -->
                         </div>
                         <div class="card-body recipe-info">

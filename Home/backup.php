@@ -1,7 +1,6 @@
 <?php
 
-// include('../Includes/Navbar/navbarMain.php');  // Mahbub 
-include('../Includes/Navbar/n1.php');  
+include('../Includes/Navbar/navbarMain.php');  // Mahbub 
 // echo $user_id;
 
 //...................... Database Connection .............................. 
@@ -615,7 +614,53 @@ mysqli_close($conn);
 
 
     <!------------------------------------------------- All Categories section  ----------------------------------------------->
- 
+
+    <section class="all-categories m-5">
+        <div class="container">
+            <div class="identity m-2">
+                <h2 class="m-0 p-0 mb-4">All Categories</h2>
+            </div>
+            <script>
+                function submitCategoryForm(category_id) {
+                    const form = document.getElementById('categoryForm');
+                    form.action = 'oneparticularCategoryShow.php?category_id=' + category_id;
+                    form.submit();
+                }
+            </script>
+
+            <form id="categoryForm" action="oneparticularCategoryShow.php" method="post">
+                <!-- No hidden input needed -->
+            </form>
+
+
+            <!-- Swiper for all categories -->
+            <div class="swiper mySwiper swiper-category">
+                <div class="swiper-wrapper">
+                    <?php foreach ($categories as $value):
+                        // echo "atasa";
+                    ?>
+                        <div class="swiper-slide">
+                            <a href="javascript:void(0);" class="category-tab" data-target="content-<?php echo $key; ?>" onclick="submitCategoryForm(<?php echo $value[0]; ?>)">
+                                <!-- <div class="row justify-content-center">
+                        <div class="col-md"> -->
+
+                                <div class="card text-center bg-transparent border-0">
+                                    <img src="../../../Images/FoodImages/2.jpg" class="card-img-top rounded-circle mx-auto d-block" alt="..." style="width: 100px; height: 100px; object-fit: cover;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Eid al-Fitr <?php echo $key; ?></h5>
+                                    </div>
+                                </div>
+                                <!-- </div>
+                        </div> -->
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+    </section>
 
 
     <!------------------------------------------------- Latest Recipe section  ----------------------------------------------->
