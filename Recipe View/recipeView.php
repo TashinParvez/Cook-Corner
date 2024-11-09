@@ -4,7 +4,7 @@ include("../Includes/Database Connection/database_connection.php");
 
 
 $recipe_id = isset($_GET['recipe_id']) ? htmlspecialchars($_GET['recipe_id']) : '1'; //---------> this will come from all category page
-
+// echo $recipe_id;
 $stmt = $conn->prepare('SELECT * FROM recipe_info WHERE recipe_id = ? LIMIT 1;');
 
 $stmt->bind_param('i', $recipe_id);

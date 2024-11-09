@@ -528,11 +528,15 @@ mysqli_close($conn);
                     <li class="nav-item">
                         <a class="nav-link" href="/Meal Plan/mealGenerator.php">MealPlan</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="#">Shop</a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link" href="/Course/allCourses.php">Course</a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- <a class="nav-link" href="/Course/allCourses.php">Course</a> -->
+                        <a class="nav-link" href="/Home/Homepage.php#bmiSection">CalculateBMI</a>
                     </li>
 
                 </ul>
